@@ -8,19 +8,155 @@
 \begin{document}
 \sloppy
 
-\title[A short title]{The full title}
-\collectionTitle{The collection title}
-\input{frontMatter}
-\subjclass[2010]{Primary unknown; Secondary unknown} %
+\title[Using DiSimplicil Theory]{Using Directed Simplicial Type Theory 
+to formally check ``informal'' mathematics}
+%
+\collectionTitle{A mathematical theory of Reality}
+%
+\input{frontMatter} 
+\subjclass[2010]{Primary unknown; Secondary unknown} % 
 \keywords{Keyword one, keyword two etc.}%
 
 \begin{abstract}
-This is the abstract.
+%
+All mathematical papers should be formally checkable.  This article 
+explores the challenges and solutions used to check the mathematical 
+statements contained in the Mathematical theory of Reality cycle of 
+papers.
+%
 \end{abstract}
 \maketitle
 \tableofcontents
 
 \section{Introduction}
+
+\begin{quote}
+%
+Alice laughed. "There's no use trying," she said: "one can't believe 
+impossible things." 
+
+"I daresay you haven't had much practice," said the Queen. 
+
+"When I was your age, I always did it for half-an-hour a day. Why, 
+sometimes I've believed as many as six impossible things before 
+breakfast."
+
+Alice and the Red Queen, \textit{Through the Looking-Glass, and What 
+Alice Found There}, in Chapter 5, published 1871, by Lewis Carroll (Charles Lutwidge 
+Dodgeson)
+
+\verb|URL: http://en.wikiquote.org/wiki/Through_the_Looking-Glass|
+%
+\end{quote}
+
+\subsection{First steps: Proofs from the HoTT book}
+
+We start by looking at the first few ``formal'' proofs in the HoTT 
+book.  These proofs had both an long and short form of each proof to 
+provide the reader with an understanding of how much more information 
+needs to be recorded to allow automatic proof checking using HoTT (for 
+Coq).  For the HoTT book\footnote{See: 
+\texttt{http://homotopytypetheory.org/book/}}, these proofs were checked 
+in an even more formal format which was then `ìnformalized'' for use in 
+the book itself.
+
+In this article we explore how to proceed in the opposite direction: 
+how ``formal'' does an informal proof need to be to be parsed by a HoTT 
+based tool?
+
+Consider:
+%
+\begin{verbatim}
+%
+We now derive from the induction principle the beginnings of the 
+structure of a higher groupoid. We begin with symmetry of equality, 
+which, in topological language, means that ``paths can be reversed''.
+
+\begin{lem}\label{lem:opp}
+  For every type $A$ and every $x,y:A$ there is a function
+  \begin{equation*}
+    (x= y)\to(y= x)
+  \end{equation*}
+  denoted $p\mapsto \opp{p}$, such that $\opp{\refl{x}}\jdeq\refl{x}$ 
+  for each $x:A$. We call $\opp{p}$ the \define{inverse} of $p$.
+  \indexdef{path!inverse}%
+  \indexdef{inverse!of path}%
+  \index{equality!symmetry of}%a
+  \index{symmetry!of equality}%
+\end{lem}
+
+Since this is our first time stating something as a ``Lemma'' or 
+``Theorem'', let us pause to consider what that means. Recall that 
+propositions (statements susceptible to proof) are identified with 
+types, whereas lemmas and theorems (statements that have been proven) 
+are identified with \emph{inhabited} types. Thus, the statement of a 
+lemma or theorem should be translated into a type, as in 
+\autoref{sec:pat}, and its proof translated into an inhabitant of that 
+type. According to the interpretation of the universal quantifier ``for 
+every'', the type corresponding to \autoref{lem:opp} is \[ 
+\prd{A:\UU}{x,y:A} (x= y)\to(y= x). \] The proof of \autoref{lem:opp} 
+will consist of constructing an element of this type, i.e.\ deriving 
+the judgment $f:\prd{A:\UU}{x,y:A} (x= y)\to(y= x)$ for some $f$. We 
+then introduce the notation $\opp{(\blank)}$ for this element $f$, in 
+which the arguments $A$, $x$, and $y$ are omitted and inferred from 
+context. (As remarked in \autoref{sec:types-vs-sets}, the secondary 
+statement ``$\opp{\refl{x}}\jdeq\refl{x}$ for each $x:A$'' should be 
+regarded as a separate judgment.)
+
+\begin{proof}[First proof]
+
+  Assume given $A:\UU$, and let $D:\prd{x,y:A}(x= y) \to \type$ be the 
+  type family defined by $D(x,y,p)\defeq (y= x)$. In other words, $D$ is 
+  a function assigning to any $x,y:A$ and $p:x=y$ a type, namely the type 
+  $y=x$.  Then we have an element
+  \begin{equation*}
+    d\defeq \lam{x} \refl{x}:\prd{x:A} D(x,x,\refl{x}).
+  \end{equation*}
+  Thus, the induction principle for identity types gives us an element
+  \narrowequation{ \indid{A}(D,d,x,y,p): (y= x)}
+  for each $p:(x= y)$.
+  We can now define the desired function $\opp{(\blank)}$ to be 
+  $\lam{p} \indid{A}(D,d,x,y,p)$, i.e.\ we set $\opp{p} \defeq 
+  \indid{A}(D,d,x,y,p)$. The conversion rule~\eqref{eq:Jconv} gives 
+  $\opp{\refl{x}}\jdeq \refl{x}$, as required.
+\end{proof}
+
+We have written out this proof in a very formal style, which may be 
+helpful while the induction rule on identity types is unfamiliar. To be 
+even more formal, we could say that \autoref{lem:opp} and its proof 
+together consist of the judgment
+%
+\begin{narrowmultline*}
+  \lam{A}{x}{y}{p} \indid{A}((\lam{x}{y}{p} (y=x)), (\lam{x} \refl{x}), x, y, p)
+  \narrowbreak : \prd{A:\UU}{x,y:A} (x= y)\to(y= x)
+\end{narrowmultline*}
+%
+(along with an additional equality judgment). However, eventually we 
+prefer to use more natural language, such as in the following 
+equivalent proof.
+
+\begin{proof}[Second proof]
+%
+  We want to construct, for each $x,y:A$ and $p:x=y$, an element 
+  $\opp{p}:y=x$.
+%
+  By induction, it suffices to do this in the case when $y$ is $x$ and 
+  $p$ is $\refl{x}$.
+%
+  But in this case, the type $x=y$ of $p$ and the type $y=x$ in which 
+  we are trying to construct $\opp{p}$ are both simply $x=x$.
+%
+  Thus, in the ``reflexivity case'', we can define $\opp{\refl{x}}$ to 
+  be simply $\refl{x}$.
+%
+  The general case then follows by the induction principle, and the 
+  conversion rule $\opp{\refl{x}}\jdeq\refl{x}$ is precisely the proof in 
+  the reflexivity case that we gave.
+%
+\end{proof}
+%
+\end{verbatim}
+
 
 \bibliographystyle{amsalpha}
 \bibliography{usingDiSimplexTheory}
