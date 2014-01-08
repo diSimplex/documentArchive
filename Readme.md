@@ -1,0 +1,3 @@
+# diSimplexTheory
+
+Directed Simplicial Theory
