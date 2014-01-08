@@ -31,7 +31,9 @@
 *.xdy
 *.tdo
 # additions for PerceptiSys tools
+*.bak
 *.bib
+*.pdf
 logs
 gitHeadInfo.gin
 gitLogInfo.tex
