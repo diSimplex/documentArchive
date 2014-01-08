@@ -30,3 +30,8 @@
 *.vrb
 *.xdy
 *.tdo
+# additions for PerceptiSys tools
+*.bib
+logs
+gitHeadInfo.gin
+gitLogInfo.tex
