@@ -1,0 +1,22 @@
+I, [14-51-47-331#29048]  INFO -- : Cook version: 2.0.7
+I, [14-51-47-331#29048]  INFO -- : Adding global cookbook /home/stg/.cookbook
+I, [14-51-47-331#29048]  INFO -- : Loading cookbook: [/home/stg/.cookbook]
+I, [14-51-47-331#29048]  INFO -- : loading configuration file [/home/stg/.cookbook/cookbook.conf]
+  in /home/stg/ExpositionGit/papers/0Foundations/ordinalArithmetic
+I, [14-51-47-333#29048]  INFO -- : Building in /home/stg/ExpositionGit/papers/0Foundations/ordinalArithmetic
+I, [14-51-47-333#29048]  INFO -- : Loading cookbook: [/home/stg/ExpositionGit/papers/0Foundations/ordinalArithmetic]
+I, [14-51-47-333#29048]  INFO -- : loading configuration file [/home/stg/ExpositionGit/papers/0Foundations/ordinalArithmetic/cookbook.conf]
+  in /home/stg/ExpositionGit/papers/0Foundations/ordinalArithmetic
+I, [14-51-47-333#29048]  INFO -- : Loading rakefile [/home/stg/ExpositionGit/papers/0Foundations/ordinalArithmetic/cookbook.rake]
+  in /home/stg/ExpositionGit/papers/0Foundations/ordinalArithmetic
+I, [14-51-47-333#29048]  INFO -- : Loading cookbook: [/home/stg/ExpositionGit/tools/diSimplexLaTeX/cookbook]
+I, [14-51-47-333#29048]  INFO -- : loading configuration file [/home/stg/ExpositionGit/tools/diSimplexLaTeX/cookbook/cookbook.conf]
+  in /home/stg/ExpositionGit/papers/0Foundations/ordinalArithmetic
+I, [14-51-47-334#29048]  INFO -- : Loading rakefile [/home/stg/ExpositionGit/tools/diSimplexLaTeX/cookbook/cookbook.rake]
+  in /home/stg/ExpositionGit/papers/0Foundations/ordinalArithmetic
+I, [14-51-47-334#29048]  INFO -- : loading configuration file [/home/stg/ExpositionGit/tools/diSimplexLaTeX/cookbook/recipes/create/create.conf]
+  in /home/stg/ExpositionGit/papers/0Foundations/ordinalArithmetic
+I, [14-51-47-334#29048]  INFO -- : Loading rakefile [/home/stg/ExpositionGit/tools/diSimplexLaTeX/cookbook/recipes/create/create.rake]
+  in /home/stg/ExpositionGit/papers/0Foundations/ordinalArithmetic
+I, [14-51-47-335#29048]  INFO -- : Loading rakefile [/home/stg/ExpositionGit/tools/diSimplexLaTeX/cookbook/recipes/texStyles/texStyles.rake]
+  in /home/stg/ExpositionGit/papers/0Foundations/ordinalArithmetic

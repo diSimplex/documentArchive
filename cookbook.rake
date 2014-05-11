@@ -2,6 +2,6 @@
 # maintain the ordinalArithmetic paper.
 #
 
-add_cookbook("/home/stg/ExpositionGit/tools/diSimplexLaTeX/cookbook")
+add_cookbook(Conf.global.diSimplex.cookbook)
 
 
