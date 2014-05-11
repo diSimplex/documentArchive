@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# This bash script uninstalls the <%= Conf.texFont.name %> fonts
+
+<% Conf.texFont.fontPaths.each do | aPathArray | %>
+rm <%= aPathArray[0] %>/*<%= Conf.texFont.texFonts.fontName %>*<%= aPathArray[1] %>
+<% end %>
+
+echo -e "To finish removing this font"
+echo -e "\n(1) Remove the single line:"
+echo -e "> Map <%= Conf.texFont.texFonts.fontName %>.map"
+echo -e "from the file:"
+echo -e "> web2c/updmap-local.cfg"
+echo -e "\n(2) Then run"
+echo -e "> tlmgr generate updmap"
+echo -e "once"
+echo -e "\n(3) Then the following commands update the font maps for"
+echo -e "all of the other output tools (dvips pdfLatex etc)"
+echo -e "> mktexlsr"
+echo -e "> updmap-sys"
+

@@ -1,0 +1,284 @@
+% \changes{0.1b}{2014/02/02}{Initial version}
+%
+% \iffalse
+%<*never>
+\documentclass{amsart}
+\usepackage{doc}
+\usepackage{disitt}
+\usepackage{hyperref}
+\newcommand{\define}[2]{\emph{\textbf{#1}}}
+\GetFileInfo{disitt-engine.sty}
+\CodelineIndex
+\EnableCrossrefs
+\RecordChanges
+\begin{document}
+\CheckSum{12}
+\DocInput{disitt-symbols.dtx}
+\section{Copyright and \LaTeX\ Project Public License}
+\begin{verbatim}
+%txsBeginComment
+Copyright (C) 2014 Stephen Gaito (PerceptiSys Ltd)
+
+This work may be distributed and/or modified under the conditions of the
+LaTeX Project Public License, either version  1.3  of  this license or (at
+your option) any later version.
+
+The latest version of this license is in
+http://www.latex-project.org/lppl.txt and  version 1.3 or later is part of
+all distributions of LaTeX version 2005/12/01 or later.
+
+This work has the LPPL maintenance status `maintained'.
+
+The Current Maintainer of this work is Stephen Gaito.
+
+The released source can be found at:
+https://github.com/diSimplex/diSimplexEngine/tree/master/texStyle  The
+
+Development source can be found at:
+https://github.com/stephengaito/diSimplexEngine/tree/master/texStyle
+
+This work consists of the files disitt.tex, disitt-example.tex, 
+disitt.dtx, disittSymbols.dtx and disitt.ins and the derived files:
+disitt.sty, disitt.cwl, disittSymbols.sty, disittSymbols.cwl
+and disitt.pdf.
+%txsEndComment
+% \end{verbatim}
+\PrintIndex
+\PrintChanges
+\end{document}
+%</never>
+% \fi
+%
+% \DoNotIndex{\edef,\advance,\else,\csname,\endcsname,\expandafter}
+% \DoNotIndex{\ifx,\fi,\input,\ifnum,\relax,\newcount,\romannumeral}
+% \DoNotIndex{\the,\typeout,\xdef,\global,\newcommand,\RequirePackage}
+% \DoNotIndex{\PackageError,\ProvidesPackage,\gdef}
+% \DoNotIndex{\IncludeTests,\LogClose,\LogTests,\Expect,\ExpectIfThen}
+% \DoNotIndex{\isnamedefined,\isundefined}
+% \DoNotIndex{\stop,\makeatletter,\makeatother,\begin,\end,\def,\let}
+% \DoNotIndex{\testFSDestroy@fifo@stack@count@top}
+% \DoNotIndex{\testFSDestroy@fifo@stack@count@bottom}
+% \DoNotIndex{\testFSDestroy@fifo@stack@count@size}
+% \DoNotIndex{\fifo@stack@top@testFSDestroy}
+% \DoNotIndex{\fifo@stack@bottom@testFSDestroy}
+%
+%
+% \title{Directed Simplicial Type Theory \LaTeX\ Style}
+% \author{Stephen Gaito}
+% \maketitle
+% \begin{abstract}
+% This is the Directed Simplicial Type Theory (DiSiTT) style file. It is a LaTeX
+% style file used to typeset DiSiTT proof arguments.
+% \end{abstract}
+%
+% \tableofcontents
+%
+% \section{Introduction}
+%
+% \section{Integration tests and example usage}
+%
+% We use the \href{http://www.ctan.org/pkg/qstest}{QSTest} package from
+% \href{http://www.ctan.org}{CTAN} to provide both integration and unit tests of
+% our FIFO/stack package.
+%
+% In this section we walk through a number of integration tests which also
+% provide example uses of FIFO/Stacks. We provide unit tests of specific
+% invariants in the code section below.  These unit tests are associated
+% with the section of code which implements a particular invariant.
+%
+% We begin by setting up the \LaTeX\ QSTest package to test the
+% \verb|fifo-stack| package, and we will log everything. Note that we do not use
+% a document
+% class
+% or begin/end a document, this is because there should not be any \emph{normal}
+% output created.  All \emph{results} are listed in the associated
+% \verb|fifo-stack-test.lgout| file.
+%
+%    \begin{macrocode}
+%<*qstest>
+\RequirePackage{qstest}
+\RequirePackage{xifthen}
+\IncludeTests{*}
+\LogTests{lgout}{*}{*}
+%</qstest>
+%    \end{macrocode}
+%
+% \section{DiSiTT Symbols texstyle}
+%
+% \subsection{Identification}
+%
+%    \begin{macrocode}
+%<*package>
+\ProvidesPackage{disitt-symbols}%
+  [2014/03/25 v1.0 DiSiTT Symbols]
+%    \end{macrocode}
+%
+% \subsection{Rotating Math Symbols}
+%
+% The symbol manipulation commands are for use with the graphicx package. They
+% have been taken from an email from Barbara Beeton (bnb at ams.org). See:
+% http://www.tug.org/pipermail/texhax/2005-October/004861.html. We will make
+% extensive use of these commands to provide symbols for our specific use.
+%
+% \begin{macro}{\reflectit}
+%
+% The \verb|\reflectit| command takes any math symbol and reflects it in its
+% vertical middle line.
+%
+%    \begin{macrocode}
+%txs\reflectit{mathSymbol}#m
+\newcommand{\reflectit}[1]{\reflectbox{\ensuremath#1}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\turnover}
+%
+% The \verb|\turnover| command takes any math symbol and reflects it in its 
+% horizontal middle line
+%
+%    \begin{macrocode}
+%txs\turnover{mathSymbol}#m
+\newcommand{\turnover}[1]{\rotatebox[origin=c]{180}{\ensuremath#1}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\turncw}
+%   \begin{macro}{\turnccw}
+%
+% The \verb|\turnXXX| commands rotate a math symbol by 90 degrees about its
+% middle in either a clockwise or counter clockwise direction.
+%
+%    \begin{macrocode}
+%txs\turncw{mathSymbol}#m
+%txs\turnccw{mathSymbol}#m
+\newcommand{\turncw}[1]{\rotatebox[origin=c]{270}{\ensuremath#1}}
+\newcommand{\turnccw}[1]{\rotatebox[origin=c]{90}{\ensuremath#1}}
+%    \end{macrocode}
+%   \end{macro}
+% \end{macro}
+
+% \begin{macro}{\turnne}
+%   \begin{macro}{\turnnw}
+%     \begin{macro}{\turnsw}
+%       \begin{macro}{\turnse}
+% The \verb|\turnXX| commands rotates a math symbol by a multiple of 45
+% degrees about its center to point its top in either a north east, 
+% north west, south west or south east direction
+%    \begin{macrocode}
+%txs\turnne{mathSymbol}#m
+%txs\turnnw{mathSymbol}#m
+%txs\turnsw{mathSymbol}#m
+%txs\turnse{mathSymbol}#m
+\newcommand{\turnne}[1]{\rotatebox[origin=c]{45}{\ensuremath#1}}
+\newcommand{\turnnw}[1]{\rotatebox[origin=c]{135}{\ensuremath#1}}
+\newcommand{\turnsw}[1]{\rotatebox[origin=c]{225}{\ensuremath#1}}
+\newcommand{\turnse}[1]{\rotatebox[origin=c]{315}{\ensuremath#1}}
+%    \end{macrocode}
+%       \end{macro}
+%     \end{macro}
+%   \end{macro}
+% \end{macro}
+%
+% \subsection{Editorial comments}
+%
+% \begin{macro}{\CHECK}
+%   \begin{macro}{\COMMENT}
+%     \begin{macro}{\TODO}
+% The editorial commands \verb|\CHECK|, \verb|\COMMENT| and \verb|\TODO| are
+% provided to allow for editorial comments to the author but which will not be
+% included in the final document.
+%    \begin{macrocode}
+%txs\CHECK{someThingToCheck}#n
+\newcommand{\CHECK}[1]{\textbf{CHECK:[} #1 \textbf{]}}
+%txs\COMMENT{anEditorialComment}#n
+\newcommand{\COMMENT}[1]{\textbf{COMMENT:[} #1 \textbf{]}}
+%txs\TODO{somethingThatNeedsToBeDone}#n
+\newcommand{\TODO}[1]{\textbf{TODO: [} #1 \textbf{]}}
+%    \end{macrocode}
+%     \end{macro}
+%   \end{macro}
+% \end{macro}
+%
+% \subsection{Defininig a word or phrase}
+%
+% \begin{macro}{\define}
+% The \verb|\define| command ensures that the defined word is listed in the
+% index as well as placed in emphasized text font
+%    \begin{macrocode}
+%txs\define{word}{something...}#n
+\newcommand{\define}[2]{\emph{\textbf{#1}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsection{Book keeping}
+%
+% We define the following ``book keeping'' commands:
+%
+% \begin{macro}{\variable}
+%    \begin{macrocode}
+%txs\variable{aVarSym}{aSubScript}#
+\newcommand{\variable}[2]{\ensuremath{#1_{#2}}}
+%    \end{macrocode}
+% \end{macro}
+%
+%\subsection{Important Objects: Universe}
+%
+% We define the following standard objects:
+%
+% \begin{macro}{\Universe}
+%    \begin{macrocode}
+%txs\Universe#
+\newcommand{\Universe}{\ensuremath{\mathfrak{U}}}
+%    \end{macrocode}
+% \end{macro}
+%
+%\subsection{Important objects: Ordinals}
+% We define the following standard objects:
+%
+% \begin{macro}{\Ordinal}
+%   \begin{macro}{\zero}
+%     \begin{macro}{\one}
+%    \begin{macrocode}
+%txs\Ordinal#
+\newcommand{\Ordinal}{\ensuremath{\mathfrak{O}}}
+%txs\zero#
+\newcommand{\zero}{\ensuremath{0}}
+%txs\one#
+\newcommand{\one}{\ensuremath{1}}
+%    \end{macrocode}
+%     \end{macro}
+%   \end{macro}
+% \end{macro}
+%
+% Now some ``functions'':
+%
+% \begin{macro}{\successor}
+%   \begin{macro}{\limitOrd}
+%    \begin{macrocode}
+%txs\successor{anOrdinal}#
+\newcommand{\successor}[1]{\ensuremath{s(#1)}}
+%txs\limitOrd{anOrdinal}#
+\newcommand{\limitOrd}[1]{\ensuremath{\omega(#1)}}
+%    \end{macrocode}
+%   \end{macro}
+% \end{macro}
+%
+% \subsection{Important Arrows}
+%
+% \begin{macro}{\arrow}
+%    \begin{macrocode}
+%txs\arrow{domainObject}{targetObject}#
+\newcommand{\arrow}[2]{\ensuremath{#1 \rightarrow #2}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsection{Finishing off}
+%
+%    \begin{macrocode}
+%</package>
+%<*qstest>
+\LogClose{lgout}
+\stop
+%</qstest>
+%    \end{macrocode}
+%
