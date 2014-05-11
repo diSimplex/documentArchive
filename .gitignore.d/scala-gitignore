@@ -1,0 +1,8 @@
+
+# scala artifacts to ignore
+.cache
+*.class
+
+# sbt eclipse
+target
+.ivyCache

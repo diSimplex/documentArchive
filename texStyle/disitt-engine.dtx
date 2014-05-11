@@ -1,0 +1,606 @@
+% \changes{0.1b}{2014/02/02}{Initial version}
+%
+% \iffalse
+%<*never>
+\documentclass{ltxdoc}
+\usepackage{doc}
+\usepackage{disitt-engine}
+\usepackage{hyperref}
+\newcommand{\define}[2]{\emph{\textbf{#1}}}
+\GetFileInfo{disitt-engine.sty}
+\CodelineIndex
+\EnableCrossrefs
+\RecordChanges
+\begin{document}
+\CheckSum{12}
+\DocInput{disitt-engine.dtx}
+\section{Copyright and \LaTeX\ Project Public License}
+\begin{verbatim}
+%txsBeginComment
+Copyright (C) 2014 Stephen Gaito (PerceptiSys Ltd)
+
+This work may be distributed and/or modified under the conditions of the
+LaTeX Project Public License, either version  1.3  of  this license or (at
+your option) any later version.
+
+The latest version of this license is in
+http://www.latex-project.org/lppl.txt and  version 1.3 or later is part of
+all distributions of LaTeX version 2005/12/01 or later.
+
+This work has the LPPL maintenance status `maintained'.
+
+The Current Maintainer of this work is Stephen Gaito.
+
+The released source can be found at:
+https://github.com/diSimplex/diSimplexEngine/tree/master/texStyle  The
+
+Development source can be found at:
+https://github.com/stephengaito/diSimplexEngine/tree/master/texStyle
+
+This work consists of the files disitt-engine.tex, 
+disitt-engine-example.tex, disitt-engine.dtx and disitt-engine.ins 
+and the derived files: disitt-engine.sty and disitt-engine.pdf.
+%txsEndComment
+% \end{verbatim}
+\PrintIndex
+\PrintChanges
+\end{document}
+%</never>
+% \fi
+%
+% \DoNotIndex{\edef,\advance,\else,\csname,\endcsname,\expandafter}
+% \DoNotIndex{\ifx,\fi,\input,\ifnum,\relax,\newcount,\romannumeral}
+% \DoNotIndex{\the,\typeout,\xdef,\global,\newcommand,\RequirePackage}
+% \DoNotIndex{\PackageError,\ProvidesPackage,\gdef}
+% \DoNotIndex{\IncludeTests,\LogClose,\LogTests,\Expect,\ExpectIfThen}
+% \DoNotIndex{\isnamedefined,\isundefined}
+% \DoNotIndex{\stop,\makeatletter,\makeatother,\begin,\end,\def,\let}
+% \DoNotIndex{\testFSDestroy@fifo@stack@count@top}
+% \DoNotIndex{\testFSDestroy@fifo@stack@count@bottom}
+% \DoNotIndex{\testFSDestroy@fifo@stack@count@size}
+% \DoNotIndex{\fifo@stack@top@testFSDestroy}
+% \DoNotIndex{\fifo@stack@bottom@testFSDestroy}
+%
+% \title{Directed Simplicial Type Theory \LaTeX\ Style}
+% \author{Stephen Gaito}
+% \maketitle
+% \begin{abstract}
+% This is the Directed Simplicial Type Theory (DiSiTT) style file. It is a LaTeX
+% style file used to typeset DiSiTT proof arguments.
+% \end{abstract}
+% \tableofcontents
+% \section{Introduction}
+%
+% The Directed Simplicial Type Theory (DiSiTT) style is a \LaTeX\ style designed
+% to type set DiSiTT style natural decuction derivations, either rules or chains
+% of rule derivations. The \emph{primary purpose} of using the DiSiTT style
+% instead of other \LaTeX\ natural deduction packages is that the DiSiTT style
+% provides the syntax required by the DiSiTT engine to perform automatic
+% derivation checking. \emph{Inside} \LaTeX\ the DiSiTT style provides a
+% unified syntax with in which either the ``Gentzen'' (tree) style (using
+% \verb|bussproofs.sty|) or ``Fitch'' (sequential) style (using
+% \verb|fitch.sty|) can be used.
+%
+% The Directed Simplicial Type Theory (DiSiTT) engine, is essentially a natural
+% deduction judgement programming language (JPL). In classical natural deduction
+% the basic \emph{judement} is a statement that a given proposition, $A$, is
+% \emph{true}. In DiSiTT, the basic judgements are statements that one
+% (directed) simplicial structure is a \emph{part} of another.
+%
+% Any programming language will need to keep track of variables in various
+% contexts, our JPL is no different.  Natural deductions consist of nested
+% collections of derivations or \emph{proofs}.  Variables are scoped to a
+% particular nested collection of derivations.
+%
+% We have a number of distinct types of derivations:
+%
+% \begin{enumerate}
+%   \item \define{Definition}{}\DescribeEnv{def}\ or
+%     \define{Subdefinition}{}\DescribeEnv{subdef}\ used to \emph{define} an
+%     equivilance between two statements. Subdefinitions are numbered relative to
+%     their enclosing (sub)definition(s).
+%   \item \define{Lemma}{} or \define{Theorem}{} used to provide a number of
+%     \emph{hypothosized} statements followed by a number of \emph{derived}
+%     statements. A Lemma or Theorem is a definition of a natural deduction rule
+%     promise that a Proof will be given either in the following text, an
+%     appendix, or from another work.
+%   \item \define{Conjecture}{} the same as a Lemma or Theorem statement but
+%     marked as unproven (and hence unuseable in other derivations).
+%   \item \define{Proof}{} or \define{Subproof}{} used to provide detailed
+%     natural deduction derivations of one or more \emph{derived} statements using
+%     the given \emph{hypothosized} statements. Typically a proof follows a given
+%     Lemma or Theorem.  However Proofs can be used as a running discusion on how
+%     to prove a given statement (which might only be visible by the end of the
+%     discussion).
+% \end{enumerate}
+%
+% One of our primary aims is to produce ``journal'' ready documents, for this we
+% use \LaTeX\ as our primary document environment and assume that the JPL
+% derivations are environments inside a \LaTeX\ document. As such each of the
+% above derivation types are defined as \LaTeX\ environments, for example:
+%
+% \begin{verbatim}
+%   \begin{definition}
+%     \begin{subdefinition}
+%     ....
+%     \end{subdefinition}
+%   \end{definition}
+% \end{verbatim}
+%
+% Each derivation environment consists of a number of derivation statements. A
+% single statement consists of an optional \define{context}{} followed by a
+% \define{judgement}{}, where a context is a sequence of judgements:
+%
+% \begin{verbatim}
+%   \hypothesis{
+%     \judgement{a}{A}, 
+%     \judgement{b}{B},
+%      ...
+%     \judgement{x}{X}
+%   }{
+%     \judgement{z}{Z}
+%   }
+% \end{verbatim}
+% or
+% \begin{verbatim}
+%   \conclusion{
+%     \judgement{a}{A}, 
+%     \judgement{b}{B},
+%      ...
+%     \judgement{x}{X}
+%   }{
+%     \judgement{z}{Z}
+%   }
+% \end{verbatim}
+%
+% Every derivation environment must have at least one \verb|\conclusion|
+% statement. Multiple \verb|\conclusion| statements are considered to be
+% mutulally
+% equivilant. Derivation environments need not have any \verb|\hyposthesis|
+% statements.  The order of statements is significant, and acts as a stack.
+%
+% In a proof derivation, every \verb|\conclusion| statement must be followed by
+% a
+% \verb|\followsUsing{xxx}| statement, which identifies the previously defined
+% derivation which justifies the previous conclusion.
+%
+% \section{Examples}
+%
+% In this section we provide some worked examples.
+%
+% TODO: We eventually need to deal with the ``The following are equivilant''
+% case with multiple conclusions.
+%
+% \begin{deAxiom}
+%   \conclusion{}{\judgement{a}{A}}
+% \end{deAxiom}
+%
+% \section{Integration tests and example usage}
+%
+% We use the \href{http://www.ctan.org/pkg/qstest}{QSTest} package from
+% \href{http://www.ctan.org}{CTAN} to provide both integration and unit tests of
+% our FIFO/stack package.
+%
+% In this section we walk through a number of integration tests which also
+% provide example uses of FIFO/Stacks. We provide unit tests of specific
+% invariants in the code section below.  These unit tests are associated
+% with the section of code which implements a particular invariant.
+%
+% We begin by setting up the \LaTeX\ QSTest package to test the
+% \verb|fifo-stack| package, and we will log everything. Note that we do not use
+% a document
+% class
+% or begin/end a document, this is because there should not be any \emph{normal}
+% output created.  All \emph{results} are listed in the associated
+% \verb|fifo-stack-test.lgout| file.
+%
+%    \begin{macrocode}
+%<*qstest>
+\RequirePackage{qstest}
+\RequirePackage{xifthen}
+\IncludeTests{*}
+\LogTests{lgout}{*}{*}
+\RequirePackage{disitt-engine}
+%</qstest>
+%    \end{macrocode}
+%
+% \subsection{DiSittFS based examples}
+%
+% We now provide an example of standard use of the \verb|DiSittFS| FIFO/Stack
+% based functionality. To do this we create a stack inside a stack and for each
+% stack we push one thing onto the stack all in a nice linear fashion.
+%
+%    \begin{macrocode}
+%<*qstest>
+\begin{qstest}{Simple DiSittFS FIFO/stack integration test}
+  {\CreateDiSittFS, \DestroyDiSittFS, 
+   \DiSittPush, \DiSittPop, \DiSittTop, \DiSittSize}
+  
+  \CreateDiSittFS{defaultValueA}
+  \Expect*{\DiSittTop}{defaultValueA}
+  \Expect*{\DiSittSize}{0}
+  \DiSittPush{firstValueFirstStack}
+  \Expect*{\DiSittTop}{firstValueFirstStack}
+  \Expect*{\DiSittSize}{1}
+  \CreateDiSittFS{defaultValueB}
+  \Expect*{\DiSittTop}{defaultValueB}
+  \Expect*{\DiSittSize}{0}
+  \DiSittPush{firstValueSecondStack}
+  \Expect*{\DiSittTop}{firstValueSecondStack}
+  \Expect*{\DiSittSize}{1}
+  \DestroyDiSittFS
+  \Expect*{\DiSittTop}{firstValueFirstStack}
+  \Expect*{\DiSittSize}{1}
+  \DiSittPop
+  \Expect*{\DiSittTop}{defaultValueA}
+  \Expect*{\DiSittSize}{0}
+\end{qstest}
+%</qstest>
+%    \end{macrocode}
+%
+% \subsection{A deAxiom example}
+%
+% We now provide an full deAxiom example.
+%
+%    \begin{macrocode}
+%<*qstest>
+\begin{qstest}{First deAxiom integration test}
+  {\CreateDiSittFS, \DestroyDiSittFS, 
+   \DiSittPush, \DiSittPop, \DiSittTop, \DiSittSize}
+
+  \CreateDiSittFS{}
+  \conclusion{}{\judgement{a}{A}}
+  \Expect*{\DiSittSize}{1}
+  \Expect*{\DiSittTop}*{\ensuremath{ \vdash \judgement{a}{A}}}
+  \ifthenelse{1 < \DiSittSize}{\whiledo{1 < \DiSittSize}{\AxiomC{\DiSittShift}}}{\AxiomC{}}
+  \UnaryInfC{\DiSittShift}
+%  \DisplayProof
+  \DestroyDiSittFS
+\end{qstest}
+%</qstest>
+%    \end{macrocode}
+%
+% \section{The \LaTeX\ code}
+%
+% \subsection{Preamble}
+%
+%    \begin{macrocode}
+%<*package>
+\ProvidesPackage{disitt-engine}%
+  [2014/03/25 v1.0 DiSiTT natural deduction engine]
+%txs#include:bussproofs
+\RequirePackage{bussproofs}
+%txs#include:ifthen
+\RequirePackage{ifthen}
+%txs#include:fifo-stack
+\RequirePackage{fifo-stack}
+%    \end{macrocode}
+%
+% \subsection{Meta-theory, theory and object levels}
+%
+% One of the fundamental distinctions for the DiSiTT engine is that between the
+% various theoretical levels at which the engine is ``working''. There are three
+% levels: %
+% \begin{itemize} %
+%    \item Meta-theory %
+%    \item Theory %
+%    \item Object %
+% \end{itemize} %
+% We use the \verb|\mTheory|\DescribeMacro{mTheory}{} and
+% \verb|\oTheory|\DescribeMacro{oTheory}{} commands to denote objects at
+% the \emph{meta-theory} and \emph{object-theory} levels respectively. Objects
+% at the \emph{theory} level are unaddorned.
+%
+%    \begin{macrocode}
+%txs\mTheory{object}#
+\newcommand{\mTheory}[1]{\ensuremath{\overline{#1}}}
+%txs\oTheory{object}#
+\newcommand{\oTheory}[1]{\ensuremath{\underline{#1}}}
+%    \end{macrocode}
+%
+% \subsection{The derivation environments}
+%
+% \subsubsection{Definition environments}
+%
+% \begin{environment}{deDefinition}
+% The \define{deDefinition}{} environment
+%    \begin{macrocode}
+%txs\begin{deDefinition}#
+%txs\end{deDefinition}#
+\newenvironment{deDefinition}{begin}{end}
+%    \end{macrocode}
+% \end{environment}
+%
+% \begin{environment}{deSubdef}
+% The \define{deSubdefinition}{} environment
+%    \begin{macrocode}
+%txs\begin{deSubdef}#
+%txs\end{deSubdef}#
+\newenvironment{deSubdef}{begin}{end}
+%    \end{macrocode}
+% \end{environment}
+%
+% \subsubsection{The Theorem environments}
+%
+% \begin{environment}{deAxiom}
+% The \define{deAxiom}{} environment
+%    \begin{macrocode}
+%txs\begin{deAxiom}#
+%txs\end{deAxiom}#
+\newenvironment{deAxiom}{\StartNaturalDeduction}{\EndNaturalDeduction}
+%    \end{macrocode}
+% \end{environment}
+%
+% \begin{environment}{deLemma}
+% The \define{deLemma}{} environment
+%    \begin{macrocode}
+%txs\begin{deLemma}#
+%txs\end{deLemma}#
+\newenvironment{deLemma}{%
+begin-lemma%
+\StartNaturalDeduction%
+}{%
+\EndNaturalDeduction%
+end-lemma
+}
+%    \end{macrocode}
+% \end{environment}
+%
+% \begin{environment}{deTheorem}
+% The \define{deTheorem}{} environment
+%    \begin{macrocode}
+%txs\begin{deTheorem}#
+%txs\end{deTheorem}#
+\newenvironment{deTheorem}{begin}{end}
+%    \end{macrocode}
+% \end{environment}
+%
+% \subsubsection{The conjecture environment}
+%
+% \begin{environment}{deConjecture}
+% The \define{deConjecture}{} environment
+%    \begin{macrocode}
+%txs\begin{deConjecture}#
+%txs\end{deConjecture}#
+\newenvironment{deConjecture}{begin}{end}
+%    \end{macrocode}
+% \end{environment}
+%
+% \subsubsection{The proof environments}
+%
+% \begin{environment}{deProof}
+% The \define{deProof}{} environment
+%    \begin{macrocode}
+%txs\begin{deProof}#
+%txs\end{deProof}#
+\newenvironment{deProof}{begin}{end}
+%    \end{macrocode}
+% \end{environment}
+%
+% \begin{environment}{deSubproof}
+% The \define{deSubproof}{} environment
+%    \begin{macrocode}
+%txs\begin{deSubproof}#
+%txs\end{deSubproof}#
+\newenvironment{deSubproof}{begin}{end}
+%    \end{macrocode}
+% \end{environment}
+%
+% \subsection{Judgement commands}
+%
+% \begin{macro}{\context}
+%    \begin{macrocode}
+%txs\context{someContext}#
+\newcommand{\context}[1]{\ensuremath{#1}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\judgement}
+%    \begin{macrocode}
+%txs\judgement{partOf}{container}#
+\newcommand{\judgement}[2]{\ensuremath{#1\!\!:\!\!#2}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\cJudgement}
+%    \begin{macrocode}
+%txs\cJudgement{contextList}#
+\newcommand{\cJudgement}[1]{\ensuremath{( #1 ) \; \textbf{ctx}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsection{Hypothesis and Conclusion commands}
+%
+% \begin{macro}{\hypothesis}
+%    \begin{macrocode}
+%txs\hypothesis{context}{result}
+\newcommand{\hypothesis}[2]{\pushHypothesis{\ensuremath{#1 \vdash #2}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\conclusion}
+%    \begin{macrocode}
+%txs\conclusion{context}{result}
+\newcommand{\conclusion}[2]{\pushConclusion{\ensuremath{#1 \vdash #2}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsection{Support macros}
+%
+% For natural deduction derivations we have considered using one or more of:
+% \begin{itemize}
+%   \item \href{http://www.ctan.org/tex-archive/macros/latex2e/contrib/bussproofs}{BussProofs}
+%   \item \href{http://www.mathstat.dal.ca/~selinger/fitch/}{Fitch}
+%   \item \href{http://www.ctan.org/pkg/lplfitch}{LPLFitch}
+%   \item \href{http://www.ctan.org/tex-archive/macros/latex/contrib/flagderiv/}{FlagDeriv}
+% \end{itemize}
+% The BussProofs and Fitch styles can be used without resorting to a FIFO or
+% stack. Unfortunately, LPLFitch would require the use of a FIFO list
+% architecture. Eqaully unfortunately, the Fitch style is not in CTAN or TeXLive
+% (it can only be obtained from the author's website directly). Due to these
+% considerations, we have, for the forseeable future chosen to use the
+% \href{http://www.ctan.org/pkg/bussproofs}{BussProofs} packge from
+% \href{http://www.ctan.org}{CTAN}.
+%
+% The semantics of the use of FlagDeriv is very clean. Unfortunately all of the
+% Fitch-like packages put too much emphasis on the introduction/assumption
+% ``step'' and not enough on the conclusion.
+%
+% While we \emph{have} chosen to use the BussProofs package, we explicitly wrap
+% the BussProofs commands so that our LaTeXMarkDown parsing engine can easily
+% identify the important structures. Unfortunately this means that we must
+% auto-magically  keep track of the number of hypothesis in each DiSiTT
+% derivation environment. We do this by maintaining a FIFO structure for each
+% instantiated derivation environment. This means that we must count the number
+% of hypothesis on a given FIFO structure.
+%
+% For lists and control sequence names we have considered the LaTeX
+% \href{http://ctan.org/pkg/etoolbox}{etoolbox} package. However, we base our
+% FIFO structure on ideas taken from Ben­jamin Ba­yart's excellent
+% \href{http://www.ctan.org/tex-archive/macros/latex2e/contrib/stack}{LaTeX
+% stack package}.  Unfortunately Bayart's stack package is explicitly only for
+% stacks and we need a slightly more complex FIFO structure, hence we
+% reimplement Bayart's stack package as an extended copy with the package name,
+% ``\LaTeX FIFO/stack implementation for Package writers'' (fifo-stack),
+% implemented for our specific needs.
+%
+% \begin{macro}{\StartNaturalDeduction}
+%   \begin{macro}{\EndNaturalDeduction}
+%    \begin{macrocode}
+\makeatletter
+\newcount\diSitt@saved@size
+\@namedef{BussProofInf1}{\UnaryInfC}
+\@namedef{BussProofInf2}{\UnaryInfC}
+\@namedef{BussProofInf3}{\BinaryInfC}
+\@namedef{BussProofInf4}{\TrinaryInfC}
+\@namedef{BussProofInf5}{\QuaternaryInfC}
+\@namedef{BussProofInf6}{\QuinaryInfC}
+\newcommand{\StartNaturalDeduction}{\vspace{0.75ex}\CreateDiSittFS{}}
+\newcommand{\EndNaturalDeduction}{%
+  \diSitt@saved@size=\DiSittSize%
+  \ifthenelse{1 < \DiSittSize}{%
+    \whiledo{1 < \DiSittSize}{\AxiomC{\DiSittBottom\DiSittShift}}%
+  }{%
+    \AxiomC{}%
+  }%
+  \@nameuse{BussProofInf\the\diSitt@saved@size}{\DiSittBottom\DiSittShift}%
+  \DisplayProof%
+  \DestroyDiSittFS%
+  \vspace{0.75ex}
+}
+\makeatother
+%    \end{macrocode}
+%   \end{macro}
+% \end{macro}
+%
+% \subsubsection{FIFO structures}
+%
+% The FIFO/Stack package allows us to keep track of both the \emph{top} and
+% \emph{bottom} of the  structure. We would \emph{like} our structures to be
+% \emph{local} to a given \TeX\ group. Unfortunately, this might be broken by
+% interviening \TeX\ groups, so the FIFO/Stack package retains Bayart's use of
+% \emph{global} macros. However, we explicitly intend for DiSiTT derivation
+% environments to be nested, so we must also keep track of how many nested FIFO
+% structures are currently in use. To do this we implement, in this package, a
+% FIFO/Stack of FIFO/Stacks.
+%
+% To begin our implementation of a Stack of FIFO/Stacks, we switch into `@'
+% letter mode in order to facilitate our very low-level \TeX\ programming mode.
+% We then create the global DiSiTT FIFO/Stack which will be used to keep track
+% of the FIFO/Stacks associated with each instantiation of a DiSiTT derivation
+% environment.
+%    \begin{macrocode}
+\makeatletter
+\FSCreate{DiSittEnvironmentStack}{unknown}
+%    \end{macrocode}
+%
+% Each (nested) derivation environment needs to call the
+% \verb|\CreateDiSittFS|\DescribeMacro{CreateDiSittFS}\ and
+% \verb|\DestroyDiSittFS|\DescribeMacro{DestroyDiSittFS}\ commands on
+% \emph{begin} and \emph{end} respectively.
+%
+% \begin{macro}{\diSittStack@count}
+%   \begin{macro}{\CreateDiSittFS}
+%     \begin{macro}{\DestroyDiSittFS}
+%    \begin{macrocode}
+\newcount\diSittStack@count
+\newcommand{\CreateDiSittFS}[1]{%
+  \global\advance\diSittStack@count by 1 %
+  \FSPush{DiSittEnvironmentStack}{diSittFS\the\diSittStack@count}
+  \FSCreate{\FSTop{DiSittEnvironmentStack}}{#1}%
+}
+\newcommand{\DestroyDiSittFS}{%
+  \FSDestroy{\FSTop{DiSittEnvironmentStack}}%
+  \FSPop{DiSittEnvironmentStack}
+}
+%    \end{macrocode}
+%     \end{macro}
+%   \end{macro}
+% \end{macro}
+%
+% Now that we have finished our very low-level \TeX\ programming, so we switch
+% back to `@' other mode.
+%    \begin{macrocode}
+\makeatother
+%    \end{macrocode}
+%
+% In order to simplify the use this Stack of FIFO/Stacks we provide wrapper FS
+% operations which each operate on the top DiSiTT FIFO/Stack.
+%
+% \begin{macro}{\DiSittPush}
+%   \begin{macro}{\DiSittPop}
+%    \begin{macrocode}
+\newcommand{\DiSittPush}[1]{\FSPush{\FSTop{DiSittEnvironmentStack}}{#1}}
+\newcommand{\DiSittPop}{\FSPop{\FSTop{DiSittEnvironmentStack}}}
+%    \end{macrocode}
+%   \end{macro}
+% \end{macro}
+%
+% \begin{macro}{\DiSittUnshift}
+%   \begin{macro}{\DiSittShift}
+%    \begin{macrocode}
+\newcommand{\DiSittUnshift}[1]{\FSUnshift{\FSTop{DiSittEnvironmentStack}}{#1}}
+\newcommand{\DiSittShift}{\FSShift{\FSTop{DiSittEnvironmentStack}}}
+%    \end{macrocode}
+%   \end{macro}
+% \end{macro}
+%
+% \begin{macro}{\DiSittTop}
+%   \begin{macro}{\DiSittBottom}
+%    \begin{macrocode}
+\newcommand{\DiSittTop}{\FSTop{\FSTop{DiSittEnvironmentStack}}}
+\newcommand{\DiSittBottom}{\FSBottom{\FSTop{DiSittEnvironmentStack}}}
+%    \end{macrocode}
+%   \end{macro}
+% \end{macro}
+%
+% \begin{macro}{\DiSittSize}
+%    \begin{macrocode}
+\newcommand{\DiSittSize}{\FSSize{\FSTop{DiSittEnvironmentStack}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsubsection{Judgement stack}
+%
+% \begin{macro}{\pushHypothesis}
+%    \begin{macrocode}
+\newcommand{\pushHypothesis}[1]{\DiSittPush{#1}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\pushConclusion}
+%    \begin{macrocode}
+\newcommand{\pushConclusion}[1]{\DiSittPush{#1}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsection{Finishing off}
+%
+%    \begin{macrocode}
+%</package>
+%<*qstest>
+\LogClose{lgout}
+\stop
+%</qstest>
+%    \end{macrocode}
+%

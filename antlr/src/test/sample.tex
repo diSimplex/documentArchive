@@ -1,0 +1,101 @@
+% This is a test of the DiSiTT parser targeted at 
+% LaTeX proof style.
+
+% My primary aim is to find a clarity of mathematical presentation. In the old
+% styles, the objectives of proof checking and proof expostion were unified
+% and/or mixed in together. With explicit computational proof checking (for all
+% but the most-non-locally-finite steps (full Axiom of Choice?)), we do not
+% really need the proof checking aspects of the classical proof.  We do however
+% need a proof specification style which is easy to write in, but it is no
+% longer \emph{required} to be expositional.
+ 
+% Being able to split the proof specification from the proof expositional
+% aspects of a given proof should allow for a simpler proof specification
+% language and proof checking system.  It should also allow for a more fluid
+% expositional style.
+
+% \emph{However} the proof specification and proof expositional styles should
+% not ``fight'' each other and become simply duplications of each other.
+
+% The proof specification style will be a ``stack based'' language. This will
+% suit both the bussproof.sty (Tree) and fitch.sty (List) based layouts of
+% natural deductions. This will also make it easier to ``layout'' a proof
+% specification in LaTeX.  In particular it should be easy to intermingle both
+% the expositional ``text'' with the proof specifcational judgements so that
+% LaTeX can format the two different styles in ``one'' readable format.  Note
+% that it is highly likely that the author will refer implicitly to the
+% judgements in their expositional text. This means that the resulting
+% ``published'' document needs to keep the two contexts clear as well as
+% inter-mingled.
+
+% It is critical that we distinguish between explicit and implicit contexts.
+% For ease of use, a human user would like to specify their proofs as implicitly
+% as possible. The proof checker requires the proofs as explicitly as possible.
+% To bridge this gap we need to make extensive use of implicit type checking to
+% be able to expand the implicit specification into an explicit form.
+
+% Since, in principle, every mathematical statement will be proven using this
+% proof checker, we need tools to make it easier for a human user to search for
+% proof specifications which might be useful in constructing their given proof
+% at hand. This requires a comprehensive proof specification search engine
+% and/or browser.
+
+% A fundamental problem that needs to be addressed by this search engine, is
+% that there is no canonical form for the proof judgements. Since we are
+% addressing the full extent of mathematical proof, we can probabaly not expect
+% to have a total language (such as Agda), and so we can probably not expect to
+% have decidible normalization of the well-formed judgements. This will place a
+% greater emphasis on a search engine that can interpret the semantical meaning
+% of a judgement rather than \emph{just} the syntatic structure.
+
+% Consider the following proof:
+
+% \begin{theorem}
+% The following conditions are equivalent:
+% \begin{itemize}
+%   \item $f$ is an isomorphism
+%   \item $f$ is epic and split monic
+%   \item $f$ is monic and split epic
+% \end{itemize}
+% \end{theorem}
+
+% This proof is really a set of six possible proof specifications, one for each
+% direction of implication between the three statements.  A typcial proof of
+% this theorem would target three of these six possible proof specifications,
+% leaving the remaining three proof specifications implicitly proven (via
+% chaining the explicitly provided proof specifications). The fundamental
+% problem with this ``style'' is that these proof specifications \emph{will} be
+% required to form parts of subsequent proofs for a potentially wide range of
+% users and purposes.  This means that the implicitly proven proof
+% specifications are important to the over all proof community, even if they are
+% ``obvious'' from the point of view of this theorem.
+
+% There are two possible approaches to solve this ``problem''. We could
+% implicilty form the remaining proof specifications by chaining the existing
+% proof specifications and explicitly ``exporting'' these implicit proof
+% specifications in the exposed theory package. Alternatively we could
+% ``require'' the author to specify the complete collection of six proof
+% specifications explicitly (or essentially the same thing not provide the
+% implicit proof specifications to the greater proof community).  This explicit
+% proof specification route is simpler to ``police'' and might lead to more
+% performant proof checking. However the larger mathematical community would be
+% better served by the implicit chaining approach in the longer run.  Such
+% implicit chaining approach would have to look at performance issues.
+
+% Mathematics produces a ``prodigious'' number of concepts about which it needs
+% to discuss. The classical mathematical solution to this is to define ever more
+% complex symbols to act as explicit and well defined ``words'' or ``names'' for
+% these concepts. Once proven, a DiSiTT proof specification \emph{is} a new
+% DiSiTT rule which can be used in subsequent natural deduction proofs
+% specifications. This means that DiSiTT will need to be able to ``pattern''
+% match any and all of these symbols structures. In particular this means that
+% the DiSiTT grammar must be able to parse any and all symbols. Since LaTeX is
+% able, by definition, to typeset any and all of these symbols, in the first
+% instance the DiSiTT grammar will be able to parse LaTeX symbols syntax. The
+% DiSiTT engine must then be able to pattern match on the resulting DiSiTT
+% grammar AST.
+
+
+
+
+

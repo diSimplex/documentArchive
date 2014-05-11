@@ -1,0 +1,36 @@
+\documentclass[a4paper, openany]{amsbook}
+\usepackage{perceptisys}
+\usepackage{perceptisysChapter}
+
+\begin{document}
+\frontmatter
+\sloppy
+
+\title[Simplicial Notes]{Working notes on Simplicial structures}
+\collectionTitle{Working notes on Simplicial structures}
+\input{frontMatter}
+\subjclass[2000]{Primary unknown; Secondary unknown} %
+\keywords{Keyword one, keyword two etc.}%
+
+\def\documentPart{chapter}
+\def\documentType{book}
+\def\documentTypes{books}
+
+\begin{abstract}
+What do you get when you mix the work of.... 
+\end{abstract}
+\maketitle
+\tableofcontents
+
+\mainmatter
+
+\include{2-simplicies}
+
+\include{3-simplicies}
+
+\backmatter \appendix \def\documentPart{appendix}
+
+\bibliographystyle{amsalpha}
+\bibliography{simplicialNotes}
+
+\end{document}

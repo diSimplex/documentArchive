@@ -1,0 +1,147 @@
+
+\chapter{3-simplicies}
+
+%\noindent\input{test}\parbox{5cm}{--------}
+
+
+\begin{cTikzPicture}
+\coordinate (O) at (0,0);
+\coordinate (A) at (0,3);
+\coordinate (B) at ($ (O)!3cm!120:(A) $);
+\coordinate (C) at ($ (O)!3cm!-120:(A) $);
+\coordinate (AB) at ($ (A)!0.5!(B) $);
+\coordinate (BC) at ($ (B)!0.5!(C) $);
+\coordinate (AC) at ($ (A)!0.5!(C) $);
+\coordinate (AO) at ($ (A)!0.7!(O) $);
+\coordinate (BO) at ($ (B)!0.7!(O) $);
+\coordinate (CO) at ($ (C)!0.7!(O) $);
+\coordinate (ABO) at ($ (O)!0.6!(AB) $);
+\coordinate (BCO) at ($ (O)!0.6!(BC) $);
+\coordinate (ACO) at ($ (O)!0.6!(AC) $);
+
+\coordinate (Op) at ($ (O)!1.5!(AB) $);
+\coordinate (Ap) at ($ (Op)+(0,0.5) $);
+\coordinate (Bp) at ($ (Op)!0.5cm!120:(Ap) $);
+\coordinate (Cp) at ($ (Op)!0.5cm!-120:(Ap) $);
+\coordinate (ABp) at ($ (Ap)!0.5!(Bp) $);
+\coordinate (BCp) at ($ (Bp)!0.5!(Cp) $);
+\coordinate (ACp) at ($ (Ap)!0.5!(Cp) $);
+
+\fill (O) circle[radius=1pt];
+\fill (A) circle[radius=1pt];
+\fill (B) circle[radius=1pt];
+\fill (C) circle[radius=1pt];
+
+\fill (Ap) circle[radius=1pt];
+\fill (Bp) circle[radius=1pt];
+\fill (Cp) circle[radius=1pt];
+
+\begin{scope}[shorten >=4pt, shorten <=4pt]
+\path (A) edge[<-] (B);
+\path (B) edge[->] (C);
+\path (A) edge[->] (C);
+\path (A) edge[->] (O);
+\path (B) edge[->] (O);
+\path (C) edge[<-] (O);
+\end{scope}
+
+\begin{scope}[shorten <=2pt, shorten >=2pt]
+\path (Ap) edge[<-] (Bp);
+\path (Bp) edge[->] (Cp);
+\path (Ap) edge[->] (Cp);
+\end{scope}
+
+\begin{scope}[shorten <=3pt]
+\path (ABp) edge[-] (Op);
+\path (BCp) edge[>-]    (Op);
+\path (ACp) edge[<-] (Op);
+\end{scope}
+
+\begin{scope}
+\path (AB) edge[-, shorten <=8pt]      (ABO);
+\path (AO) edge[<-, shorten <=16pt] (ABO);
+\path (BO) edge[>-, shorten <=16pt] (ABO);
+
+\path (BC) edge[>-, shorten <=8pt]   (BCO);
+\path (BO) edge[-, shorten <=16pt]    (BCO);
+\path (CO) edge[<-, shorten <=16pt] (BCO);
+
+\path (AC) edge[<-, shorten <=8pt]   (ACO);
+\path (AO) edge[-, shorten <=16pt]    (ACO);
+\path (CO) edge[>-, shorten <=16pt] (ACO);
+\end{scope}
+
+
+\end{cTikzPicture}
+
+
+\begin{cTikzPicture}
+\coordinate (O) at (0,0);
+\coordinate (A) at (0,3);
+\coordinate (B) at ($ (O)!3cm!120:(A) $);
+\coordinate (C) at ($ (O)!3cm!-120:(A) $);
+\coordinate (AB) at ($ (A)!0.5!(B) $);
+\coordinate (BC) at ($ (B)!0.5!(C) $);
+\coordinate (AC) at ($ (A)!0.5!(C) $);
+\coordinate (AO) at ($ (A)!0.7!(O) $);
+\coordinate (BO) at ($ (B)!0.7!(O) $);
+\coordinate (CO) at ($ (C)!0.7!(O) $);
+\coordinate (ABO) at ($ (O)!0.6!(AB) $);
+\coordinate (BCO) at ($ (O)!0.6!(BC) $);
+\coordinate (ACO) at ($ (O)!0.6!(AC) $);
+
+\coordinate (Op) at ($ (O)!1.5!(AB) $);
+\coordinate (Ap) at ($ (Op)+(0,0.5) $);
+\coordinate (Bp) at ($ (Op)!0.5cm!120:(Ap) $);
+\coordinate (Cp) at ($ (Op)!0.5cm!-120:(Ap) $);
+\coordinate (ABp) at ($ (Ap)!0.5!(Bp) $);
+\coordinate (BCp) at ($ (Bp)!0.5!(Cp) $);
+\coordinate (ACp) at ($ (Ap)!0.5!(Cp) $);
+
+\fill (O) circle[radius=1pt];
+\fill (A) circle[radius=1pt];
+\fill (B) circle[radius=1pt];
+\fill (C) circle[radius=1pt];
+
+\fill (Ap) circle[radius=1pt];
+\fill (Bp) circle[radius=1pt];
+\fill (Cp) circle[radius=1pt];
+
+\begin{scope}[shorten >=4pt, shorten <=4pt]
+\path (A) edge[->] (B);
+\path (B) edge[->] (C);
+\path (A) edge[->] (C);
+\path (A) edge[->] (O);
+\path (B) edge[->] (O);
+\path (C) edge[<-] (O);
+\end{scope}
+
+\begin{scope}[shorten <=2pt, shorten >=2pt]
+\path (Ap) edge[->] (Bp);
+\path (Bp) edge[->] (Cp);
+\path (Ap) edge[->] (Cp);
+\end{scope}
+
+\begin{scope}[shorten <=3pt]
+\path (ABp) edge[-] (Op);
+\path (BCp) edge[>-]    (Op);
+\path (ACp) edge[<-] (Op);
+\end{scope}
+
+\begin{scope}
+\path (AB) edge[-, shorten <=8pt]      (ABO);
+\path (AO) edge[<-, shorten <=16pt] (ABO);
+\path (BO) edge[>-, shorten <=16pt] (ABO);
+
+\path (BC) edge[>-, shorten <=8pt]   (BCO);
+\path (BO) edge[-, shorten <=16pt]    (BCO);
+\path (CO) edge[<-, shorten <=16pt] (BCO);
+
+\path (AC) edge[<-, shorten <=8pt]   (ACO);
+\path (AO) edge[-, shorten <=16pt]    (ACO);
+\path (CO) edge[>-, shorten <=16pt] (ACO);
+\end{scope}
+
+
+\end{cTikzPicture}
+
