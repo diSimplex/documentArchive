@@ -193,7 +193,7 @@ and disitt.pdf.
 %txs\COMMENT{anEditorialComment}#n
 \newcommand{\COMMENT}[1]{\textbf{COMMENT:[} #1 \textbf{]}}
 %txs\TODO{somethingThatNeedsToBeDone}#n
-\newcommand{\TODO}[1]{\textbf{TODO: [} #1 \textbf{]}}
+\newcommand{\TODO}[1]{\textbf{TODO: [} \ifmmode\text{#1}\else#1\fi \textbf{]}}
 %    \end{macrocode}
 %     \end{macro}
 %   \end{macro}
