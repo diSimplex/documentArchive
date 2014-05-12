@@ -31,14 +31,14 @@ In order to ``understand'' our mathematics at the meta-theory level, we need to
 start exploring Plato's Playground by building the Ordinals, \Ordinal.
 
 We begin at the \emph{theory} level by positing the existence of a \emph{type},
-the Ordinals, \Ordinal and an \emph{an} object, \judgement{\zero}{\Ordinal}.
+the Ordinals, \Ordinal\ and \emph{an} object, \judgement{\zero}{\Ordinal}.
 
 \begin{deAxiom}
 \conclusion{}{\judgement{\Ordinal}{\Universe}}
 \end{deAxiom}
 
 \begin{deAxiom}
-\conclusion{}{\judgement{\zero}{\Ordinal}}
+\conclusion{}{\judgement{\zero}{\Ordinal_{\cdot}}}
 \end{deAxiom}
 
 Given an ordinal, $\alpha$, we can create a new ordinal in two distinctly
@@ -62,31 +62,32 @@ they form a totally ordered structure. To express this aspect of the Ordinals,
 we need to specify the ``arrows'', or \one-simplices, in the Ordinal structure.
 
 \begin{deAxiom}
-\hypothesis{\Gamma}{\judgement{\alpha}{\Ordinal}}
+\hypothesis{\Gamma}{\judgement{\alpha}{\Ordinal_{\cdot}}}
 \conclusion{\Gamma}{
-  \judgement{\arrow{\alpha}{\successor{\alpha}}}{\Ordinal}
+  \judgement{\arrow{\alpha}{\successor{\alpha}}}{\Ordinal_{\rightarrow}}
 }
 \end{deAxiom}
 
 \begin{deAxiom}
 \conclusion{}{
-  \judgement{\arrow{\zero}{\limitOrd{\zero}}}{\Ordinal}
+  \judgement{\arrow{\zero}{\limitOrd{\zero}}}{\arrow{\Ordinal}{\Ordinal}}
 }
 \end{deAxiom}
 
 \begin{deAxiom}
-\hypothesis{\Gamma}{\judgement{\alpha}{\Ordinal}}
+\hypothesis{\Gamma}{\judgement{\alpha}{\Ordinal_{\cdot}}}
 \conclusion{\Gamma}{
-  \judgement{\arrow{\limitOrd{\alpha}}{\limitOrd{\successor{\alpha}}}}{\Ordinal}
+  \judgement{\arrow{\limitOrd{\alpha}}{\limitOrd{\successor{\alpha}}}}{\Ordinal_{\rightarrow}}
 }
 \end{deAxiom}
 
 \begin{deAxiom}
-\hypothesis{\Gamma}{\judgement{\alpha}{\Ordinal}}
-\hypothesis{\Gamma}{\judgement{\beta}{\Ordinal}}
-\hypothesis{\Gamma}{\judgement{\arrow{\alpha}{\limitOrd{\beta}}}{\Ordinal}}
+\hypothesis{\Gamma}{\judgement{\alpha}{\Ordinal_{\cdot}}}
+\hypothesis{\Gamma}{\judgement{\beta}{\Ordinal_{\cdot}}}
+\hypothesis{\Gamma}{\judgement{\arrow{\alpha}{\successor{\alpha}}}{\Ordinal_{\rightarrow}}}
+\hypothesis{\Gamma}{\judgement{\arrow{\alpha}{\limitOrd{\beta}}}{\Ordinal_{\rightarrow}}}
 \conclusion{\Gamma}{
-  \judgement{\arrow{\successor{\alpha}}{\limitOrd{\beta}}}{\Ordinal}
+  \judgement{\arrow{\successor{\alpha}}{\limitOrd{\beta}}}{\Ordinal_{\rightarrow}}
 }
 \end{deAxiom}
 
@@ -94,58 +95,40 @@ we need to specify the ``arrows'', or \one-simplices, in the Ordinal structure.
 with objects.  That is you can not form a successor or limit-ordinal from an
 arrow!! How do we make this assumption explicit? }
 
-With the very minimal tools available to us, we would now like to show two
-things.  Firstly, that every ordinal is the ``ultimate successor'' of some
-identifible limit-ordinal, and secondly, that every ordinal has a one-simplex
-(``arrow'') directed to the ``next'' limit-ordinal.
-
-We define the ultimate successor ``function'' as follows:
+With the very minimal tools available to us, we would now like to show that
+every ordinal has a one-simplex (``arrow'') directed to the ``next''
+limit-ordinal.
 
 %\begin{deDefinition}
 \begin{deAxiom}
-\hypothesis{\Gamma}{\judgement{\alpha}{\Ordinal}}
+\hypothesis{\Gamma}{\judgement{\alpha}{\Ordinal_{\cdot}}}
 \conclusion{\Gamma}{
-  \judgement{\arrow{\limitOrd{\alpha}}{\limitOrd{\alpha}}}{\TODO{WHAT GOES HERE?}}
+  \judgement{\arrow{\limitOrd{\alpha}}{\limitOrd{\successor{\alpha}}}}{\Ordinal_{\rightarrow}}
 }
 \end{deAxiom}
 %\end{deDefinition}
 
 %\begin{deDefinition}
 \begin{deAxiom}
-\hypothesis{\Gamma}{\judgement{\alpha}{\Ordinal}}
-\hypothesis{\Gamma}{\judgement{\beta}{\Ordinal}}
-\hypothesis{\Gamma}{\judgement{\arrow{\alpha}{\successor{\alpha}}}{\Ordinal}}
-\hypothesis{\Gamma}{\judgement{\arrow{\alpha}{\limitOrd{\beta}}}{\TODO{WHAT GOES HERE?}}}
+\hypothesis{\Gamma}{\judgement{\alpha}{\Ordinal_{\cdot}}}
+\hypothesis{\Gamma}{\judgement{\beta}{\Ordinal_{\cdot}}}
+\hypothesis{\Gamma}{\judgement{\arrow{\alpha}{\successor{\alpha}}}{\Ordinal_{\rightarrow}}}
+\hypothesis{\Gamma}{\judgement{\arrow{\alpha}{\limitOrd{\beta}}}{\Ordinal_{\rightarrow}}}
 \conclusion{\Gamma}{
-  \judgement{\arrow{\successor{\alpha}}{\limitOrd{\beta}}}{\TODO{WHAT GOES HERE?}}
+  \judgement{\arrow{\successor{\alpha}}{\limitOrd{\beta}}}{\Ordinal_{\rightarrow}}
 }
 \end{deAxiom}
 %\end{deDefinition}
 
-We define the next limit ordinal function as follows:
+Aren't the above two ``definitions'' really axioms and wouldn't we have a
+stronger axiom if we could say that \judgement{ $
+\arrow{\alpha}{\limitOrd{\beta}} =
+\arrow{\arrow{\alpha}{\successor{\alpha}}}{\limitOrd{\beta}} $ }{
+\Ordinal_{\rightarrow} } which is expressing the ``fact'' that there is only
+\emph{one} arrow between any two objects. Alas to do this we need to understand
+``identity'' of objects(?) and arrows.
 
-%\begin{deDefinition}
-\begin{deAxiom}
-\hypothesis{\Gamma}{\judgement{\alpha}{\Ordinal}}
-\conclusion{\Gamma}{
-  \judgement{\arrow{\limitOrd{\alpha}}{\limitOrd{\successor{\alpha}}}}{\TODO{WHAT GOES HERE?!}}
-}
-\end{deAxiom}
-%\end{deDefinition}
-
-%\begin{deDefinition}
-\begin{deAxiom}
-\hypothesis{\Gamma}{\judgement{\alpha}{\Ordinal}}
-\hypothesis{\Gamma}{\judgement{\beta}{\Ordinal}}
-\hypothesis{\Gamma}{\judgement{\arrow{\alpha}{\successor{\alpha}}}{\Ordinal}}
-\hypothesis{\Gamma}{\judgement{\arrow{\alpha}{\limitOrd{\beta}}}{\TODO{WHAT GOES HERE?!}}}
-\conclusion{\Gamma}{
-  \judgement{\arrow{\successor{\alpha}}{\limitOrd{\beta}}}{\TODO{WHAT GOES HERE?!}}
-}
-\end{deAxiom}
-%\end{deDefinition}
-
-Finally we have the axiom:
+Finally we have the axiom \COMMENT{is this really an axiom anymore? do we need it?}:
 \newcommand{\nextLimitOrd}[1]{\ensuremath{\hat{\omega}(#1)}}
 \begin{deAxiom}
 \hypothesis{\Gamma}{\judgement{\alpha}{\Ordinal}}
