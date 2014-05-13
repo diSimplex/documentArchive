@@ -2,15 +2,14 @@
 %
 
 \documentclass[a4paper,openany]{amsbook}
-\usepackage{perceptisys}
-\usepackage{perceptisysChapter}
+\usepackage{disitt}
+\usepackage{disitt-symbols}
 
 \begin{document}
 \frontmatter
 \sloppy
 
 \title[DiSimplicial Theory]{Reality of Mathematics: Directed Simplicial Theory}
-\collectionTitle{A Mathematical Theory of Reality}
 \input{frontMatter}
 \subjclass[2010]{Primary unknown; Secondary unknown} %
 \keywords{Keyword one, keyword two etc.}%
@@ -24,6 +23,16 @@ address the question: \textit{How ``Real'' is Mathematics?}
 \mainmatter
 
 \section{Introduction}
+
+\TODO{Martin L\"of's Dependent Type Theory is the DTT of propositions.  HoTT
+(see \cite{iasUfm2013hott}) is the DTT of homotopic sets. Directed Simplicial
+Type Theory is the DTT of simplicial structures.  This means that the ``logic''
+in the fibers (see \cite{jacobs1999catLogic}) for DiSiTT is the ``logic''
+defined by an appropriate logical factorization system (see \cite[Definition
+4.3.2 on page 136]{jacobs2012coalg}). In particular, the structures at the
+``type'' ``level'' are the co-algebraic completions of the ``examples'' at the
+``type-object'' ``level''. So a DiSiTT judgement \judgement{a}{A} is that $a$ is
+an ``example'' of the co-algegra $A$.}
 
 The aim of this cycle of papers is to provide a rigorous mathematical theory of
 Reality. This first paper provides \emph{an} answer to the question: \emph{How
