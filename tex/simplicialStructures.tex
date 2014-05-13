@@ -3,24 +3,35 @@
 
 \InputIfFileExists{options}{}{}
 \documentclass[a4paper]{amsart}
-\usepackage[article]{disitt}
+\usepackage{disitt}
+\usepackage{disitt-symbols}
 
 \begin{document}
 \sloppy
 
-\title[A short title]{The full title}
-\collectionTitle{The collection title}
+\title[Simplicial Structures]{The directed topology of simplicial structures}
 \input{frontMatter}
 \subjclass[2010]{Primary unknown; Secondary unknown} %
 \keywords{Keyword one, keyword two etc.}%
 
 \begin{abstract}
-This is the abstract.
+%
+Our eventual goal is to study the topology of space-time.  At a basic 
+level, space-time is, in fact, directed rather than homogeneous. We 
+base our study of directed topology on directed simplicial structures 
+and their associated automorphisms.
+%
 \end{abstract}
 \maketitle
 \tableofcontents
 
 \section{Introduction}
+
+\TODO{Of particular importance for our work is to explore the appropriate
+logical factorization system of the classical topos of presheaves, $[
+\Cardinal^{op}, \Set ]$. See \cite[Definition 4.3.2; page 136]{jacobs2012coalg}.
+This logical factorization system provides us with the ``logic'' required for
+Directed Simplicial Type Theory. }
 
 \bibliographystyle{amsalpha}
 \bibliography{simplicialStructures}
