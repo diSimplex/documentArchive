@@ -66,3 +66,5 @@ texStyle/*.synctex.gz
 texStyle/*.pdf
 texStyle/*.lgout
 
+# jEdit artifacts to ignore
+*~
