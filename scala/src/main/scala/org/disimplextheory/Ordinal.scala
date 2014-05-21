@@ -2,6 +2,19 @@ package org.disimplextheory;
 
 import org.disimplextheory.Ordinal._
 
+/* 
+ * We use a factory pattern to ensure that there is NO overlap between 
+ * Ordinal case types. To do this we make the Natural and LargeOrdinal
+ * case class primary constructors private. This means that the Natural
+ * and LargeOrdinal companion classes need a factory (via the "apply" 
+ * method) to create the correct case class.
+ */
+ 
+// We use this PrivateOrdinal trait to dis-ambiguate overloaded apply
+// methods so that we can have private case constructors.
+// see: http://stackoverflow.com/questions/20030826/scala-case-class-private-constructor-but-public-apply-method/20031500#20031500
+trait PrivateOrdinal
+
 abstract class Ordinal {
   def suc() : Ordinal
   def omega() : Ordinal
@@ -13,20 +26,17 @@ abstract class Ordinal {
 }
 
 case class Zero() extends Ordinal {
-  def suc() = new Natural(1)
+  def suc() = Natural(1)
   def omega() = zero
   def ==(that: Ordinal) : Boolean = that match {
     case Zero() => true
-    case Natural(thatNat) => (0 == thatNat)
-    case LargeOrdinal(thatNat, thatLimitOrd) =>
-      (zero == thatLimitOrd) && (0 == thatNat)
+    case Natural(_) => false
+    case LargeOrdinal(_, _) => false
   }
   def <(that: Ordinal) : Boolean = that match {
     case Zero() => false
-    case Natural(thatNat) => (0 < thatNat)
-    case LargeOrdinal(thatNat, thatLimitOrd) => 
-      if (zero < thatLimitOrd) true
-      else (0 < thatNat)
+    case Natural(thatNat) => true
+    case LargeOrdinal(thatNat, thatLimitOrd) => true 
   }
   def +(that: Ordinal) : Ordinal = that match {
     case Zero() => zero
@@ -35,44 +45,39 @@ case class Zero() extends Ordinal {
   }
 }
 
-case class Natural protected(nat: Int) extends Ordinal {
-  def suc() = new Natural(this.nat+1)
-  def omega() = new LargeOrdinal(0, this)
+case class Natural private(nat: Int with PrivateOrdinal) extends Ordinal {
+  def suc() = Natural(this.nat+1)
+  def omega() = LargeOrdinal(0, this)
   def ==(that: Ordinal) : Boolean = that match {
-    case Zero() => (this.nat == 0)
+    case Zero() => false
     case Natural(thatNat) => (this.nat == thatNat)
-    case LargeOrdinal(thatNat, thatLimitOrd) =>
-      (zero == thatLimitOrd) && (this.nat == thatNat)
+    case LargeOrdinal(thatNat, thatLimitOrd) => false
   }
   def <(that: Ordinal) : Boolean = that match {
     case Zero() => false
     case Natural(thatNat) => (this.nat < thatNat)
-    case LargeOrdinal(thatNat, thatLimitOrd) => 
-      if (zero < thatLimitOrd) true
-      else if (thatLimitOrd < zero) false
-      else (this.nat < thatNat)
+    case LargeOrdinal(thatNat, thatLimitOrd) => true 
   }
   def +(that: Ordinal) : Ordinal = that match {
     case Zero() => this
-    case Natural(thatNat) => new Natural(this.nat + thatNat)
-    case LargeOrdinal(thatNat, thatLimitOrd) =>
-      if (zero < thatLimitOrd) that
-      else new Natural(this.nat + thatNat)
+    case Natural(thatNat) => Natural(this.nat + thatNat)
+    case LargeOrdinal(thatNat, thatLimitOrd) => that
   }
 }
 
-case class LargeOrdinal protected(nat: Int, limitOrd: Ordinal) extends Ordinal {
-  def suc() = new LargeOrdinal(this.nat+1, this.limitOrd)
-  def omega() = new LargeOrdinal(0, this)
+case class LargeOrdinal protected(nat: Int with PrivateOrdinal,
+                                  limitOrd: Ordinal) extends Ordinal {
+  def suc() = LargeOrdinal(this.nat+1, this.limitOrd)
+  def omega() = LargeOrdinal(0, this)
   def ==(that: Ordinal) : Boolean = that match {
-    case Zero() => (this.limitOrd == zero) && (this.nat == 0)
-    case Natural(thatNat) => (this.limitOrd == zero) && (this.nat == thatNat)
+    case Zero() => false
+    case Natural(thatNat) => false
     case LargeOrdinal(thatNat, thatLimitOrd) =>
       (this.limitOrd == thatLimitOrd) && (this.nat == thatNat)
   }
   def <(that: Ordinal) : Boolean = that match {
     case Zero() => false
-    case Natural(thatNat) => (this.nat < thatNat)
+    case Natural(thatNat) => false
     case LargeOrdinal(thatNat, thatLimitOrd) => 
       if (this.limitOrd < thatLimitOrd) true
       else if (thatLimitOrd < this.limitOrd) false
@@ -80,23 +85,33 @@ case class LargeOrdinal protected(nat: Int, limitOrd: Ordinal) extends Ordinal {
   }
   def +(that: Ordinal) : Ordinal = that match {
     case Zero() => this
-    case Natural(thatNat) => new LargeOrdinal(this.nat+thatNat, this.limitOrd)
+    case Natural(thatNat) => LargeOrdinal(this.nat+thatNat, this.limitOrd)
     case LargeOrdinal(thatNat, thatLimitOrd) =>
       if (this.limitOrd < thatLimitOrd) that
       else if (thatLimitOrd < this.limitOrd) this
-      else new LargeOrdinal(this.nat + thatNat, this.limitOrd)
+      else LargeOrdinal(this.nat + thatNat, 
+                        this.limitOrd + thatLimitOrd)
   }
 }
 
 object Ordinal {
-  def Ordinal(aNat: Int, anOrdinal: Ordinal) = 
-    if (anOrdinal == zero) {
-      if (aNat == 0) zero
-      else new Natural(aNat)
-    } else new LargeOrdinal(aNat, anOrdinal)
+  val zero   = new Zero()
+  val one    = Natural(1)
+  val two    = Natural(2)
+  val omega1 = LargeOrdinal(0, one)
+  val omega2 = LargeOrdinal(0, two) 
+}
 
-  val zero = new Zero()
-  val one  = new Natural(1)
-  val two  = new Natural(2)
+object Natural {
+  def apply(aNat: Int) : Ordinal = 
+    if (aNat == 0) zero
+    else new Natural(aNat.asInstanceOf[Int with PrivateOrdinal])
+}
+
+object LargeOrdinal {
+  def apply(aNat: Int, anOrdinal: Ordinal) : Ordinal = 
+    if (anOrdinal == zero) Natural(aNat)
+    else new LargeOrdinal(aNat.asInstanceOf[Int with PrivateOrdinal], 
+                          anOrdinal)
 }
 
