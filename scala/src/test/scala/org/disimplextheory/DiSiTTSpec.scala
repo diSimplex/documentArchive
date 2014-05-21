@@ -11,4 +11,5 @@ abstract class DiSiTTSpec extends
   // PartialFunctionValues with 
   // Payloads with 
   // PrivateMethodTester with
-  TryValues
+  TryValues with
+  BeforeAndAfter
