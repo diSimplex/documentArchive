@@ -23,6 +23,7 @@ abstract class Ordinal {
   def <(that: Ordinal) : Boolean
   def >(that: Ordinal) : Boolean = !(this < that) && !(this == that)
   def +(that: Ordinal) : Ordinal
+  def *(that: Ordinal) : Ordinal
 }
 
 case class Zero() extends Ordinal {
@@ -43,6 +44,7 @@ case class Zero() extends Ordinal {
     case Natural(_) => that
     case LargeOrdinal(_, _) => that
   }
+  def *(that: Ordinal) : Ordinal = zero
 }
 
 case class Natural private(nat: Int with PrivateOrdinal) extends Ordinal {
@@ -61,7 +63,12 @@ case class Natural private(nat: Int with PrivateOrdinal) extends Ordinal {
   def +(that: Ordinal) : Ordinal = that match {
     case Zero() => this
     case Natural(thatNat) => Natural(this.nat + thatNat)
-    case LargeOrdinal(thatNat, thatLimitOrd) => that
+    case LargeOrdinal(_, _) => that
+  }
+  def *(that: Ordinal) : Ordinal = that match {
+    case Zero() => zero
+    case Natural(thatNat) => Natural(this.nat * thatNat)
+    case LargeOrdinal(_, _) => that
   }
 }
 
@@ -91,6 +98,13 @@ case class LargeOrdinal protected(nat: Int with PrivateOrdinal,
       else if (thatLimitOrd < this.limitOrd) this
       else LargeOrdinal(this.nat + thatNat, 
                         this.limitOrd + thatLimitOrd)
+  }
+  def *(that: Ordinal) : Ordinal = that match {
+    case Zero() => zero
+    case Natural(thatNat) => LargeOrdinal(this.nat * thatNat, 
+                                          this.limitOrd * that)
+    case LargeOrdinal(thatNat, thatLimitOrd) =>
+      LargeOrdinal(0,zero) // TODO this is wrong!
   }
 }
 

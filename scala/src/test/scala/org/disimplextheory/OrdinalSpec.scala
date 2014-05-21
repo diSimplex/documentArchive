@@ -43,6 +43,12 @@ class OrdinalSpec extends DiSiTTSpec {
         assert(one  == (zero + one))
         assert(omega1 == (zero + omega1))
       }
+      
+      "correctly *" in {
+        assert(zero == (zero * zero))
+        assert(zero == (zero * one))
+        assert(zero == (zero * omega1))
+      }
     }
     
     "Natural" should {
@@ -74,6 +80,16 @@ class OrdinalSpec extends DiSiTTSpec {
         assert(two == (one + one))
         assert(omega1 == (one + omega1))
       }
+      
+      "correctly *" in {
+        assert(zero == (one * zero))
+        assert(one  == (one * one))
+        assert(two  == (one * two))
+        assert(Natural(4) == (two * two))
+        assert(omega1 == (one * omega1))
+        assert(omega2 == (one * omega2))
+        assert(omega1 == (two * omega1)) // CHECK
+      }
     }
     
     "LargeOrdinal" should {
@@ -99,6 +115,12 @@ class OrdinalSpec extends DiSiTTSpec {
         assert(omegaPlusOne == (omega1 + one))
         assert(omega1 == (one + omega1))
         assert(omega2 == (omega1 + omega1))
+      }
+      
+      "correctly *" in {
+        assert(zero == (omega1 * zero))
+        assert(omega1 == (omega1 * one))
+        // TODO expand!
       }
     }
   }
