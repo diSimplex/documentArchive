@@ -35,9 +35,7 @@ case class Zero() extends Ordinal {
   }
 }
 
-abstract class NonZeroOrdinal extends Ordinal 
-
-case class Natural(nat: Int) extends NonZeroOrdinal {
+case class Natural protected(nat: Int) extends Ordinal {
   def suc() = new Natural(this.nat+1)
   def omega() = new LargeOrdinal(0, this)
   def ==(that: Ordinal) : Boolean = that match {
@@ -63,7 +61,7 @@ case class Natural(nat: Int) extends NonZeroOrdinal {
   }
 }
 
-case class LargeOrdinal(nat: Int, limitOrd: Ordinal) extends NonZeroOrdinal {
+case class LargeOrdinal protected(nat: Int, limitOrd: Ordinal) extends Ordinal {
   def suc() = new LargeOrdinal(this.nat+1, this.limitOrd)
   def omega() = new LargeOrdinal(0, this)
   def ==(that: Ordinal) : Boolean = that match {
@@ -91,6 +89,12 @@ case class LargeOrdinal(nat: Int, limitOrd: Ordinal) extends NonZeroOrdinal {
 }
 
 object Ordinal {
+  def Ordinal(aNat: Int, anOrdinal: Ordinal) = 
+    if (anOrdinal == zero) {
+      if (aNat == 0) zero
+      else new Natural(aNat)
+    } else new LargeOrdinal(aNat, anOrdinal)
+
   val zero = new Zero()
   val one  = new Natural(1)
   val two  = new Natural(2)
