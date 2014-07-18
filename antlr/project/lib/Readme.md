@@ -1,3 +1,9 @@
+**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
+
+- [SBT plugins](#sbt-plugins)
+	- [sbt-antlr4](#sbt-antlr4)
+- [Adding jar based plugins (from GitHub?)](#adding-jar-based-plugins-from-github)
+
 # SBT plugins
 
 ## sbt-antlr4

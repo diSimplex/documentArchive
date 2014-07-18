@@ -1,3 +1,7 @@
+**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
+
+- [diSimplexTT4haskell](#disimplextt4haskell)
+
 diSimplexTT4haskell
 ===================
 
