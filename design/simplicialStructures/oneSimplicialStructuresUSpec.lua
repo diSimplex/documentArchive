@@ -7,12 +7,12 @@
 --]]
 
 
-disitt = require 'disitt'
+disitt = require 'disittRaw'
 local simplex = disitt.simplex
 local word    = disitt.word
 local object  = disitt.object
 
-describe("one simplicial structures", function()
+describe("RAW one simplicial structures", function()
 
   before_each(function()
     local a = object
