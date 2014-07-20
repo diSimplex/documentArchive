@@ -8,3 +8,5 @@ end
 load_recipe 'create';
 load_recipe 'texStyles';
 load_recipe 'texFonts';
+load_recipe 'ruby';
+load_recipe 'lua';
