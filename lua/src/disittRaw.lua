@@ -1,5 +1,7 @@
 -- This is the DiSitt module
 
+local pp = require 'pl.pretty'
+
 local M = {}
 
 -- need ordinals
@@ -35,13 +37,46 @@ even have the "halting problem" but we are not total since we allow for
 directed limits.
 
 --]]
-function M.simplex(values)
+
+local Simplex = {}
+
+Simplex.instances = {}
+
+function Simplex:dimension()
+  return self.myValues.n - 1
+end
+
+function Simplex:name()
+  return self.myName
+end
+
+Simplex.__index = Simplex
+Simplex.type = "Simplex"
+
+function M.simplex(aName, ...)
+  local someValues =  table.pack(...)
+  for i, v in ipairs{...} do
+    if v.type ~= "Simplex" then
+      error("Trying to created a simplex using nonsimplicies")
+    end
+    if v:dimension() ~= someValues.n-2 then
+      error("Using simplicies of the wrong dimension")
+    end
+  end
+  if Simplex.instances[aName] ~= nil then
+    return Simplex.instances[aName]
+  end
+  obj = {myName = aName, myValues = someValues }
+  setmetatable(obj, Simplex)
+  if someValues.n == 0 then
+    someValues.n = 1
+    someValues[0] = obj
+  end
+  Simplex.instances[aName] = obj
+  return obj
 end
 
 function M.word(values)
-end
-
-function M.object(values)
 end
 
 return M

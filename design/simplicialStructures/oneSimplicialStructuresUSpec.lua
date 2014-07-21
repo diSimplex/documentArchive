@@ -2,44 +2,53 @@
 
  This is an initial sketch of an interface to oneSimplicialStructures.
 
- WARNING: I do NOT know how to do this!  ;-(
-
 --]]
-
 
 disitt = require 'disittRaw'
 local simplex = disitt.simplex
 local word    = disitt.word
 local object  = disitt.object
 
-describe("RAW one simplicial structures", function()
+describe("RAW zero simplicies", function()
 
-  before_each(function()
-    local a = object
-    local b = object
-    local c = object
-    local d = object
+  it("should be zero simplex", function()
+    local a = simplex(10)
 
-    local f = word{ 
-      simplex{ a, b }
-    }
-
-    local g = word{
-      simplex{ c, d }
-    }
-
-    local bEQc = word {
-      simplex{ b, c }
-    }
-
-    -- here be dragons!
-    -- local fg = 0
-    -- what do we mean by composition?!
+    assert.is_equal(a:dimension(), 0)
+    assert.is_equal(a:name(), 10)
   end)
 
-  it("should have zero simplicies", function()
-    
-    assert.is_true(false)
+  it("two zero simplicies with the same name should be identical", function()
+    local a = simplex(10)
+    local b = simplex(10)
+
+    assert.are.equal(a, b)
+  end)
+
+end)
+
+describe("RAW one simplicies", function()
+
+  it("should be a one simplex", function()
+    local a = simplex(10)
+    local b = simplex(12)
+    local c = simplex(11, a, b)
+
+    assert.is.equal(c:name(), 11)
+    assert.is.equal(c:dimension(), 1)
+  end)
+
+  it("one simplicies should only contain zero simplicies", function()
+    local a = simplex(10)
+    local b = simplex(12)
+    local c = simplex(11, a, b)
+
+    assert.has_error(function() simplex(13, a, c) end)
+  end)
+
+  it("one simplicies can only be built out of zero simplicies", function()
+
+    assert.has_error(function() simplex(14, 'silly') end)
 
   end)
 
