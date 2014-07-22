@@ -2,14 +2,6 @@
 # Git files to ignore #
 .gitignore
 
-# Java gitignore (from GitHub) #
-*.class
-
-# Package Files #
-*.jar
-*.war
-*.ear
-
 # LaTeX files to ignore #
 *.acn
 *.acr
@@ -53,18 +45,12 @@ tmp
 gitHeadInfo.gin
 gitLogInfo.tex
 
-# scala artifacts to ignore
-.cache
-*.class
-
-# sbt eclipse
-target
-.ivyCache
-
 # other
 texStyle/*.synctex.gz
 texStyle/*.pdf
 texStyle/*.lgout
 
-# jEdit artifacts to ignore
-*~
+# lua file to ignore
+lua/doc
+*.so
+*.o
