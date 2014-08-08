@@ -4,4 +4,7 @@ print(package.cpath)
 
 local ds = require 'diSimplexLuaC'
 print( ds )
-print( ds.new() )
+disitt = ds.new()
+print( disitt )
+uni1 = disitt:universe(1)
+print( uni1 )

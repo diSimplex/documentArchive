@@ -4,17 +4,12 @@
 
 --]]
 
-disitt = require 'disittRaw'
-local simplex  = disitt.simplex
-local universe = disitt.universe
-local word     = disitt.word
-local object   = disitt.object
+local disitt = (require 'diSimplexLuaC').new()
 
 describe("RAW zero simplicies", function()
 
   it("should be zero simplex", function()
-    local a = simplex({})
-
+    local a = disitt:simplex({})
     assert.is_equal(a:dimension(), 0)
   end)
 
@@ -23,9 +18,9 @@ end)
 describe("RAW one simplicies", function()
 
   it("should be a one simplex", function()
-    local a = simplex({})
-    local b = simplex({})
-    local c = simplex({a, b})
+    local a = disitt:simplex({})
+    local b = disitt:simplex({})
+    local c = disitt:simplex({a, b})
 
     assert.is.equal(c:dimension(), 1)
     assert.is.equal(c:side(0), a)
@@ -34,18 +29,18 @@ describe("RAW one simplicies", function()
   end)
 
   it("one simplicies should only contain zero simplicies", function()
-    local a = simplex({})
-    local b = simplex({})
-    local c = simplex({a, b})
+    local a = disitt:simplex({})
+    local b = disitt:simplex({})
+    local c = disitt:simplex({a, b})
 
-    assert.has_error(function() simplex({a, c}) end)
+    assert.has_error(function() disitt:simplex({a, c}) end)
   end)
 
   it("one simplicies can be built out of an array", function()
-    local a = simplex({})
-    local b = simplex({})
+    local a = disitt:simplex({})
+    local b = disitt:simplex({})
     simplicies = { a, b }
-    local c = simplex(simplicies)
+    local c = disitt:simplex(simplicies)
 
     assert.is.equal(c:dimension(), 1)
     assert.is.equal(c:side(0), a)
@@ -55,7 +50,7 @@ describe("RAW one simplicies", function()
 
   it("one simplicies can only be built out of zero simplicies", function()
 
-    assert.has_error(function() simplex({'silly'}) end)
+    assert.has_error(function() disitt:simplex({'silly'}) end)
 
   end)
 
@@ -64,19 +59,20 @@ end)
 describe("universe", function()
 
   it("should have a unique zero simplex", function()
-    local uni0 = universe(0)
+    local uni0 = disitt:universe(0)
     assert.is.truthy(uni0)
     assert.is.equal(uni0:dimension(), 0)
-    assert.is.equal(uni0, universe(0))
-    assert.is.equal(uni0:side(0), nil)
+    assert.is.equal(uni0, disitt:universe(0))
+    local uniM1 = disitt:universe(-1)
+    assert.is.equal(uni0:side(0), uniM1)
   end)
 
   it("should have a unique one simplex", function()
-    local uni0 = universe(0)
-    local uni1 = universe(1)
+    local uni0 = disitt:universe(0)
+    local uni1 = disitt:universe(1)
     assert.is.truthy(uni1)
     assert.is.equal(uni1:dimension(), 1)
-    assert.is.equal(uni1, universe(1))
+    assert.is.equal(uni1, disitt:universe(1))
     assert.is.equal(uni1:side(0), uni0)
     assert.is.equal(uni1:side(1), uni0)
   end)

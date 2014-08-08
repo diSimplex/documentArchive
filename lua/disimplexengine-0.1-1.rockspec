@@ -24,7 +24,11 @@ dependencies = {
 build = {
   type = "builtin",
   modules = {
-    diSimplexLuaC = { "csrc/diSimplex.c", "csrc/disitt.c" }
+    diSimplexLuaC = { 
+      "csrc/diSimplexEngine/diSimplexEngine.c",
+      "csrc/diSimplexLua.c",
+      "csrc/diSiTTLua.c"
+    }
   }
 }
 

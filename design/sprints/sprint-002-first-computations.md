@@ -16,11 +16,13 @@
 # Sprint 002 first computations
 
 * Started: 2014/07/18
-* Ends: 2014/07/25
+* Paused: 2014/08/08  
 
 ## Tasks
 
-1. Start exploring syntax and semantics of computation in DiSiTT
+1. Start building simple simplicial structures complete with the universe.
+
+1. Start exploring syntax and semantics of computation in DiSiTT (delayed).
 
 ## Stories/Features
 
