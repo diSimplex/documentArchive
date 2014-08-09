@@ -20,9 +20,19 @@
 
 ## Tasks
 
-1. Start building simple simplicial structures complete with the universe.
+1. Start building simple simplicial structures complete with the 
+universe.
 
-1. Start exploring syntax and semantics of computation in DiSiTT (delayed).
+1. Explore the theory of definitional objects defined by (open?) 
+covers. Focus on the simplicial structure of an (open?) cover.
+
+1. Understand the simplicial structure of a (bi)similarity.
+
+1. Explore patterns build out of definitional objects as the base of 
+Jacob's (logical) fibrations.
+
+1. Start exploring syntax and semantics of computation in DiSiTT 
+(delayed).
 
 ## Stories/Features
 
