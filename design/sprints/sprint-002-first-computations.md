@@ -17,6 +17,8 @@
 
 * Started: 2014/07/18
 * Paused: 2014/08/08  
+* Restarted: 2014/09/01
+* Ended: 2014/09/19
 
 ## Tasks
 
@@ -101,4 +103,13 @@ the base category.
 
 ## Wrap-up
 
-None at the moment.
+Essentially sketched basic structure of engine.
+
+Worked on a number of distinctly unrelated projects, which required 
+repeated restarts, which provided distinct distractions.
+
+The current work has transitioned to a study of the underlying 
+mathematical *meaning* of what is being constructed.
+
+**So** this work is transitioning to sprint-003.
+
