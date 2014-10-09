@@ -1,7 +1,8 @@
-#ifndef DISITT_H
-#define DISITT_H
+#ifndef DISITTLUA_H
+#define DISITTLUA_H
 
-#include "diSimplexEngine/diSimplexEngine.h"
+#include "diSimplexEngine/diSiTT.h"
+#include "diSimplexEngine/diSimplex.h"
 #include "lua.h"
 #include "lauxlib.h"
 

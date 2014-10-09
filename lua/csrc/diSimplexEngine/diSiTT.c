@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "diSimplexEngine.h"
+#include "diSiTT.h"
 
 // Initialize a DiSiTT instance
 void dse_init_disitt(DiSiTT *disitt) {
@@ -10,7 +10,7 @@ void dse_init_disitt(DiSiTT *disitt) {
 // Ensure that a given dimensionn (and all smaller dimensions)
 // have been added to this DiSiTT's collection of instances
 //
-void instances_ensure_dimension(DiSiTT *disitt,
+void diSiTT_ensure_dimension(DiSiTT *disitt,
                                 dimension_t newDimension) {
   if (newDimension < 0) newDimension = 0;
 
@@ -23,7 +23,7 @@ void instances_ensure_dimension(DiSiTT *disitt,
 
   // check to see if we need to add lower dimensions
   if ( numDimensions < newDimension ) {
-    instances_ensure_dimension(disitt, newDimension - 1);
+    diSiTT_ensure_dimension(disitt, newDimension - 1);
   }
 
   // now add this dimension
@@ -53,11 +53,11 @@ void instances_ensure_dimension(DiSiTT *disitt,
 }
 
 // Check that a give simplex exists
-bool instances_simplex_exists(DiSiTT     *disitt,
+bool diSiTT_simplex_exists(DiSiTT     *disitt,
                               dimension_t dimension,
                               simplex_id  simplexId) {
 
-  if (!instances_dimension_exists(disitt, dimension)) {
+  if (!diSiTT_dimension_exists(disitt, dimension)) {
     return 0;
   }
 
@@ -75,12 +75,12 @@ bool instances_simplex_exists(DiSiTT     *disitt,
 }
 
 // Get the next available empty simplex for a given dimension
-simplex_id instances_get_empty_simplex(DiSiTT     *disitt,
+simplex_id diSiTT_get_empty_simplex(DiSiTT     *disitt,
                                        dimension_t dimension){
   // normalize the dimension
   if (dimension < 0) dimension = 0;
 
-  instances_ensure_dimension(disitt, dimension);
+  diSiTT_ensure_dimension(disitt, dimension);
 
   // get the simplex instances for this dimension
   DynArray *instances =
@@ -118,12 +118,12 @@ simplex_id instances_get_empty_simplex(DiSiTT     *disitt,
 
 // Return the given simplex to the pool of avaialble empty simpleices
 // for a given dimension
-void instances_return_simplex(DiSiTT     *disitt,
+void diSiTT_return_simplex(DiSiTT     *disitt,
                               dimension_t dimension,
                               simplex_id  oldSimplexId){
 
   // make sure this simplex actually exists
-  if (!instances_simplex_exists(disitt, dimension, oldSimplexId)) {
+  if (!diSiTT_simplex_exists(disitt, dimension, oldSimplexId)) {
     return;
   }
 
@@ -155,100 +155,3 @@ void instances_return_simplex(DiSiTT     *disitt,
   *linkedListHead = oldSimplexId;
 }
 
-// Store the side into the simplex provided
-// sides are zero relative index as in traditional simplicial practice
-// BUT the zeroth side represents the "definitional" simplex
-void simplex_store_side(DiSiTT *disitt,
-                        dimension_t dimension,
-                        simplex_id  parentSimplexId,
-                        int         sideNumber,
-                        simplex_id  sideSimplexId){
-  // make sure this simplicies actually exist
-  if (!instances_simplex_exists(disitt, dimension, parentSimplexId)) return;
-  if (!instances_simplex_exists(disitt, dimension-1, sideSimplexId)) return;
-
-  // make sure that the requested side exists
-  if (dimension < sideNumber) return;
-  if (sideNumber < 0) return;
-
-  // normalize the dimension
-  if (dimension < 0) dimension = 0;
-
-  // get the simplex instances for this dimension
-  DynArray *instances =
-    *DynArray_getElementPtr(disitt->instances, dimension, DynArray*);
-
-  // get the parent diSimplex object
-  DiSimplexObj *parentSimplexObj =
-    DynArray_getElementPtr(instances, parentSimplexId, DiSimplexObj);
-
-  // store the side (note we add one to allow for the definitional simplex)
-  parentSimplexObj->side[sideNumber+1] = sideSimplexId;
-}
-
-// Get the requested side
-// sides are zero relative index as in traditional simplicial practice
-// BUT the zeroth side represents the "definitional" simplex
-simplex_id simplex_get_side(DiSiTT *disitt,
-                            dimension_t dimension,
-                            simplex_id parentSimplexId,
-                            int sideNumber) {
-
-  // make sure this simplex actually exists
-  if (!instances_simplex_exists(disitt, dimension, parentSimplexId)) return 0;
-
-  // make sure that the requested side exists
-  if (dimension < sideNumber) return 0;
-  if (sideNumber < 0) return 0;
-
-  // normalize the dimension
-  if (dimension < 0) dimension = 0;
-
-  // get the simplex instances for this dimension
-  DynArray *instances =
-    *DynArray_getElementPtr(disitt->instances, dimension, DynArray*);
-
-  // get the parent diSimplex object
-  DiSimplexObj *parentSimplexObj =
-    DynArray_getElementPtr(instances, parentSimplexId, DiSimplexObj);
-
-  // store the side (note we add one to allow for the definitional simplex)
-  return parentSimplexObj->side[sideNumber+1];
-//  return 0;
-}
-
-void simplex_toString(DiSiTT *disitt,
-                      dimension_t dimension,
-                      simplex_id simplex_id,
-                      char *buffer,
-                      size_t bufferSize) {
-
-  if (bufferSize < 1) return;
-
-  buffer[0] = 0;
-
-  char listBuf[250];
-  listBuf[0] = 0;
-
-  if (instances_simplex_exists(disitt, dimension, simplex_id)) {
-    char numberBuf[20];
-    int numSides = dimension + 1;
-    if (10 < numSides) numSides = 10;
-    int i = 0;
-    for( ; i < numSides; i++) {
-      numberBuf[0] = 0;
-      sprintf(numberBuf, "%u ", simplex_get_side(disitt,
-                                                 dimension,
-                                                 simplex_id,
-                                                 i));
-      strncat(listBuf, numberBuf, 20);
-    }
-  }
-
-  snprintf(buffer, bufferSize,
-           "diSimplex(%p, %d, %d, [ 0 ][ %s])",
-           disitt,
-           dimension,
-           simplex_id,
-           listBuf);
-}

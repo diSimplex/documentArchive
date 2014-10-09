@@ -140,6 +140,23 @@ semantics](http://en.wikibooks.org/wiki/Haskell/Denotational_semantics)
 in particular [Strict and Non-Strict Semantics == lazy 
 evaluation](http://en.wikibooks.org/wiki/Haskell/Denotational_semantics#Strict_and_Non-Strict_Semantics)
 
+* [Function-level 
+programming](http://en.wikipedia.org/wiki/Function-level_programming) 
+is an example of a non-Lisp, non-ML, non-Haskell functional type of 
+language. See John Backus' 1977 Turing award lecture [Can Programming 
+Be Liberated from the von Neumann Style? A Functional Style and Its 
+Algebra of 
+Programs](http://web.stanford.edu/class/cs242/readings/backus.pdf) (and 
+[Dijkstra's 
+review](https://www.cs.utexas.edu/users/EWD/transcriptions/EWD06xx/EWD692.html)). 
+See also [The FL Project: The Design of a Functional 
+Language](http://theory.stanford.edu/~aiken/publications/trs/FLProject.pdf). 
+The *most* ***important*** point is that FP/FL tries to build a *simple* 
+functional language which has a specific Denotational model. 
+Unfortunately it is a strcit rather than a lazy language, but many of 
+the ideas are helpful in understanding the overall problem.
+
+
 ### What is the "size" of a constructive mathematics which allows for coalgebraicly defined (imprecise) reals?
 
 * [locally presentable 

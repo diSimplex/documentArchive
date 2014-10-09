@@ -1,5 +1,5 @@
-#ifndef DISIMPLEXENGINE_H
-#define DISIMPLEXENGINE_H
+#ifndef DISITT_H
+#define DISITT_H
 
 #include "dynArray.h"
 
@@ -25,6 +25,7 @@ Universe simplex of that dimension.
 typedef struct DiSiTTStruct {
   DynArray *instances;
   DynArray *emptySimplicies;
+  DynArray *structures;
 } DiSiTT;
 
 // Initialize a DiSiTT instance
@@ -52,48 +53,34 @@ typedef struct DiSimplexRefStruct {
   simplex_id   simplex;
 } DiSimplexRef;
 
-#define instances_dimension_exists(disitt, dimension) \
+
+typedef struct DiStructureObjStruct {
+
+} DiStructureObj;
+
+
+#define diSiTT_dimension_exists(disitt, dimension) \
   ( dimension < (DynArray_len(disitt->instances)))
 
 // Ensure that a given dimensionn (and all smaller dimensions)
 // have been added to this DiSiTT's collection of instances
 //
-extern void instances_ensure_dimension(DiSiTT *disitt,
-                                       dimension_t newDimension);
+extern void diSitt_ensure_dimension(DiSiTT *disitt,
+                                    dimension_t newDimension);
 
 // Check that a give simplex exists
-extern bool instances_simplex_exists(DiSiTT *disitt,
-                                     dimension_t dimension,
-                                     simplex_id  simplex);
+extern bool diSiTT_simplex_exists(DiSiTT *disitt,
+                                  dimension_t dimension,
+                                  simplex_id  simplex);
 
 // Get the next available empty simplex for a given dimension
-extern simplex_id instances_get_empty_simplex(DiSiTT     *disitt,
-                                              dimension_t dimension);
+extern simplex_id diSiTT_get_empty_simplex(DiSiTT     *disitt,
+                                           dimension_t dimension);
 
 // Return the given simplex to the pool of avaialble empty simpleices
 // for a given dimension
-extern void instances_return_simplex(DiSiTT     *disitt,
-                                     dimension_t dimension,
-                                     simplex_id  simplex);
-
-// Store the side into the simplex provided
-extern void simplex_store_side(DiSiTT *disitt,
-                               dimension_t dimensionOfSimplex,
-                               simplex_id  parentSimplex,
-                               int         sideNumber,
-                               simplex_id  sideSimplex);
-
-// Return the requested side
-extern simplex_id simplex_get_side(DiSiTT *disitt,
-                                   dimension_t dimensionOfSimplex,
-                                   simplex_id  parentSimplex,
-                                   int         sideNumber);
-
-// provide a human readable output of the given simplex
-extern void simplex_toString(DiSiTT *disitt,
-                             dimension_t dimension,
-                             simplex_id simplex_id,
-                             char *buffer,
-                             size_t bufferSize);
+extern void diSiTT_return_simplex(DiSiTT     *disitt,
+                                  dimension_t dimension,
+                                  simplex_id  simplex);
 
 #endif

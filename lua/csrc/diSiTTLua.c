@@ -7,8 +7,8 @@ The DiSiTT module provides the core of the diSimplexEngine.
 #include "diSiTTLua.h"
 #include "diSimplexLua.h"
 
-#define DISITT_TABLE_NAME	"diSimplexEngine.DiSiTT"
-#define checkForDiSiTT(L, index) (void*)luaL_checkudata((L), (index), DISITT_TABLE_NAME)
+#define DISITTLUA_TABLE_NAME	"diSimplexEngine.DiSiTT"
+#define checkForDiSiTT(L, index) (void*)luaL_checkudata((L), (index), DISITTLUA_TABLE_NAME)
 #define checkDiSiTT(L)	checkForDiSiTT(L, 1)
 
 ///
@@ -16,11 +16,11 @@ The DiSiTT module provides the core of the diSimplexEngine.
 // @function new
 // @return A new instance of a diSiTT object.
 //
-static int disitt_new(lua_State *L) {
+static int diSiTTLua_new(lua_State *L) {
   DiSiTT *disitt = (DiSiTT *)lua_newuserdata(L, sizeof(DiSiTT));
   dse_init_disitt(disitt);
 
-  luaL_getmetatable(L, DISITT_TABLE_NAME);
+  luaL_getmetatable(L, DISITTLUA_TABLE_NAME);
   lua_setmetatable(L, -2);
   return 1;
 }
@@ -30,7 +30,7 @@ static int disitt_new(lua_State *L) {
 // @function __tosting
 // @return[1] A string representation of the diSiTT object.
 //
-static int disitt_toString(lua_State *L) {
+static int diSiTTLua_toString(lua_State *L) {
   void *disitt = checkDiSiTT(L);
   lua_pushfstring(L, "DiSiTT(%p)", disitt);
   return 1;
@@ -42,20 +42,20 @@ static int disitt_toString(lua_State *L) {
 // @param dimension The dimension of the requested universe simplex.
 // @return[1] The requested universe simplex
 //
-static int disitt_universe(lua_State *L) {
+static int diSiTTLua_universe(lua_State *L) {
   DiSiTT *disitt = checkDiSiTT(L);
   int unCheckedDimension = luaL_checkint(L, 2);
   luaL_argcheck(L, -1 <= unCheckedDimension, 2, "dimensions must be greater than or equal to -1");
   dimension_t dimension = (dimension_t)unCheckedDimension;
-  instances_ensure_dimension(disitt, dimension);
-  return diSimplex_return_simplex(L, disitt, dimension, 0);
+  diSiTT_ensure_dimension(disitt, dimension);
+  return diSimplexLua_return_simplex(L, disitt, dimension, 0);
 }
 
 ///
 // Return a new diSimplex containing the given sides
 // @param sides an array of diSimplex references of the correct dimension and number.
 // @return[1] a diSimplex reference to the new diSimplex.
-static int disitt_simplex(lua_State *L) {
+static int diSiTTLua_simplex(lua_State *L) {
   DiSiTT *disitt = checkDiSiTT(L);
   // the second argument is a array(table) of diSimplicies
   luaL_checktype(L, 2, LUA_TTABLE);
@@ -68,9 +68,9 @@ static int disitt_simplex(lua_State *L) {
   dimension_t dimensionOfSides   = dimensionOfSimplex - 1;
   if ( dimensionOfSides < 0 ) dimensionOfSides = 0;
 
-  instances_ensure_dimension(disitt, dimensionOfSimplex);
+  diSiTT_ensure_dimension(disitt, dimensionOfSimplex);
   simplex_id newSimplexId =
-    instances_get_empty_simplex(disitt, dimensionOfSimplex);
+    diSiTT_get_empty_simplex(disitt, dimensionOfSimplex);
 
   // inspect each side
   int i = 1;
@@ -84,7 +84,7 @@ static int disitt_simplex(lua_State *L) {
     // check the validity of the side
     if (aSide->disitt != disitt) {
       // return the un-used simplex
-      instances_return_simplex(disitt,
+      diSiTT_return_simplex(disitt,
                                dimensionOfSimplex,
                                newSimplexId);
       // raise an error!
@@ -93,18 +93,18 @@ static int disitt_simplex(lua_State *L) {
     // check the dimension
     if (aSide->dimension != dimensionOfSides) {
       // return the un-used simplex
-      instances_return_simplex(disitt,
+      diSiTT_return_simplex(disitt,
                                dimensionOfSimplex,
                                newSimplexId);
       // raise an error!
       luaL_argerror(L, 2, "dimension of all sides must be two less than the number of sides in the simplex");
     }
     // check that the side simplex exists
-    if (!instances_simplex_exists(aSide->disitt,
+    if (!diSiTT_simplex_exists(aSide->disitt,
                                   aSide->dimension,
                                   aSide->simplex)) {
       // return the un-used simplex
-      instances_return_simplex(disitt,
+      diSiTT_return_simplex(disitt,
                                dimensionOfSimplex,
                                newSimplexId);
       // raise an error!
@@ -120,21 +120,32 @@ static int disitt_simplex(lua_State *L) {
                        i-1,
                        aSide->simplex);
   }
-  return diSimplex_return_simplex(L,
+  return diSimplexLua_return_simplex(L,
                                   disitt,
                                   dimensionOfSimplex,
                                   newSimplexId);
 }
 
-static struct luaL_Reg disitt_functions[] = {
-  {"new", disitt_new},
+///
+
+// Return a new diSimplexStructure containing the given sides
+// @return[1] a new diSimplexStructure.
+static int diSiTTLua_structure(lua_State *L) {
+  DiSiTT *disitt = checkDiSiTT(L);
+
+  return diStructureLua_new(L, disitt);
+}
+
+static struct luaL_Reg diSiTTLua_functions[] = {
+  {"new", diSiTTLua_new},
   {NULL, NULL}
 };
 
-static struct luaL_Reg disitt_meta_functions[] = {
-  {"__tostring", disitt_toString},
-  {"universe",   disitt_universe},
-  {"simplex",    disitt_simplex},
+static struct luaL_Reg diSiTTLua_meta_functions[] = {
+  {"__tostring", diSiTTLua_toString},
+  {"universe",   diSiTTLua_universe},
+  {"simplex",    diSiTTLua_simplex},
+  {"structure",  diSiTTLua_structure},
   {NULL, NULL}
 };
 
@@ -142,16 +153,17 @@ static struct luaL_Reg disitt_meta_functions[] = {
 //
 int luaopen_diSimplexLuaC (lua_State *L) {
 
-  diSimplex_init(L);
+  diSimplexLua_init(L);
+  diStructureLua_init(L);
 
   // create and setup a new metatable for the DiSiTT system
-  luaL_newmetatable(L, DISITT_TABLE_NAME);
+  luaL_newmetatable(L, DISITTLUA_TABLE_NAME);
   lua_pushvalue(L, -1);            // duplicates the metatable
   lua_setfield(L, -2, "__index");  // set metatable.__index = metatable
 
-  luaL_setfuncs(L, disitt_meta_functions, 0);
+  luaL_setfuncs(L, diSiTTLua_meta_functions, 0);
 
-  luaL_newlib(L, disitt_functions);
+  luaL_newlib(L, diSiTTLua_functions);
   return 1;
 }
 
