@@ -113,6 +113,7 @@ task :cookPreConfig => 'lua:cookPreConfig'
 #
 # All RSpec specification tests
 #
+desc 'Run all specifications'
 task :specs => [ 
   'lua:cspecs',
   'lua:uspecs', 
@@ -121,6 +122,7 @@ task :specs => [
   'lua:ispecs'
 ]
 #
+desc 'List all specifications'
 task 'ls:specs' => [ 
   'lua:lsCSpecs',
   'lua:lsUSpecs',
