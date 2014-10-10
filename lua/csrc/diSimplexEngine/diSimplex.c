@@ -1,6 +1,16 @@
 #include <stdio.h>
 #include "diSimplex.h"
 
+///
+// Return true if this diSimplex still exists
+// @param diSimplex this diSimplex
+// @return[1] true if this diSimplex exists; false otherwise
+int diSimplex_exists(DiSimplexRef *diSimplex) {
+  return diSiTT_simplex_exists(diSimplex->diSiTT,
+                               diSimplex->dimension,
+                               diSimplex->simplex);
+}
+
 // Store the side into the simplex provided
 // sides are zero relative index as in traditional simplicial practice
 // BUT the zeroth side represents the "definitional" simplex

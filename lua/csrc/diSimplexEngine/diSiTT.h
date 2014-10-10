@@ -26,6 +26,7 @@ typedef struct DiSiTTStruct {
   DynArray *instances;
   DynArray *emptySimplicies;
   DynArray *structures;
+  DynArray *emptyStructures;
 } DiSiTT;
 
 // Initialize a DiSiTT instance
@@ -48,14 +49,16 @@ typedef struct DiSimplexObjStruct {
   (size_t)(sizeof(DiSimplexObj) + ((dimension)+1)*sizeof(simplex_id))
 
 typedef struct DiSimplexRefStruct {
-  DiSiTT      *disitt;
+  DiSiTT      *diSiTT;
   dimension_t  dimension;
   simplex_id   simplex;
 } DiSimplexRef;
 
 
 typedef struct DiStructureObjStruct {
-
+  DiSiTT   *diSiTT;
+  DynArray *dimensions;
+  DiSimplexRef curSimplex;
 } DiStructureObj;
 
 

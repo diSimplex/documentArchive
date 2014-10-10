@@ -5,29 +5,29 @@ A structure of directed simplicies.
 
 #include "diStructureLua.h"
 
-
-///
-// Construct and return a new diStructure in the disitt DiSiTT.
-// @param disitt the DiSiTT universe in which this structure exists
-// @return[1] a new diStructure
-int diStructureLua_new(lua_State *L,
-                       DiSiTT *disitt) {
-
-  DiStructureObj *diStructure =
-    (DiStructureObj *)lua_newuserdata(L, sizeof(DiStructureObj));
-
-  luaL_getmetatable(L, DISTRUCTURE_TABLE_NAME);
-  lua_setmetatable(L, -2);
-
-  return 1;
-}
-
 ///
 // Add an existing simplex of a given dimension to this structure
 // @param simplex
 // @return[1] true if simplex added
 static int diStructureLua_add(lua_State *L){
+  DiStructureObj *diStructure = checkDiStructure(L);
+  DiSimplexRef   *diSimplex   = checkForDiSimplex(L, 2);
+  // ensure the diStructure exists
+  if (!diStructure_exists(diStructure)) {
+    luaL_argerror(L, 1, "the specified diStructure does not exist");
+  }
+  // ensure the diSimplex exists
+  if (!diSimplex_exists(diSimplex)) {
+    luaL_argerror(L, 2, "the specified diSimplex does not exist");
+  }
+  // ensure diStructure and diSimplex are in the same diSiTT
+  if (diStructure->diSiTT != diSimplex->diSiTT) {
+    luaL_argerror(L, 2, "the specified diSimplex must be in the same DiSiTT as the diStructure");
+  }
+  // add the diSimplex to the diStructure
+  lua_pushboolean(L, diStructure_add(diStructure, diSimplex));
 
+  return 1;
 }
 
 ///
@@ -45,6 +45,30 @@ static int diStructureLua_size(lua_State *L){
 }
 
 ///
+// Return the requested diSimplex in the ordered set of simplicies
+// of a given dimension.
+// @param dimension
+// @param itemNumber (zero relative)
+// @return[1] DiSimplexRef
+static int diStructureLua_simplex(lua_State *L){
+  DiStructureObj *diStructure = checkDiStructure(L);
+  int unCheckedDimension = luaL_checkint(L, 2);
+  luaL_argcheck(L, -1 <= unCheckedDimension, 2, "dimensions must be greater than or equal to -1");
+  dimension_t dimension = (dimension_t)unCheckedDimension;
+
+  int unCheckedItemNumber = luaL_checkint(L, 3);
+  luaL_argcheck(L, -1 < unCheckedItemNumber, 3, "simplex number must be greater than or equal to 0");
+  size_t itemNumber = (size_t)unCheckedItemNumber;
+
+  return diSimplexLua_return_simplex(L,
+                                     diStructure->diSiTT,
+                                     dimension,
+                                     diStructure_get_simplex_number(diStructure,
+                                                                    dimension,
+                                                                    itemNumber));
+}
+
+///
 // Provide a string representation of the diStructure object.
 // @function __tosting
 // @return[1] A string representation of the diStructure object.
@@ -59,6 +83,7 @@ static int diStructureLua_toString(lua_State *L) {
 static struct luaL_Reg diStructureLua_meta_functions[] = {
   {"add", diStructureLua_add},
   {"size", diStructureLua_size},
+  {"simplex", diStructureLua_simplex},
   {"__tostring", diStructureLua_toString},
   {NULL, NULL}
 };

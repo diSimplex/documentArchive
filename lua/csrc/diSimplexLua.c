@@ -17,7 +17,7 @@ int diSimplexLua_return_simplex(lua_State *L,
   DiSimplexRef *diSimplex =
     (DiSimplexRef *)lua_newuserdata(L, sizeof(DiSimplexRef));
 
-  diSimplex->disitt    = disitt;
+  diSimplex->diSiTT    = disitt;
   diSimplex->dimension = dimension;
   diSimplex->simplex   = simplex;
 
@@ -35,7 +35,7 @@ static int diSimplexLua_equal(lua_State *L) {
   DiSimplexRef *myDiSimplex    = checkDiSimplex(L);
   DiSimplexRef *otherDiSimplex = checkForDiSimplex(L, 2);
   bool isEqual = true;
-  if (myDiSimplex->disitt    != otherDiSimplex->disitt)    isEqual = false;
+  if (myDiSimplex->diSiTT    != otherDiSimplex->diSiTT)    isEqual = false;
   if (myDiSimplex->dimension != otherDiSimplex->dimension) isEqual = false;
   if (myDiSimplex->simplex   != otherDiSimplex->simplex)   isEqual = false;
   lua_pushboolean(L, isEqual);
@@ -53,7 +53,7 @@ static int diSimplexLua_toString(lua_State *L) {
   char strBuf[500];
   strBuf[0] = 0;
 
-  simplex_toString(diSimplex->disitt,
+  simplex_toString(diSimplex->diSiTT,
                    diSimplex->dimension,
                    diSimplex->simplex,
                    strBuf, 500);
@@ -80,7 +80,7 @@ static int diSimplexLua_dimension(lua_State *L) {
 static int diSimplexLua_side(lua_State *L) {
   DiSimplexRef *diSimplex = checkDiSimplex(L);
 
-  DiSiTT     *disitt    = diSimplex->disitt;
+  DiSiTT     *disitt    = diSimplex->diSiTT;
   dimension_t dimension = diSimplex->dimension;
   simplex_id  simplex   = diSimplex->simplex;
 

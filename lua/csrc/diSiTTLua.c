@@ -6,6 +6,7 @@ The DiSiTT module provides the core of the diSimplexEngine.
 
 #include "diSiTTLua.h"
 #include "diSimplexLua.h"
+#include "diStructureLua.h"
 
 #define DISITTLUA_TABLE_NAME	"diSimplexEngine.DiSiTT"
 #define checkForDiSiTT(L, index) (void*)luaL_checkudata((L), (index), DISITTLUA_TABLE_NAME)
@@ -82,7 +83,7 @@ static int diSiTTLua_simplex(lua_State *L) {
     // remove the reference from the top of the stack
     lua_pop(L, 1);
     // check the validity of the side
-    if (aSide->disitt != disitt) {
+    if (aSide->diSiTT != disitt) {
       // return the un-used simplex
       diSiTT_return_simplex(disitt,
                                dimensionOfSimplex,
@@ -100,7 +101,7 @@ static int diSiTTLua_simplex(lua_State *L) {
       luaL_argerror(L, 2, "dimension of all sides must be two less than the number of sides in the simplex");
     }
     // check that the side simplex exists
-    if (!diSiTT_simplex_exists(aSide->disitt,
+    if (!diSiTT_simplex_exists(aSide->diSiTT,
                                   aSide->dimension,
                                   aSide->simplex)) {
       // return the un-used simplex
@@ -112,7 +113,7 @@ static int diSiTTLua_simplex(lua_State *L) {
     }
     char strBuf[500];
     strBuf[0] = 0;
-    simplex_toString(aSide->disitt, aSide->dimension, aSide->simplex,
+    simplex_toString(aSide->diSiTT, aSide->dimension, aSide->simplex,
                      strBuf, 500);
     simplex_store_side(disitt,
                        dimensionOfSimplex,
@@ -133,7 +134,15 @@ static int diSiTTLua_simplex(lua_State *L) {
 static int diSiTTLua_structure(lua_State *L) {
   DiSiTT *disitt = checkDiSiTT(L);
 
-  return diStructureLua_new(L, disitt);
+  DiStructureObj *diStructure =
+    (DiStructureObj *)lua_newuserdata(L, sizeof(DiStructureObj));
+
+  diStructure_init(diStructure, disitt);
+
+  luaL_getmetatable(L, DISTRUCTURE_TABLE_NAME);
+  lua_setmetatable(L, -2);
+
+  return 1;
 }
 
 static struct luaL_Reg diSiTTLua_functions[] = {
