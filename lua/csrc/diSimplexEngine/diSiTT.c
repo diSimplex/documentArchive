@@ -151,9 +151,9 @@ simplex_id diSiTT_get_empty_simplex(DiSiTT     *disitt,
 // @param disitt :: DiSiTT*; the diSiTT.
 // @param dimension :: dimension_t; the dimension of the diSimplex being released.
 // @param oldSimplexId :: simplex_id; the ID of the diSimplex being released.
-void diSiTT_return_simplex(DiSiTT     *disitt,
-                              dimension_t dimension,
-                              simplex_id  oldSimplexId){
+void diSiTT_release_simplex(DiSiTT     *disitt,
+                            dimension_t dimension,
+                            simplex_id  oldSimplexId){
 
   // make sure this simplex actually exists
   if (!diSiTT_simplex_exists(disitt, dimension, oldSimplexId)) {

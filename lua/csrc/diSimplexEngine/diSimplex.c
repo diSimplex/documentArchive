@@ -32,11 +32,11 @@ int diSimplex_exists(DiSimplexRef *diSimplex) {
 // @param parentSimplexId :: simplex_id; the ID of the parent diSimplex.
 // @param sideNumber :: (signed) int; the side to be added to the parent.
 // @param sideSimplexId :: simplex_id; the ID of the diSimplex to be added.
-void simplex_store_side(DiSiTT *disitt,
-                        dimension_t dimension,
-                        simplex_id  parentSimplexId,
-                        int         sideNumber,
-                        simplex_id  sideSimplexId){
+void diSimplex_store_side(DiSiTT *disitt,
+                          dimension_t dimension,
+                          simplex_id  parentSimplexId,
+                          int         sideNumber,
+                          simplex_id  sideSimplexId){
   // make sure this simplicies actually exist
   if (!diSiTT_simplex_exists(disitt, dimension, parentSimplexId)) return;
   if (!diSiTT_simplex_exists(disitt, dimension-1, sideSimplexId)) return;
@@ -105,11 +105,11 @@ simplex_id simplex_get_side(DiSiTT *disitt,
 // @param simplex_id :: simplex_id; the ID of this diSimplex.
 // @param buffer :: char*; the buffer which will contain the string.
 // @param bufferSize :: size_t; the total size of the buffer.
-void simplex_toString(DiSiTT *disitt,
-                      dimension_t dimension,
-                      simplex_id simplex_id,
-                      char *buffer,
-                      size_t bufferSize) {
+void diSimplex_toString(DiSiTT *disitt,
+                        dimension_t dimension,
+                        simplex_id simplex_id,
+                        char *buffer,
+                        size_t bufferSize) {
 
   if (bufferSize < 1) return;
 

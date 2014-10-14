@@ -64,10 +64,10 @@ static int diSimplexLua_toString(lua_State *L) {
   char strBuf[500];
   strBuf[0] = 0;
 
-  simplex_toString(diSimplex->diSiTT,
-                   diSimplex->dimension,
-                   diSimplex->simplex,
-                   strBuf, 500);
+  diSimplex_toString(diSimplex->diSiTT,
+                     diSimplex->dimension,
+                     diSimplex->simplex,
+                     strBuf, 500);
 
   lua_pushfstring(L, "%s", strBuf);
   return 1;

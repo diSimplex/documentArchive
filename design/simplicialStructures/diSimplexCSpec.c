@@ -38,7 +38,7 @@ int main() {
       //
       // return the simplex
       //
-      diSiTT_return_simplex(disitt1, 3, newSimplex);
+      diSiTT_release_simplex(disitt1, 3, newSimplex);
       expect_false(diSiTT_simplex_exists(disitt1, 3, newSimplex));
       dim3Simplicies =
         *DynArray_getElementPtr(disitt1->simplicies, 3, DynArray*);
@@ -77,8 +77,8 @@ int main() {
       //
       // return some simplicies
       //
-      diSiTT_return_simplex(disitt1, 3, newSimplex1);
-      diSiTT_return_simplex(disitt1, 3, newSimplex3);
+      diSiTT_release_simplex(disitt1, 3, newSimplex1);
+      diSiTT_release_simplex(disitt1, 3, newSimplex3);
       expect_true(diSiTT_simplex_exists(disitt1, 3, newSimplex0));
       expect_false(diSiTT_simplex_exists(disitt1, 3, newSimplex1));
       expect_true(diSiTT_simplex_exists(disitt1, 3, newSimplex2));
@@ -125,7 +125,7 @@ int main() {
     it("should be able to store and get sides", ^{
       simplex_id parentSimplexId = diSiTT_get_empty_simplex(disitt1, 3);
       simplex_id childSimplexId  = diSiTT_get_empty_simplex(disitt1, 2);
-      simplex_store_side(disitt1, 3, parentSimplexId, 0, childSimplexId);
+      diSimplex_store_side(disitt1, 3, parentSimplexId, 0, childSimplexId);
       expect_equal(simplex_get_side(disitt1, 3, parentSimplexId, 0), childSimplexId);
       expect_equal(simplex_get_side(disitt1, 3, parentSimplexId, 1), 0);
     });
@@ -133,9 +133,9 @@ int main() {
     it("should do nothing if side is not part of simplex", ^{
       simplex_id parentSimplexId = diSiTT_get_empty_simplex(disitt1, 3);
       simplex_id childSimplexId  = diSiTT_get_empty_simplex(disitt1, 2);
-      simplex_store_side(disitt1, 3, parentSimplexId, 10, childSimplexId);
+      diSimplex_store_side(disitt1, 3, parentSimplexId, 10, childSimplexId);
       expect_equal(simplex_get_side(disitt1, 3, parentSimplexId, 10), 0);
-      simplex_store_side(disitt1, 3, parentSimplexId, -1, childSimplexId);
+      diSimplex_store_side(disitt1, 3, parentSimplexId, -1, childSimplexId);
       expect_equal(simplex_get_side(disitt1, 3, parentSimplexId, -1), 0);
     });
 

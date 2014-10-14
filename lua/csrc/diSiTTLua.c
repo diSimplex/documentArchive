@@ -89,18 +89,18 @@ static int diSiTTLua_simplex(lua_State *L) {
     // check the validity of the side
     if (aSide->diSiTT != disitt) {
       // return the un-used simplex
-      diSiTT_return_simplex(disitt,
-                               dimensionOfSimplex,
-                               newSimplexId);
+      diSiTT_release_simplex(disitt,
+                             dimensionOfSimplex,
+                             newSimplexId);
       // raise an error!
       luaL_argerror(L, 2, "all sides MUST be from the same underlying DiSiTT structure");
     }
     // check the dimension
     if (aSide->dimension != dimensionOfSides) {
       // return the un-used simplex
-      diSiTT_return_simplex(disitt,
-                               dimensionOfSimplex,
-                               newSimplexId);
+      diSiTT_release_simplex(disitt,
+                             dimensionOfSimplex,
+                             newSimplexId);
       // raise an error!
       luaL_argerror(L, 2, "dimension of all sides must be two less than the number of sides in the simplex");
     }
@@ -109,21 +109,21 @@ static int diSiTTLua_simplex(lua_State *L) {
                                   aSide->dimension,
                                   aSide->simplex)) {
       // return the un-used simplex
-      diSiTT_return_simplex(disitt,
-                               dimensionOfSimplex,
-                               newSimplexId);
+      diSiTT_release_simplex(disitt,
+                             dimensionOfSimplex,
+                             newSimplexId);
       // raise an error!
       luaL_argerror(L, 2, "the simplex of all sides must already exist");
     }
     char strBuf[500];
     strBuf[0] = 0;
-    simplex_toString(aSide->diSiTT, aSide->dimension, aSide->simplex,
-                     strBuf, 500);
-    simplex_store_side(disitt,
-                       dimensionOfSimplex,
-                       newSimplexId,
-                       i-1,
-                       aSide->simplex);
+    diSimplex_toString(aSide->diSiTT, aSide->dimension, aSide->simplex,
+                       strBuf, 500);
+    diSimplex_store_side(disitt,
+                         dimensionOfSimplex,
+                         newSimplexId,
+                         i-1,
+                         aSide->simplex);
   }
   return diSimplexLua_return_simplex(L,
                                   disitt,

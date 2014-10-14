@@ -101,8 +101,8 @@ extern simplex_id diSiTT_get_empty_simplex(DiSiTT     *disitt,
 
 // Return the given simplex to the pool of avaialble empty simpleices
 // for a given dimension
-extern void diSiTT_return_simplex(DiSiTT     *disitt,
-                                  dimension_t dimension,
-                                  simplex_id  simplex);
+extern void diSiTT_release_simplex(DiSiTT     *disitt,
+                                   dimension_t dimension,
+                                   simplex_id  simplex);
 
 #endif
