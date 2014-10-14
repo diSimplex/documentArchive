@@ -102,7 +102,7 @@ simplex_id diStructure_get_simplex_number(DiStructureObj *diStructure,
   DynArray *simplicies =
     *DynArray_getElementPtr(diStructure->dimensions, dimension, DynArray*);
 
-  if ( itemNumber < 0 ) return 0;
+  //if ( itemNumber < 0 ) return 0;
   if ( DynArray_len(simplicies) <= itemNumber ) return 0;
 
   return *DynArray_getElementPtr(simplicies, itemNumber, simplex_id);
