@@ -9,9 +9,23 @@
 #define false	0
 #endif
 
+/***
+
+The diSimplexEngine's DiSiTT component.
+
+All of the macros in this component are pure C helper macros.
+
+A DiSiTT structure provides an encapsulated environment in which
+directed simplicial structures can exist. Note that a given Lua script
+can interact with multiple DiSiTT structures, each of which will be
+totally separate from each other.
+
+@module diSimplexEngine.diSiTT.macros
+*/
+
 /*
 
-The main diSiTT object, which contains a four DynArrays of pointers to
+The main diSiTT object, which contains four DynArrays of pointers to
 DynArrays. Each sub-DynArray in the "simplicies" DynArray, contains the
 collection of simplex instances for a specific dimension. Each
 sub-DynArray in the "simplex_icd" DynArray, contains the simplex_icd
@@ -44,9 +58,12 @@ typedef struct DiSimplexObjStruct {
 
 #define DSE_SIMPLEX_INUSE	1
 
+///
 // Compute the size in bytes required to store an actual simplex structure
 // of a given dimension.
-//
+// @function DiSimplexObjSize
+// @param dimension :: dimension_t; the dimension of the diSimplex.
+// @return size_t; the size of the requested diSimplex.
 #define  DiSimplexObjSize(dimension) \
   (size_t)(sizeof(DiSimplexObj) + ((dimension)+1)*sizeof(simplex_id))
 

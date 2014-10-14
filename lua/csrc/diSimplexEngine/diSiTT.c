@@ -1,7 +1,24 @@
 #include <stdio.h>
 #include "diSiTT.h"
 
-// Initialize a DiSiTT instance
+/***
+
+The diSimplexEngine's DiSiTT component.
+
+All of the code in this component is pure C helper code.
+
+A DiSiTT structure provides an encapsulated environment in which
+directed simplicial structures can exist. Note that a given Lua script
+can interact with multiple DiSiTT structures, each of which will be
+totally separate from each other.
+
+@module diSimplexEngine.diSiTT
+*/
+
+///
+// Initialize a DiSiTT instance.
+// @function dse_init_disitt
+// @param disitt :: DiSiTT*; the diSiTT structure to be initialized.
 void dse_init_disitt(DiSiTT *disitt) {
   disitt->emptySimplicies = DynArray_new(sizeof(simplex_id), 0);
   disitt->simplicies      = DynArray_new(sizeof(DynArray*),  0);
@@ -9,8 +26,13 @@ void dse_init_disitt(DiSiTT *disitt) {
   disitt->structures      = DynArray_new(sizeof(DynArray*), 0);
 }
 
+
+///
 // Ensure that a given dimensionn (and all smaller dimensions)
-// have been added to this DiSiTT's collection of simplicies
+// have been added to this DiSiTT's collection of simplicies.
+// @function diSiTT_ensure_dimension
+// @param disitt :: DiSiTT*; the diSiTT.
+// @param newDimension :: dimension_t; the dimension which must exists or be added.
 //
 void diSiTT_ensure_dimension(DiSiTT *disitt,
                                 dimension_t newDimension) {
@@ -76,7 +98,11 @@ bool diSiTT_simplex_exists(DiSiTT     *disitt,
   return 0;
 }
 
-// Get the next available empty simplex for a given dimension
+///
+// Get the next available empty diSimplex for a given dimension.
+// @function diSiTT_get_empty_simplex
+// @param disitt :: DiSiTT*; the diSiTT.
+// @param dimension :; dimension_t; the dimension of the new diSimplex.
 simplex_id diSiTT_get_empty_simplex(DiSiTT     *disitt,
                                        dimension_t dimension){
   // normalize the dimension
@@ -118,8 +144,13 @@ simplex_id diSiTT_get_empty_simplex(DiSiTT     *disitt,
   return newSimplexId;
 }
 
-// Return the given simplex to the pool of avaialble empty simpleices
+/// 
+// Release the given diSimplex to the pool of avaialble empty diSimpleices
 // for a given dimension
+// @function diSiTT_release_simplex
+// @param disitt :: DiSiTT*; the diSiTT.
+// @param dimension :: dimension_t; the dimension of the diSimplex being released.
+// @param oldSimplexId :: simplex_id; the ID of the diSimplex being released.
 void diSiTT_return_simplex(DiSiTT     *disitt,
                               dimension_t dimension,
                               simplex_id  oldSimplexId){

@@ -1,19 +1,37 @@
 #include <stdio.h>
 #include "diSimplex.h"
 
+/***
+
+The diSimplexEngine's DiSimplex component.
+
+All of the code in this component is pure C helper code.
+
+A DiSimplex structure encapsulates a directed simplex in the diSimplexEngine.
+
+@module diSimplexEngine.diSimplex
+*/
+
 ///
 // Return true if this diSimplex still exists
-// @param diSimplex this diSimplex
-// @return[1] true if this diSimplex exists; false otherwise
+// @function diSimplex_exists
+// @param diSimplex :: DiSimplexRef*; this diSimplex.
+// @return true if this diSimplex exists; false otherwise
 int diSimplex_exists(DiSimplexRef *diSimplex) {
   return diSiTT_simplex_exists(diSimplex->diSiTT,
                                diSimplex->dimension,
                                diSimplex->simplex);
 }
 
-// Store the side into the simplex provided
-// sides are zero relative index as in traditional simplicial practice
-// BUT the zeroth side represents the "definitional" simplex
+///
+// Store the diSimplex for this side into the (parent) diSimplex provided.
+// Sides are zero relative index as in traditional simplicial practice,
+// BUT the zeroth side represents the "definitional" simplex.
+// @function diSimplex_store_side
+// @param disitt :: DiSiTT*; the diSiTT which contains this diSimplex
+// @param parentSimplexId :: simplex_id; the ID of the parent diSimplex.
+// @param sideNumber :: (signed) int; the side to be added to the parent.
+// @param sideSimplexId :: simplex_id; the ID of the diSimplex to be added.
 void simplex_store_side(DiSiTT *disitt,
                         dimension_t dimension,
                         simplex_id  parentSimplexId,
@@ -42,9 +60,15 @@ void simplex_store_side(DiSiTT *disitt,
   parentSimplexObj->side[sideNumber+1] = sideSimplexId;
 }
 
-// Get the requested side
-// sides are zero relative index as in traditional simplicial practice
-// BUT the zeroth side represents the "definitional" simplex
+///
+// Get the requested side.
+// Sides are zero relative index as in traditional simplicial practice,
+// BUT the zeroth side represents the "definitional" simplex.
+// @function diSimplex_get_side
+// @param disitt :: DiSiTT*; the diSiTT which contains this diSimplex.
+// @param dimension :: dimension_t; the dimension of this diSimplex.
+// @param parentSimplexId :: simplex_id; the ID of the parent diSimplex.
+// @param sideNumber :: (signed) int; the side number to be returned.
 simplex_id simplex_get_side(DiSiTT *disitt,
                             dimension_t dimension,
                             simplex_id parentSimplexId,
@@ -73,6 +97,14 @@ simplex_id simplex_get_side(DiSiTT *disitt,
 //  return 0;
 }
 
+///
+// Return a string which represents/decodes this diSimplex instance.
+// @function diSimplex_toString
+// @param disitt :: DiSiTT*; the diSiTT which contains this diSimplex.
+// @param dimension :: dimension_t; the dimension of this diSimplex.
+// @param simplex_id :: simplex_id; the ID of this diSimplex.
+// @param buffer :: char*; the buffer which will contain the string.
+// @param bufferSize :: size_t; the total size of the buffer.
 void simplex_toString(DiSiTT *disitt,
                       dimension_t dimension,
                       simplex_id simplex_id,

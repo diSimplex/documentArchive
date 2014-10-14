@@ -6,9 +6,11 @@ A structure of directed simplicies.
 #include "diStructureLua.h"
 
 ///
-// Add an existing simplex of a given dimension to this structure
-// @param simplex
-// @return[1] true if simplex added
+// Add an existing diSimplex of a given dimension to this diStructure.
+// @function add
+// @param diStructure the diStructure to which this diSimplex is to be added.
+// @param diSimplex the diSimplex to be added to this diStructure.
+// @return true if simplex added; false otherwise
 static int diStructureLua_add(lua_State *L){
   DiStructureObj *diStructure = checkDiStructure(L);
   DiSimplexRef   *diSimplex   = checkForDiSimplex(L, 2);
@@ -31,9 +33,11 @@ static int diStructureLua_add(lua_State *L){
 }
 
 ///
-// Return the number of simplicies in a given dimension
-// @param dimension
-// @return[1] the number of simplicies in the dimension
+// Return the number of diSimplicies in a given dimension.
+// @function size
+// @param diStructure the diStructure whose size is requested.
+// @param dimension the dimension whose size is requested.
+// @return the number of diSimplicies in the dimension.
 static int diStructureLua_size(lua_State *L){
   DiStructureObj *diStructure = checkDiStructure(L);
   int unCheckedDimension = luaL_checkint(L, 2);
@@ -47,9 +51,11 @@ static int diStructureLua_size(lua_State *L){
 ///
 // Return the requested diSimplex in the ordered set of simplicies
 // of a given dimension.
-// @param dimension
-// @param itemNumber (zero relative)
-// @return[1] DiSimplexRef
+// @function simplex
+// @param diStructure the diStructure from which to obtain the diSimplex.
+// @param dimension the dimension of the required simplex.
+// @param itemNumber the index (zero relative) of the requested simplex.
+// @return a lua reference to a diSimplex.
 static int diStructureLua_simplex(lua_State *L){
   DiStructureObj *diStructure = checkDiStructure(L);
   int unCheckedDimension = luaL_checkint(L, 2);
@@ -71,7 +77,8 @@ static int diStructureLua_simplex(lua_State *L){
 ///
 // Provide a string representation of the diStructure object.
 // @function __tosting
-// @return[1] A string representation of the diStructure object.
+// @param diStructure the diStructure to be printed.
+// @return A string representation of the diStructure object.
 //
 static int diStructureLua_toString(lua_State *L) {
   DiStructureObj *diStructure = checkDiStructure(L);

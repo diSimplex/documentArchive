@@ -1,7 +1,7 @@
 /***
 The diSimplexEngine's DiSiTT component.
 The DiSiTT module provides the core of the diSimplexEngine.
-@module disitt
+@module diSiTT
 */
 
 #include "diSiTTLua.h"
@@ -29,7 +29,8 @@ static int diSiTTLua_new(lua_State *L) {
 ///
 // Provide a string representation of the disitt object.
 // @function __tosting
-// @return[1] A string representation of the diSiTT object.
+// @param diSiTT the diSiTT object to print.
+// @return A string representation of the diSiTT object.
 //
 static int diSiTTLua_toString(lua_State *L) {
   void *disitt = checkDiSiTT(L);
@@ -40,8 +41,9 @@ static int diSiTTLua_toString(lua_State *L) {
 ///
 // Return the universe simplex of a given dimension.
 // @function universe
+// @param diSiTT the diSiTT object which contains this universe.
 // @param dimension The dimension of the requested universe simplex.
-// @return[1] The requested universe simplex
+// @return The requested universe simplex
 //
 static int diSiTTLua_universe(lua_State *L) {
   DiSiTT *disitt = checkDiSiTT(L);
@@ -53,9 +55,11 @@ static int diSiTTLua_universe(lua_State *L) {
 }
 
 ///
-// Return a new diSimplex containing the given sides
+// Create a new diSimplex containing the given sides.
+// @function simplex
+// @param diSiTT the diSiTT object which will contain this simplex.
 // @param sides an array of diSimplex references of the correct dimension and number.
-// @return[1] a diSimplex reference to the new diSimplex.
+// @return a diSimplex reference to the new diSimplex.
 static int diSiTTLua_simplex(lua_State *L) {
   DiSiTT *disitt = checkDiSiTT(L);
   // the second argument is a array(table) of diSimplicies
@@ -128,9 +132,10 @@ static int diSiTTLua_simplex(lua_State *L) {
 }
 
 ///
-
-// Return a new diSimplexStructure containing the given sides
-// @return[1] a new diSimplexStructure.
+// Create a new diSimplexStructure containing the given sides.
+// @function structure
+// @param diSiTT the diSiTT which will contain this structure.
+// @return a new diSimplexStructure.
 static int diSiTTLua_structure(lua_State *L) {
   DiSiTT *disitt = checkDiSiTT(L);
 

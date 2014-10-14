@@ -1,11 +1,22 @@
 #include <stdio.h>
 #include "diStructure.h"
 
+/***
+
+The diSimplexEngine's DiStructure component.
+
+All of the code in this component is pure C helper code.
+
+A DiStructure encapsulates a directed simplex structure in the diSimplexEngine.
+
+@module diSimplexEngine.diStructure
+*/
+
 ///
 // Initialize a new diStructure object
-// @param diStructure the uninitialized diStructure
-// @param diSiTT the diSiTT environment in which this diStructure should exist
-// return[0] void
+// @function diStructure_init
+// @param diStructure :: DiStructure*; the uninitialized diStructure.
+// @param diSiTT :: DiSiTT*; the diSiTT environment in which this diStructure should exist
 void diStructure_init(DiStructureObj *diStructure, DiSiTT *diSiTT) {
   diStructure->diSiTT               = diSiTT;
   diStructure->dimensions           = DynArray_new(sizeof(DynArray*), 0);
@@ -17,8 +28,9 @@ void diStructure_init(DiStructureObj *diStructure, DiSiTT *diSiTT) {
 
 ///
 // Return true if this diStructure still exists
-// @param diStructure this structure
-// @return[1] true if this diStructure exists; false otherwise
+// @function diStructure_exists
+// @param diStructure :: DiStructureObj*; this diStructure.
+// @return boolean; true if this diStructure exists; false otherwise
 int diStructure_exists(DiStructureObj *diStructure) {
 
   return true;
@@ -26,10 +38,11 @@ int diStructure_exists(DiStructureObj *diStructure) {
 
 ///
 // Ensure that a given dimension (and all smaller dimensions) exists
-// int the diStruture.
-// @param diStructure this diStructure
-// @param dimension the dimension to ensure exists
-// return[1] true if dimension now exists; false otherwise
+// in the diStruture.
+// @function diStructure_ensure_dimension_exists
+// @param diStructure :: DiStructureObj*; this diStructure.
+// @param dimension :: dimension_t; the dimension to ensure exists.
+// return boolean; true if dimension now exists; false otherwise
 int diStructure_ensure_dimension_exists(DiStructureObj *diStructure,
                                         dimension_t newDimension) {
   if (newDimension < 0) newDimension = 0;
@@ -51,9 +64,10 @@ int diStructure_ensure_dimension_exists(DiStructureObj *diStructure,
 
 ///
 // Return the number of simplicies of a given dimension in this structure
-// @param diStructure this structure
-// @param dimension the dimension to check
-// @return[1] number of simplicies
+// @function diStructure_size
+// @param diStructure :: DiStructureObj*; this structure.
+// @param dimension :: dimension_t; the dimension to check.
+// @return int; number of simplicies
 int diStructure_size(DiStructureObj *diStructure, dimension_t dimension) {
 
   if ( dimension < -1 ) return 0;
@@ -69,9 +83,10 @@ int diStructure_size(DiStructureObj *diStructure, dimension_t dimension) {
 
 ///
 // Add an additional diSimplex to this structure
-// @param diStructure this structure
-// @param diSimplex the diSimplex to add
-// @return[1] true if diSimplex was added; false otherwise
+// @function diStructure_add
+// @param diStructure :: DiStructureObj*; this structure.
+// @param diSimplex :: DiSimplexRef*; the diSimplex to add.
+// @return boolean; true if diSimplex was added; false otherwise
 int diStructure_add(DiStructureObj *diStructure, DiSimplexRef *diSimplex) {
   dimension_t dimension = diSimplex->dimension;
   if (dimension < 0) dimension = 0;
@@ -88,10 +103,11 @@ int diStructure_add(DiStructureObj *diStructure, DiSimplexRef *diSimplex) {
 
 ///
 // Return the requested diSimplex
-// @param diStructure this structure
-// @param dimension the required diSimplex dimension
-// @param itemNumber the required diSimplex in the diStructure's ordered set of diSimplicies of this dimension
-// @return[1] diSimplex
+// @function diStructure_get_simplex_number
+// @param diStructure :: DiStructureObj*; this structure.
+// @param dimension :: dimension_t; the required diSimplex dimension.
+// @param itemNumber :: size_t; the required diSimplex in the diStructure's ordered set of diSimplicies of this dimension.
+// @return simplex_id; the requested diSimplex.
 simplex_id diStructure_get_simplex_number(DiStructureObj *diStructure,
                                           dimension_t dimension,
                                           size_t itemNumber) {

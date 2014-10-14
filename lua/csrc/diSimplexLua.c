@@ -5,10 +5,18 @@ A single directed simplex.
 
 #include "diSimplexLua.h"
 
-// Construct and return a Lua user data object which contains
-// **references** to a specific simplex of a given dimension in a given
-// DiSiTT
-//
+/***
+
+A C helper function which provides a lua reference to a diSimplex.
+Constructs and returns a Lua user data object which contains ***references***
+to a specific simplex of a given dimension in a given DiSiTT.
+
+@function diSimplexLua_return_simplex
+@param L ::lua_State; the lua state.
+@param diSiTT :: DiSiTT; the diSiTT environment which contains the simplex.
+@param dimension :: dimension_t; the dimension of the simplex.
+@param simplex :: simplex_id; the simplex reference.
+*/
 int diSimplexLua_return_simplex(lua_State *L,
                              DiSiTT *disitt,
                              dimension_t dimension,
@@ -28,9 +36,11 @@ int diSimplexLua_return_simplex(lua_State *L,
 }
 
 ///
-// Determine if two diSimplex reference objects are equal
-// @param other the other diSimplex reference object
-// @return[1] true if the two objects refer to the same diSimplex
+// Determine if two diSimplicies are equal.
+// @function __eq
+// @param diSimplex the diSimplex object.
+// @param otherDiSimplex the other diSimplex reference object.
+// @return true if the two objects refer to the same diSimplex
 static int diSimplexLua_equal(lua_State *L) {
   DiSimplexRef *myDiSimplex    = checkDiSimplex(L);
   DiSimplexRef *otherDiSimplex = checkForDiSimplex(L, 2);
@@ -45,7 +55,8 @@ static int diSimplexLua_equal(lua_State *L) {
 ///
 // Provide a string representation of the diSimplex object.
 // @function __tosting
-// @return[1] A string representation of the diSimplex object.
+// @param diSimplex the diSimplex object to be printed.
+// @return A string representation of the diSimplex object.
 //
 static int diSimplexLua_toString(lua_State *L) {
   DiSimplexRef *diSimplex = checkDiSimplex(L);
@@ -63,8 +74,10 @@ static int diSimplexLua_toString(lua_State *L) {
 }
 
 ///
-// Returns the dimension of this simplex
-// @return[1] the dimension of this simplex
+// Returns the dimension of this simplex.
+// @function dimension
+// @param diSimplex the diSimplex object whose dimension is being requested.
+// @return the dimension of this simplex
 static int diSimplexLua_dimension(lua_State *L) {
   DiSimplexRef *diSimplex = checkDiSimplex(L);
 
@@ -75,8 +88,9 @@ static int diSimplexLua_dimension(lua_State *L) {
 ///
 // Get the requested side of this simplex.
 // @function side
+// @param diSimplex the diSimplex whose side is being requested.
 // @param index the (zero releative) side.
-// @return[1] the requested side of this simplex.
+// @return the requested side of this simplex.
 static int diSimplexLua_side(lua_State *L) {
   DiSimplexRef *diSimplex = checkDiSimplex(L);
 
@@ -107,8 +121,12 @@ static struct luaL_Reg diSimplexLua_meta_functions[] = {
   {NULL, NULL}
 };
 
-// Setup the Lua resources required for the DiSimplex classes
-//
+/*** A C helper function which initializes the DiSimplex lua module.
+Setup the Lua resources required for the DiSimplex module.
+
+@function diSimplexLua_init
+@param L ::lua_State; the lua state.
+*/
 void diSimplexLua_init(lua_State *L) {
   // create and setup a new metatable for the DiSiTT system
   luaL_newmetatable(L, DISIMPLEXLUA_TABLE_NAME);
