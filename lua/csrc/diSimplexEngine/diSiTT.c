@@ -4,17 +4,19 @@
 // Initialize a DiSiTT instance
 void dse_init_disitt(DiSiTT *disitt) {
   disitt->emptySimplicies = DynArray_new(sizeof(simplex_id), 0);
-  disitt->instances       = DynArray_new(sizeof(DynArray*),  0);
+  disitt->simplicies      = DynArray_new(sizeof(DynArray*),  0);
+  disitt->emptyStructures = DynArray_new(sizeof(structure_id), 0);
+  disitt->structures      = DynArray_new(sizeof(DynArray*), 0);
 }
 
 // Ensure that a given dimensionn (and all smaller dimensions)
-// have been added to this DiSiTT's collection of instances
+// have been added to this DiSiTT's collection of simplicies
 //
 void diSiTT_ensure_dimension(DiSiTT *disitt,
                                 dimension_t newDimension) {
   if (newDimension < 0) newDimension = 0;
 
-  dimension_t numDimensions = DynArray_len(disitt->instances);
+  dimension_t numDimensions = DynArray_len(disitt->simplicies);
 
   // check to see if we already have added this dimension
   if ( newDimension < numDimensions ) {
@@ -43,9 +45,9 @@ void diSiTT_ensure_dimension(DiSiTT *disitt,
     DynArray_getElementPtr(newDimensionArray, 0, DiSimplexObj);
   universeSimplex->flags |= DSE_SIMPLEX_INUSE;
   //
-  // now place this new DynArray onto the end of the instances array
+  // now place this new DynArray onto the end of the simplicies array
   //
-  DynArray_addElement(disitt->instances, DynArray*, newDimensionArray);
+  DynArray_addElement(disitt->simplicies, DynArray*, newDimensionArray);
   //
   // now initalize the empty simplex linked list to the null simplex
   //
@@ -62,7 +64,7 @@ bool diSiTT_simplex_exists(DiSiTT     *disitt,
   }
 
   DynArray *simplicies =
-    *DynArray_getElementPtr(disitt->instances, dimension, DynArray*);
+    *DynArray_getElementPtr(disitt->simplicies, dimension, DynArray*);
   if (simplexId < DynArray_len(simplicies)) {
     DiSimplexObj *simplexObj =
       DynArray_getElementPtr(simplicies, simplexId, DiSimplexObj);
@@ -82,9 +84,9 @@ simplex_id diSiTT_get_empty_simplex(DiSiTT     *disitt,
 
   diSiTT_ensure_dimension(disitt, dimension);
 
-  // get the simplex instances for this dimension
-  DynArray *instances =
-    *DynArray_getElementPtr(disitt->instances, dimension, DynArray*);
+  // get the simplex simplicies for this dimension
+  DynArray *simplicies =
+    *DynArray_getElementPtr(disitt->simplicies, dimension, DynArray*);
 
   // allocate a variable for the new simplex id
   simplex_id newSimplexId = 0;
@@ -99,19 +101,19 @@ simplex_id diSiTT_get_empty_simplex(DiSiTT     *disitt,
     // and re-point the list of empties to the next empty simplex
     newSimplexId   = *linkedListHead;
     DiSimplexObj *newSimplexObj =
-      DynArray_getElementPtr(instances, newSimplexId, DiSimplexObj);
+      DynArray_getElementPtr(simplicies, newSimplexId, DiSimplexObj);
     *linkedListHead = newSimplexObj->side[0];
   } else {
     // if the linked list of empty simplicies is itself empty
     // use DynArray_addZeroedElement to add a new (zeroed) simplex
-    DynArray_addZeroedElement(instances);
-    newSimplexId = DynArray_len(instances)-1;  // adjust to zero relative index
+    DynArray_addZeroedElement(simplicies);
+    newSimplexId = DynArray_len(simplicies)-1;  // adjust to zero relative index
   }
 
   // zero the empty simplex before returning it
   DiSimplexObj *newSimplexObj =
-    DynArray_getElementPtr(instances, newSimplexId, DiSimplexObj);
-  memset(newSimplexObj, 0, DynArray_elementSize(instances));
+    DynArray_getElementPtr(simplicies, newSimplexId, DiSimplexObj);
+  memset(newSimplexObj, 0, DynArray_elementSize(simplicies));
   newSimplexObj->flags |= DSE_SIMPLEX_INUSE;
   return newSimplexId;
 }
@@ -130,9 +132,9 @@ void diSiTT_return_simplex(DiSiTT     *disitt,
   // normalize the dimension
   if (dimension < 0) dimension = 0;
 
-  // get the simplex instances for this dimension
-  DynArray *instances =
-    *DynArray_getElementPtr(disitt->instances, dimension, DynArray*);
+  // get the simplex simplicies for this dimension
+  DynArray *simplicies =
+    *DynArray_getElementPtr(disitt->simplicies, dimension, DynArray*);
 
   // get the head of the linked list
   simplex_id *linkedListHead =
@@ -146,9 +148,9 @@ void diSiTT_return_simplex(DiSiTT     *disitt,
   //
   // get the old simplex object itself
   DiSimplexObj *oldSimplexObj =
-    DynArray_getElementPtr(instances, oldSimplexId, DiSimplexObj);
+    DynArray_getElementPtr(simplicies, oldSimplexId, DiSimplexObj);
   // ensure the old simplex is zeroed
-  memset(oldSimplexObj, 0, DynArray_elementSize(instances));
+  memset(oldSimplexObj, 0, DynArray_elementSize(simplicies));
   // place the linkedListHead into the old simplex
   oldSimplexObj->side[0] = *linkedListHead;
   // place the oldSimplexId in the linkedListHead

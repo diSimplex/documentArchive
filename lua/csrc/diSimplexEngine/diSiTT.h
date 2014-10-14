@@ -11,19 +11,19 @@
 
 /*
 
-The main diSiTT object, which contains a pair of UT_array of pointers
-to UT_arrays. Each sub-UT_array in the "instance" UT_array, contains
-the collection of simplex instances for a specific dimension. Each
-sub-UT_array in the "simplex_icd" UT_array, contains the simplex_icd
-required by the UT_array code for each corresponding dimension of
-simplex cotained in the "instance" UT_array.
+The main diSiTT object, which contains a four DynArrays of pointers to
+DynArrays. Each sub-DynArray in the "simplicies" DynArray, contains the
+collection of simplex instances for a specific dimension. Each
+sub-DynArray in the "simplex_icd" DynArray, contains the simplex_icd
+required by the DynArray code for each corresponding dimension of
+simplex cotained in the "simplicies" DynArray.
 
-The simplex at the zero-th index of the "instance" sub-UT_array, is the
-Universe simplex of that dimension.
+The simplex at the zero-th index of the "simplicies" sub-DynArray, is
+the Universe simplex of that dimension.
 
 */
 typedef struct DiSiTTStruct {
-  DynArray *instances;
+  DynArray *simplicies;
   DynArray *emptySimplicies;
   DynArray *structures;
   DynArray *emptyStructures;
@@ -34,9 +34,11 @@ extern void dse_init_disitt(DiSiTT *disitt);
 
 typedef int dimension_t;
 typedef unsigned int simplex_id;
+typedef unsigned int structure_id;
 
 typedef struct DiSimplexObjStruct {
   unsigned int flags;
+  structure_id structure;
   simplex_id side[1];
 } DiSimplexObj;
 
@@ -63,10 +65,10 @@ typedef struct DiStructureObjStruct {
 
 
 #define diSiTT_dimension_exists(disitt, dimension) \
-  ( dimension < (DynArray_len(disitt->instances)))
+  ( dimension < (DynArray_len(disitt->simplicies)))
 
 // Ensure that a given dimensionn (and all smaller dimensions)
-// have been added to this DiSiTT's collection of instances
+// have been added to this DiSiTT's collection of simplicies
 //
 extern void diSitt_ensure_dimension(DiSiTT *disitt,
                                     dimension_t newDimension);

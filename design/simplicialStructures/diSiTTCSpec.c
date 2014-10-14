@@ -33,24 +33,28 @@ int main() {
 
     it("should have empty DynArray structures (before use)", ^{
       expect_equal(DynArray_len(disitt0->emptySimplicies), 0);
-      expect_equal(DynArray_len(disitt0->instances), 0);
+      expect_equal(DynArray_len(disitt0->simplicies), 0);
+      expect_equal(DynArray_len(disitt0->emptyStructures), 0);
+      expect_equal(DynArray_len(disitt0->structures), 0);
     });
 
     it("should have empty DynArray structures (after diSiTT_ensure_dimension)", ^{
       expect_equal(DynArray_len(disitt0->emptySimplicies), 0);
-      expect_equal(DynArray_len(disitt0->instances), 0);
+      expect_equal(DynArray_len(disitt0->simplicies), 0);
+      expect_equal(DynArray_len(disitt0->emptyStructures), 0);
+      expect_equal(DynArray_len(disitt0->structures), 0);
       diSiTT_ensure_dimension(disitt0, 60);
       expect_equal(DynArray_len(disitt0->emptySimplicies), 61);
-      expect_equal(DynArray_len(disitt0->instances), 61);
+      expect_equal(DynArray_len(disitt0->simplicies), 61);
 
       // walk through each dimension and check the icd...
       int i = 52;
       for(; i < 61; i++) {
-        DynArray *dimInstances =
-          *DynArray_getElementPtr(disitt0->instances, i, DynArray*);
-        expect_equal(DynArray_len(dimInstances), 1);
-        refute_equal(DynArray_capacity(dimInstances), 0);
-        expect_equal(DynArray_elementSize(dimInstances), DiSimplexObjSize(i));
+        DynArray *dimSimplicies =
+          *DynArray_getElementPtr(disitt0->simplicies, i, DynArray*);
+        expect_equal(DynArray_len(dimSimplicies), 1);
+        refute_equal(DynArray_capacity(dimSimplicies), 0);
+        expect_equal(DynArray_elementSize(dimSimplicies), DiSimplexObjSize(i));
       }
     });
 

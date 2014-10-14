@@ -31,12 +31,12 @@ void simplex_store_side(DiSiTT *disitt,
   if (dimension < 0) dimension = 0;
 
   // get the simplex instances for this dimension
-  DynArray *instances =
-    *DynArray_getElementPtr(disitt->instances, dimension, DynArray*);
+  DynArray *simplicies =
+    *DynArray_getElementPtr(disitt->simplicies, dimension, DynArray*);
 
   // get the parent diSimplex object
   DiSimplexObj *parentSimplexObj =
-    DynArray_getElementPtr(instances, parentSimplexId, DiSimplexObj);
+    DynArray_getElementPtr(simplicies, parentSimplexId, DiSimplexObj);
 
   // store the side (note we add one to allow for the definitional simplex)
   parentSimplexObj->side[sideNumber+1] = sideSimplexId;
@@ -61,12 +61,12 @@ simplex_id simplex_get_side(DiSiTT *disitt,
   if (dimension < 0) dimension = 0;
 
   // get the simplex instances for this dimension
-  DynArray *instances =
-    *DynArray_getElementPtr(disitt->instances, dimension, DynArray*);
+  DynArray *simplicies =
+    *DynArray_getElementPtr(disitt->simplicies, dimension, DynArray*);
 
   // get the parent diSimplex object
   DiSimplexObj *parentSimplexObj =
-    DynArray_getElementPtr(instances, parentSimplexId, DiSimplexObj);
+    DynArray_getElementPtr(simplicies, parentSimplexId, DiSimplexObj);
 
   // store the side (note we add one to allow for the definitional simplex)
   return parentSimplexObj->side[sideNumber+1];

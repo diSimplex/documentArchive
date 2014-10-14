@@ -26,23 +26,23 @@ int main() {
       // get a simplex
       simplex_id newSimplex = diSiTT_get_empty_simplex(disitt1, 3);
       expect_equal(newSimplex, 1);
-      expect_equal(DynArray_len(disitt1->instances), 4);
+      expect_equal(DynArray_len(disitt1->simplicies), 4);
       expect_true(diSiTT_simplex_exists(disitt1, 3, newSimplex));
-      DynArray *dim3Instances =
-        *DynArray_getElementPtr(disitt1->instances, 3, DynArray*);
-      expect_equal(DynArray_len(dim3Instances), 2);
-      expect_equal(DynArray_elementSize(dim3Instances), DiSimplexObjSize(3));
+      DynArray *dim3Simplicies =
+        *DynArray_getElementPtr(disitt1->simplicies, 3, DynArray*);
+      expect_equal(DynArray_len(dim3Simplicies), 2);
+      expect_equal(DynArray_elementSize(dim3Simplicies), DiSimplexObjSize(3));
       DiSimplexObj *newSimplexObj =
-        DynArray_getElementPtr(dim3Instances, 1, DiSimplexObj);
+        DynArray_getElementPtr(dim3Simplicies, 1, DiSimplexObj);
       expect_equal(newSimplexObj->side[0], 0);
       //
       // return the simplex
       //
       diSiTT_return_simplex(disitt1, 3, newSimplex);
       expect_false(diSiTT_simplex_exists(disitt1, 3, newSimplex));
-      dim3Instances =
-        *DynArray_getElementPtr(disitt1->instances, 3, DynArray*);
-      expect_equal(DynArray_len(dim3Instances), 2);
+      dim3Simplicies =
+        *DynArray_getElementPtr(disitt1->simplicies, 3, DynArray*);
+      expect_equal(DynArray_len(dim3Simplicies), 2);
     });
 
     it("should get and return a number of  empty simplicies", ^{
@@ -56,22 +56,22 @@ int main() {
       expect_equal(newSimplex2, 3);
       expect_equal(newSimplex3, 4);
       expect_equal(newSimplex4, 5);
-      expect_equal(DynArray_len(disitt1->instances), 4);
+      expect_equal(DynArray_len(disitt1->simplicies), 4);
       expect_true(diSiTT_simplex_exists(disitt1, 3, newSimplex0));
       expect_true(diSiTT_simplex_exists(disitt1, 3, newSimplex1));
       expect_true(diSiTT_simplex_exists(disitt1, 3, newSimplex2));
       expect_true(diSiTT_simplex_exists(disitt1, 3, newSimplex3));
       expect_true(diSiTT_simplex_exists(disitt1, 3, newSimplex4));
-      DynArray *dim3Instances =
-        *DynArray_getElementPtr(disitt1->instances, 3, DynArray*);
-      expect_equal(DynArray_len(dim3Instances), 6);
-      expect_equal(DynArray_elementSize(dim3Instances), DiSimplexObjSize(3));
+      DynArray *dim3Simplicies =
+        *DynArray_getElementPtr(disitt1->simplicies, 3, DynArray*);
+      expect_equal(DynArray_len(dim3Simplicies), 6);
+      expect_equal(DynArray_elementSize(dim3Simplicies), DiSimplexObjSize(3));
       DiSimplexObj *newSimplex0Obj =
-        DynArray_getElementPtr(dim3Instances, newSimplex0, DiSimplexObj);
+        DynArray_getElementPtr(dim3Simplicies, newSimplex0, DiSimplexObj);
       expect_equal(newSimplex0Obj->side[0], 0);
       newSimplex0Obj->side[0] = 10;
       DiSimplexObj *newSimplex1Obj =
-        DynArray_getElementPtr(dim3Instances, newSimplex1, DiSimplexObj);
+        DynArray_getElementPtr(dim3Simplicies, newSimplex1, DiSimplexObj);
       expect_equal(newSimplex1Obj->side[0], 0);
       newSimplex1Obj->side[0] = 10;
       //
@@ -84,11 +84,11 @@ int main() {
       expect_true(diSiTT_simplex_exists(disitt1, 3, newSimplex2));
       expect_false(diSiTT_simplex_exists(disitt1, 3, newSimplex3));
       expect_true(diSiTT_simplex_exists(disitt1, 3, newSimplex4));
-      dim3Instances =
-        *DynArray_getElementPtr(disitt1->instances, 3, DynArray*);
-      expect_equal(DynArray_len(dim3Instances), 6);
+      dim3Simplicies =
+        *DynArray_getElementPtr(disitt1->simplicies, 3, DynArray*);
+      expect_equal(DynArray_len(dim3Simplicies), 6);
       newSimplex0Obj =
-        DynArray_getElementPtr(dim3Instances, newSimplex0, DiSimplexObj);
+        DynArray_getElementPtr(dim3Simplicies, newSimplex0, DiSimplexObj);
       expect_equal(newSimplex0Obj->side[0], 10);
       //
       // get some more simplicies (should reuse newSimplex1 and newSimplex3
@@ -97,14 +97,14 @@ int main() {
       newSimplex3 = diSiTT_get_empty_simplex(disitt1, 3);
       expect_true(diSiTT_simplex_exists(disitt1, 3, newSimplex1));
       expect_true(diSiTT_simplex_exists(disitt1, 3, newSimplex3));
-      dim3Instances =
-        *DynArray_getElementPtr(disitt1->instances, 3, DynArray*);
-      expect_equal(DynArray_len(dim3Instances), 6);
+      dim3Simplicies =
+        *DynArray_getElementPtr(disitt1->simplicies, 3, DynArray*);
+      expect_equal(DynArray_len(dim3Simplicies), 6);
       newSimplex0Obj =
-        DynArray_getElementPtr(dim3Instances, newSimplex0, DiSimplexObj);
+        DynArray_getElementPtr(dim3Simplicies, newSimplex0, DiSimplexObj);
       expect_equal(newSimplex0Obj->side[0], 10);
       newSimplex1Obj =
-        DynArray_getElementPtr(dim3Instances, newSimplex1, DiSimplexObj);
+        DynArray_getElementPtr(dim3Simplicies, newSimplex1, DiSimplexObj);
       expect_equal(newSimplex1Obj->side[0], 0);
       //
       // get a new simplex (should be completely new)
@@ -113,9 +113,9 @@ int main() {
       simplex_id newSimplex5 = diSiTT_get_empty_simplex(disitt1, 3);
       expect_equal(newSimplex5, 6);
       expect_true(diSiTT_simplex_exists(disitt1, 3, newSimplex5));
-      dim3Instances =
-        *DynArray_getElementPtr(disitt1->instances, 3, DynArray*);
-      expect_equal(DynArray_len(dim3Instances), 7);
+      dim3Simplicies =
+        *DynArray_getElementPtr(disitt1->simplicies, 3, DynArray*);
+      expect_equal(DynArray_len(dim3Simplicies), 7);
     });
 
   });
