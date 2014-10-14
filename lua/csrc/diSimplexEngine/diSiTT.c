@@ -76,7 +76,13 @@ void diSiTT_ensure_dimension(DiSiTT *disitt,
   DynArray_addZeroedElement(disitt->emptySimplicies);
 }
 
-// Check that a give simplex exists
+///
+// Check that a given diSimplex exists in this diSiTT environment.
+// @function diSiTT_simplex_exists
+// @param disitt: DiSiTT*; this diSiTT.
+// @param dimension: dimension_t; the dimension of the diSimplex.
+// @param simplexId: simplex_id; the ID of the diSimplex.
+// @return boolean; true if this diSimplex exists in this diSiTT environment.
 bool diSiTT_simplex_exists(DiSiTT     *disitt,
                               dimension_t dimension,
                               simplex_id  simplexId) {
