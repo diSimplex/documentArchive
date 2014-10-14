@@ -44,7 +44,7 @@ typedef struct DiSiTTStruct {
 } DiSiTT;
 
 // Initialize a DiSiTT instance
-extern void dse_init_disitt(DiSiTT *disitt);
+extern void diSiTT_init(DiSiTT *disitt);
 
 typedef int dimension_t;
 typedef unsigned int simplex_id;
@@ -56,7 +56,7 @@ typedef struct DiSimplexObjStruct {
   simplex_id side[1];
 } DiSimplexObj;
 
-#define DSE_SIMPLEX_INUSE	1
+#define DISITT_DISIMPLEX_INUSE	1
 
 ///
 // Compute the size in bytes required to store an actual simplex structure

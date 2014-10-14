@@ -19,7 +19,7 @@ The DiSiTT module provides the core of the diSimplexEngine.
 //
 static int diSiTTLua_new(lua_State *L) {
   DiSiTT *disitt = (DiSiTT *)lua_newuserdata(L, sizeof(DiSiTT));
-  dse_init_disitt(disitt);
+  diSiTT_init(disitt);
 
   luaL_getmetatable(L, DISITTLUA_TABLE_NAME);
   lua_setmetatable(L, -2);

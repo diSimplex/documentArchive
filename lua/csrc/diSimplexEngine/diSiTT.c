@@ -17,9 +17,9 @@ totally separate from each other.
 
 ///
 // Initialize a DiSiTT instance.
-// @function dse_init_disitt
+// @function diSiTT_init
 // @param disitt :: DiSiTT*; the diSiTT structure to be initialized.
-void dse_init_disitt(DiSiTT *disitt) {
+void diSiTT_init(DiSiTT *disitt) {
   disitt->emptySimplicies = DynArray_new(sizeof(simplex_id), 0);
   disitt->simplicies      = DynArray_new(sizeof(DynArray*),  0);
   disitt->emptyStructures = DynArray_new(sizeof(structure_id), 0);
@@ -60,12 +60,12 @@ void diSiTT_ensure_dimension(DiSiTT *disitt,
   // points to the universe simplex for the next lower dimension.
   // So adding a zero element (and doing nothing else) ensures that
   // the element is a universe simplex. BUT we must assert that the universe
-  // simplex is DSE_SIMPLEX_INUSE.
+  // simplex is DISITT_DISIMPLEX_INUSE.
   //
   DynArray_addZeroedElement(newDimensionArray);
   DiSimplexObj *universeSimplex =
     DynArray_getElementPtr(newDimensionArray, 0, DiSimplexObj);
-  universeSimplex->flags |= DSE_SIMPLEX_INUSE;
+  universeSimplex->flags |= DISITT_DISIMPLEX_INUSE;
   //
   // now place this new DynArray onto the end of the simplicies array
   //
@@ -90,7 +90,7 @@ bool diSiTT_simplex_exists(DiSiTT     *disitt,
   if (simplexId < DynArray_len(simplicies)) {
     DiSimplexObj *simplexObj =
       DynArray_getElementPtr(simplicies, simplexId, DiSimplexObj);
-    if (simplexObj->flags && DSE_SIMPLEX_INUSE) {
+    if (simplexObj->flags && DISITT_DISIMPLEX_INUSE) {
       return 1;
     }
   }
@@ -140,7 +140,7 @@ simplex_id diSiTT_get_empty_simplex(DiSiTT     *disitt,
   DiSimplexObj *newSimplexObj =
     DynArray_getElementPtr(simplicies, newSimplexId, DiSimplexObj);
   memset(newSimplexObj, 0, DynArray_elementSize(simplicies));
-  newSimplexObj->flags |= DSE_SIMPLEX_INUSE;
+  newSimplexObj->flags |= DISITT_DISIMPLEX_INUSE;
   return newSimplexId;
 }
 

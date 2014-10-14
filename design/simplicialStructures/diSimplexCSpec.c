@@ -14,9 +14,9 @@ int main() {
 
   // setup our DiSiTT engine(s)
   disitt0 = &disittObj0;
-  dse_init_disitt(disitt0);
+  diSiTT_init(disitt0);
   disitt1 = &disittObj1;
-  dse_init_disitt(disitt1);
+  diSiTT_init(disitt1);
 
   fprintf(stdout, "\n>>>diSimplexCSpec\n\n");
 

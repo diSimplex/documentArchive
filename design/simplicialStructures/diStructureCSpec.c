@@ -18,9 +18,9 @@ int main() {
 
   // setup our DiSiTT engine(s)
   disitt0 = &disittObj0;
-  dse_init_disitt(disitt0);
+  diSiTT_init(disitt0);
   disitt1 = &disittObj1;
-  dse_init_disitt(disitt1);
+  diSiTT_init(disitt1);
   diSimplex0 = &diSimplexObj0;
   diSimplex0->diSiTT = disitt0;
   diSimplex0->dimension = 0;
