@@ -32,6 +32,13 @@ namespace :lua do
     end
   end
 
+  # Lua documentation
+  task :createDocumentation do
+    Dir.chdir('lua') do
+      sh "ldoc ."
+    end
+  end
+
   # Helper tasks for CBDD/RSpec testing
   #
   # ALL CBDD tests are UNIT tests (lua does the integration).
@@ -109,6 +116,15 @@ namespace :lua do
 end # namespace :lua
 
 task :cookPreConfig => 'lua:cookPreConfig'
+
+#
+# Lua documentation
+#
+desc 'Create lua documentation'
+task :ldoc => 'lua:createDocumentation'
+
+desc 'Create documentation'
+task :doc => :ldoc
 
 #
 # All RSpec specification tests
