@@ -7,10 +7,8 @@
 // **references** to a specific simplex of a given dimension in a given
 // DiSiTT
 //
-extern int diSimplexLua_return_simplex(lua_State *L,
-                                       DiSiTT *disitt,
-                                       dimension_t dimension,
-                                       simplex_id simplex);
+extern int diSimplexLua_return_simplex_ref(lua_State *L,
+                                           DiSimplexRef *simplex);
 
 // Setup the Lua resources required for the DiSimplex classes
 //

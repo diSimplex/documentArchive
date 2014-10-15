@@ -24,10 +24,13 @@ int main() {
 
     it("should get and return one empty simplex", ^{
       // get a simplex
-      simplex_id newSimplex = diSiTT_get_empty_simplex(disitt1, 3);
-      expect_equal(newSimplex, 1);
+      DiSimplexRef newSimplex;
+      newSimplex.diSiTT    = disitt1;
+      newSimplex.dimension = 3;
+      expect_true(diSimplex_get_empty(&newSimplex));
+      expect_equal(newSimplex.simplex, 1);
       expect_equal(DynArray_len(disitt1->simplicies), 4);
-      expect_true(diSiTT_simplex_exists(disitt1, 3, newSimplex));
+      expect_true(diSimplex_exists(&newSimplex));
       DynArray *dim3Simplicies =
         *DynArray_getElementPtr(disitt1->simplicies, 3, DynArray*);
       expect_equal(DynArray_len(dim3Simplicies), 2);
@@ -38,81 +41,105 @@ int main() {
       //
       // return the simplex
       //
-      diSiTT_release_simplex(disitt1, 3, newSimplex);
-      expect_false(diSiTT_simplex_exists(disitt1, 3, newSimplex));
+      diSimplex_release(&newSimplex);
+      expect_false(diSimplex_exists(&newSimplex));
       dim3Simplicies =
         *DynArray_getElementPtr(disitt1->simplicies, 3, DynArray*);
       expect_equal(DynArray_len(dim3Simplicies), 2);
     });
 
     it("should get and return a number of  empty simplicies", ^{
-      simplex_id newSimplex0 = diSiTT_get_empty_simplex(disitt1, 3);
-      simplex_id newSimplex1 = diSiTT_get_empty_simplex(disitt1, 3);
-      simplex_id newSimplex2 = diSiTT_get_empty_simplex(disitt1, 3);
-      simplex_id newSimplex3 = diSiTT_get_empty_simplex(disitt1, 3);
-      simplex_id newSimplex4 = diSiTT_get_empty_simplex(disitt1, 3);
-      expect_equal(newSimplex0, 1);
-      expect_equal(newSimplex1, 2);
-      expect_equal(newSimplex2, 3);
-      expect_equal(newSimplex3, 4);
-      expect_equal(newSimplex4, 5);
+      DiSimplexRef newSimplex0;
+      newSimplex0.diSiTT    = disitt1;
+      newSimplex0.dimension = 3;
+      expect_true(diSimplex_get_empty(&newSimplex0));
+      DiSimplexRef newSimplex1;
+      newSimplex1.diSiTT    = disitt1;
+      newSimplex1.dimension = 3;
+      expect_true(diSimplex_get_empty(&newSimplex1));
+      DiSimplexRef newSimplex2;
+      newSimplex2.diSiTT    = disitt1;
+      newSimplex2.dimension = 3;
+      expect_true(diSimplex_get_empty(&newSimplex2));
+      DiSimplexRef newSimplex3;
+      newSimplex3.diSiTT    = disitt1;
+      newSimplex3.dimension = 3;
+      expect_true(diSimplex_get_empty(&newSimplex3));
+      DiSimplexRef newSimplex4;
+      newSimplex4.diSiTT    = disitt1;
+      newSimplex4.dimension = 3;
+      expect_true(diSimplex_get_empty(&newSimplex4));
+      expect_equal(newSimplex0.simplex, 1);
+      expect_equal(newSimplex1.simplex, 2);
+      expect_equal(newSimplex2.simplex, 3);
+      expect_equal(newSimplex3.simplex, 4);
+      expect_equal(newSimplex4.simplex, 5);
       expect_equal(DynArray_len(disitt1->simplicies), 4);
-      expect_true(diSiTT_simplex_exists(disitt1, 3, newSimplex0));
-      expect_true(diSiTT_simplex_exists(disitt1, 3, newSimplex1));
-      expect_true(diSiTT_simplex_exists(disitt1, 3, newSimplex2));
-      expect_true(diSiTT_simplex_exists(disitt1, 3, newSimplex3));
-      expect_true(diSiTT_simplex_exists(disitt1, 3, newSimplex4));
+      expect_true(diSimplex_exists(&newSimplex0));
+      expect_true(diSimplex_exists(&newSimplex1));
+      expect_true(diSimplex_exists(&newSimplex2));
+      expect_true(diSimplex_exists(&newSimplex3));
+      expect_true(diSimplex_exists(&newSimplex4));
       DynArray *dim3Simplicies =
         *DynArray_getElementPtr(disitt1->simplicies, 3, DynArray*);
       expect_equal(DynArray_len(dim3Simplicies), 6);
       expect_equal(DynArray_elementSize(dim3Simplicies), DiSimplexObjSize(3));
       DiSimplexObj *newSimplex0Obj =
-        DynArray_getElementPtr(dim3Simplicies, newSimplex0, DiSimplexObj);
+        DynArray_getElementPtr(dim3Simplicies, newSimplex0.simplex,
+                               DiSimplexObj);
       expect_equal(newSimplex0Obj->side[0], 0);
       newSimplex0Obj->side[0] = 10;
       DiSimplexObj *newSimplex1Obj =
-        DynArray_getElementPtr(dim3Simplicies, newSimplex1, DiSimplexObj);
+        DynArray_getElementPtr(dim3Simplicies, newSimplex1.simplex,
+                               DiSimplexObj);
       expect_equal(newSimplex1Obj->side[0], 0);
       newSimplex1Obj->side[0] = 10;
       //
       // return some simplicies
       //
-      diSiTT_release_simplex(disitt1, 3, newSimplex1);
-      diSiTT_release_simplex(disitt1, 3, newSimplex3);
-      expect_true(diSiTT_simplex_exists(disitt1, 3, newSimplex0));
-      expect_false(diSiTT_simplex_exists(disitt1, 3, newSimplex1));
-      expect_true(diSiTT_simplex_exists(disitt1, 3, newSimplex2));
-      expect_false(diSiTT_simplex_exists(disitt1, 3, newSimplex3));
-      expect_true(diSiTT_simplex_exists(disitt1, 3, newSimplex4));
+      diSimplex_release(&newSimplex1);
+      diSimplex_release(&newSimplex3);
+      expect_true(diSimplex_exists(&newSimplex0));
+      expect_false(diSimplex_exists(&newSimplex1));
+      expect_true(diSimplex_exists(&newSimplex2));
+      expect_false(diSimplex_exists(&newSimplex3));
+      expect_true(diSimplex_exists(&newSimplex4));
       dim3Simplicies =
         *DynArray_getElementPtr(disitt1->simplicies, 3, DynArray*);
       expect_equal(DynArray_len(dim3Simplicies), 6);
       newSimplex0Obj =
-        DynArray_getElementPtr(dim3Simplicies, newSimplex0, DiSimplexObj);
+        DynArray_getElementPtr(dim3Simplicies, newSimplex0.simplex,
+                               DiSimplexObj);
       expect_equal(newSimplex0Obj->side[0], 10);
       //
       // get some more simplicies (should reuse newSimplex1 and newSimplex3
       //
-      newSimplex1 = diSiTT_get_empty_simplex(disitt1, 3);
-      newSimplex3 = diSiTT_get_empty_simplex(disitt1, 3);
-      expect_true(diSiTT_simplex_exists(disitt1, 3, newSimplex1));
-      expect_true(diSiTT_simplex_exists(disitt1, 3, newSimplex3));
+      expect_true(diSimplex_get_empty(&newSimplex1));
+      expect_true(diSimplex_get_empty(&newSimplex3));
+      expect_true(diSimplex_exists(&newSimplex1));
+      expect_true(diSimplex_exists(&newSimplex3));
       dim3Simplicies =
         *DynArray_getElementPtr(disitt1->simplicies, 3, DynArray*);
       expect_equal(DynArray_len(dim3Simplicies), 6);
       newSimplex0Obj =
-        DynArray_getElementPtr(dim3Simplicies, newSimplex0, DiSimplexObj);
+        DynArray_getElementPtr(dim3Simplicies, newSimplex0.simplex,
+                               DiSimplexObj);
       expect_equal(newSimplex0Obj->side[0], 10);
       newSimplex1Obj =
-        DynArray_getElementPtr(dim3Simplicies, newSimplex1, DiSimplexObj);
+        DynArray_getElementPtr(dim3Simplicies, newSimplex1.simplex,
+                               DiSimplexObj);
       expect_equal(newSimplex1Obj->side[0], 0);
       //
       // get a new simplex (should be completely new)
       //
-      expect_false(diSiTT_simplex_exists(disitt1, 3, 6));
-      simplex_id newSimplex5 = diSiTT_get_empty_simplex(disitt1, 3);
-      expect_equal(newSimplex5, 6);
-      expect_true(diSiTT_simplex_exists(disitt1, 3, newSimplex5));
+      DiSimplexRef newSimplex5;
+      newSimplex5.diSiTT    = disitt1;
+      newSimplex5.dimension = 3;
+      newSimplex5.simplex   = 6;
+      expect_false(diSimplex_exists(&newSimplex5));
+      expect_true(diSimplex_get_empty(&newSimplex5));
+      expect_equal(newSimplex5.simplex, 6);
+      expect_true(diSimplex_exists(&newSimplex5));
       dim3Simplicies =
         *DynArray_getElementPtr(disitt1->simplicies, 3, DynArray*);
       expect_equal(DynArray_len(dim3Simplicies), 7);
@@ -123,20 +150,51 @@ int main() {
   describe("storing/getting sides", ^{
 
     it("should be able to store and get sides", ^{
-      simplex_id parentSimplexId = diSiTT_get_empty_simplex(disitt1, 3);
-      simplex_id childSimplexId  = diSiTT_get_empty_simplex(disitt1, 2);
-      diSimplex_store_side(disitt1, 3, parentSimplexId, 0, childSimplexId);
-      expect_equal(simplex_get_side(disitt1, 3, parentSimplexId, 0), childSimplexId);
-      expect_equal(simplex_get_side(disitt1, 3, parentSimplexId, 1), 0);
+      DiSimplexRef parentSimplex;
+      parentSimplex.diSiTT    = disitt1;
+      parentSimplex.dimension = 3;
+      expect_true(diSimplex_get_empty(&parentSimplex));
+      DiSimplexRef childSimplex;
+      childSimplex.diSiTT    = disitt1;
+      childSimplex.dimension = 2;
+      expect_true(diSimplex_get_empty(&childSimplex));
+      diSimplex_store_side(&parentSimplex, 0, &childSimplex);
+      DiSimplexRef sideSimplex0;
+      expect_true(diSimplex_get_side(&parentSimplex, 0, &sideSimplex0));
+      expect_true(childSimplex.diSiTT == sideSimplex0.diSiTT);
+      expect_equal(childSimplex.dimension, sideSimplex0.dimension);
+      expect_equal(childSimplex.simplex,   sideSimplex0.simplex);
+      DiSimplexRef sideSimplex1;
+      expect_true(diSimplex_get_side(&parentSimplex, 1, &sideSimplex1));
+      expect_true(sideSimplex1.diSiTT == disitt1);
+      expect_equal(sideSimplex1.dimension, 2);
+      expect_equal(sideSimplex1.simplex, 0);
     });
 
     it("should do nothing if side is not part of simplex", ^{
-      simplex_id parentSimplexId = diSiTT_get_empty_simplex(disitt1, 3);
-      simplex_id childSimplexId  = diSiTT_get_empty_simplex(disitt1, 2);
-      diSimplex_store_side(disitt1, 3, parentSimplexId, 10, childSimplexId);
-      expect_equal(simplex_get_side(disitt1, 3, parentSimplexId, 10), 0);
-      diSimplex_store_side(disitt1, 3, parentSimplexId, -1, childSimplexId);
-      expect_equal(simplex_get_side(disitt1, 3, parentSimplexId, -1), 0);
+      DiSimplexRef parentSimplex;
+      parentSimplex.diSiTT    = disitt1;
+      parentSimplex.dimension = 3;
+      expect_true(diSimplex_get_empty(&parentSimplex));
+      DiSimplexRef childSimplex;
+      childSimplex.diSiTT    = disitt1;
+      childSimplex.dimension = 2;
+      childSimplex.simplex   = 0;
+      expect_true(diSimplex_get_empty(&childSimplex));
+      expect_true(childSimplex.diSiTT == disitt1);
+      expect_equal(childSimplex.dimension, 2);
+      expect_equal(childSimplex.simplex, 2);
+      childSimplex.simplex = 0;
+      diSimplex_store_side(&parentSimplex, 10, &childSimplex);
+      expect_false(diSimplex_get_side(&parentSimplex, 10, &childSimplex));
+      expect_true(childSimplex.diSiTT == disitt1);
+      expect_equal(childSimplex.dimension, 2);
+      expect_equal(childSimplex.simplex, 0);
+      diSimplex_store_side(&parentSimplex, -1, &childSimplex);
+      expect_false(diSimplex_get_side(&parentSimplex, -1, &childSimplex));
+      expect_true(childSimplex.diSiTT == disitt1);
+      expect_equal(childSimplex.dimension, 2);
+      expect_equal(childSimplex.simplex, 0);
     });
 
   });
@@ -145,14 +203,33 @@ int main() {
 
     it("should exist", ^{
       diSiTT_ensure_dimension(disitt1, 5);
-      expect_true(diSiTT_simplex_exists(disitt1, 0, 0));
-      expect_true(diSiTT_simplex_exists(disitt1, 1, 0));
-      expect_true(diSiTT_simplex_exists(disitt1, 2, 0));
-      expect_true(diSiTT_simplex_exists(disitt1, 3, 0));
-      expect_true(diSiTT_simplex_exists(disitt1, 4, 0));
-      expect_true(diSiTT_simplex_exists(disitt1, 5, 0));
-      expect_false(diSiTT_simplex_exists(disitt1, 6, 0));
-      expect_false(diSiTT_simplex_exists(disitt1, 7, 0));
+      DiSimplexRef universeSimplex;
+      universeSimplex.diSiTT    = disitt1;
+      universeSimplex.simplex   = 0;
+
+      universeSimplex.dimension = 0;
+      expect_true(diSimplex_exists(&universeSimplex));
+
+      universeSimplex.dimension = 1;
+      expect_true(diSimplex_exists(&universeSimplex));
+
+      universeSimplex.dimension = 2;
+      expect_true(diSimplex_exists(&universeSimplex));
+
+      universeSimplex.dimension = 3;
+      expect_true(diSimplex_exists(&universeSimplex));
+
+      universeSimplex.dimension = 4;
+      expect_true(diSimplex_exists(&universeSimplex));
+
+      universeSimplex.dimension = 5;
+      expect_true(diSimplex_exists(&universeSimplex));
+
+      universeSimplex.dimension = 6;
+      expect_false(diSimplex_exists(&universeSimplex));
+
+      universeSimplex.dimension = 7;
+      expect_false(diSimplex_exists(&universeSimplex));
     });
   });
 

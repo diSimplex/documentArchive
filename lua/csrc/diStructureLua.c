@@ -6,13 +6,36 @@ A structure of directed simplicies.
 #include "diStructureLua.h"
 
 ///
+// A C helper function which provides a lua reference to a diStructure.
+// Constructs and returns a Lua user data object which contains
+// ***references*** to a specific structure in a given DiSiTT.
+// @function diSimplexLua_return_structure_ref
+// @param L ::lua_State; the lua state.
+// @param diSiTT :: DiSiTT; the diSiTT environment which contains the structure.
+// @param structure :: structure_id; the structure reference.
+int diStructureLua_return_structure_ref(lua_State *L,
+                                        DiStructureRef *localStructure) {
+
+  DiStructureRef *diStructure =
+    (DiStructureRef *)lua_newuserdata(L, sizeof(DiStructureRef));
+
+  diStructure->diSiTT    = localStructure->diSiTT;
+  diStructure->structure = localStructure->structure;
+
+  luaL_getmetatable(L, DISTRUCTURELUA_TABLE_NAME);
+  lua_setmetatable(L, -2);
+
+  return 1;
+}
+
+///
 // Add an existing diSimplex of a given dimension to this diStructure.
 // @function add
 // @param diStructure the diStructure to which this diSimplex is to be added.
 // @param diSimplex the diSimplex to be added to this diStructure.
 // @return true if simplex added; false otherwise
 static int diStructureLua_add(lua_State *L){
-  DiStructureObj *diStructure = checkDiStructure(L);
+  DiStructureRef *diStructure = checkDiStructure(L);
   DiSimplexRef   *diSimplex   = checkForDiSimplex(L, 2);
   // ensure the diStructure exists
   if (!diStructure_exists(diStructure)) {
@@ -39,7 +62,7 @@ static int diStructureLua_add(lua_State *L){
 // @param dimension the dimension whose size is requested.
 // @return the number of diSimplicies in the dimension.
 static int diStructureLua_size(lua_State *L){
-  DiStructureObj *diStructure = checkDiStructure(L);
+  DiStructureRef *diStructure = checkDiStructure(L);
   int unCheckedDimension = luaL_checkint(L, 2);
   luaL_argcheck(L, -1 <= unCheckedDimension, 2, "dimensions must be greater than or equal to -1");
   dimension_t dimension = (dimension_t)unCheckedDimension;
@@ -57,7 +80,7 @@ static int diStructureLua_size(lua_State *L){
 // @param itemNumber the index (zero relative) of the requested simplex.
 // @return a lua reference to a diSimplex.
 static int diStructureLua_simplex(lua_State *L){
-  DiStructureObj *diStructure = checkDiStructure(L);
+  DiStructureRef *diStructure = checkDiStructure(L);
   int unCheckedDimension = luaL_checkint(L, 2);
   luaL_argcheck(L, -1 <= unCheckedDimension, 2, "dimensions must be greater than or equal to -1");
   dimension_t dimension = (dimension_t)unCheckedDimension;
@@ -66,12 +89,12 @@ static int diStructureLua_simplex(lua_State *L){
   luaL_argcheck(L, -1 < unCheckedItemNumber, 3, "simplex number must be greater than or equal to 0");
   size_t itemNumber = (size_t)unCheckedItemNumber;
 
-  return diSimplexLua_return_simplex(L,
-                                     diStructure->diSiTT,
-                                     dimension,
-                                     diStructure_get_simplex_number(diStructure,
-                                                                    dimension,
-                                                                    itemNumber));
+  DiSimplexRef simplex;
+
+  diStructure_get_simplex_number(diStructure, dimension,
+                                 itemNumber, &simplex);
+
+  return diSimplexLua_return_simplex_ref(L, &simplex);
 }
 
 ///
@@ -81,7 +104,7 @@ static int diStructureLua_simplex(lua_State *L){
 // @return A string representation of the diStructure object.
 //
 static int diStructureLua_toString(lua_State *L) {
-  DiStructureObj *diStructure = checkDiStructure(L);
+  DiStructureRef *diStructure = checkDiStructure(L);
 
   lua_pushfstring(L, "%s", "diSimplexStructure");
   return 1;
@@ -99,7 +122,7 @@ static struct luaL_Reg diStructureLua_meta_functions[] = {
 //
 void diStructureLua_init(lua_State *L) {
   // create and setup a new metatable for the DiSiTT system
-  luaL_newmetatable(L, DISTRUCTURE_TABLE_NAME);
+  luaL_newmetatable(L, DISTRUCTURELUA_TABLE_NAME);
   lua_pushvalue(L, -1);            // duplicates the metatable
   lua_setfield(L, -2, "__index");  // set metatable.__index = metatable
 

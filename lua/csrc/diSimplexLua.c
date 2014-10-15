@@ -5,29 +5,25 @@ A single directed simplex.
 
 #include "diSimplexLua.h"
 
-/***
-
-A C helper function which provides a lua reference to a diSimplex.
-Constructs and returns a Lua user data object which contains ***references***
-to a specific simplex of a given dimension in a given DiSiTT.
-
-@function diSimplexLua_return_simplex
-@param L ::lua_State; the lua state.
-@param diSiTT :: DiSiTT; the diSiTT environment which contains the simplex.
-@param dimension :: dimension_t; the dimension of the simplex.
-@param simplex :: simplex_id; the simplex reference.
-*/
-int diSimplexLua_return_simplex(lua_State *L,
-                             DiSiTT *disitt,
-                             dimension_t dimension,
-                             simplex_id simplex) {
+///
+// A C helper function which provides a lua reference to a diSimplex.
+// Constructs and returns a Lua user data object which contains
+// ***references*** to a specific simplex of a given dimension
+// in a given DiSiTT.
+// @function diSimplexLua_return_simplex_ref
+// @param L ::lua_State; the lua state.
+// @param diSiTT :: DiSiTT; the diSiTT environment which contains the simplex.
+// @param dimension :: dimension_t; the dimension of the simplex.
+// @param simplex :: simplex_id; the simplex reference.
+int diSimplexLua_return_simplex_ref(lua_State *L,
+                                    DiSimplexRef *localSimplex) {
 
   DiSimplexRef *diSimplex =
     (DiSimplexRef *)lua_newuserdata(L, sizeof(DiSimplexRef));
 
-  diSimplex->diSiTT    = disitt;
-  diSimplex->dimension = dimension;
-  diSimplex->simplex   = simplex;
+  diSimplex->diSiTT    = localSimplex->diSiTT;
+  diSimplex->dimension = localSimplex->dimension;
+  diSimplex->simplex   = localSimplex->simplex;
 
   luaL_getmetatable(L, DISIMPLEXLUA_TABLE_NAME);
   lua_setmetatable(L, -2);
@@ -64,10 +60,7 @@ static int diSimplexLua_toString(lua_State *L) {
   char strBuf[500];
   strBuf[0] = 0;
 
-  diSimplex_toString(diSimplex->diSiTT,
-                     diSimplex->dimension,
-                     diSimplex->simplex,
-                     strBuf, 500);
+  diSimplex_toString(diSimplex, strBuf, 500);
 
   lua_pushfstring(L, "%s", strBuf);
   return 1;
@@ -98,19 +91,17 @@ static int diSimplexLua_side(lua_State *L) {
   dimension_t dimension = diSimplex->dimension;
   simplex_id  simplex   = diSimplex->simplex;
 
-  if (!diSiTT_simplex_exists(disitt, dimension, simplex)) {
+  if (!diSimplex_exists(diSimplex)) {
     luaL_argerror(L, 1, "the specified diSimplex does not exist");
   }
   // check for the side argument
   int side = luaL_checkinteger(L, 2);
-  simplex_id sideSimplexId = simplex_get_side(disitt,
-                                              dimension,
-                                              simplex,
-                                              side);
+  DiSimplexRef sideSimplex;
+  sideSimplex.diSiTT    = diSimplex->diSiTT;
+  sideSimplex.dimension = diSimplex->dimension - 1;
+  diSimplex_get_side(diSimplex, side, &sideSimplex);
 
-  return diSimplexLua_return_simplex(L, disitt,
-                                  dimension - 1,
-                                  sideSimplexId);
+  return diSimplexLua_return_simplex_ref(L, &sideSimplex);
 }
 
 static struct luaL_Reg diSimplexLua_meta_functions[] = {

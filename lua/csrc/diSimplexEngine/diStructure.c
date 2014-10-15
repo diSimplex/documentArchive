@@ -17,23 +17,76 @@ A DiStructure encapsulates a directed simplex structure in the diSimplexEngine.
 // @function diStructure_init
 // @param diStructure :: DiStructure*; the uninitialized diStructure.
 // @param diSiTT :: DiSiTT*; the diSiTT environment in which this diStructure should exist
-void diStructure_init(DiStructureObj *diStructure, DiSiTT *diSiTT) {
-  diStructure->diSiTT               = diSiTT;
-  diStructure->dimensions           = DynArray_new(sizeof(DynArray*), 0);
-  diStructure->curSimplex.diSiTT    = diSiTT;
-  diStructure->curSimplex.dimension = 0;
-  diStructure->curSimplex.simplex   = 0; // the universal zero-simplex
-}
-
+//void diStructure_init(DiStructureObj *diStructure, DiSiTT *diSiTT) {
+//  diStructure->diSiTT               = diSiTT;
+//  diStructure->dimensions           = DynArray_new(sizeof(DynArray*), 0);
+//  diStructure->curSimplex.diSiTT    = diSiTT;
+//  diStructure->curSimplex.dimension = 0;
+//  diStructure->curSimplex.simplex   = 0; // the universal zero-simplex
+//}
 
 ///
 // Return true if this diStructure still exists
 // @function diStructure_exists
 // @param diStructure :: DiStructureObj*; this diStructure.
 // @return boolean; true if this diStructure exists; false otherwise
-int diStructure_exists(DiStructureObj *diStructure) {
+bool diStructure_exists(DiStructureRef *structure) {
 
-  return true;
+  DiStructureObj *structureObj =
+    *DynArray_getElementPtr(structure->diSiTT->structures,
+                            structure->structure, DiStructureObj*);
+  if (structureObj->flags && DISITT_DISIMPLEX_INUSE) {
+      return 1;
+  }
+
+  return 0;
+}
+
+///
+// Get the next available empty diStructure
+// @function diSiTT_get_empty_structure
+// @param disitt :: DiSiTT*; the diSiTT.
+// @return structure_id; an empty diStructure.
+structure_id diStructure_get_empty(DiSiTT *disitt) {
+
+  structure_id newStructureId = 0;
+
+  // the disitt->emptyStructures DynArray is used as a push down queue
+  // of empty diStructures. If it is not empty, then we simply reuse
+  // the most recently releasted diStructure.
+
+  if ( 0 < DynArray_len(disitt->emptyStructures) ) {
+
+  }
+
+  // there are no emptyStructures which we can reuse... so create a new one.
+
+  // zero the empty simplex before returning it
+  DiStructureObj *newStructureObj =
+    DynArray_getElementPtr(disitt->structures, newStructureId, DiStructureObj);
+  newStructureObj->flags |= DISITT_DISIMPLEX_INUSE;
+//  DynArray_clear(newStructureObj->dimensions);
+  return newStructureId;
+}
+
+///
+// Release the given diStructure back to the pool of available empty
+// diStructures.
+// @function diSiTT_release_structure
+// @param disitt :: DiSiTT*; the diSiTT.
+// @param structureId :: structure_id; the ID of the diStructure to be released.
+void diStructure_release(DiSiTT *disitt,
+                              structure_id structureId) {
+
+}
+
+///
+// Empty an existing diStructure
+// @function diStructure_empty
+// @param disitt :: DiSiTT*; the diSiTT.
+// @param structureId :: structure_id; the ID of the diStructure to empty.
+void diStructure_empty(DiSiTT *disitt, structure_id structureId) {
+
 }
 
 ///

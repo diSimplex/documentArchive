@@ -26,14 +26,12 @@ void diSiTT_init(DiSiTT *disitt) {
   disitt->structures      = DynArray_new(sizeof(DynArray*), 0);
 }
 
-
 ///
 // Ensure that a given dimensionn (and all smaller dimensions)
 // have been added to this DiSiTT's collection of simplicies.
 // @function diSiTT_ensure_dimension
 // @param disitt :: DiSiTT*; the diSiTT.
 // @param newDimension :: dimension_t; the dimension which must exists or be added.
-//
 void diSiTT_ensure_dimension(DiSiTT *disitt,
                                 dimension_t newDimension) {
   if (newDimension < 0) newDimension = 0;
@@ -77,120 +75,20 @@ void diSiTT_ensure_dimension(DiSiTT *disitt,
 }
 
 ///
-// Check that a given diSimplex exists in this diSiTT environment.
-// @function diSiTT_simplex_exists
-// @param disitt :: DiSiTT*; this diSiTT.
-// @param dimension :: dimension_t; the dimension of the diSimplex.
-// @param simplexId :: simplex_id; the ID of the diSimplex.
-// @return boolean; true if this diSimplex exists in this diSiTT environment.
-bool diSiTT_simplex_exists(DiSiTT     *disitt,
-                              dimension_t dimension,
-                              simplex_id  simplexId) {
-
-  if (!diSiTT_dimension_exists(disitt, dimension)) {
-    return 0;
-  }
-
-  DynArray *simplicies =
-    *DynArray_getElementPtr(disitt->simplicies, dimension, DynArray*);
-  if (simplexId < DynArray_len(simplicies)) {
-    DiSimplexObj *simplexObj =
-      DynArray_getElementPtr(simplicies, simplexId, DiSimplexObj);
-    if (simplexObj->flags && DISITT_DISIMPLEX_INUSE) {
-      return 1;
-    }
-  }
-
-  return 0;
-}
-
-///
-// Get the next available empty diSimplex for a given dimension.
-// @function diSiTT_get_empty_simplex
+// Collect all unused diSimplicies and diStructures.
+// @function diSiTT_collect_garbage
 // @param disitt :: DiSiTT*; the diSiTT.
-// @param dimension :; dimension_t; the dimension of the new diSimplex.
-simplex_id diSiTT_get_empty_simplex(DiSiTT     *disitt,
-                                       dimension_t dimension){
-  // normalize the dimension
-  if (dimension < 0) dimension = 0;
+void diSiTT_collect_garbage(DiSiTT *disitt) {
+  // do nothing at the moment.... however eventually....
 
-  diSiTT_ensure_dimension(disitt, dimension);
+  // clear all diSimplex and diStructure GC_MARKS
 
-  // get the simplex simplicies for this dimension
-  DynArray *simplicies =
-    *DynArray_getElementPtr(disitt->simplicies, dimension, DynArray*);
+  // walk all diStructures which are "INUSE" marking all unmarked diSimplicies
 
-  // allocate a variable for the new simplex id
-  simplex_id newSimplexId = 0;
+  // walk all diSimplicies and release any which are "INUSE" but not GC_MARKed
 
-  // get the head of the linked list
-  simplex_id *linkedListHead =
-    DynArray_getElementPtr(disitt->emptySimplicies, dimension, simplex_id);
+  // walk all diStructures and release any which are "INUSE" but not GC_MARKed
 
-  if (*linkedListHead) {
-    // if the linked list of empty simplicies is not itself empty
-    // use the first simplex on the linked list
-    // and re-point the list of empties to the next empty simplex
-    newSimplexId   = *linkedListHead;
-    DiSimplexObj *newSimplexObj =
-      DynArray_getElementPtr(simplicies, newSimplexId, DiSimplexObj);
-    *linkedListHead = newSimplexObj->side[0];
-  } else {
-    // if the linked list of empty simplicies is itself empty
-    // use DynArray_addZeroedElement to add a new (zeroed) simplex
-    DynArray_addZeroedElement(simplicies);
-    newSimplexId = DynArray_len(simplicies)-1;  // adjust to zero relative index
-  }
-
-  // zero the empty simplex before returning it
-  DiSimplexObj *newSimplexObj =
-    DynArray_getElementPtr(simplicies, newSimplexId, DiSimplexObj);
-  memset(newSimplexObj, 0, DynArray_elementSize(simplicies));
-  newSimplexObj->flags |= DISITT_DISIMPLEX_INUSE;
-  return newSimplexId;
-}
-
-/// 
-// Release the given diSimplex to the pool of avaialble empty diSimpleices
-// for a given dimension
-// @function diSiTT_release_simplex
-// @param disitt :: DiSiTT*; the diSiTT.
-// @param dimension :: dimension_t; the dimension of the diSimplex being released.
-// @param oldSimplexId :: simplex_id; the ID of the diSimplex being released.
-void diSiTT_release_simplex(DiSiTT     *disitt,
-                            dimension_t dimension,
-                            simplex_id  oldSimplexId){
-
-  // make sure this simplex actually exists
-  if (!diSiTT_simplex_exists(disitt, dimension, oldSimplexId)) {
-    return;
-  }
-
-  // normalize the dimension
-  if (dimension < 0) dimension = 0;
-
-  // get the simplex simplicies for this dimension
-  DynArray *simplicies =
-    *DynArray_getElementPtr(disitt->simplicies, dimension, DynArray*);
-
-  // get the head of the linked list
-  simplex_id *linkedListHead =
-    DynArray_getElementPtr(disitt->emptySimplicies, dimension, simplex_id);
-
-  // add this simplex to the begining of the linked list of empty simplicies
-  //
-  // take the current start of the list and store it in the first element
-  // of the newly empty simplex and place the index of this newly empty
-  // simplex in the disitt->emptySimplicies pointer.
-  //
-  // get the old simplex object itself
-  DiSimplexObj *oldSimplexObj =
-    DynArray_getElementPtr(simplicies, oldSimplexId, DiSimplexObj);
-  // ensure the old simplex is zeroed
-  memset(oldSimplexObj, 0, DynArray_elementSize(simplicies));
-  // place the linkedListHead into the old simplex
-  oldSimplexObj->side[0] = *linkedListHead;
-  // place the oldSimplexId in the linkedListHead
-  *linkedListHead = oldSimplexId;
+  // clear all diSimplex and diStructure GC_MARKS
 }
 

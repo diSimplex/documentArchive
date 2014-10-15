@@ -46,12 +46,14 @@ static int diSiTTLua_toString(lua_State *L) {
 // @return The requested universe simplex
 //
 static int diSiTTLua_universe(lua_State *L) {
-  DiSiTT *disitt = checkDiSiTT(L);
+  DiSimplexRef universeSimplex;
+  universeSimplex.diSiTT = checkDiSiTT(L);
   int unCheckedDimension = luaL_checkint(L, 2);
   luaL_argcheck(L, -1 <= unCheckedDimension, 2, "dimensions must be greater than or equal to -1");
-  dimension_t dimension = (dimension_t)unCheckedDimension;
-  diSiTT_ensure_dimension(disitt, dimension);
-  return diSimplexLua_return_simplex(L, disitt, dimension, 0);
+  universeSimplex.dimension = (dimension_t)unCheckedDimension;
+  diSiTT_ensure_dimension(universeSimplex.diSiTT, universeSimplex.dimension);
+  universeSimplex.simplex = 0;
+  return diSimplexLua_return_simplex_ref(L, &universeSimplex);
 }
 
 ///
@@ -61,21 +63,21 @@ static int diSiTTLua_universe(lua_State *L) {
 // @param sides an array of diSimplex references of the correct dimension and number.
 // @return a diSimplex reference to the new diSimplex.
 static int diSiTTLua_simplex(lua_State *L) {
-  DiSiTT *disitt = checkDiSiTT(L);
+  DiSimplexRef newSimplex;
+  newSimplex.diSiTT = checkDiSiTT(L);
   // the second argument is a array(table) of diSimplicies
   luaL_checktype(L, 2, LUA_TTABLE);
 
   // the dimension of all of the sides MUST be equal to
   // two less than the number of sides being added to this diSimplex
   int numberOfSides              = luaL_len(L, 2);
-  dimension_t dimensionOfSimplex = numberOfSides - 1;
-  if (dimensionOfSimplex < 0) dimensionOfSimplex = 0;
-  dimension_t dimensionOfSides   = dimensionOfSimplex - 1;
+  newSimplex.dimension = numberOfSides - 1;
+  if (newSimplex.dimension < 0) newSimplex.dimension = 0;
+  dimension_t dimensionOfSides   = newSimplex.dimension - 1;
   if ( dimensionOfSides < 0 ) dimensionOfSides = 0;
 
-  diSiTT_ensure_dimension(disitt, dimensionOfSimplex);
-  simplex_id newSimplexId =
-    diSiTT_get_empty_simplex(disitt, dimensionOfSimplex);
+  diSiTT_ensure_dimension(newSimplex.diSiTT, newSimplex.dimension);
+  diSimplex_get_empty(&newSimplex);
 
   // inspect each side
   int i = 1;
@@ -87,48 +89,32 @@ static int diSiTTLua_simplex(lua_State *L) {
     // remove the reference from the top of the stack
     lua_pop(L, 1);
     // check the validity of the side
-    if (aSide->diSiTT != disitt) {
+    if (aSide->diSiTT != newSimplex.diSiTT) {
       // return the un-used simplex
-      diSiTT_release_simplex(disitt,
-                             dimensionOfSimplex,
-                             newSimplexId);
+      diSimplex_release(&newSimplex);
       // raise an error!
       luaL_argerror(L, 2, "all sides MUST be from the same underlying DiSiTT structure");
     }
     // check the dimension
     if (aSide->dimension != dimensionOfSides) {
       // return the un-used simplex
-      diSiTT_release_simplex(disitt,
-                             dimensionOfSimplex,
-                             newSimplexId);
+      diSimplex_release(&newSimplex);
       // raise an error!
       luaL_argerror(L, 2, "dimension of all sides must be two less than the number of sides in the simplex");
     }
     // check that the side simplex exists
-    if (!diSiTT_simplex_exists(aSide->diSiTT,
-                                  aSide->dimension,
-                                  aSide->simplex)) {
+    if (!diSimplex_exists(aSide)) {
       // return the un-used simplex
-      diSiTT_release_simplex(disitt,
-                             dimensionOfSimplex,
-                             newSimplexId);
+      diSimplex_release(&newSimplex);
       // raise an error!
       luaL_argerror(L, 2, "the simplex of all sides must already exist");
     }
     char strBuf[500];
     strBuf[0] = 0;
-    diSimplex_toString(aSide->diSiTT, aSide->dimension, aSide->simplex,
-                       strBuf, 500);
-    diSimplex_store_side(disitt,
-                         dimensionOfSimplex,
-                         newSimplexId,
-                         i-1,
-                         aSide->simplex);
+    diSimplex_toString(aSide, strBuf, 500);
+    diSimplex_store_side(&newSimplex, i-1, aSide);
   }
-  return diSimplexLua_return_simplex(L,
-                                  disitt,
-                                  dimensionOfSimplex,
-                                  newSimplexId);
+  return diSimplexLua_return_simplex_ref(L, &newSimplex);
 }
 
 ///
@@ -137,17 +123,11 @@ static int diSiTTLua_simplex(lua_State *L) {
 // @param diSiTT the diSiTT which will contain this structure.
 // @return a new diSimplexStructure.
 static int diSiTTLua_structure(lua_State *L) {
-  DiSiTT *disitt = checkDiSiTT(L);
+  DiStructureRef newStructure;
+  newStructure.diSiTT = checkDiSiTT(L);
 
-  DiStructureObj *diStructure =
-    (DiStructureObj *)lua_newuserdata(L, sizeof(DiStructureObj));
-
-  diStructure_init(diStructure, disitt);
-
-  luaL_getmetatable(L, DISTRUCTURE_TABLE_NAME);
-  lua_setmetatable(L, -2);
-
-  return 1;
+  diStructure_get_empty(&newStructure);
+  return diStructureLua_return_structure_ref(L, &newStructure);
 }
 
 static struct luaL_Reg diSiTTLua_functions[] = {

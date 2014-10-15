@@ -79,6 +79,8 @@ describe("universe", function()
 
 end)
 
+--[[
+
 describe("structure", function()
 
   it("should have two zero simplicies", function()
@@ -95,3 +97,5 @@ describe("structure", function()
   end)
 
 end)
+
+--]]

@@ -50,13 +50,27 @@ typedef int dimension_t;
 typedef unsigned int simplex_id;
 typedef unsigned int structure_id;
 
+// Ensure that a given dimensionn (and all smaller dimensions)
+// have been added to this DiSiTT's collection of simplicies
+//
+extern void diSitt_ensure_dimension(DiSiTT *disitt,
+                                    dimension_t newDimension);
+
+// Collect all unused diSimplicies and diStructures.
+extern void diSiTT_collect_garbage(DiSiTT *disitt);
+
+// ==========================================================================
+// DiSimplex objects
+
 typedef struct DiSimplexObjStruct {
   unsigned int flags;
   structure_id structure;
   simplex_id side[1];
 } DiSimplexObj;
 
-#define DISITT_DISIMPLEX_INUSE	1
+// diSimplex flags --- powers of 2 indexing in a bit-array
+#define DISITT_DISIMPLEX_INUSE	 1
+#define DISITT_DISIMPLEX_GC_MARK 2
 
 ///
 // Compute the size in bytes required to store an actual simplex structure
@@ -73,36 +87,22 @@ typedef struct DiSimplexRefStruct {
   simplex_id   simplex;
 } DiSimplexRef;
 
+// ==========================================================================
+// DiStructure objects
 
 typedef struct DiStructureObjStruct {
-  DiSiTT   *diSiTT;
+  unsigned int flags;
   DynArray *dimensions;
   DiSimplexRef curSimplex;
 } DiStructureObj;
 
+// diStructure flags --- powers of 2 indexing in a bit-array
+#define DISITT_DISTRUCTURE_INUSE   1
+#define DISITT_DISTRUCTURE_GC_MARK 2
 
-#define diSiTT_dimension_exists(disitt, dimension) \
-  ( dimension < (DynArray_len(disitt->simplicies)))
-
-// Ensure that a given dimensionn (and all smaller dimensions)
-// have been added to this DiSiTT's collection of simplicies
-//
-extern void diSitt_ensure_dimension(DiSiTT *disitt,
-                                    dimension_t newDimension);
-
-// Check that a give simplex exists
-extern bool diSiTT_simplex_exists(DiSiTT *disitt,
-                                  dimension_t dimension,
-                                  simplex_id  simplex);
-
-// Get the next available empty simplex for a given dimension
-extern simplex_id diSiTT_get_empty_simplex(DiSiTT     *disitt,
-                                           dimension_t dimension);
-
-// Return the given simplex to the pool of avaialble empty simpleices
-// for a given dimension
-extern void diSiTT_release_simplex(DiSiTT     *disitt,
-                                   dimension_t dimension,
-                                   simplex_id  simplex);
+typedef struct DiStructureRefStruct {
+  DiSiTT       *diSiTT;
+  structure_id  structure;
+} DiStructureRef;
 
 #endif
