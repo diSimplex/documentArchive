@@ -45,6 +45,7 @@ namespace :lua do
   # We use: https://github.com/nassersala/cbdd
   #
   cSpecs = FileList.new('design/**/*CSpec.c');
+  CLEAN.include('**/*.out')
   task :cspecs do
     cSpecs.each do | aCSpec |
       aCSpecRunner = aCSpec.sub(/\.c$/, '.out')
