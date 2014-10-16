@@ -90,9 +90,12 @@ typedef struct DiSimplexRefStruct {
 // ==========================================================================
 // DiStructure objects
 
+// Each of the DiStructureObj's dimensions is an ordered array of
+// simplexIds.
+
 typedef struct DiStructureObjStruct {
   unsigned int flags;
-  DynArray *dimensions;
+  DynArray *dimensions;  // a DynArray of DynArrays
   DiSimplexRef curSimplex;
 } DiStructureObj;
 

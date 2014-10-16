@@ -44,6 +44,19 @@ extern DynArray *DynArray_new(size_t elementSize, size_t initialCapacity);
   }
 
 ///
+// Macro to clean the existing DynArray.
+// @function DynArray_clear
+// @param dynArray :: DynArray*; the dynArray to be cleared.
+#define DynArray_clear(dynArray)					\
+  if (dynArray) {							\
+    (dynArray)->len = 0;						\
+    if ((dynArray)->data) {						\
+      memset( (dynArray)->data, 0, 					\
+        (((dynArray)->capacity) * ((dynArray)->elementSize)) );		\
+    }									\
+  }
+
+///
 // Return the current number of elements in the array.
 // @function DynArray_len
 // @param dynArray :: DynArray*; the dynArray.
@@ -114,6 +127,16 @@ extern void DynArray_increaseCapacity(DynArray *dynArray,
   ((elementType*)(((dynArray)->data)+(elementIndex*((dynArray)->elementSize))))
 
 ///
+// Return a pointer of type, elementType, to the last element
+// and then remove this last element.
+// @function DynArray_popLastElementPtr
+// @param dynArray :: DynArray*; the dynArray.
+// @param elementType :: macro-text; the C type of the element to which to case.
+// @return a type cast pointer to the requested element.
+#define DynArray_popLastElementPtr(dynArray, elementType)		\
+  ((elementType*)(((dynArray)->data)+((--((dynArray)->len))*((dynArray)->elementSize))))
+
+///
 // Add a new element of type
 // @function DynArray_addElement
 // @param dynArray :: DynArray*; the dynArray.
@@ -122,5 +145,6 @@ extern void DynArray_increaseCapacity(DynArray *dynArray,
 #define DynArray_addElement(dynArray, elementType, elementValue)	\
   DynArray_addZeroedElement(dynArray);					\
   (*(DynArray_getElementPtr(dynArray, (((dynArray)->len)-1), elementType))) = elementValue
+
 
 #endif

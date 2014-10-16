@@ -23,11 +23,11 @@ void diSiTT_init(DiSiTT *disitt) {
   disitt->emptySimplicies = DynArray_new(sizeof(simplex_id), 0);
   disitt->simplicies      = DynArray_new(sizeof(DynArray*),  0);
   disitt->emptyStructures = DynArray_new(sizeof(structure_id), 0);
-  disitt->structures      = DynArray_new(sizeof(DynArray*), 0);
+  disitt->structures      = DynArray_new(sizeof(DiStructureObj), 0);
 }
 
 ///
-// Ensure that a given dimensionn (and all smaller dimensions)
+// Ensure that a given dimension (and all smaller dimensions)
 // have been added to this DiSiTT's collection of simplicies.
 // @function diSiTT_ensure_dimension
 // @param disitt :: DiSiTT*; the diSiTT.

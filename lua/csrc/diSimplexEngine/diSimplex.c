@@ -43,8 +43,9 @@ bool diSimplex_exists(DiSimplexRef *simplex) {
 
 ///
 // Get the next available empty diSimplex for a given dimension. A partial
-// reference to the new diSimplex is passed in (diSiTT and dimension), and
-// the required simplex field is assigned on sucessful return.
+// reference to the new diSimplex is passed in (with valid diSiTT and
+// dimension fields), and the required simplex field is assigned on
+// sucessful return.
 // @function diSiTT_get_empty
 // @param newSimplex :: DiSimplexRef*; a partial reference to the new diSimplex.
 // @return bool; true if a new diSimplex has been allocated; false otherwise
@@ -92,8 +93,8 @@ bool diSimplex_get_empty(DiSimplexRef *newSimplex) {
   return true;
 }
 
-/// 
-// Release the given diSimplex to the pool of avaialble empty diSimpleices
+///
+// Release the given diSimplex to the pool of avaialble empty diSimplicies
 // for a given dimension
 // @function diSimplex_release
 // @param oldSimplex :: DiSimplexRef*; a reference to the diSimplex being released.
@@ -180,12 +181,13 @@ void diSimplex_store_side(DiSimplexRef *parentSimplex,
 ///
 // Get the requested side.
 // Sides are zero relative index as in traditional simplicial practice,
-// BUT the zeroth side represents the "definitional" simplex.
+// BUT the zeroth side represents the "definitional" simplex. A partial
+// diSimplex reference is passed in in the side simplex and is filled in
+// with a complete reference to the appropraite side diSimplex of the parent.
 // @function diSimplex_get_side
-// @param disitt :: DiSiTT*; the diSiTT which contains this diSimplex.
-// @param dimension :: dimension_t; the dimension of this diSimplex.
-// @param parentSimplexId :: simplex_id; the ID of the parent diSimplex.
+// @param parentSimplex :: DiSimplexRef*; a reference to the parent diSimplex.
 // @param sideNumber :: (signed) int; the side number to be returned.
+// @param sideSimplex :: DiSimplexRef*; a partial reference to the side diSimplex.
 bool diSimplex_get_side(DiSimplexRef *parentSimplex,
                       size_t        sideNumber,
                       DiSimplexRef *sideSimplex) {
@@ -222,9 +224,7 @@ bool diSimplex_get_side(DiSimplexRef *parentSimplex,
 ///
 // Return a string which represents/decodes this diSimplex instance.
 // @function diSimplex_toString
-// @param disitt :: DiSiTT*; the diSiTT which contains this diSimplex.
-// @param dimension :: dimension_t; the dimension of this diSimplex.
-// @param simplex_id :: simplex_id; the ID of this diSimplex.
+// @param simplex :: diSimplexRef*; a reference to the diSimplex.
 // @param buffer :: char*; the buffer which will contain the string.
 // @param bufferSize :: size_t; the total size of the buffer.
 void diSimplex_toString(DiSimplexRef *simplex,

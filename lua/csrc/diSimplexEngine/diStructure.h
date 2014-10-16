@@ -5,48 +5,60 @@
 #include "diSiTT.h"
 #include "diSimplex.h"
 
+#define diStructureRef_init(structureRef, diSiTTPtr, structureId)	\
+  if (structureRef) {							\
+    (structureRef)->diSiTT = (diSiTTPtr);				\
+    (structureRef)->structure = (structureId);				\
+  }
 
-
-//
-// Initialize a new diStructure object
-// @param diStructure the uninitialized diStructure
-// @param diSiTT the diSiTT environment in which this diStructure should exist
-// return[0] void
-extern void diStructure_init(DiStructureObj *diStructure,
-                             DiSiTT         *diSiTT);
 //
 // Return true if this diStructure still exists
-// @param diStructure this structure
-// @return[1] true if this diStructure exists; false otherwise
+// @param diStructure :: DiStructureRef*; a reference to a possible diStructure.
+// @return bool; true if this diStructure exists; false otherwise
 extern bool diStructure_exists(DiStructureRef *structure);
 
-// Get the next available empty diStructure
-extern structure_id diStructure_get_empty(DiSiTT *disitt);
-
-// Release the given diStructure back to the pool of available empty
-// diStructures.
-extern void diStructure_release(DiSiTT *disitt,
-                                     structure_id structureId);
+//
+// Get the next available empty diStructure. A partial reference
+// to the new diStructure is passed in (diSiTT), and
+// the required structure field is assigned on sucessful return.
+// @function diStructure_get_empty
+// @param structure :: DiStructureRef*; an partial empty diStructure.
+// @return bool; true if empty structure assigned; false otherwise.
+extern bool diStructure_get_empty(DiStructureRef *newStructure);
 
 //
-// Empty an existing diStructure
-// @function diStructure_empty
-// @param disitt :: DiSiTT*; the diSiTT.
-// @param structureId :: structure_id; the ID of the diStructure to empty.
-extern void diStructure_empty(DiSiTT *disitt, structure_id structureId);
+// Release the given diStructure back to the pool of available empty
+// diStructures.
+// @function diStructure_release
+// @param structure :: DiStructureRef*; the diStructure to be released.
+// @return bool; true if the diStructure has been sucessfully released; false otherwise.
+extern bool diStructure_release(DiStructureRef *structure);
 
 //
 // Return the number of simplicies of a given dimension in this structure
 // @param diStructure this structure
 // @param dimension the dimension to check
 // @return[1] number of simplicies
-extern int diStructure_size(DiStructureObj *diStructure, dimension_t dimension);
+extern size_t diStructure_size(DiStructureRef *diStructure, dimension_t dimension);
 
 //
 // Add an additional diSimplex to this structure
 // @param diStructure this structure
 // @param diSimplex the diSimplex to add
 // @return[1] true if diSimplex was added; false otherwise
-extern int diStructure_add(DiStructureObj *diStructure, DiSimplexRef *diSimplex);
+extern bool diStructure_add(DiStructureRef *diStructure, DiSimplexRef *diSimplex);
+
+//
+// Return the requested diSimplex
+// @function diStructure_get_simplex_number
+// @param diStructure :: DiStructureRef*; this structure.
+// @param dimension :: dimension_t; the required diSimplex dimension.
+// @param itemNumber :: size_t; the required diSimplex in the diStructure's or$
+// @param simplex :: DiSimplexRef*; an empty diSimplexRef which will be filled in with a valid diSimplex which is the requested simplex.
+// @return bool; true if the requested diSimplex has been found; false otherwise.
+extern bool diStructure_get_simplex_number(DiStructureRef *diStructure,
+                                           dimension_t dimension,
+                                           size_t itemNumber,
+                                           DiSimplexRef *simplex );
 
 #endif

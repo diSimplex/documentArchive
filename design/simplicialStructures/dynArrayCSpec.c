@@ -4,6 +4,11 @@
 
 #include <diSimplexEngine/dynArray.c>
 
+/* TODO: should actually test DynArray_addZeroedElement actually
+returns a zero element after pops.  However, at the moment this is not
+strictly needed. (DynArray_addZeroedElement is used and so tested in
+DynArray_addElement. */
+
 int main() {
   fprintf(stdout, "\n>>>dynArrayCSpec\n\n");
   fprintf(stdout, "size of        void* = %lu\n", sizeof(void*));
@@ -111,6 +116,140 @@ int main() {
       expect_equal(*DynArray_getElementPtr(dynArray, 12, long), 22L);
       expect_equal(*DynArray_getElementPtr(dynArray, 13, long), 23L);
       expect_equal(*DynArray_getElementPtr(dynArray, 14, long), 24L);
+      DynArray_free(dynArray);
+    });
+
+    it("can clear a dynArray after adding lots of new non-zero elements on the end", ^{
+      DynArray *dynArray = DynArray_new(sizeof(long), 0);
+      expect_equal(DynArray_len(dynArray), 0);
+      expect_equal(DynArray_capacity(dynArray), DYNARRAY_CAPACITY_INCREMENT);
+      expect_equal(DynArray_elementSize(dynArray), sizeof(long));
+      DynArray_addElement(dynArray, long, 10L);
+      DynArray_addElement(dynArray, long, 11L);
+      DynArray_addElement(dynArray, long, 12L);
+      DynArray_addElement(dynArray, long, 13L);
+      DynArray_addElement(dynArray, long, 14L);
+      DynArray_addElement(dynArray, long, 15L);
+      DynArray_addElement(dynArray, long, 16L);
+      DynArray_addElement(dynArray, long, 17L);
+      DynArray_addElement(dynArray, long, 18L);
+      DynArray_addElement(dynArray, long, 19L);
+      DynArray_addElement(dynArray, long, 20L);
+      DynArray_addElement(dynArray, long, 21L);
+      DynArray_addElement(dynArray, long, 22L);
+      DynArray_addElement(dynArray, long, 23L);
+      DynArray_addElement(dynArray, long, 24L);
+      expect_equal(DynArray_len(dynArray), 15);
+      expect_equal(DynArray_capacity(dynArray), 2*DYNARRAY_CAPACITY_INCREMENT);
+      expect_equal(DynArray_elementSize(dynArray), sizeof(long));
+      expect_equal(*DynArray_getElementPtr(dynArray,  0, long), 10L);
+      expect_equal(*DynArray_getElementPtr(dynArray,  1, long), 11L);
+      expect_equal(*DynArray_getElementPtr(dynArray,  2, long), 12L);
+      expect_equal(*DynArray_getElementPtr(dynArray,  3, long), 13L);
+      expect_equal(*DynArray_getElementPtr(dynArray,  4, long), 14L);
+      expect_equal(*DynArray_getElementPtr(dynArray,  5, long), 15L);
+      expect_equal(*DynArray_getElementPtr(dynArray,  6, long), 16L);
+      expect_equal(*DynArray_getElementPtr(dynArray,  7, long), 17L);
+      expect_equal(*DynArray_getElementPtr(dynArray,  8, long), 18L);
+      expect_equal(*DynArray_getElementPtr(dynArray,  9, long), 19L);
+      expect_equal(*DynArray_getElementPtr(dynArray, 10, long), 20L);
+      expect_equal(*DynArray_getElementPtr(dynArray, 11, long), 21L);
+      expect_equal(*DynArray_getElementPtr(dynArray, 12, long), 22L);
+      expect_equal(*DynArray_getElementPtr(dynArray, 13, long), 23L);
+      expect_equal(*DynArray_getElementPtr(dynArray, 14, long), 24L);
+      DynArray_clear(dynArray);
+      expect_equal(DynArray_len(dynArray), 0);
+      expect_equal(DynArray_capacity(dynArray), 2*DYNARRAY_CAPACITY_INCREMENT);
+      expect_equal(DynArray_elementSize(dynArray), sizeof(long));
+      expect_equal(*DynArray_getElementPtr(dynArray,  0, long), 0L);
+      expect_equal(*DynArray_getElementPtr(dynArray,  1, long), 0L);
+      expect_equal(*DynArray_getElementPtr(dynArray,  2, long), 0L);
+      expect_equal(*DynArray_getElementPtr(dynArray,  3, long), 0L);
+      expect_equal(*DynArray_getElementPtr(dynArray,  4, long), 0L);
+      expect_equal(*DynArray_getElementPtr(dynArray,  5, long), 0L);
+      expect_equal(*DynArray_getElementPtr(dynArray,  6, long), 0L);
+      expect_equal(*DynArray_getElementPtr(dynArray,  7, long), 0L);
+      expect_equal(*DynArray_getElementPtr(dynArray,  8, long), 0L);
+      expect_equal(*DynArray_getElementPtr(dynArray,  9, long), 0L);
+      expect_equal(*DynArray_getElementPtr(dynArray, 10, long), 0L);
+      expect_equal(*DynArray_getElementPtr(dynArray, 11, long), 0L);
+      expect_equal(*DynArray_getElementPtr(dynArray, 12, long), 0L);
+      expect_equal(*DynArray_getElementPtr(dynArray, 13, long), 0L);
+      expect_equal(*DynArray_getElementPtr(dynArray, 14, long), 0L);
+      DynArray_free(dynArray);
+    });
+
+    it("can pop elements off the end after adding lots of new non-zero elements on the end", ^{
+      DynArray *dynArray = DynArray_new(sizeof(long), 0);
+      expect_equal(DynArray_len(dynArray), 0);
+      expect_equal(DynArray_capacity(dynArray), DYNARRAY_CAPACITY_INCREMENT);
+      expect_equal(DynArray_elementSize(dynArray), sizeof(long));
+      DynArray_addElement(dynArray, long, 10L);
+      DynArray_addElement(dynArray, long, 11L);
+      DynArray_addElement(dynArray, long, 12L);
+      DynArray_addElement(dynArray, long, 13L);
+      DynArray_addElement(dynArray, long, 14L);
+      DynArray_addElement(dynArray, long, 15L);
+      DynArray_addElement(dynArray, long, 16L);
+      DynArray_addElement(dynArray, long, 17L);
+      DynArray_addElement(dynArray, long, 18L);
+      DynArray_addElement(dynArray, long, 19L);
+      DynArray_addElement(dynArray, long, 20L);
+      DynArray_addElement(dynArray, long, 21L);
+      DynArray_addElement(dynArray, long, 22L);
+      DynArray_addElement(dynArray, long, 23L);
+      DynArray_addElement(dynArray, long, 24L);
+      expect_equal(DynArray_len(dynArray), 15);
+      expect_equal(DynArray_capacity(dynArray), 2*DYNARRAY_CAPACITY_INCREMENT);
+      expect_equal(DynArray_elementSize(dynArray), sizeof(long));
+      expect_equal(*DynArray_getElementPtr(dynArray,  0, long), 10L);
+      expect_equal(*DynArray_getElementPtr(dynArray,  1, long), 11L);
+      expect_equal(*DynArray_getElementPtr(dynArray,  2, long), 12L);
+      expect_equal(*DynArray_getElementPtr(dynArray,  3, long), 13L);
+      expect_equal(*DynArray_getElementPtr(dynArray,  4, long), 14L);
+      expect_equal(*DynArray_getElementPtr(dynArray,  5, long), 15L);
+      expect_equal(*DynArray_getElementPtr(dynArray,  6, long), 16L);
+      expect_equal(*DynArray_getElementPtr(dynArray,  7, long), 17L);
+      expect_equal(*DynArray_getElementPtr(dynArray,  8, long), 18L);
+      expect_equal(*DynArray_getElementPtr(dynArray,  9, long), 19L);
+      expect_equal(*DynArray_getElementPtr(dynArray, 10, long), 20L);
+      expect_equal(*DynArray_getElementPtr(dynArray, 11, long), 21L);
+      expect_equal(*DynArray_getElementPtr(dynArray, 12, long), 22L);
+      expect_equal(*DynArray_getElementPtr(dynArray, 13, long), 23L);
+      expect_equal(*DynArray_getElementPtr(dynArray, 14, long), 24L);
+      expect_equal(DynArray_len(dynArray), 15);
+      expect_equal(*DynArray_popLastElementPtr(dynArray, long), 24L);
+      expect_equal(DynArray_len(dynArray), 14);
+      expect_equal(*DynArray_popLastElementPtr(dynArray, long), 23L);
+      expect_equal(DynArray_len(dynArray), 13);
+      expect_equal(*DynArray_popLastElementPtr(dynArray, long), 22L);
+      expect_equal(DynArray_len(dynArray), 12);
+      expect_equal(*DynArray_popLastElementPtr(dynArray, long), 21L);
+      expect_equal(DynArray_len(dynArray), 11);
+      expect_equal(*DynArray_popLastElementPtr(dynArray, long), 20L);
+      expect_equal(DynArray_len(dynArray), 10);
+      expect_equal(*DynArray_popLastElementPtr(dynArray, long), 19L);
+      expect_equal(DynArray_len(dynArray), 9);
+      expect_equal(*DynArray_popLastElementPtr(dynArray, long), 18L);
+      expect_equal(DynArray_len(dynArray), 8);
+      expect_equal(*DynArray_popLastElementPtr(dynArray, long), 17L);
+      expect_equal(DynArray_len(dynArray), 7);
+      expect_equal(*DynArray_popLastElementPtr(dynArray, long), 16L);
+      expect_equal(DynArray_len(dynArray), 6);
+      expect_equal(*DynArray_popLastElementPtr(dynArray, long), 15L);
+      expect_equal(DynArray_len(dynArray), 5);
+      expect_equal(*DynArray_popLastElementPtr(dynArray, long), 14L);
+      expect_equal(DynArray_len(dynArray), 4);
+      expect_equal(*DynArray_popLastElementPtr(dynArray, long), 13L);
+      expect_equal(DynArray_len(dynArray), 3);
+      expect_equal(*DynArray_popLastElementPtr(dynArray, long), 12L);
+      expect_equal(DynArray_len(dynArray), 2);
+      expect_equal(*DynArray_popLastElementPtr(dynArray, long), 11L);
+      expect_equal(DynArray_len(dynArray), 1);
+      expect_equal(*DynArray_popLastElementPtr(dynArray, long), 10L);
+      expect_equal(DynArray_len(dynArray), 0);
+      expect_equal(DynArray_capacity(dynArray), 2*DYNARRAY_CAPACITY_INCREMENT);
+      expect_equal(DynArray_elementSize(dynArray), sizeof(long));
       DynArray_free(dynArray);
     });
 

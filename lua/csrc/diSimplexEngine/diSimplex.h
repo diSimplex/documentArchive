@@ -4,6 +4,13 @@
 #include "dynArray.h"
 #include "diSiTT.h"
 
+#define diSimplexRef_init(diSimplexRef, diSiTTPtr, dimensionId, simplexId) \
+  if (diSimplexRef) {							   \
+    (diSimplexRef)->diSiTT    = diSiTTPtr;				   \
+    (diSimplexRef)->dimension = dimensionId;				   \
+    (diSimplexRef)->simplex   = simplexId;				   \
+  }
+
 // Check that a give diSimplex exists
 extern bool diSimplex_exists(DiSimplexRef *simplex);
 

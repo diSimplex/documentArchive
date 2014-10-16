@@ -79,8 +79,6 @@ describe("universe", function()
 
 end)
 
---[[
-
 describe("structure", function()
 
   it("should have two zero simplicies", function()
@@ -88,14 +86,16 @@ describe("structure", function()
     local a = disitt:simplex({})
     local b = disitt:simplex({})
     assert.is.equal(struct:size(0),0)
+    assert.is.equal(struct:size(1),0)
     struct:add(a)
     assert.is.equal(struct:size(0),1)
+    assert.is.equal(struct:size(1),0)
     struct:add(b)
     assert.is.equal(struct:size(0),2)
+    assert.is.equal(struct:size(1),0)
     assert.is.equal(struct:simplex(0,0), a)
     assert.is.equal(struct:simplex(0,1), b)
   end)
 
 end)
 
---]]
