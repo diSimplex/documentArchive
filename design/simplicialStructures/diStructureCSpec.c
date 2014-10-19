@@ -22,16 +22,16 @@ int main() {
 
   describe("diStructures", ^{
 
-    it("should get and return some empty structures", ^{
+    it("should get and return some initial structures", ^{
       DiStructureRef newStructure0;
       diStructureRef_init(&newStructure0, disitt0, 0);
-      expect_true(diStructure_get_empty(&newStructure0));
+      expect_true(diStructure_get_initial(&newStructure0));
       expect_true(newStructure0.diSiTT == disitt0);
       expect_equal(newStructure0.structure, 0);
       expect_true(diStructure_exists(&newStructure0));
       DiStructureRef newStructure1;
       diStructureRef_init(&newStructure1, disitt0, 0);
-      expect_true(diStructure_get_empty(&newStructure1));
+      expect_true(diStructure_get_initial(&newStructure1));
       expect_true(newStructure1.diSiTT == disitt0);
       expect_equal(newStructure1.structure, 1);
       expect_true(diStructure_exists(&newStructure1));
@@ -40,7 +40,7 @@ int main() {
     it("diStructures should be properly formed (before use)", ^{
       DiStructureRef newStructure0;
       diStructureRef_init(&newStructure0, disitt0, 0);
-      expect_true(diStructure_get_empty(&newStructure0));
+      expect_true(diStructure_get_initial(&newStructure0));
       expect_true(newStructure0.diSiTT == disitt0);
       expect_equal(newStructure0.structure, 2);
       expect_true(diStructure_exists(&newStructure0));
@@ -56,10 +56,10 @@ int main() {
       expect_true(structureObj->flags && DISITT_DISTRUCTURE_INUSE);
     });
 
-    it("should have empty DynArray structures (after diStructure_ensure_dimension_exists)", ^{
+    it("should have initial DynArray structures (after diStructure_ensure_dimension_exists)", ^{
       DiStructureRef newStructure0;
       diStructureRef_init(&newStructure0, disitt0, 0);
-      expect_true(diStructure_get_empty(&newStructure0));
+      expect_true(diStructure_get_initial(&newStructure0));
       expect_true(newStructure0.diSiTT == disitt0);
       expect_equal(newStructure0.structure, 3);
       expect_true(diStructure_exists(&newStructure0));
@@ -79,10 +79,10 @@ int main() {
       }
     });
 
-    it("should have non-empty DynArray structures (after adding a simplex)", ^{
+    it("should have non-initial DynArray structures (after adding a simplex)", ^{
       DiStructureRef newStructure0;
       diStructureRef_init(&newStructure0, disitt0, 0);
-      expect_true(diStructure_get_empty(&newStructure0));
+      expect_true(diStructure_get_initial(&newStructure0));
       expect_true(newStructure0.diSiTT == disitt0);
       expect_equal(newStructure0.structure, 4);
       expect_true(diStructure_exists(&newStructure0));
@@ -131,15 +131,15 @@ int main() {
       expect_false(diStructure_exists(&structure2));
       DiStructureRef newStructure2;
       diStructureRef_init(&newStructure2, disitt0, 0);
-      expect_true(diStructure_get_empty(&newStructure2));
+      expect_true(diStructure_get_initial(&newStructure2));
       expect_equal(newStructure2.structure, 2);
       DiStructureRef newStructure3;
       diStructureRef_init(&newStructure3, disitt0, 0);
-      expect_true(diStructure_get_empty(&newStructure3));
+      expect_true(diStructure_get_initial(&newStructure3));
       expect_equal(newStructure3.structure, 3);
       DiStructureRef newStructure5;
       diStructureRef_init(&newStructure5, disitt0, 0);
-      expect_true(diStructure_get_empty(&newStructure5));
+      expect_true(diStructure_get_initial(&newStructure5));
       expect_equal(newStructure5.structure, 5);
     });
 

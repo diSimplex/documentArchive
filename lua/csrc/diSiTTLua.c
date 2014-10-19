@@ -39,21 +39,29 @@ static int diSiTTLua_toString(lua_State *L) {
 }
 
 ///
-// Return the universe simplex of a given dimension.
-// @function universe
-// @param diSiTT the diSiTT object which contains this universe.
-// @param dimension The dimension of the requested universe simplex.
-// @return The requested universe simplex
+// Return the terminal diStructure of a given dimension.
+// @function terminal
+// @param diSiTT the diSiTT object which contains this terminal.
+// @param dimension The dimension of the requested terminal diStructure.
+// @return The requested terminal diStructure
 //
-static int diSiTTLua_universe(lua_State *L) {
-  DiSimplexRef universeSimplex;
-  universeSimplex.diSiTT = checkDiSiTT(L);
+static int diSiTTLua_terminal(lua_State *L) {
+  DiStructureRef terminalStructure;
+  terminalStructure.diSiTT = checkDiSiTT(L);
   int unCheckedDimension = luaL_checkint(L, 2);
   luaL_argcheck(L, -1 <= unCheckedDimension, 2, "dimensions must be greater than or equal to -1");
-  universeSimplex.dimension = (dimension_t)unCheckedDimension;
-  diSiTT_ensure_dimension(universeSimplex.diSiTT, universeSimplex.dimension);
-  universeSimplex.simplex = 0;
-  return diSimplexLua_return_simplex_ref(L, &universeSimplex);
+  dimension_t dimension = (dimension_t)unCheckedDimension;
+  diSiTT_ensure_dimension(terminalStructure.diSiTT, dimension);
+  diStructure_get_initial(&terminalStructure);
+  dimension_t i = 0;
+  for (; i < dimension; i++) {
+    DiSimplexRef terminalSimplex;
+    terminalSimplex.diSiTT    = terminalStructure.diSiTT;
+    terminalSimplex.dimension = i;
+    terminalSimplex.simplex   = 0; // the terminal simplex of any dimension
+    diStructure_add(&terminalStructure, &terminalSimplex);
+  }
+  return diStructureLua_return_structure_ref(L, &terminalStructure);
 }
 
 ///
@@ -118,16 +126,16 @@ static int diSiTTLua_simplex(lua_State *L) {
 }
 
 ///
-// Create a new diSimplexStructure containing the given sides.
-// @function structure
+// Create a new initial diSimplexStructure (containing no diSimplicies).
+// @function initial
 // @param diSiTT the diSiTT which will contain this structure.
-// @return a new diSimplexStructure.
-static int diSiTTLua_structure(lua_State *L) {
-  DiStructureRef newStructure;
-  newStructure.diSiTT = checkDiSiTT(L);
+// @return a new initial diSimplexStructure.
+static int diSiTTLua_initial(lua_State *L) {
+  DiStructureRef initialStructure;
+  initialStructure.diSiTT = checkDiSiTT(L);
 
-  diStructure_get_empty(&newStructure);
-  return diStructureLua_return_structure_ref(L, &newStructure);
+  diStructure_get_initial(&initialStructure);
+  return diStructureLua_return_structure_ref(L, &initialStructure);
 }
 
 static struct luaL_Reg diSiTTLua_functions[] = {
@@ -137,9 +145,9 @@ static struct luaL_Reg diSiTTLua_functions[] = {
 
 static struct luaL_Reg diSiTTLua_meta_functions[] = {
   {"__tostring", diSiTTLua_toString},
-  {"universe",   diSiTTLua_universe},
+  {"terminal",   diSiTTLua_terminal},
   {"simplex",    diSiTTLua_simplex},
-  {"structure",  diSiTTLua_structure},
+  {"initial",    diSiTTLua_initial},
   {NULL, NULL}
 };
 

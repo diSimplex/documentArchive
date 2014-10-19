@@ -18,13 +18,13 @@
 extern bool diStructure_exists(DiStructureRef *structure);
 
 //
-// Get the next available empty diStructure. A partial reference
+// Get the next available initial (empty) diStructure. A partial reference
 // to the new diStructure is passed in (diSiTT), and
 // the required structure field is assigned on sucessful return.
-// @function diStructure_get_empty
-// @param structure :: DiStructureRef*; an partial empty diStructure.
-// @return bool; true if empty structure assigned; false otherwise.
-extern bool diStructure_get_empty(DiStructureRef *newStructure);
+// @function diStructure_get_initial
+// @param structure :: DiStructureRef*; an partial initial (empty) diStructure.
+// @return bool; true if initial (empty) structure assigned; false otherwise.
+extern bool diStructure_get_initial(DiStructureRef *initialStructure);
 
 //
 // Release the given diStructure back to the pool of available empty

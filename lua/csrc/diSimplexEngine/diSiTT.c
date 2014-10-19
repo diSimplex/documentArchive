@@ -54,16 +54,16 @@ void diSiTT_ensure_dimension(DiSiTT *disitt,
   //
   DynArray *newDimensionArray = DynArray_new(DiSimplexObjSize(newDimension), 0);
   //
-  // a universe simplex for a given dimension has all sides zero which hence
-  // points to the universe simplex for the next lower dimension.
+  // a terminal simplex for a given dimension has all sides zero which hence
+  // points to the terminal simplex for the next lower dimension.
   // So adding a zero element (and doing nothing else) ensures that
-  // the element is a universe simplex. BUT we must assert that the universe
+  // the element is a terminal simplex. BUT we must assert that the terminal
   // simplex is DISITT_DISIMPLEX_INUSE.
   //
   DynArray_addZeroedElement(newDimensionArray);
-  DiSimplexObj *universeSimplex =
+  DiSimplexObj *terminalSimplex =
     DynArray_getElementPtr(newDimensionArray, 0, DiSimplexObj);
-  universeSimplex->flags |= DISITT_DISIMPLEX_INUSE;
+  terminalSimplex->flags |= DISITT_DISIMPLEX_INUSE;
   //
   // now place this new DynArray onto the end of the simplicies array
   //

@@ -199,37 +199,37 @@ int main() {
 
   });
 
-  describe("universe simplicies", ^{
+  describe("terminal simplicies", ^{
 
     it("should exist", ^{
       diSiTT_ensure_dimension(disitt1, 5);
-      DiSimplexRef universeSimplex;
-      universeSimplex.diSiTT    = disitt1;
-      universeSimplex.simplex   = 0;
+      DiSimplexRef terminalSimplex;
+      terminalSimplex.diSiTT    = disitt1;
+      terminalSimplex.simplex   = 0;
 
-      universeSimplex.dimension = 0;
-      expect_true(diSimplex_exists(&universeSimplex));
+      terminalSimplex.dimension = 0;
+      expect_true(diSimplex_exists(&terminalSimplex));
 
-      universeSimplex.dimension = 1;
-      expect_true(diSimplex_exists(&universeSimplex));
+      terminalSimplex.dimension = 1;
+      expect_true(diSimplex_exists(&terminalSimplex));
 
-      universeSimplex.dimension = 2;
-      expect_true(diSimplex_exists(&universeSimplex));
+      terminalSimplex.dimension = 2;
+      expect_true(diSimplex_exists(&terminalSimplex));
 
-      universeSimplex.dimension = 3;
-      expect_true(diSimplex_exists(&universeSimplex));
+      terminalSimplex.dimension = 3;
+      expect_true(diSimplex_exists(&terminalSimplex));
 
-      universeSimplex.dimension = 4;
-      expect_true(diSimplex_exists(&universeSimplex));
+      terminalSimplex.dimension = 4;
+      expect_true(diSimplex_exists(&terminalSimplex));
 
-      universeSimplex.dimension = 5;
-      expect_true(diSimplex_exists(&universeSimplex));
+      terminalSimplex.dimension = 5;
+      expect_true(diSimplex_exists(&terminalSimplex));
 
-      universeSimplex.dimension = 6;
-      expect_false(diSimplex_exists(&universeSimplex));
+      terminalSimplex.dimension = 6;
+      expect_false(diSimplex_exists(&terminalSimplex));
 
-      universeSimplex.dimension = 7;
-      expect_false(diSimplex_exists(&universeSimplex));
+      terminalSimplex.dimension = 7;
+      expect_false(diSimplex_exists(&terminalSimplex));
     });
   });
 

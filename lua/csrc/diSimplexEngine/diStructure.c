@@ -33,16 +33,16 @@ bool diStructure_exists(DiStructureRef *structure) {
 }
 
 ///
-// Get the next available empty diStructure. A partial reference
+// Get the next available initial (empty) diStructure. A partial reference
 // to the new diStructure is passed in (with a valid diSiTT field), and
 // the required structure field is assigned on sucessful return.
-// @function diStructure_get_empty
-// @param structure :: DiStructureRef*; an partial empty diStructure.
-// @return bool; true if empty structure assigned; false otherwise.
-bool diStructure_get_empty(DiStructureRef *newStructure) {
+// @function diStructure_get_initial
+// @param structure :: DiStructureRef*; an partial initial (empty) diStructure.
+// @return bool; true if initial (empty) structure assigned; false otherwise.
+bool diStructure_get_initial(DiStructureRef *initialStructure) {
 
-  DiSiTT *diSiTT = newStructure->diSiTT;
-  newStructure->structure = 0;
+  DiSiTT *diSiTT = initialStructure->diSiTT;
+  initialStructure->structure = 0;
 
   // the disitt->emptyStructures DynArray is used as a push down queue
   // of empty diStructures. If it is not empty, then we simply reuse
@@ -51,40 +51,40 @@ bool diStructure_get_empty(DiStructureRef *newStructure) {
   if ( 0 < DynArray_len(diSiTT->emptyStructures) ) {
     // there is at least one already existing empty diStructure....
     // so pop it off the end of the emptyStructures dynArray and use it.
-    newStructure->structure =
+    initialStructure->structure =
       *DynArray_popLastElementPtr(diSiTT->emptyStructures, structure_id);
   } else {
     // there are no emptyStructures which we can reuse... so create a new one.
     DynArray_addZeroedElement(diSiTT->structures);
-    newStructure->structure = DynArray_len(diSiTT->structures)-1; // adjust to zero realitive index
+    initialStructure->structure = DynArray_len(diSiTT->structures)-1; // adjust to zero realitive index
   }
 
   // (re)initialize this empty diStructure before returning it
-  DiStructureObj *newStructureObj =
+  DiStructureObj *initialStructureObj =
     DynArray_getElementPtr(diSiTT->structures,
-                           newStructure->structure, DiStructureObj);
-  if ( newStructureObj->dimensions ) {
+                           initialStructure->structure, DiStructureObj);
+  if ( initialStructureObj->dimensions ) {
     // this newStructureObj already has a dynArray assigned to it
     // so walk through each existing dimension
     // and clear its list of simplicies (clear its DynArray)
-    size_t numDimensions = DynArray_len(newStructureObj->dimensions);
+    size_t numDimensions = DynArray_len(initialStructureObj->dimensions);
     int i = 0;
     for (i = 0; i < numDimensions; i++) {
       DynArray *simplicies =
-        *DynArray_getElementPtr(newStructureObj->dimensions, i, DynArray*);
+        *DynArray_getElementPtr(initialStructureObj->dimensions, i, DynArray*);
       DynArray_clear(simplicies);
     }
   } else {
     // this is a completely new diStructure
     // so we need to assign it a new DynArray
-    newStructureObj->dimensions = DynArray_new(sizeof(DynArray*), 0);
+    initialStructureObj->dimensions = DynArray_new(sizeof(DynArray*), 0);
   }
   // mark this diStructure as "INUSE"
-  newStructureObj->flags |= DISITT_DISTRUCTURE_INUSE;
+  initialStructureObj->flags |= DISITT_DISTRUCTURE_INUSE;
   // (re)initialize all fields
-  newStructureObj->curSimplex.diSiTT    = diSiTT;
-  newStructureObj->curSimplex.dimension = 0;
-  newStructureObj->curSimplex.simplex   = 0; // the universal zero-simplex
+  initialStructureObj->curSimplex.diSiTT    = diSiTT;
+  initialStructureObj->curSimplex.dimension = 0;
+  initialStructureObj->curSimplex.simplex   = 0; // the terminal zero-simplex
   return true;
 }
 
