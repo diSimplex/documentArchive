@@ -11,8 +11,8 @@ DynArray_addElement. */
 
 int main() {
   fprintf(stdout, "\n>>>dynArrayCSpec\n\n");
-  fprintf(stdout, "size of        void* = %lu\n", sizeof(void*));
-  fprintf(stdout, "size of     DynArray = %lu",   sizeof(DynArray));
+  fprintf(stdout, "size of        void* = %u\n", sizeof(void*));
+  fprintf(stdout, "size of     DynArray = %u",   sizeof(DynArray));
   fprintf(stdout, "   + DynArray_capacity()*DynArray_elementSize()\n");
   fprintf(stdout, "\n");
 

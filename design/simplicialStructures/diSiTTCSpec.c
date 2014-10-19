@@ -18,15 +18,15 @@ int main() {
   diSiTT_init(disitt1);
 
   fprintf(stdout, "\n>>>diSiTTCSpec\n\n");
-  fprintf(stdout, "size of             int = %lu\n", sizeof(int));
-  fprintf(stdout, "size of     dimension_t = %lu\n", sizeof(dimension_t));
-  fprintf(stdout, "size of      simplex_id = %lu\n", sizeof(simplex_id));
-  fprintf(stdout, "size of           void* = %lu\n", sizeof(void*));
-  fprintf(stdout, "size of          DiSiTT = %lu\n", sizeof(DiSiTT));
-  fprintf(stdout, "size of    DiSimplexObj = %lu",   sizeof(DiSimplexObj));
+  fprintf(stdout, "size of             int = %u\n", sizeof(int));
+  fprintf(stdout, "size of     dimension_t = %u\n", sizeof(dimension_t));
+  fprintf(stdout, "size of      simplex_id = %u\n", sizeof(simplex_id));
+  fprintf(stdout, "size of           void* = %u\n", sizeof(void*));
+  fprintf(stdout, "size of          DiSiTT = %u\n", sizeof(DiSiTT));
+  fprintf(stdout, "size of    DiSimplexObj = %u",   sizeof(DiSimplexObj));
   fprintf(stdout, "   + (dimension + 1)*sizeof(int)\n");
-  fprintf(stdout, "size of DiSimplexObj(1) = %lu\n",  DiSimplexObjSize(1));
-  fprintf(stdout, "size of    DiSimplexRef = %lu\n", sizeof(DiSimplexRef));
+  fprintf(stdout, "size of DiSimplexObj(1) = %u\n",  DiSimplexObjSize(1));
+  fprintf(stdout, "size of    DiSimplexRef = %u\n", sizeof(DiSimplexRef));
   fprintf(stdout, "\n");
 
   describe("DiSiTT engine", ^{
