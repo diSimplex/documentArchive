@@ -10,6 +10,7 @@
 			- [Why are we *not* interested in using "game semantics"?](#why-are-we-not-interested-in-using-game-semantics)
 			- [Researchers in computational semantics](#researchers-in-computational-semantics)
 			- [Resources for computational semantics](#resources-for-computational-semantics)
+			- [Resources for simplicial sturctures](#resources-for-simplicial-sturctures)
 		- [What is the "size" of a constructive mathematics which allows for coalgebraicly defined (imprecise) reals?](#what-is-the-size-of-a-constructive-mathematics-which-allows-for-coalgebraicly-defined-imprecise-reals)
 		- [Type theory](#type-theory)
 	- [Wrap-up](#wrap-up)
@@ -155,6 +156,10 @@ The *most* ***important*** point is that FP/FL tries to build a *simple*
 functional language which has a specific Denotational model. 
 Unfortunately it is a strcit rather than a lazy language, but many of 
 the ideas are helpful in understanding the overall problem.
+
+#### Resources for simplicial sturctures
+
+* [An elementary illustrated introduction to simplicial sets](http://arxiv.org/abs/0809.4221).
 
 
 ### What is the "size" of a constructive mathematics which allows for coalgebraicly defined (imprecise) reals?

@@ -7,6 +7,11 @@
 	- [Busted/RSpec specifications](#bustedrspec-specifications)
 	- [Questions and Risks](#questions-and-risks)
 		- [What syntax will be used for the DiSiTT engine?](#what-syntax-will-be-used-for-the-disitt-engine)
+		- [What is the mapping between the natural deduction and haskell syntax?](#what-is-the-mapping-between-the-natural-deduction-and-haskell-syntax)
+		- [Why does Haskell not have a begin/end like block to contain local variables?](#why-does-haskell-not-have-a-beginend-like-block-to-contain-local-variables)
+		- [What is the meaning of an individual rule?](#what-is-the-meaning-of-an-individual-rule)
+		- [How are groups of rules related versus haskell's pattern matching?](#how-are-groups-of-rules-related-versus-haskell's-pattern-matching)
+		- [What are "definitional" "objects"?](#what-are-definitional-objects)
 	- [Wrap-up](#wrap-up)
 
 # Sprint 003 Engine syntax
