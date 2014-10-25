@@ -30,13 +30,8 @@ bool diStructure_contained_in(DiStructureRef *myStructure,
 // @param diStructure :: DiStructureRef*; this diStructure.
 // @return boolean; true if this diStructure exists; false otherwise
 bool diStructure_exists(DiStructureRef *structure) {
-  DiSiTT *diSiTT = structure->diSiTT;
 
-  if (DynArray_len(diSiTT->structures) <= structure->structure) return false;
-
-  DiStructureObj *structureObj =
-    DynArray_getElementPtr(structure->diSiTT->structures,
-                            structure->structure, DiStructureObj);
+  diStructureRef_get_structureObj_or_return_false(structure, structureObj);
   if (structureObj->flags && DISITT_DISTRUCTURE_INUSE) {
       return true;
   }
@@ -162,18 +157,11 @@ int diStructure_ensure_dimension_exists(DiStructureObj *diStructure,
 // @return int; number of simplicies
 size_t diStructure_size(DiStructureRef *diStructure, dimension_t dimension) {
 
-  if ( dimension < -1 ) return 0;
-  if ( dimension == -1 ) dimension = 0;
+  diStructureRef_get_structureObj_or_return_false(diStructure, diStructureObj);
 
-  DiStructureObj *diStructureObj =
-    DynArray_getElementPtr(diStructure->diSiTT->structures,
-                           diStructure->structure,
-                           DiStructureObj);
+  diStructureRef_get_simplicies_or_return_false(diStructureObj,
+                                                dimension, simplicies);
 
-  if ( DynArray_len(diStructureObj->dimensions) <= dimension ) return 0;
-
-  DynArray *simplicies =
-    *DynArray_getElementPtr(diStructureObj->dimensions, dimension, DynArray*);
   return DynArray_len( simplicies );
 }
 
@@ -191,19 +179,14 @@ bool diStructure_add(DiStructureRef *diStructure, DiSimplexRef *diSimplex) {
 
   if (diStructure->diSiTT != diSimplex->diSiTT) return false;
 
-  DiSiTT *disitt = diStructure->diSiTT;
-  DiStructureObj *diStructureObj =
-    DynArray_getElementPtr(disitt->structures,
-                           diStructure->structure,
-                           DiStructureObj);
+  diStructureRef_get_structureObj_or_return_false(diStructure, diStructureObj);
 
   dimension_t dimension = diSimplex->dimension;
   if (dimension < 0) dimension = 0;
   diStructure_ensure_dimension_exists(diStructureObj, dimension);
 
-  // get the dynArray for this diStructure's dimension
-  DynArray *simplicies =
-    *DynArray_getElementPtr(diStructureObj->dimensions, dimension, DynArray*);
+  diStructureRef_get_simplicies_or_return_false(diStructureObj,
+                                                dimension, simplicies);
 
   DynArray_addElement(simplicies, simplex_id, diSimplex->simplex);
 
@@ -222,27 +205,20 @@ bool diStructure_get_simplex_number(DiStructureRef *diStructure,
                                     dimension_t dimension,
                                     size_t itemNumber,
                                     DiSimplexRef *simplex ) {
-  if ( dimension < -1 ) return false;
-  if ( dimension == -1 ) dimension = 0;
 
-  DiSiTT *disitt = diStructure->diSiTT;
-  DiStructureObj *diStructureObj =
-    DynArray_getElementPtr(disitt->structures,
-                           diStructure->structure,
-                           DiStructureObj);
+  diStructureRef_get_structureObj_or_return_false(diStructure, diStructureObj);
 
-  if ( DynArray_len(diStructureObj->dimensions) <= dimension ) return false;
-
-  DynArray *simplicies =
-    *DynArray_getElementPtr(diStructureObj->dimensions, dimension, DynArray*);
+  diStructureRef_get_simplicies_or_return_false(diStructureObj,
+                                                dimension, simplicies);
 
   //if ( itemNumber < 0 ) return false;
   if ( DynArray_len(simplicies) <= itemNumber ) return false;
 
-  simplex->diSiTT    = disitt;
+  simplex->diSiTT    = diStructure->diSiTT;
   simplex->dimension = dimension;
   simplex->simplex   =
     *DynArray_getElementPtr(simplicies, itemNumber, simplex_id);
+  simplex->structure = diStructure->structure;
 
   return true;
 }

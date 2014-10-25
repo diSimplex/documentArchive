@@ -269,6 +269,7 @@ bool diSimplex_get_side(DiSimplexRef *parentSimplex,
   sideSimplex->diSiTT    = parentSimplex->diSiTT;
   sideSimplex->dimension = parentSimplex->dimension - 1;
   sideSimplex->simplex   = parentSimplexObj->side[sideNumber+1];
+  sideSimplex->structure = parentSimplex->structure;
 
   return true;
 }

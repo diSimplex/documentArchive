@@ -199,6 +199,7 @@ int main() {
       DiSimplexRef terminalSimplex;
       terminalSimplex.diSiTT    = disitt1;
       terminalSimplex.simplex   = 0;
+      terminalSimplex.structure = 0;
 
       terminalSimplex.dimension = 0;
       expect_true(diSimplex_exists(&terminalSimplex));

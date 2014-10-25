@@ -84,9 +84,9 @@ static int diSimplexLua_dimension(lua_State *L) {
 static int diSimplexLua_side(lua_State *L) {
   DiSimplexRef *diSimplex = checkDiSimplex(L);
 
-  DiSiTT     *disitt    = diSimplex->diSiTT;
-  dimension_t dimension = diSimplex->dimension;
-  simplex_id  simplex   = diSimplex->simplex;
+//  DiSiTT     *disitt    = diSimplex->diSiTT;
+//  dimension_t dimension = diSimplex->dimension;
+//  simplex_id  simplex   = diSimplex->simplex;
 
   if (!diSimplex_exists(diSimplex)) {
     luaL_argerror(L, 1, "the specified diSimplex does not exist");

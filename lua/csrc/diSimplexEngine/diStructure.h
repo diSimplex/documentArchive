@@ -4,6 +4,30 @@
 #include "dynArray.h"
 #include "diSiTT.h"
 
+
+#define diStructureRef_get_structureObj_or_return_false(structureRef, structureObj) \
+  DiStructureObj *(structureObj);					\
+  if (true) {								\
+    if (DynArray_len((structureRef)->diSiTT->structures) <= 		\
+          (structureRef)->structure) return false;			\
+    (structureObj) =							\
+        DynArray_getElementPtr((structureRef)->diSiTT->structures,	\
+                               (structureRef)->structure,		\
+                                DiStructureObj);			\
+  }
+
+#define diStructureRef_get_simplicies_or_return_false(structureObj, dimension, simpliciesArray) \
+  DynArray *(simpliciesArray);						\
+  if (true) {								\
+    if ( (dimension) < -1 ) return false;				\
+    if ( (dimension) == -1 ) (dimension) = 0;				\
+    if ( DynArray_len((structureObj)->dimensions) <=			\
+         (dimension) ) return false;					\
+  (simpliciesArray) =							\
+    *DynArray_getElementPtr((structureObj)->dimensions,			\
+                            (dimension), DynArray*);			\
+  }
+
 #define diStructureRef_init(structureRef, diSiTTPtr, structureId)	\
   if (structureRef) {							\
     (structureRef)->diSiTT = (diSiTTPtr);				\
