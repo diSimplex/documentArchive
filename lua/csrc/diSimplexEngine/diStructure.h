@@ -3,13 +3,21 @@
 
 #include "dynArray.h"
 #include "diSiTT.h"
-#include "diSimplex.h"
 
 #define diStructureRef_init(structureRef, diSiTTPtr, structureId)	\
   if (structureRef) {							\
     (structureRef)->diSiTT = (diSiTTPtr);				\
     (structureRef)->structure = (structureId);				\
   }
+
+//
+// Determine if myStructure is contained in otherStructure.
+// @function diStructure_contained_in
+// @param myStructure :: DiStructureRef*;
+// @param otherStructure :: DiStructureRef *;
+// @return bool; true if myStructure is contained in otherStructure; false oth$
+bool diStructure_contained_in(DiStructureRef *myStructure,
+                              DiStructureRef *otherStructure);
 
 //
 // Return true if this diStructure still exists
@@ -60,5 +68,25 @@ extern bool diStructure_get_simplex_number(DiStructureRef *diStructure,
                                            dimension_t dimension,
                                            size_t itemNumber,
                                            DiSimplexRef *simplex );
+
+//
+// Compute the union of two existing diStructures
+// @function diStructure_union
+// @param structureA :: DiStructureRef*; structure A.
+// @param structureB :: DiStructureRef*; structure B.
+// @param result :: DiStructureRef*; the resulting union diStructure.
+// @return bool; true if union could be computed; false otherwise.
+extern bool diStructure_union(DiStructureRef *structureA,
+                              DiStructureRef *structureB,
+                              DiStructureRef *result);
+
+//
+// Compute the merge of two existing diStructures
+// @function diStructure_merge_into
+// @param structureA :: DiStructureRef*; merged structure.
+// @param structureB :: DiStructureRef*; other structure.
+// @return bool; true if merge could be computed; false otherwise.
+extern bool diStructure_merge_into(DiStructureRef *mergedStructure,
+                                   DiStructureRef *otherStructure);
 
 #endif

@@ -24,6 +24,7 @@ int diSimplexLua_return_simplex_ref(lua_State *L,
   diSimplex->diSiTT    = localSimplex->diSiTT;
   diSimplex->dimension = localSimplex->dimension;
   diSimplex->simplex   = localSimplex->simplex;
+  diSimplex->structure = localSimplex->structure;
 
   luaL_getmetatable(L, DISIMPLEXLUA_TABLE_NAME);
   lua_setmetatable(L, -2);
@@ -38,13 +39,9 @@ int diSimplexLua_return_simplex_ref(lua_State *L,
 // @param otherDiSimplex the other diSimplex reference object.
 // @return true if the two objects refer to the same diSimplex
 static int diSimplexLua_equal(lua_State *L) {
-  DiSimplexRef *myDiSimplex    = checkDiSimplex(L);
-  DiSimplexRef *otherDiSimplex = checkForDiSimplex(L, 2);
-  bool isEqual = true;
-  if (myDiSimplex->diSiTT    != otherDiSimplex->diSiTT)    isEqual = false;
-  if (myDiSimplex->dimension != otherDiSimplex->dimension) isEqual = false;
-  if (myDiSimplex->simplex   != otherDiSimplex->simplex)   isEqual = false;
-  lua_pushboolean(L, isEqual);
+  DiSimplexRef *mySimplex    = checkDiSimplex(L);
+  DiSimplexRef *otherSimplex = checkForDiSimplex(L, 2);
+  lua_pushboolean(L, diSimplex_equals(mySimplex, otherSimplex));
   return 1;
 }
 

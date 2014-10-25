@@ -4,6 +4,7 @@
 
 #include <diSimplexEngine/dynArray.c>
 #include <diSimplexEngine/diSiTT.c>
+#include <diSimplexEngine/diStructure.c>
 #include <diSimplexEngine/diSimplex.c>
 
 DiSiTT  disittObj0, disittObj1;
@@ -35,14 +36,20 @@ int main() {
       expect_equal(DynArray_len(disitt0->emptySimplicies), 0);
       expect_equal(DynArray_len(disitt0->simplicies), 0);
       expect_equal(DynArray_len(disitt0->emptyStructures), 0);
-      expect_equal(DynArray_len(disitt0->structures), 0);
+      expect_equal(DynArray_len(disitt0->structures), 1);
+      DiStructureRef initialStructure;
+      diStructureRef_init(&initialStructure, disitt0, 0);
+      expect_true(diStructure_exists(&initialStructure));
     });
 
     it("should have empty DynArray structures (after diSiTT_ensure_dimension)", ^{
       expect_equal(DynArray_len(disitt0->emptySimplicies), 0);
       expect_equal(DynArray_len(disitt0->simplicies), 0);
       expect_equal(DynArray_len(disitt0->emptyStructures), 0);
-      expect_equal(DynArray_len(disitt0->structures), 0);
+      expect_equal(DynArray_len(disitt0->structures), 1);
+      DiStructureRef initialStructure;
+      diStructureRef_init(&initialStructure, disitt0, 0);
+      expect_true(diStructure_exists(&initialStructure));
       diSiTT_ensure_dimension(disitt0, 60);
       expect_equal(DynArray_len(disitt0->emptySimplicies), 61);
       expect_equal(DynArray_len(disitt0->simplicies), 61);

@@ -7,8 +7,8 @@
 #include <diSimplexEngine/diSimplex.c>
 #include <diSimplexEngine/diStructure.c>
 
-DiSiTT  disittObj0, disittObj1;
-DiSiTT *disitt0,   *disitt1;
+DiSiTT  disittObj0, disittObj1, disittObj2;
+DiSiTT *disitt0,   *disitt1,   *disitt2;
 
 int main() {
 
@@ -17,6 +17,8 @@ int main() {
   diSiTT_init(disitt0);
   disitt1 = &disittObj1;
   diSiTT_init(disitt1);
+  disitt2 = &disittObj2;
+  diSiTT_init(disitt2);
 
   fprintf(stdout, "\n>>>diStructureCSpec\n\n");
 
@@ -27,13 +29,13 @@ int main() {
       diStructureRef_init(&newStructure0, disitt0, 0);
       expect_true(diStructure_get_initial(&newStructure0));
       expect_true(newStructure0.diSiTT == disitt0);
-      expect_equal(newStructure0.structure, 0);
+      expect_equal(newStructure0.structure, 1);
       expect_true(diStructure_exists(&newStructure0));
       DiStructureRef newStructure1;
       diStructureRef_init(&newStructure1, disitt0, 0);
       expect_true(diStructure_get_initial(&newStructure1));
       expect_true(newStructure1.diSiTT == disitt0);
-      expect_equal(newStructure1.structure, 1);
+      expect_equal(newStructure1.structure, 2);
       expect_true(diStructure_exists(&newStructure1));
     });
 
@@ -42,7 +44,7 @@ int main() {
       diStructureRef_init(&newStructure0, disitt0, 0);
       expect_true(diStructure_get_initial(&newStructure0));
       expect_true(newStructure0.diSiTT == disitt0);
-      expect_equal(newStructure0.structure, 2);
+      expect_equal(newStructure0.structure, 3);
       expect_true(diStructure_exists(&newStructure0));
       DiStructureObj *structureObj =
         DynArray_getElementPtr(disitt0->structures,
@@ -50,9 +52,6 @@ int main() {
                                DiStructureObj);
       expect_true(structureObj->dimensions != 0);
       expect_equal(DynArray_len(structureObj->dimensions), 0);
-      expect_true(structureObj->curSimplex.diSiTT == disitt0);
-      expect_equal(structureObj->curSimplex.dimension, 0);
-      expect_equal(structureObj->curSimplex.simplex, 0);
       expect_true(structureObj->flags && DISITT_DISTRUCTURE_INUSE);
     });
 
@@ -61,7 +60,7 @@ int main() {
       diStructureRef_init(&newStructure0, disitt0, 0);
       expect_true(diStructure_get_initial(&newStructure0));
       expect_true(newStructure0.diSiTT == disitt0);
-      expect_equal(newStructure0.structure, 3);
+      expect_equal(newStructure0.structure, 4);
       expect_true(diStructure_exists(&newStructure0));
       DiStructureObj *structureObj =
         DynArray_getElementPtr(disitt0->structures,
@@ -84,7 +83,7 @@ int main() {
       diStructureRef_init(&newStructure0, disitt0, 0);
       expect_true(diStructure_get_initial(&newStructure0));
       expect_true(newStructure0.diSiTT == disitt0);
-      expect_equal(newStructure0.structure, 4);
+      expect_equal(newStructure0.structure, 5);
       expect_true(diStructure_exists(&newStructure0));
       DiStructureObj *structureObj =
         DynArray_getElementPtr(disitt0->structures,
@@ -93,7 +92,7 @@ int main() {
       expect_true(structureObj->dimensions != 0);
       expect_equal(DynArray_len(structureObj->dimensions), 0);
       DiSimplexRef newSimplex;
-      diSimplexRef_init(&newSimplex, disitt0, 0, 0);
+      diSimplexRef_init(&newSimplex, disitt0, 0, 0, 0);
       diSimplex_get_empty(&newSimplex);
       expect_equal(newSimplex.simplex, 1);
       diStructure_add(&newStructure0, &newSimplex);
@@ -108,39 +107,47 @@ int main() {
 
     it("should be able to release and reobtain diStructures", ^{
       DiStructureRef structure0;
-      diStructureRef_init(&structure0, disitt0, 0);
+      diStructureRef_init(&structure0, disitt2, 0);
       expect_true(diStructure_exists(&structure0));
       DiStructureRef structure1;
-      diStructureRef_init(&structure1, disitt0, 1);
+      diStructureRef_init(&structure1, disitt2, 1);
+      diStructure_get_initial(&structure1);
       expect_true(diStructure_exists(&structure1));
       DiStructureRef structure2;
-      diStructureRef_init(&structure2, disitt0, 2);
+      diStructureRef_init(&structure2, disitt2, 2);
+      diStructure_get_initial(&structure2);
       expect_true(diStructure_exists(&structure2));
       DiStructureRef structure3;
-      diStructureRef_init(&structure3, disitt0, 3);
+      diStructureRef_init(&structure3, disitt2, 3);
+      diStructure_get_initial(&structure3);
       expect_true(diStructure_exists(&structure3));
       DiStructureRef structure4;
-      diStructureRef_init(&structure4, disitt0, 4);
+      diStructureRef_init(&structure4, disitt2, 4);
+      diStructure_get_initial(&structure4);
       expect_true(diStructure_exists(&structure4));
       DiStructureRef structure5;
-      diStructureRef_init(&structure5, disitt0, 5);
-      expect_false(diStructure_exists(&structure5));
+      diStructureRef_init(&structure5, disitt2, 5);
+      diStructure_get_initial(&structure5);
+      expect_true(diStructure_exists(&structure5));
+      DiStructureRef structure6;
+      diStructureRef_init(&structure6, disitt2, 6);
+      expect_false(diStructure_exists(&structure6));
       expect_true(diStructure_release(&structure3));
       expect_false(diStructure_exists(&structure3));
       expect_true(diStructure_release(&structure2));
       expect_false(diStructure_exists(&structure2));
       DiStructureRef newStructure2;
-      diStructureRef_init(&newStructure2, disitt0, 0);
+      diStructureRef_init(&newStructure2, disitt2, 0);
       expect_true(diStructure_get_initial(&newStructure2));
       expect_equal(newStructure2.structure, 2);
       DiStructureRef newStructure3;
-      diStructureRef_init(&newStructure3, disitt0, 0);
+      diStructureRef_init(&newStructure3, disitt2, 0);
       expect_true(diStructure_get_initial(&newStructure3));
       expect_equal(newStructure3.structure, 3);
-      DiStructureRef newStructure5;
-      diStructureRef_init(&newStructure5, disitt0, 0);
-      expect_true(diStructure_get_initial(&newStructure5));
-      expect_equal(newStructure5.structure, 5);
+      DiStructureRef newStructure6;
+      diStructureRef_init(&newStructure6, disitt2, 0);
+      expect_true(diStructure_get_initial(&newStructure6));
+      expect_equal(newStructure6.structure, 6);
     });
 
 

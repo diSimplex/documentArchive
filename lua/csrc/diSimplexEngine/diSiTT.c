@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include "diSiTT.h"
+#include "diStructure.h"
+#include "diSimplex.h"
 
 /***
 
@@ -24,6 +26,13 @@ void diSiTT_init(DiSiTT *disitt) {
   disitt->simplicies      = DynArray_new(sizeof(DynArray*),  0);
   disitt->emptyStructures = DynArray_new(sizeof(structure_id), 0);
   disitt->structures      = DynArray_new(sizeof(DiStructureObj), 0);
+  //
+  // create the empty structure at structure_id 0...
+  // this will be used/assumed to exist almost everywhere...
+  //
+  DiStructureRef initialStructure;
+  diStructureRef_init(&initialStructure, disitt, 0);
+  diStructure_get_initial(&initialStructure);
 }
 
 ///

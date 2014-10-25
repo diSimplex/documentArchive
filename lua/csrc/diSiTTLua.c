@@ -61,7 +61,12 @@ static int diSiTTLua_terminal(lua_State *L) {
     terminalSimplex.simplex   = 0; // the terminal simplex of any dimension
     diStructure_add(&terminalStructure, &terminalSimplex);
   }
-  return diStructureLua_return_structure_ref(L, &terminalStructure);
+  DiSimplexRef   topTerminalSimplex;
+  diSimplexRef_init(&topTerminalSimplex,
+                    terminalStructure.diSiTT,
+                    dimension, 0,
+                    terminalStructure.structure);
+  return diSimplexLua_return_simplex_ref(L, &topTerminalSimplex);
 }
 
 ///
@@ -71,8 +76,10 @@ static int diSiTTLua_terminal(lua_State *L) {
 // @param sides an array of diSimplex references of the correct dimension and number.
 // @return a diSimplex reference to the new diSimplex.
 static int diSiTTLua_simplex(lua_State *L) {
-  DiSimplexRef newSimplex;
-  newSimplex.diSiTT = checkDiSiTT(L);
+  DiSimplexRef   newSimplex;
+  newSimplex.diSiTT    = checkDiSiTT(L);
+  newSimplex.structure = 0;
+
   // the second argument is a array(table) of diSimplicies
   luaL_checktype(L, 2, LUA_TTABLE);
 
@@ -85,6 +92,7 @@ static int diSiTTLua_simplex(lua_State *L) {
   if ( dimensionOfSides < 0 ) dimensionOfSides = 0;
 
   diSiTT_ensure_dimension(newSimplex.diSiTT, newSimplex.dimension);
+
   diSimplex_get_empty(&newSimplex);
 
   // inspect each side
@@ -117,9 +125,6 @@ static int diSiTTLua_simplex(lua_State *L) {
       // raise an error!
       luaL_argerror(L, 2, "the simplex of all sides must already exist");
     }
-    char strBuf[500];
-    strBuf[0] = 0;
-    diSimplex_toString(aSide, strBuf, 500);
     diSimplex_store_side(&newSimplex, i-1, aSide);
   }
   return diSimplexLua_return_simplex_ref(L, &newSimplex);

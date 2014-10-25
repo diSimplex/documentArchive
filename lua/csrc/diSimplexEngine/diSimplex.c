@@ -13,32 +13,79 @@ A DiSimplex structure encapsulates a directed simplex in the diSimplexEngine.
 */
 
 ///
-// Check that a given diSimplex exists in this diSiTT environment.
-// @function diSiTT_simplex_exists
-// @param simplex :: DiSimplexRef*; a reference to a possible diSimplex.
-// @return boolean; true if this diSimplex exists in this diSiTT environment.
-bool diSimplex_exists(DiSimplexRef *simplex) {
+// Determine if two diSimplicies are equal by ensuring that one of the two
+// simplicies underlying structures is contained in the other, and that both
+// simplicies have the same ordered collection of sides.
+// @function diSimplex_equal
+// @param mySimplex :: DiSimplexRef*;
+// @param otherSimplex :: DiSimplexRef*;
+// @return bool; true if both simplicies are equal; false otherwise.
+bool diSimplex_equals(DiSimplexRef *mySimplex, DiSimplexRef *otherSimplex) {
+  char myBuffer[500];
+  diSimplex_toString(mySimplex, myBuffer, 500);
+  char otherBuffer[500];
+  diSimplex_toString(otherSimplex, otherBuffer, 500);
+  printf("equals: %s %s\n", myBuffer, otherBuffer);
 
-  DiSiTT      *diSiTT    = simplex->diSiTT;
-  dimension_t  dimension = simplex->dimension;
+  if (mySimplex->diSiTT    != otherSimplex->diSiTT) return false;
+  if (mySimplex->dimension != otherSimplex->dimension) return false;
+  dimension_t numSides = mySimplex->dimension + 1;
 
-  if ( dimension < 0 ) dimension = 0;
+  if (!diSimplex_exists(mySimplex)) return false;
+  if (!diSimplex_exists(otherSimplex)) return false;
 
-  if ( DynArray_len(diSiTT->simplicies) <= dimension ) {
-    return 0;
+  DiStructureRef myStructure;
+  diStructureRef_init(&myStructure, mySimplex->diSiTT, mySimplex->structure);
+  DiStructureRef otherStructure;
+  diStructureRef_init(&otherStructure,
+                      otherSimplex->diSiTT,
+                      otherSimplex->structure);
+  if (diStructure_contained_in(&myStructure, &otherStructure)) {
+    // continue with other tests
+  } else if (diStructure_contained_in(&otherStructure, &myStructure)) {
+    // continue with other tests
+  } else {
+    return false;
   }
 
-  DynArray *simplicies =
-    *DynArray_getElementPtr(diSiTT->simplicies, dimension, DynArray*);
-  if (simplex->simplex < DynArray_len(simplicies)) {
-    DiSimplexObj *simplexObj =
-      DynArray_getElementPtr(simplicies, simplex->simplex, DiSimplexObj);
-    if (simplexObj->flags && DISITT_DISIMPLEX_INUSE) {
-      return 1;
+  printf("equals:simplexId: %u %u\n", mySimplex->simplex, otherSimplex->simplex);
+  if (mySimplex->simplex == otherSimplex->simplex) return true;
+
+  diSimplexRef_get_simplexObj_or_return_false(mySimplex,    mySimplexObj);
+  diSimplexRef_get_simplexObj_or_return_false(otherSimplex, otherSimplexObj);
+  printf("equals:simplexObj: %p %p\n", mySimplexObj, otherSimplexObj);
+
+  dimension_t i = 0;
+  for ( ; i < numSides ; i++ ) {
+      printf("side[%u] (%p::%u, %p::%u)\n",
+             i, mySimplexObj, mySimplexObj->side[i],
+                otherSimplexObj, otherSimplexObj->side[i]);
+    if (mySimplexObj->side[i]   != otherSimplexObj->side[i]) {
+      printf("SIDES[%u] NOT EQUAL (%u != %u)\n",
+             i, mySimplexObj->side[i], otherSimplexObj->side[i]);
+      return false;
     }
   }
 
-  return 0;
+  return true;
+}
+
+///
+// Check that a given diSimplex exists in this diSiTT environment.
+// @function diSimplex_exists
+// @param simplex :: DiSimplexRef*; a reference to a possible diSimplex.
+// @return boolean; true if this diSimplex exists in this diSiTT environment.
+bool diSimplex_exists(DiSimplexRef *simplex) {
+  DiSiTT      *diSiTT    = simplex->diSiTT;
+
+  DiStructureRef structureRef;
+  diStructureRef_init(&structureRef, simplex->diSiTT, simplex->structure);
+  if (!diStructure_exists(&structureRef)) return 0;
+
+  diSimplexRef_get_simplexObj_or_return_false(simplex, simplexObj);
+  if (!(simplexObj->flags && DISITT_DISIMPLEX_INUSE)) return false;
+
+  return true;
 }
 
 ///
@@ -90,6 +137,13 @@ bool diSimplex_get_empty(DiSimplexRef *newSimplex) {
     DynArray_getElementPtr(simplicies, newSimplex->simplex, DiSimplexObj);
   memset(newSimplexObj, 0, DynArray_elementSize(simplicies));
   newSimplexObj->flags |= DISITT_DISIMPLEX_INUSE;
+
+  // ensure this empty simplex has a corresponding empty structure
+  DiStructureRef newStructure;
+  diStructureRef_init(&newStructure, newSimplex->diSiTT, 0);
+  diStructure_get_initial(&newStructure);
+  newSimplex->structure = newStructure.structure;
+
   return true;
 }
 
@@ -98,11 +152,12 @@ bool diSimplex_get_empty(DiSimplexRef *newSimplex) {
 // for a given dimension
 // @function diSimplex_release
 // @param oldSimplex :: DiSimplexRef*; a reference to the diSimplex being released.
-void diSimplex_release(DiSimplexRef *oldSimplex){
+// @return bool; true if the diSimplex has been released; false otherwise.
+bool diSimplex_release(DiSimplexRef *oldSimplex){
   DiSiTT *disitt = oldSimplex->diSiTT;
 
   // make sure this simplex actually exists
-  if (!diSimplex_exists(oldSimplex)) return;
+  if (!diSimplex_exists(oldSimplex)) return true;
 
   // normalize the dimension
   dimension_t dimension = oldSimplex->dimension;
@@ -131,6 +186,8 @@ void diSimplex_release(DiSimplexRef *oldSimplex){
   oldSimplexObj->side[0] = *linkedListHead;
   // place the oldSimplexId in the linkedListHead
   *linkedListHead = oldSimplex->simplex;
+
+  return true;
 }
 
 ///
@@ -141,41 +198,49 @@ void diSimplex_release(DiSimplexRef *oldSimplex){
 // @param parentSimplex :: DiSimplexRef*; the parent diSimplex.
 // @param sideNumber :: size_t; the side to be added to the parent.
 // @param sideSimplex :: DiSimplexRef*; the diSimplex to be added.
-void diSimplex_store_side(DiSimplexRef *parentSimplex,
+// @return bool; true is the side has been stored; false otherwise.
+bool diSimplex_store_side(DiSimplexRef *parentSimplex,
                           size_t sideNumber,
                           DiSimplexRef *sideSimplex) {
   // make sure these simplicies are in the same diSiTT environment
-  if (parentSimplex->diSiTT != sideSimplex->diSiTT) return;
+  if (parentSimplex->diSiTT != sideSimplex->diSiTT) return false;
 
   DiSiTT *disitt = parentSimplex->diSiTT;
 
   // make sure that the side diSimplex id one dimension less than the
   // parent diSimplex.
-  if (parentSimplex->dimension != sideSimplex->dimension + 1) return;
-
-  dimension_t dimension = parentSimplex->dimension;
+  if (parentSimplex->dimension != sideSimplex->dimension + 1) return false;
 
   // make sure that the requested side exists
-  if (dimension < sideNumber) return;
+  if (parentSimplex->dimension < sideNumber) return false;
   //if (sideNumber < 0) return;
 
-  // normalize the dimension
-  if (dimension < 0) dimension = 0;
-
   // make sure this simplicies actually exist
-  if (!diSimplex_exists(parentSimplex)) return;
-  if (!diSimplex_exists(sideSimplex)) return;
+  if (!diSimplex_exists(parentSimplex)) return false;
+  if (!diSimplex_exists(sideSimplex)) return false;
 
-  // get the simplex instances for this dimension
-  DynArray *simplicies =
-    *DynArray_getElementPtr(disitt->simplicies, dimension, DynArray*);
+  // take the union of the underlying diStructures.
+  DiStructureRef parentStructure;
+  diStructureRef_init(&parentStructure,
+                      parentSimplex->diSiTT,
+                      parentSimplex->structure);
+  DiStructureRef sideStructure;
+  diStructureRef_init(&sideStructure,
+                      sideSimplex->diSiTT,
+                      sideSimplex->structure);
+  DiStructureRef mergedStructure;
+  diStructureRef_init(&mergedStructure, parentSimplex->diSiTT, 0);
+  if (!diStructure_union(&parentStructure,
+                         &sideStructure,
+                         &mergedStructure)) return false;
+  parentSimplex->structure = mergedStructure.structure;
 
-  // get the parent diSimplex object
-  DiSimplexObj *parentSimplexObj =
-    DynArray_getElementPtr(simplicies, parentSimplex->simplex, DiSimplexObj);
+  diSimplexRef_get_simplexObj_or_return_false(parentSimplex, parentSimplexObj);
 
   // store the side (note we add one to allow for the definitional simplex)
   parentSimplexObj->side[sideNumber+1] = sideSimplex->simplex;
+
+  return true;
 }
 
 ///
@@ -193,25 +258,12 @@ bool diSimplex_get_side(DiSimplexRef *parentSimplex,
                       DiSimplexRef *sideSimplex) {
 
   // make sure this simplex actually exists
-  if (!diSimplex_exists(parentSimplex)) return 0;
-
-  dimension_t dimension = parentSimplex->dimension;
+  if (!diSimplex_exists(parentSimplex)) return false;
 
   // make sure that the requested side exists
-  if (dimension < sideNumber) return 0;
-  //if (sideNumber < 0) return 0;
+  if (parentSimplex->dimension < sideNumber) return false;
 
-  // normalize the dimension
-  if (dimension < 0) dimension = 0;
-
-  // get the simplex instances for this dimension
-  DynArray *simplicies =
-    *DynArray_getElementPtr(parentSimplex->diSiTT->simplicies,
-                            dimension, DynArray*);
-
-  // get the parent diSimplex object
-  DiSimplexObj *parentSimplexObj =
-    DynArray_getElementPtr(simplicies, parentSimplex->simplex, DiSimplexObj);
+  diSimplexRef_get_simplexObj_or_return_false(parentSimplex, parentSimplexObj);
 
   // store the side (note we add one to allow for the definitional simplex)
   sideSimplex->diSiTT    = parentSimplex->diSiTT;
@@ -253,9 +305,10 @@ void diSimplex_toString(DiSimplexRef *simplex,
   }
 
   snprintf(buffer, bufferSize,
-           "diSimplex(%p, %d, %d, [ 0 ][ %s])",
+           "diSimplex(%p, %d, %u, %u, [ %s])",
            simplex->diSiTT,
            simplex->dimension,
            simplex->simplex,
+           simplex->structure,
            listBuf);
 }

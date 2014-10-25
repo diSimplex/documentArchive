@@ -4,6 +4,7 @@
 
 #include <diSimplexEngine/dynArray.c>
 #include <diSimplexEngine/diSiTT.c>
+#include <diSimplexEngine/diStructure.c>
 #include <diSimplexEngine/diSimplex.c>
 
 DiSiTT  disittObj0, disittObj1;
@@ -25,8 +26,7 @@ int main() {
     it("should get and return one empty simplex", ^{
       // get a simplex
       DiSimplexRef newSimplex;
-      newSimplex.diSiTT    = disitt1;
-      newSimplex.dimension = 3;
+      diSimplexRef_init(&newSimplex, disitt1, 3, 0, 0);
       expect_true(diSimplex_get_empty(&newSimplex));
       expect_equal(newSimplex.simplex, 1);
       expect_equal(DynArray_len(disitt1->simplicies), 4);
@@ -50,24 +50,19 @@ int main() {
 
     it("should get and return a number of  empty simplicies", ^{
       DiSimplexRef newSimplex0;
-      newSimplex0.diSiTT    = disitt1;
-      newSimplex0.dimension = 3;
+      diSimplexRef_init(&newSimplex0, disitt1, 3, 0, 0);
       expect_true(diSimplex_get_empty(&newSimplex0));
       DiSimplexRef newSimplex1;
-      newSimplex1.diSiTT    = disitt1;
-      newSimplex1.dimension = 3;
+      diSimplexRef_init(&newSimplex1, disitt1, 3, 0, 0);
       expect_true(diSimplex_get_empty(&newSimplex1));
       DiSimplexRef newSimplex2;
-      newSimplex2.diSiTT    = disitt1;
-      newSimplex2.dimension = 3;
+      diSimplexRef_init(&newSimplex2, disitt1, 3, 0, 0);
       expect_true(diSimplex_get_empty(&newSimplex2));
       DiSimplexRef newSimplex3;
-      newSimplex3.diSiTT    = disitt1;
-      newSimplex3.dimension = 3;
+      diSimplexRef_init(&newSimplex3, disitt1, 3, 0, 0);
       expect_true(diSimplex_get_empty(&newSimplex3));
       DiSimplexRef newSimplex4;
-      newSimplex4.diSiTT    = disitt1;
-      newSimplex4.dimension = 3;
+      diSimplexRef_init(&newSimplex4, disitt1, 3, 0, 0);
       expect_true(diSimplex_get_empty(&newSimplex4));
       expect_equal(newSimplex0.simplex, 1);
       expect_equal(newSimplex1.simplex, 2);
@@ -133,9 +128,7 @@ int main() {
       // get a new simplex (should be completely new)
       //
       DiSimplexRef newSimplex5;
-      newSimplex5.diSiTT    = disitt1;
-      newSimplex5.dimension = 3;
-      newSimplex5.simplex   = 6;
+      diSimplexRef_init(&newSimplex5, disitt1, 3, 6, 0);
       expect_false(diSimplex_exists(&newSimplex5));
       expect_true(diSimplex_get_empty(&newSimplex5));
       expect_equal(newSimplex5.simplex, 6);

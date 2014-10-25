@@ -47,6 +47,10 @@ typedef struct DiSiTTStruct {
 extern void diSiTT_init(DiSiTT *disitt);
 
 typedef int dimension_t;
+
+// IT IS CRITICAL that simplex_id and structure_id are the "same" type
+// this fact is used by the DiSimplexObj in the zero or one dimension
+// to point structures instead of simplicies.
 typedef unsigned int simplex_id;
 typedef unsigned int structure_id;
 
@@ -64,7 +68,6 @@ extern void diSiTT_collect_garbage(DiSiTT *disitt);
 
 typedef struct DiSimplexObjStruct {
   unsigned int flags;
-  structure_id structure;
   simplex_id side[1];
 } DiSimplexObj;
 
@@ -85,6 +88,7 @@ typedef struct DiSimplexRefStruct {
   DiSiTT      *diSiTT;
   dimension_t  dimension;
   simplex_id   simplex;
+  structure_id structure;
 } DiSimplexRef;
 
 // ==========================================================================
@@ -96,7 +100,6 @@ typedef struct DiSimplexRefStruct {
 typedef struct DiStructureObjStruct {
   unsigned int flags;
   DynArray *dimensions;  // a DynArray of DynArrays
-  DiSimplexRef curSimplex;
 } DiStructureObj;
 
 // diStructure flags --- powers of 2 indexing in a bit-array

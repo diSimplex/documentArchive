@@ -13,6 +13,18 @@ A DiStructure encapsulates a directed simplex structure in the diSimplexEngine.
 */
 
 ///
+// Determine if myStructure is contained in otherStructure.
+// @function diStructure_contained_in
+// @param myStructure :: DiStructureRef*;
+// @param otherStructure :: DiStructureRef *;
+// @return bool; true if myStructure is contained in otherStructure; false otherwise.
+bool diStructure_contained_in(DiStructureRef *myStructure,
+                              DiStructureRef *otherStructure) {
+
+  return true;
+}
+
+///
 // Return true if this diStructure still exists
 // @function diStructure_exists
 // @param diStructure :: DiStructureRef*; this diStructure.
@@ -81,10 +93,6 @@ bool diStructure_get_initial(DiStructureRef *initialStructure) {
   }
   // mark this diStructure as "INUSE"
   initialStructureObj->flags |= DISITT_DISTRUCTURE_INUSE;
-  // (re)initialize all fields
-  initialStructureObj->curSimplex.diSiTT    = diSiTT;
-  initialStructureObj->curSimplex.dimension = 0;
-  initialStructureObj->curSimplex.simplex   = 0; // the terminal zero-simplex
   return true;
 }
 
@@ -98,6 +106,9 @@ bool diStructure_release(DiStructureRef *oldStructure) {
 
   // if the old structure does not exist... then it has already been released.
   if (!diStructure_exists(oldStructure)) return true;
+
+  // we can NOT release the zero structure.
+  if (oldStructure->structure == 0) return false;
 
   DiSiTT *disitt = oldStructure->diSiTT;
 
@@ -175,6 +186,9 @@ size_t diStructure_size(DiStructureRef *diStructure, dimension_t dimension) {
 // @return boolean; true if diSimplex was added; false otherwise
 bool diStructure_add(DiStructureRef *diStructure, DiSimplexRef *diSimplex) {
 
+  // We can NOT add anything to the zero structure.
+  if (diStructure->structure == 0) return false;
+
   if (diStructure->diSiTT != diSimplex->diSiTT) return false;
 
   DiSiTT *disitt = diStructure->diSiTT;
@@ -230,5 +244,33 @@ bool diStructure_get_simplex_number(DiStructureRef *diStructure,
   simplex->simplex   =
     *DynArray_getElementPtr(simplicies, itemNumber, simplex_id);
 
+  return true;
+}
+
+///
+// Compute the union of two existing diStructures
+// @function diStructure_union
+// @param structureA :: DiStructureRef*; structure A.
+// @param structureB :: DiStructureRef*; structure B.
+// @param result :: DiStructureRef*; the resulting union diStructure.
+// @return bool; true if union could be computed; false otherwise.
+bool diStructure_union(DiStructureRef *structureA,
+                       DiStructureRef *structureB,
+                       DiStructureRef *result) {
+
+  // do nothing at the moment
+  return true;
+}
+
+///
+// Compute the merge of two existing diStructures
+// @function diStructure_merge_into
+// @param structureA :: DiStructureRef*; merged structure.
+// @param structureB :: DiStructureRef*; other structure.
+// @return bool; true if merge could be computed; false otherwise.
+bool diStructure_merge_into(DiStructureRef *mergedStructure,
+                       DiStructureRef *otherStructure) {
+
+  // do nothing at the moment
   return true;
 }
