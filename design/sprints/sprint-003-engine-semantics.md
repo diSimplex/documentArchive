@@ -13,6 +13,9 @@
 			- [Resources for simplicial sturctures](#resources-for-simplicial-sturctures)
 		- [What is the "size" of a constructive mathematics which allows for coalgebraicly defined (imprecise) reals?](#what-is-the-size-of-a-constructive-mathematics-which-allows-for-coalgebraicly-defined-imprecise-reals)
 		- [Type theory](#type-theory)
+		- [Computation via Graph Transforms](#computation-via-graph-transforms)
+			- [Researchers](#researchers)
+			- [Approach](#approach)
 	- [Wrap-up](#wrap-up)
 
 # Sprint 003 Engine Semantics (Denotational, operational and axiomatic)
@@ -190,6 +193,170 @@ For the more recent [Homotopy Type Theory](http://homotopytypetheory.org/) see:
 
 * [Homotopy Type Theory: Univalent Foundations of 
 Mathematics](http://homotopytypetheory.org/book/)
+
+### Computation via Graph Transforms
+
+We use computation via a diStructure generalization of Graph 
+Transforms.  We use the diStructure generalization of the double 
+pushout setup, see: [Algebraic Approaches to Graph Transformation, Part 
+I: Basic Concepts and Double Pushout 
+Approach](http://compass2.di.unipi.it/TR/files/TR-96-17.ps.gz)
+
+(See also the second chapter: [Algebraic approaches to graph 
+transformation. Part II: single pushout approach and comparison with 
+double pushout approach](http://dl.acm.org/citation.cfm?id=278930). In 
+particular both chapters read together, in their analysis of causal 
+orders and parallelism theories, suggest reasons for the space-time we 
+experience being 3+1 dimensions.)
+
+We model our work closely on that of the work done by the Programming 
+Languages and Systems (sub)group run by [Detlef 
+Plump](http://www-users.cs.york.ac.uk/~det/) at the University of York 
+in the UK ([PLASMA's GP 
+subgroup](http://www.cs.york.ac.uk/plasma/wiki/index.php?title=GP_%28Graph_Programs%29)).  
+The [York Abstract Machine 
+(YAM)](http://www.cs.york.ac.uk/plasma/publications/pdf/ManningPlumpGT-VMT.06.pdf) 
+and its associated [The GP Programming 
+System](http://www.cs.york.ac.uk/plasma/publications/pdf/ManningPlumpGT-VMT.08.pdf) 
+are particularly important to our work.
+
+One particularly important facet of this work are the various different 
+approaches to the subgraph isomorphism problem:
+
+* [An Optimization Technique for Subgraph Matching 
+Strategies](http://www.info.uni-karlsruhe.de/papers/TR_2006_7.pdf) 
+provides a very good overview of the work of Dörr extended by Batz to 
+include graphical query cost heuristics.
+
+* section 4.1 of [The GP Programming 
+System](http://www.cs.york.ac.uk/plasma/publications/pdf/ManningPlumpGT-VMT.08.pdf) 
+provides a useful simplification of Batz's work which might be useful 
+to keep in mind.
+
+* [Messmer and Bunke's paper "Efficient subgraph isomorphism detection: 
+A decomposition 
+approach"](http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.318.8651) 
+This is a RETE like approach to the Subgraph Isomorphism problem.
+
+#### Researchers
+
+* [Detlef Plump](http://www-users.cs.york.ac.uk/~det/papers.html)
+
+ * [The York Abstract Machine 
+(YAM)](http://www.cs.york.ac.uk/plasma/publications/pdf/ManningPlumpGT-VMT.06.pdf)
+
+ * [The GP Programming 
+System](http://www.cs.york.ac.uk/plasma/publications/pdf/ManningPlumpGT-VMT.08.pdf)
+
+ * [The Graph Programming Language 
+GP](http://www.cs.york.ac.uk/plasma/publications/pdf/Plump.CAI.09.pdf)
+
+ * [The Semantics of Graph 
+Programs](http://www.cs.york.ac.uk/plasma/publications/pdf/PlumpSteinert.RULE.09.pdf).
+
+ * [The Design of GP 
+2](http://www.cs.york.ac.uk/plasma/publications/pdf/Plump.WRS.11.pdf)
+
+ * [Double pushout graph transformation 
+revisited](http://www-users.cs.york.ac.uk/%7Edet/Papers/mscs.01.pdf)
+
+ * [Verifying Monadic Second-Order Properties of Graph 
+Programs](http://www.cs.york.ac.uk/plasma/publications/pdf/PoskittPlump.ICGT.14.pdf)
+
+ * [Relabelling in Graph 
+Transformation](http://www-users.cs.york.ac.uk/%7Edet/Papers/icgt.02.pdf).
+
+ * [M,N-Adhesive Transformation 
+Systems](http://www.cs.york.ac.uk/plasma/publications/pdf/HabelPlump.12a.pdf) 
+covers graph transformations with relabelling (which will be important 
+for our work).
+
+* [Annegret Habel 
+](http://formale-sprachen.informatik.uni-oldenburg.de/persons/annegret.habel/eindex.html#publications)
+
+* [Pawel Sobocinski](http://users.ecs.soton.ac.uk/ps/) (see his work on 
+Adhesive categories as well as Van Kempen theories).
+
+* [Steve Lack](http://maths.mq.edu.au/~slack/papers.html) (again see 
+his work on Adhesive categories).
+
+
+#### Approach
+
+We use a structure inspired by that of the YAM (figure 2 section 2 page 
+234(4) of [The York Abstract Machine 
+(YAM)](http://www.cs.york.ac.uk/plasma/publications/pdf/ManningPlumpGT-VMT.06.pdf)):
+
+* the **diStructure** which is **being transformed/constructed**.
+
+* a **choice stack** which is used both to hold the 
+macro-choices as to which diStructure transform to appy, *as well as*, 
+to hold the micro-choices associated with the substructure isomorphism 
+identification (tranformation match) problem.
+
+* a corresponding **diStructure change stack**.
+
+* a **(local) "data" stack**.  In our case all labels are themselves 
+diStructures, so the contents of the data stack are a collection of 
+currently partially built diStructures.
+
+The base commands of our diStructure machine come from roughly the same 
+categories of commands as those used by the YAM:
+
+* **Data stack commands**
+
+* **Control instructions**, which delimit rules, explicitly represent 
+choices or mark deterministic sections of code.  Note that [The Design 
+of GP 
+2](http://www.cs.york.ac.uk/plasma/publications/pdf/Plump.WRS.11.pdf) 
+changed the commands which control the choice stack to allow for a more 
+nuanced collection of backtracking behaviours.
+
+
+* **diStructure query instructions** Our collection of diStructure 
+queries will be our generalization of Batz's lookup and extension 
+commands.  Node lookup will be the same, but we need a vastly increased 
+collection of "extension" commands which will come from the maps which 
+underly the diStructure's functorial structure maps.
+
+* **diStructure modification instructions** Our collection of 
+diStructure modification instructions will, again, come from the maps 
+which underly the diStructure's functorial structure maps.
+
+Our ultimate goal to be able to interpret diStructures as either a 
+"data" structure, **or** as "program" description depending upon the 
+context. This is important for, for example, infinite diStructures 
+which represent process traces which are lazily unfolded as and when 
+needed.  For this we need to consider the GP/GP2 programming constructs:
+
+* non-deterministic **collections** of transforms to be applied 
+(non-deterministically) once.
+
+* deterministic **sequences** of transforms applied one at a time in sequence.
+
+* **repetitive application** of a (set of) transform(s)
+
+* if/then (GP) or try (GP/GP2) **choice** of one of two transforms 
+depending on whether or not a conditional transform applies.
+
+A. Habel and D. Plump in [Computational Completeness of Programming 
+Languages Based on Graph 
+Transformation](http://www-users.cs.york.ac.uk/%7Edet/Papers/fossacs.01.pdf) 
+show that the above programming constructs are [Turing 
+complete](http://en.wikipedia.org/wiki/Turing_completeness). However *do 
+we really need the choice constructs, or can we get Turing completeness 
+using failure backtracking alone?*
+
+The GP/GP2 "complier" translates a collection of graph transforms into 
+(more) optimal sequences of graph query commands using heuristics set 
+out in section 4.1 of [The GP Programming 
+System](http://www.cs.york.ac.uk/plasma/publications/pdf/ManningPlumpGT-VMT.08.pdf). 
+Alternatively Batz finds minimal spanning arborescences of the Plan 
+graph, see sections 7.1 and 7.2 of [An Optimization Technique for 
+Subgraph Matching 
+Strategies](http://www.info.uni-karlsruhe.de/papers/TR_2006_7.pdf).
+
+
 
 ## Wrap-up
 
