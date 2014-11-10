@@ -321,7 +321,13 @@ underly the diStructure's functorial structure maps.
 
 * **diStructure modification instructions** Our collection of 
 diStructure modification instructions will, again, come from the maps 
-which underly the diStructure's functorial structure maps.
+which underly the diStructure's functorial structure maps. GP/GP2 has 
+an associated graph editing graphical user interface. Higher-order 
+diStructures can by definition (of our human limitations) not have any 
+such graphical user interface. This means that modifications must take 
+place using a textual interface, essentially providing ordered lists of 
+diSimplicies which are interpreted as higher order simplicies. In our 
+context, any concept of "order" will require 1-diSimplicial structures.
 
 Our ultimate goal to be able to interpret diStructures as either a 
 "data" structure, **or** as "program" description depending upon the 
@@ -356,7 +362,16 @@ graph, see sections 7.1 and 7.2 of [An Optimization Technique for
 Subgraph Matching 
 Strategies](http://www.info.uni-karlsruhe.de/papers/TR_2006_7.pdf).
 
-
+Quite often we will be "applying" specific transforms by providing 
+initial partial matches. This suggests that instead of solving the full 
+substructure isomorphims problem we really need to solve a substructure 
+isomorphism extension problem. To do this we probably need to solve the 
+minimal spanning tree *extension* problem. In addition, whenever we 
+need to do an unrestricted node search, we should proceed by 
+potentially matching nodes closest to the existing substructure first.  
+As well, to accommodate possible infinite limit structures, we might 
+consider matching higher-order diSimplicies rather than just 
+0-diSimplicies (of which there might be inifinite numbers).
 
 ## Wrap-up
 
