@@ -6,12 +6,9 @@
 	- [Stories/Features](#storiesfeatures)
 	- [Busted/RSpec specifications](#bustedrspec-specifications)
 	- [Questions and Risks](#questions-and-risks)
-		- [What syntax will be used for the DiSiTT engine?](#what-syntax-will-be-used-for-the-disitt-engine)
-		- [What is the mapping between the natural deduction and haskell syntax?](#what-is-the-mapping-between-the-natural-deduction-and-haskell-syntax)
-		- [Why does Haskell not have a begin/end like block to contain local variables?](#why-does-haskell-not-have-a-beginend-like-block-to-contain-local-variables)
-		- [What is the meaning of an individual rule?](#what-is-the-meaning-of-an-individual-rule)
-		- [How are groups of rules related versus haskell's pattern matching?](#how-are-groups-of-rules-related-versus-haskell's-pattern-matching)
-		- [What are "definitional" "objects"?](#what-are-definitional-objects)
+		- [Researchers](#researchers)
+			- [Reflections](#reflections)
+		- [Other resources](#other-resources)
 	- [Wrap-up](#wrap-up)
 
 # Sprint 003 Engine syntax
@@ -28,6 +25,48 @@ A secondary objective (related to the LaTeX syntax) is to understand
 the modular structure of the DiSiTT language. In particular how will 
 users extend the DiSiTT language.
 
+Through the previous work (in this sprint), I have come to realize that 
+the diSimplexEngine is essentially a project in showing that 
+Mathematics ***is*** all about ***computation***.
+
+The semantics of the diSimplexEngine is provided by the collection of 
+diSimplicial structures (diStructures), that is by the functor 
+category: [ \Delta, \Universe ], the functors from \Delta to the 
+\Universe.  It is critical here that $\Universe \isomorphic_to [ 
+\Delta, \Universe ]$, that is, that \Universe is the largest fixed 
+point by the co-algebraic operator [ \Delta, \Universe ], and that 
+identity is defined by the largest (identity) bisimularity associated 
+with this co-algebraic operator.
+
+These diSimplicial structures simultaneously represent data and 
+process. Data and computation. The fundamental theory of diSimplicial 
+computation is provided by diStructure transform (the diStructure 
+extension of graph transforms).
+
+"Constructive" mathematics ***is*** the closure of the finitely 
+computable component of \Universe. (The rest of) "Mathematics" is the 
+potentially non-finite computable (similar to Turing-oracles) "rest" of 
+the \Universe. Part of this project is to show that, using (classically 
+non-well-founded) co-algebraic reasoning, Mathematical Physics/Science 
+is contained in the "Constructive" components of mathematics.
+
+In fact the "Rest of (Classical) Mathematics" is almost certainly 
+meta-computable. That is, classical mathematics has finitely 
+specifiable (co-algebraic) definitions, which can be computed with at a 
+meta-mathematical or meta-meta-....-mathematical level (though almost 
+certainly not at the "mathematical level").
+
+To implement this vision, we need to define an ***extensible*** 
+diStructure computational langauge. This will take a number of forms. 
+It is critical that a diStructure ***can*** be ***interpreted*** as a 
+computational algorithm in its own-right. However we will also need a 
+textural language with which to construct diStructures and their 
+algorithms. The "base" textural language will most appropriately be 
+written in Lua or a language defined by a Lua based parser (since we 
+have nominally decided that Lua will be the base computational 
+environment). However an alternate textural language ***must*** be 
+provided in LaTeX to enable its use in general mathematical writting.
+
 ## Tasks
 
 ## Stories/Features
@@ -36,78 +75,95 @@ users extend the DiSiTT language.
 
 ## Questions and Risks
 
-### What syntax will be used for the DiSiTT engine?
+### Researchers
 
-We will primarily base the *syntax* of the DiSiTT engine on the similar 
-syntax of [HoTT](http://homotopytypetheory.org/book/), in particular 
-the "second" (more formal) presentation of the [natural 
-deduction](http://en.wikipedia.org/wiki/Natural_deduction) based syntax 
-found in the appendix A.2.
+* [Detlef Plump](http://www-users.cs.york.ac.uk/~det/papers.html)
 
-We will also base the *syntax* of the DiSiTT engine on the 
-"classical" development of the internal langauge of a Topos (this is 
-essentially a proof of the "full abstractness" of the *internal* 
-*language* of Toposes). A good exposition of this can be found in 
-chapter 3 of J. L. Bell's book [Toposes and Local Set 
-Theories](http://store.doverpublications.com/0486462862.html). (See 
-also [J Lambek's 
-review](http://projecteuclid.org/euclid.bams/1183555325)).
+ * [The York Abstract Machine 
+(YAM)](http://www.cs.york.ac.uk/plasma/publications/pdf/ManningPlumpGT-VMT.06.p
+df)
 
-Note that in both cases we do *not* make use of, or define, any 
-*infinite* first order logic.
+ * [The GP Programming 
+System](http://www.cs.york.ac.uk/plasma/publications/pdf/ManningPlumpGT-VMT.08.
+pdf)
 
-The syntax of the DiSiTT language is also inspired by that of 
-[Haskell](http://www.haskell.org) and 
-[Agda](http://wiki.portal.chalmers.se/agda/pmwiki.php).
+ * [The Graph Programming Language 
+GP](http://www.cs.york.ac.uk/plasma/publications/pdf/Plump.CAI.09.pdf)
 
-### What is the mapping between the natural deduction and haskell syntax?
+ * [The Semantics of Graph 
+Programs](http://www.cs.york.ac.uk/plasma/publications/pdf/PlumpSteinert.RULE.0
+9.pdf).
 
-The haskell syntax depends heavily on pattern matching.  For the 
-natural deduction style, pattern matching is "*essentially*" the 
-judgement context.
+ * [The Design of GP 
+2](http://www.cs.york.ac.uk/plasma/publications/pdf/Plump.WRS.11.pdf)
 
-Alternatively the contexts (across all judegements) provides what is 
-essentially the collection of local variables used in a given 
-judegment, while the premises of a rule provide the pattern matching.
+ * [Double pushout graph transformation 
+revisited](http://www-users.cs.york.ac.uk/%7Edet/Papers/mscs.01.pdf)
 
-### Why does Haskell not have a begin/end like block to contain local variables?
+ * [Verifying Monadic Second-Order Properties of Graph 
+Programs](http://www.cs.york.ac.uk/plasma/publications/pdf/PoskittPlump.ICGT.14
+.pdf)
 
-Haskell certainly has "where" and "let" "blocks" which introduce local 
-"variables". Note that Haskell values are immutable, Haskell variables 
-can change reference but the values they contain can not be "changed".
+ * [Relabelling in Graph 
+Transformation](http://www-users.cs.york.ac.uk/%7Edet/Papers/icgt.02.pdf).
 
-### What is the meaning of an individual rule?
+ * [M,N-Adhesive Transformation 
+Systems](http://www.cs.york.ac.uk/plasma/publications/pdf/HabelPlump.12a.pdf) 
+covers graph transformations with relabelling (which will be important 
+for our work).
 
-A given rule corresponds to a *directed* simplex between 
-*configurations* as objects.  
+* [Medha Shukla Sarkar](http://www.mtsu.edu/~msarkar/)
 
-How does this correspond to (or get "mapped down to") the structure of 
-the simplicies in the configurations?
+ * Ph.D. thesis [GXL - A Graph Transformation Language with Scoping and 
+Graph 
+Parameters](http://research.cs.queensu.ca/~cordy/Papers/TAGT98_GXL.pdf) 
+(co-supervised between [Dorothea 
+Blostein](http://research.cs.queensu.ca/~blostein/) and Jim Cordy) 
+importantly this is based upon a mixture of (double push-out) graph 
+transforms, Haskell, and the syntax of the [TXL programming 
+language](http://www.txl.ca/)
 
-What are the "*sides*" of a given rule's *directed* simplex?
+* [Jim Cordy](http://research.cs.queensu.ca/home/cordy/papers.html)
 
-In Jacobs' analysis of [Categorical Logic and Type 
-Theory](http://www.cs.ru.nl/B.Jacobs/CLT/bookinfo.html) for many 
-"logics" the premises are assumed to be replaceable by the product 
-("and-ing") of the individual premises. However since the product is 
-(usually) symmetric, this leads to an undirected (or symmetric) 
-simplex. Note that the underlying logic for dependent types *is* 
-directed. How does [linear 
-logic](http://en.wikipedia.org/wiki/Linear_logic) fit into this scheme?
+ * [TXL programming language](http://www.txl.ca/) (see also wikipedia's 
+entry [TXL (programming 
+language)](http://en.wikipedia.org/wiki/TXL_%28programming_language%29)).
 
-### How are groups of rules related versus haskell's pattern matching?
+ * [TXL Documents](http://www.txl.ca/ndocs.html).
 
-### What are "definitional" "objects"?
+ * [The TXL Programming Language, Version 
+10.6](http://www.txl.ca/docs/TXL106ProgLang.pdf)
 
-I strongly suspect that what I want to mean by "definitional" "object" 
-are essentially Ehresmann's 
-[*sketches*](http://ncatlab.org/nlab/show/sketch). We will base our use 
-of sketches on the books [Locally Presentable and Accessible 
-Categories](http://ebooks.cambridge.org/ebook.jsf?bid=CBO9780511600579) 
-or [Accessible categories: The foundations of categorical model 
-theory](http://www.ams.org/books/conm/104/)
+* [D Wagellar](http://www.micallefwagelaar.be/dennis/doku.php/start)
 
-However, how do we "construct" a sketch?
+ * [Towards a General Composition Semantics for Rule-Based Model 
+Transformation](http://soft.vub.ac.be/Publications/2011/vub-soft-tr-11-07.pdf). 
+Defines 
+[simpleGT](https://code.google.com/a/eclipselabs.org/p/simplegt/) which 
+is an interesting syntax for a Graph transform language with rule and 
+module inheritance.
+
+#### Reflections 
+
+* The GP programming system has a *very* clean syntax which would map 
+nicely to a diStructure.
+
+* The GXL has an interesting overview of how TXL, Haskell and DPO graph 
+transforms can be used together.
+
+* The TXL has a very nice syntax which has similarities to Haskell but 
+might be easier to use/parse (though is slightly wordier than Haskell). 
+In particular it has explicit (algebraic) constructors and 
+(co-algebraic) deconstructors. It also has explicit "failure" 
+conditions based solely on graph matching. These failure conditions can 
+be used as explicit NAC conditions.
+
+* The simpleGT syntax has interesting rule and module inheritance.
+
+### Other resources
+
+* [Available transformation 
+languages](http://en.wikipedia.org/wiki/Model_transformation_language#Available_transformation_languages).
 
 ## Wrap-up
 
