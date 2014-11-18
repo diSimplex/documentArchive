@@ -64,8 +64,7 @@ static int diSiTTLua_terminal(lua_State *L) {
   DiSimplexRef   topTerminalSimplex;
   diSimplexRef_init(&topTerminalSimplex,
                     terminalStructure.diSiTT,
-                    dimension, 0,
-                    terminalStructure.structure);
+                    dimension, 0);
   return diSimplexLua_return_simplex_ref(L, &topTerminalSimplex);
 }
 
@@ -78,7 +77,6 @@ static int diSiTTLua_terminal(lua_State *L) {
 static int diSiTTLua_simplex(lua_State *L) {
   DiSimplexRef   newSimplex;
   newSimplex.diSiTT    = checkDiSiTT(L);
-  newSimplex.structure = 0;
 
   // the second argument is a array(table) of diSimplicies
   luaL_checktype(L, 2, LUA_TTABLE);

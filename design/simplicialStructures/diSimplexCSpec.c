@@ -26,7 +26,7 @@ int main() {
     it("should get and return one empty simplex", ^{
       // get a simplex
       DiSimplexRef newSimplex;
-      diSimplexRef_init(&newSimplex, disitt1, 3, 0, 0);
+      diSimplexRef_init(&newSimplex, disitt1, 3, 0);
       expect_true(diSimplex_get_empty(&newSimplex));
       expect_equal(newSimplex.simplex, 1);
       expect_equal(DynArray_len(disitt1->simplicies), 4);
@@ -50,19 +50,19 @@ int main() {
 
     it("should get and return a number of  empty simplicies", ^{
       DiSimplexRef newSimplex0;
-      diSimplexRef_init(&newSimplex0, disitt1, 3, 0, 0);
+      diSimplexRef_init(&newSimplex0, disitt1, 3, 0);
       expect_true(diSimplex_get_empty(&newSimplex0));
       DiSimplexRef newSimplex1;
-      diSimplexRef_init(&newSimplex1, disitt1, 3, 0, 0);
+      diSimplexRef_init(&newSimplex1, disitt1, 3, 0);
       expect_true(diSimplex_get_empty(&newSimplex1));
       DiSimplexRef newSimplex2;
-      diSimplexRef_init(&newSimplex2, disitt1, 3, 0, 0);
+      diSimplexRef_init(&newSimplex2, disitt1, 3, 0);
       expect_true(diSimplex_get_empty(&newSimplex2));
       DiSimplexRef newSimplex3;
-      diSimplexRef_init(&newSimplex3, disitt1, 3, 0, 0);
+      diSimplexRef_init(&newSimplex3, disitt1, 3, 0);
       expect_true(diSimplex_get_empty(&newSimplex3));
       DiSimplexRef newSimplex4;
-      diSimplexRef_init(&newSimplex4, disitt1, 3, 0, 0);
+      diSimplexRef_init(&newSimplex4, disitt1, 3, 0);
       expect_true(diSimplex_get_empty(&newSimplex4));
       expect_equal(newSimplex0.simplex, 1);
       expect_equal(newSimplex1.simplex, 2);
@@ -128,7 +128,7 @@ int main() {
       // get a new simplex (should be completely new)
       //
       DiSimplexRef newSimplex5;
-      diSimplexRef_init(&newSimplex5, disitt1, 3, 6, 0);
+      diSimplexRef_init(&newSimplex5, disitt1, 3, 6);
       expect_false(diSimplex_exists(&newSimplex5));
       expect_true(diSimplex_get_empty(&newSimplex5));
       expect_equal(newSimplex5.simplex, 6);
@@ -199,7 +199,6 @@ int main() {
       DiSimplexRef terminalSimplex;
       terminalSimplex.diSiTT    = disitt1;
       terminalSimplex.simplex   = 0;
-      terminalSimplex.structure = 0;
 
       terminalSimplex.dimension = 0;
       expect_true(diSimplex_exists(&terminalSimplex));

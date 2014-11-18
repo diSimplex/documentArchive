@@ -218,7 +218,6 @@ bool diStructure_get_simplex_number(DiStructureRef *diStructure,
   simplex->dimension = dimension;
   simplex->simplex   =
     *DynArray_getElementPtr(simplicies, itemNumber, simplex_id);
-  simplex->structure = diStructure->structure;
 
   return true;
 }

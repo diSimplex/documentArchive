@@ -1,9 +1,7 @@
 #ifndef DISIMPLEX_H
 #define DISIMPLEX_H
 
-#include "dynArray.h"
 #include "diSiTT.h"
-#include "diStructure.h"
 
 #define diSimplexRef_get_simplicies_or_return_false(simplexRef, simpliciesDynArray) \
   DynArray *(simplicies);						\
@@ -25,13 +23,11 @@
         DynArray_getElementPtr(simplicies, (simplexRef)->simplex, DiSimplexObj); \
   }
 
-#define diSimplexRef_init(diSimplexRef, diSiTTPtr, dimensionId,		\
-                          simplexId, structureId) 			\
+#define diSimplexRef_init(diSimplexRef, diSiTTPtr, dimensionId,	simplexId) \
   if (diSimplexRef) {							\
     (diSimplexRef)->diSiTT    = (diSiTTPtr);				\
     (diSimplexRef)->dimension = (dimensionId);				\
     (diSimplexRef)->simplex   = (simplexId);				\
-    (diSimplexRef)->structure = (structureId);				\
   }
 
 //

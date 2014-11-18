@@ -92,7 +92,7 @@ int main() {
       expect_true(structureObj->dimensions != 0);
       expect_equal(DynArray_len(structureObj->dimensions), 0);
       DiSimplexRef newSimplex;
-      diSimplexRef_init(&newSimplex, disitt0, 0, 0, 0);
+      diSimplexRef_init(&newSimplex, disitt0, 0, 0);
       diSimplex_get_empty(&newSimplex);
       expect_equal(newSimplex.simplex, 1);
       diStructure_add(&newStructure0, &newSimplex);

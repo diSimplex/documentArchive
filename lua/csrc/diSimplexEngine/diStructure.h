@@ -1,9 +1,7 @@
 #ifndef DISTRUCTURE_H
 #define DISTRUCTURE_H
 
-#include "dynArray.h"
-#include "diSiTT.h"
-
+#include "diSimplex.h"
 
 #define diStructureRef_get_structureObj_or_return_false(structureRef, structureObj) \
   DiStructureObj *(structureObj);					\

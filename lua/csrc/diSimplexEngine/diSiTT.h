@@ -88,7 +88,6 @@ typedef struct DiSimplexRefStruct {
   DiSiTT      *diSiTT;
   dimension_t  dimension;
   simplex_id   simplex;
-  structure_id structure;
 } DiSimplexRef;
 
 // ==========================================================================

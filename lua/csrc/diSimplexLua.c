@@ -24,7 +24,6 @@ int diSimplexLua_return_simplex_ref(lua_State *L,
   diSimplex->diSiTT    = localSimplex->diSiTT;
   diSimplex->dimension = localSimplex->dimension;
   diSimplex->simplex   = localSimplex->simplex;
-  diSimplex->structure = localSimplex->structure;
 
   luaL_getmetatable(L, DISIMPLEXLUA_TABLE_NAME);
   lua_setmetatable(L, -2);

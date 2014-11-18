@@ -34,20 +34,6 @@ bool diSimplex_equals(DiSimplexRef *mySimplex, DiSimplexRef *otherSimplex) {
   if (!diSimplex_exists(mySimplex)) return false;
   if (!diSimplex_exists(otherSimplex)) return false;
 
-  DiStructureRef myStructure;
-  diStructureRef_init(&myStructure, mySimplex->diSiTT, mySimplex->structure);
-  DiStructureRef otherStructure;
-  diStructureRef_init(&otherStructure,
-                      otherSimplex->diSiTT,
-                      otherSimplex->structure);
-  if (diStructure_contained_in(&myStructure, &otherStructure)) {
-    // continue with other tests
-  } else if (diStructure_contained_in(&otherStructure, &myStructure)) {
-    // continue with other tests
-  } else {
-    return false;
-  }
-
   printf("equals:simplexId: %u %u\n", mySimplex->simplex, otherSimplex->simplex);
   if (mySimplex->simplex == otherSimplex->simplex) return true;
 
@@ -77,10 +63,6 @@ bool diSimplex_equals(DiSimplexRef *mySimplex, DiSimplexRef *otherSimplex) {
 // @return boolean; true if this diSimplex exists in this diSiTT environment.
 bool diSimplex_exists(DiSimplexRef *simplex) {
   DiSiTT      *diSiTT    = simplex->diSiTT;
-
-  DiStructureRef structureRef;
-  diStructureRef_init(&structureRef, simplex->diSiTT, simplex->structure);
-  if (!diStructure_exists(&structureRef)) return 0;
 
   diSimplexRef_get_simplexObj_or_return_false(simplex, simplexObj);
   if (!(simplexObj->flags && DISITT_DISIMPLEX_INUSE)) return false;
@@ -137,12 +119,6 @@ bool diSimplex_get_empty(DiSimplexRef *newSimplex) {
     DynArray_getElementPtr(simplicies, newSimplex->simplex, DiSimplexObj);
   memset(newSimplexObj, 0, DynArray_elementSize(simplicies));
   newSimplexObj->flags |= DISITT_DISIMPLEX_INUSE;
-
-  // ensure this empty simplex has a corresponding empty structure
-  DiStructureRef newStructure;
-  diStructureRef_init(&newStructure, newSimplex->diSiTT, 0);
-  diStructure_get_initial(&newStructure);
-  newSimplex->structure = newStructure.structure;
 
   return true;
 }
@@ -219,22 +195,6 @@ bool diSimplex_store_side(DiSimplexRef *parentSimplex,
   if (!diSimplex_exists(parentSimplex)) return false;
   if (!diSimplex_exists(sideSimplex)) return false;
 
-  // take the union of the underlying diStructures.
-  DiStructureRef parentStructure;
-  diStructureRef_init(&parentStructure,
-                      parentSimplex->diSiTT,
-                      parentSimplex->structure);
-  DiStructureRef sideStructure;
-  diStructureRef_init(&sideStructure,
-                      sideSimplex->diSiTT,
-                      sideSimplex->structure);
-  DiStructureRef mergedStructure;
-  diStructureRef_init(&mergedStructure, parentSimplex->diSiTT, 0);
-  if (!diStructure_union(&parentStructure,
-                         &sideStructure,
-                         &mergedStructure)) return false;
-  parentSimplex->structure = mergedStructure.structure;
-
   diSimplexRef_get_simplexObj_or_return_false(parentSimplex, parentSimplexObj);
 
   // store the side (note we add one to allow for the definitional simplex)
@@ -269,7 +229,6 @@ bool diSimplex_get_side(DiSimplexRef *parentSimplex,
   sideSimplex->diSiTT    = parentSimplex->diSiTT;
   sideSimplex->dimension = parentSimplex->dimension - 1;
   sideSimplex->simplex   = parentSimplexObj->side[sideNumber+1];
-  sideSimplex->structure = parentSimplex->structure;
 
   return true;
 }
@@ -306,10 +265,9 @@ void diSimplex_toString(DiSimplexRef *simplex,
   }
 
   snprintf(buffer, bufferSize,
-           "diSimplex(%p, %d, %u, %u, [ %s])",
+           "diSimplex(%p, %d, %u, [ %s])",
            simplex->diSiTT,
            simplex->dimension,
            simplex->simplex,
-           simplex->structure,
            listBuf);
 }
