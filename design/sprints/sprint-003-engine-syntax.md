@@ -112,16 +112,27 @@ Systems](http://www.cs.york.ac.uk/plasma/publications/pdf/HabelPlump.12a.pdf)
 covers graph transformations with relabelling (which will be important 
 for our work).
 
-* [Medha Shukla Sarkar](http://www.mtsu.edu/~msarkar/)
-
- * Ph.D. thesis [GXL - A Graph Transformation Language with Scoping and 
-Graph 
-Parameters](http://research.cs.queensu.ca/~cordy/Papers/TAGT98_GXL.pdf) 
-(co-supervised between [Dorothea 
-Blostein](http://research.cs.queensu.ca/~blostein/) and Jim Cordy) 
-importantly this is based upon a mixture of (double push-out) graph 
-transforms, Haskell, and the syntax of the [TXL programming 
+* [Medha Shukla Sarkar](http://www.mtsu.edu/~msarkar/) Ph.D. thesis 
+co-supervised between Dorothea Blostein and Jim Cordy. Importantly this 
+thesis is based upon a mixture of (double push-out) graph transforms, 
+Haskell, and the syntax of the [TXL programming 
 language](http://www.txl.ca/)
+
+ * Ph.D. thesis (summary) [GXL - A Graph Transformation Language with 
+Scoping and Graph 
+Parameters](http://research.cs.queensu.ca/~cordy/Papers/TAGT98_GXL.pdf) 
+
+ * Ph.D. thesis (full) [GXL - A Graph Transformation Language with 
+Scoping and Graph Parameters](http://www.collectionscanada.gc.ca/obj/s4/f2/dsk1/tape3/PQDD_0013/NQ52862.pdf).
+
+* [Dorothea Blostein](http://research.cs.queensu.ca/~blostein/)
+
+ * [Practical Use of Graph 
+Rewriting](http://research.cs.queensu.ca/TechReports/Reports/1995-373.pdf)
+
+ * [Issues in the Practical Use of Graph 
+Rewriting](http://research.cs.queensu.ca/~blostein/LNCS1073.pdf) 
+(published version of the above technical report).
 
 * [Jim Cordy](http://research.cs.queensu.ca/home/cordy/papers.html)
 
@@ -133,6 +144,11 @@ language)](http://en.wikipedia.org/wiki/TXL_%28programming_language%29)).
 
  * [The TXL Programming Language, Version 
 10.6](http://www.txl.ca/docs/TXL106ProgLang.pdf)
+
+* Andrew Malton
+
+ * [The Denotational Semantics of a Functional Tree-Manipulation 
+Language](http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.54.4214)
 
 * [D Wagellar](http://www.micallefwagelaar.be/dennis/doku.php/start)
 
