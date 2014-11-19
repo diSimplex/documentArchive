@@ -13,20 +13,15 @@ A DiSimplex structure encapsulates a directed simplex in the diSimplexEngine.
 */
 
 ///
-// Determine if two diSimplicies are equal by ensuring that one of the two
-// simplicies underlying structures is contained in the other, and that both
-// simplicies have the same ordered collection of sides.
+// Determine if two diSimplicies are equal by ensuring
+// they both are contained in the same DiSiTT,
+// of the same dimension, both exist,
+// and have the same simplex_id.
 // @function diSimplex_equal
 // @param mySimplex :: DiSimplexRef*;
 // @param otherSimplex :: DiSimplexRef*;
 // @return bool; true if both simplicies are equal; false otherwise.
 bool diSimplex_equals(DiSimplexRef *mySimplex, DiSimplexRef *otherSimplex) {
-  char myBuffer[500];
-  diSimplex_toString(mySimplex, myBuffer, 500);
-  char otherBuffer[500];
-  diSimplex_toString(otherSimplex, otherBuffer, 500);
-  printf("equals: %s %s\n", myBuffer, otherBuffer);
-
   if (mySimplex->diSiTT    != otherSimplex->diSiTT) return false;
   if (mySimplex->dimension != otherSimplex->dimension) return false;
   dimension_t numSides = mySimplex->dimension + 1;
@@ -34,24 +29,7 @@ bool diSimplex_equals(DiSimplexRef *mySimplex, DiSimplexRef *otherSimplex) {
   if (!diSimplex_exists(mySimplex)) return false;
   if (!diSimplex_exists(otherSimplex)) return false;
 
-  printf("equals:simplexId: %u %u\n", mySimplex->simplex, otherSimplex->simplex);
-  if (mySimplex->simplex == otherSimplex->simplex) return true;
-
-  diSimplexRef_get_simplexObj_or_return_false(mySimplex,    mySimplexObj);
-  diSimplexRef_get_simplexObj_or_return_false(otherSimplex, otherSimplexObj);
-  printf("equals:simplexObj: %p %p\n", mySimplexObj, otherSimplexObj);
-
-  dimension_t i = 0;
-  for ( ; i < numSides ; i++ ) {
-      printf("side[%u] (%p::%u, %p::%u)\n",
-             i, mySimplexObj, mySimplexObj->side[i],
-                otherSimplexObj, otherSimplexObj->side[i]);
-    if (mySimplexObj->side[i]   != otherSimplexObj->side[i]) {
-      printf("SIDES[%u] NOT EQUAL (%u != %u)\n",
-             i, mySimplexObj->side[i], otherSimplexObj->side[i]);
-      return false;
-    }
-  }
+  if (mySimplex->simplex != otherSimplex->simplex) return false;
 
   return true;
 }
