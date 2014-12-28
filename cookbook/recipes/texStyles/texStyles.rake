@@ -1,4 +1,7 @@
 # TexStyle tasks:
+
+require 'rake/clean'
+
 namespace :texStyles do
 
   Conf.texStyle.install = false unless Conf.texStyle.has_key?(:install);
@@ -134,6 +137,23 @@ namespace :texStyles do
   task :finalClean => :localRelease do
     system "cd texStyle; rm -rf *.sty *.cwl *.tex"
   end
+
+  CLEAN.include(
+    '**/*.aux',
+    '**/*.glo',
+    '**/*.gls',
+    '**/*.idx',
+    '**/*.ilg',
+    '**/*.ind',
+    '**/*.lgout',
+    '**/*.log',
+    '**/*.pdf',
+    '**/*.glo',
+    '**/*.toc',
+    '**/*synctex.gz',
+    'texStyle/*.sty',
+    'texStyle/*.tex'
+  )
 
   task :default => :finalClean
 end
