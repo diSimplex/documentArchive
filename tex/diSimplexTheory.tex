@@ -22,17 +22,15 @@ address the question: \textit{How ``Real'' is Mathematics?}
 \tableofcontents 
 \mainmatter
 
-\section{Introduction}
+\begin{quotation}
+In the places I go there are things that I see\\
+That I \emph{never} could spell if I stopped with the Z.\\
+\begin{quote}
+\textit{On Beyond Zebra} by Dr Seuss.
+\end{quote}
+\end{quotation}
 
-\TODO{Martin L\"of's Dependent Type Theory is the DTT of propositions.  HoTT
-(see \cite{iasUfm2013hott}) is the DTT of homotopic sets. Directed Simplicial
-Type Theory is the DTT of simplicial structures.  This means that the ``logic''
-in the fibers (see \cite{jacobs1999catLogic}) for DiSiTT is the ``logic''
-defined by an appropriate logical factorization system (see \cite[Definition
-4.3.2 on page 136]{jacobs2012coalg}). In particular, the structures at the
-``type'' ``level'' are the co-algebraic completions of the ``examples'' at the
-``type-object'' ``level''. So a DiSiTT judgement \judgement{a}{A} is that $a$ is
-an ``example'' of the co-algegra $A$.}
+\section{Introduction}
 
 The aim of this cycle of papers is to provide a rigorous mathematical theory of
 Reality. This first paper provides \emph{an} answer to the question: \emph{How
@@ -45,68 +43,51 @@ mathematical description of Reality? How Real is mathematics? If it is not
 Real/valid, then is Reality itself Real/valid?
 
 To break this circularity, we take the pragmatic approach, bastardising
-Descartes, and state: \emph{I make marks in reality, so I exist}\footnote{See
-the work of the philosopher Andy Clark, \TODO{add citations}}.
+Descartes, and state: \emph{I make marks in Reality, so I exist}.
 
-We base our work on the (essential) computability of (most of) mathematics.
+Any discussion of the `Reality' or `Validity' of Mathematics is essentially a
+discussion of the \textit{Foundations of Mathematics}. Classically Mathematics
+is founded upon Zermelo-–Fraenkel set theory with the axiom of choice (ZFC)
+expressed in the language of First Order Predicate Logic. To avoid Russel's
+paradox, one form of the Liar Paradox, ZFC explicitly includes an axiom forcing
+all sets to be well--founded. From a Categorical point of view, this means that
+classical Set Theory is an \emph{Algebraic} theory. From a computational point
+of view, this means that classical Set Theory is `data'.
 
-There are numerous schools of the foundations of mathematics.  Should we only
-allow mathematics which can be computed in finite time? Should impredicative
-statements be allowed? Can the full axiom of choice be allowed?  Is the
-uncontrolled use of proof by contradiction acceptable? Can you do ``useful''
-mathematics with out being impredicative and using the axiom of choice and
-proofs by contradiction?
+One of the primary aims of this cycle of papers, is to show that the Sciences
+and Engineering, are better served by a Mathematics which focuses on spatially
+distributed interacting \emph{processes}. This means that, from a Categorical
+point of view, we are interested in \emph{Co-Algebraic} structures as the
+Foundations of Mathematics.
 
-Restricting mathematics to \emph{only} finitely computable statements is too
-restrictive. Indisciplined use of the full axiom of choice, allows mathematics
-which is potentially ``unrelated'' to ``Reality''.
+Equally importantly, `Truth', as expressed by Aristotelian Logic, in the form of
+First Order Predicate Logic, is less important then the ability to compute. We
+will show that First Order Predicate Logic, as traditionally used in
+Mathematics, is the \emph{internal} logic of \emph{the} Co-Algebraic Universe of
+Mathematics. We will refer to this Co-Algebraic Universe as \emph{`Plato's
+Universe'}, \Universe.
 
-We take the \emph{proof relevant} approach of Martin-L\"of's dependent type
-theory.
+We base our foundations of mathematics on computation \emph{rather than} Logic.
+
+Clearly, not all of classical Mathematics is `computable'.  For example, the use
+of the (the unrestricted) Axiom of Choice, is un-computable by a classical
+Turing Machine. This suggests that, to capture the whole of classical
+Mathematics, we will need a more nuanced model of computation. The critical
+point here is that classical mathematics is developed from an \emph{omnipotent}
+point of view, yet as finite beings, we only have far more limited computational
+abilities. In out best 'school Latin`, we christen beings with these more
+limited abilities, as \emph{modipotent}.
+
+The \emph{sub}universe of mathematics computable by an $\omega$-modipotent
+being, we will refer to as \emph{`Plato's Playground'}.
+
+\TODO{rework the following}
 
 As will become obvious later in this cycle of papers, ``Reality'' is \emph{a}
 model of \emph{a} higher topos.  Unfortunately, for finite beings \emph{inside}
 Reality, we can only ever specify a possible collection of possible Realities. A
 collection of Realities which are consistent with our current, finitely limited,
 understanding, or measurement of ``Reality''.
-
-The ``fact'' that ``Reality'' is a model of a higher topos suggests that our
-chosen foundations should be ``compatible'' with the categorical approach to
-mathematics. We will prove, later in this cycle of papers, that the
-\emph{internal} (local) logic of a higher topos is Directed Simplicial Type
-Theory (DiSiTT).
-
-We take our lead from Homotopic type theory by being a ``proof relevant''
-dependent type theoretic approach to logic. This provides a very disciplined
-approach to the use of Constructivism, Intuitionism, as well as the use of
-(im)predicative statements and the various versions of the axiom of choice.
-
-Basically, we are interested in the fragment of mathematics which forms the
-completion of finitely specifiable statements.
-
-We make use of the full axiom of choice and/or uncontrolled proofs of
-contradiction only to explore the pathologies outside of our finitist fragment
-of mathematics.
-
-Any discussion of the ``Reality'' or ``Validity'' of Mathematics is essentially
-a discussion of the \textit{Foundations of Mathematics}.
-
-The classical foundations of Mathematics, as developed over the past 200 years,
-typically consists of some order of \emph{logic} (first or second-order)
-together with the axioms of [Zermelo-Fraenkel set theory with the axiom of
-choice](\verb|http://en.wikipedia.org/wiki/Zermelo-Fraenkel_set_theory|) (ZFC).
-
-Alternate foundations \emph{can} be provided by using one or other Type Theory.
-The recent [Homotopy Type Theory](http://homotopytypetheory.org/) (HoTT),
-provided the final ideas required to ``crystallise'' our particular work in the
-foundations of mathematics.
-
-Current foundations of Mathematics attempt to formalise the ``Logic'' of
-``Propositional/Predicate Calculus''.  Since at least 2007, and at various
-levels of consciousness, I have felt that this was inadequate for the
-development of a \textit{mathematics of Reality}.  However until now, I could
-not clearly express how to found mathematics with out propositional/predicate
-calculus.
 
 Far more fundamental and far more important than propositions is the concept of
 Causality.  I will argue, in later work, that the human brain, is a causality
@@ -129,6 +110,79 @@ sciences and engineering.
 This book is devoted to giving the reader a more ``mathematical'' overview of
 Directed Simplicial Theory.  It is meant to be read in companion with the very
 much more detailed \textit{Directed Simplicial Theory Implemented in Haskell}.
+
+\section{Building Plato's Wilderness}
+
+Our explicit thesis is that Mathematics \emph{is} computation.
+
+To begin, we must provide a model of computation. The classical models of
+computability, such as Turing Machines, the Lambda Calculus and General
+Recursive Functions, are all, more or less, about computational sequentiallity
+and `time'. While the model we are about to propose will be equivilant to any of
+the classical models, it is designed to be \emph{explicitly} about parallel
+computation and `space--time'. Moreover, since classical mathematics is
+mathematics from an omnipotent point of view, the computational model required
+to capture classical mathematics, must \emph{explicitly} have unbounded
+computational ability.
+
+Since Mathematics \emph{is} computation, we, as mathematicians, write \emph{in}
+a programming language. As in Computer Science, there are many programming
+languages, each suited to a different paradigm, there will be numerous
+mathamatical languages.
+
+Again, in Theoretical Computer Science, given a programming language, the first
+question is: \emph{How do we know what this language computes?} This question is
+captured by the Denotational and Operational Semantics associated with a given
+language. Plato's universe, \emph{the} Co-Algebraic universe of Mathematics,
+is essentially, the fixed point of these Semantic descriptions.
+
+When the dust settles, to define Plato's Universe, \Universe, we will need to
+simultaineously define, via co--induction, the three structures of \Universe,
+\Lists, \ListAutomorphisms:
+%
+\begin{align}
+   \Universe          & \isomorphic \arrow{\ListAutomorphisms}{\Universe} & \text{Plato's Universe} \\
+   \Lists             & \isomorphic \one + \Universe \times \Lists        & \text{Lists} \\
+   \ListAutomorphisms & \isomorphic \arrow{\Lists}{\Lists}                & \text{List Automorphisms}
+\end{align}
+%
+Unfortunately, since we \emph{are} building the foundations of Mathematics, we,
+as yet, have no definitions of co--induction, $\isomorphic$, \one, $+$, $\times$,
+$\arrow{\cdot}{\cdot}$, let alone, \Universe, \Lists\ or even \ListAutomorphisms.
+
+Again, when the dust settles, Lists, \Lists, is \emph{an} \emph{implementation}
+of the classical concept of the Ordinals, \Ordinal, and the isomorphism objects
+of the Lists modulo List Automorphisms, \ListAutomorphisms, is \emph{an}
+\emph{implementation} of the classical concepts of the Cardinals, \Cardinal. In
+deed we will, eventually, make these explicit definitions, however, at the
+moment, we are getting ahead of our current (minimal) abilities.
+
+\subsection{Syntax}
+
+There are two distinct types of references that we will use:
+%
+\begin{itemize}
+\item Specific know references, \define{names}{}, and
+\item Specific unknown references, \define{variables}{}.
+\end{itemize}
+%
+diSimplicial structures, which are instances of Plato's universe, are highly
+structured objects with complex internal referential links, these links are
+denoted using references to specific known objects using names. The `tools' we
+use to build diSimplicial structures will also need to refer to other specific
+diSimplicial structures which are possibly `currently' uknown. Such specific but
+unknown references will use variables.
+
+
+\subsection{Denotational Semantics}
+
+\subsection{Operational Semantics}
+
+
+
+\begin{definition}
+content...
+\end{definition}
 
 \bibliographystyle{amsalpha}
 \bibliography{diSimplexTheory}
