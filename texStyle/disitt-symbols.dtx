@@ -221,9 +221,10 @@ and disitt.pdf.
 %    \end{macrocode}
 % \end{macro}
 %
-%\subsection{Important Objects: Universe}
+%\subsection{Important Objects}
+%\subsubsection{Universe}
 %
-% We define the following standard objects:
+% We define Plato's Universe:
 %
 % \begin{macro}{\Universe}
 %    \begin{macrocode}
@@ -232,7 +233,29 @@ and disitt.pdf.
 %    \end{macrocode}
 % \end{macro}
 %
-%\subsection{Important objects: Ordinals}
+%\subsubsection{Lists}
+%
+% We define ordered collections known by computer scientists as \emph{Lists}:
+%
+% \begin{macro}{\Lists}
+%    \begin{macrocode}
+%txs\Lists#
+\newcommand{\Lists}{\ensuremath{\mathfrak{L}}}
+%    \end{macrocode}
+% \end{macro}
+%
+%\subsubsection{List Automorphisms}
+%
+% We define the automorphisms of Lists:
+%
+% \begin{macro}{\ListAutomorphisms}
+%    \begin{macrocode}
+%txs\ListAutomorphisms#
+\newcommand{\ListAutomorphisms}{\ensuremath{\Delta}}
+%    \end{macrocode}
+% \end{macro}
+%
+%\subsubsection{Ordinals}
 % We define the following standard objects:
 %
 % \begin{macro}{\Ordinal}
@@ -289,7 +312,16 @@ and disitt.pdf.
 \newcommand{\Set}{\ensuremath{\textbf{Set}}}
 %    \end{macrocode}
 % \end{macro}
-
+%
+% \subsection{Isomorphisms}
+%
+% \begin{macro}{\isomorphic}
+%    \begin{macrocode}
+%txs\isomorphic#
+\newcommand{\isomorphic}{\ensuremath{\backsimeq}}
+%    \end{macrocode}
+% \end{macro}
+%
 % \subsection{Finishing off}
 %
 %    \begin{macrocode}
