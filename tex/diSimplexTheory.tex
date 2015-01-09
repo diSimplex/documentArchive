@@ -142,8 +142,8 @@ simultaineously define, via co--induction, the three structures of \Universe,
 %
 \begin{align}
    \Universe          & \isomorphic \arrow{\ListAutomorphisms}{\Universe} & \text{Plato's Universe} \\
-   \Lists             & \isomorphic \one + \Universe \times \Lists        & \text{Lists} \\
-   \ListAutomorphisms & \isomorphic \arrow{\Lists}{\Lists}                & \text{List Automorphisms}
+   \Lists             & \isomorphic \one + \Universe \times \Lists        & \text{(Gernalized) Lists} \\
+   \ListAutomorphisms & \isomorphic \arrow{\Lists}{\Lists}                & \text{(Gernalized) List Automorphisms}
 \end{align}
 %
 Unfortunately, since we \emph{are} building the foundations of Mathematics, we,
@@ -162,11 +162,11 @@ moment, we are getting ahead of our current (minimal) abilities.
 There are two distinct types of references that we will use:
 %
 \begin{itemize}
-\item Specific know references, \define{names}{}, and
+\item Specific known references, \define{names}{}, and
 \item Specific unknown references, \define{variables}{}.
 \end{itemize}
 %
-diSimplicial structures, which are instances of Plato's universe, are highly
+DiSimplicial structures, which are instances of Plato's universe, are highly
 structured objects with complex internal referential links, these links are
 denoted using references to specific known objects using names. The `tools' we
 use to build diSimplicial structures will also need to refer to other specific
@@ -183,6 +183,42 @@ unknown references will use variables.
 \begin{definition}
 content...
 \end{definition}
+
+\subsection{motivation}
+
+A sketch of nearly random ideas relating to the base of the foundations of
+mathematics via computational complexity.
+
+start by looking at finite computation as above BUT we need to generalize lists
+to encompase the supremum operator. See chapter 2 and 3 of Algebraic Set Theory.
+compare the trees used to prove the existence of ZF-Algebras (chapter 3) with
+those used to help motivate Aczel's Non-Well-Founded sets. compare these with
+Vopenka's (rigid graph/tree) principle in Adamek and Rosicky's book Locally
+Presentable and Accessible Categories.
+
+Vopenka's principle is described in Mathoverflow articles:
+\verb|http://mathoverflow.net/questions/29302/reasons-to-believe-vopenkas-principle-huge-cardinals-are-consistent/29473#29473|
+and
+\verb|http://mathoverflow.net/questions/45602/can-vopenkas-principle-be-violated-definably/46538#46538|
+and or Adamek and Rosicky's book as really delineating the ``correct'' boundary
+between small and large sets. As such our theory \emph{should} ensure the
+Vopenka's principle is honoured.
+
+basically using AST's existence work, we can build the ordinals just in time (?)
+to extend finite computers into transfinite computers. (See Moschovakis's paper
+on definition of algorithms -- he does not go far enough and use co-algebraic
+methods... but his computer tools do assume ordinal computation as we need to
+do).
+
+need to understand the relationship between implicit and explicit computation
+--- see the similar dichotome in the lambda-calculus.
+
+look for p =!= np in the categorical theorems which force the use of the
+small/large boundary.
+
+look at: lucas2001transfiniteRewrite,
+dershowitzKaplanPlaisted1989transfiinteRewrite,
+jacobs2011coalgebraicComputation
 
 \bibliographystyle{amsalpha}
 \bibliography{diSimplexTheory}
