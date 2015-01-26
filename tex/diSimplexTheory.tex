@@ -203,11 +203,11 @@ symbols which can be `written', nor the length of time which might be used to
 `write these symbols down', since, of course, an omnipotent \Cardinal-being has
 no such limits. In each case we explicitly allow for a `transfinite number of
 symbols', a `transfinite sized piece of paper', and a `transfinite amount of
-time' (when of course we have suitably defined the `transfinite ordinals' and
-`transfinite cardinals'). Note that, in contrast to classical set theory, to
-`compute' any large ordinal, instead of merely assuming it exists, an
-omnipotent \Cardinal-being does indeed require large ordinal lengths of time to
-write down large ordinal numbers of symbols.
+time' (when of course we have suitably defined the `transfinite ordinals'). Note
+that, in contrast to classical set theory, to `compute' any large ordinal,
+instead of merely assuming it exists, an omnipotent \Cardinal-being does indeed
+require large ordinal lengths of time to write down large ordinal numbers of
+symbols.
 
 DiSimplicial structures, which are instances of Plato's universe, are highly
 structured objects with complex referential structure. There are two
@@ -289,6 +289,21 @@ For any being, names and variables are defined by:
 %
 \end{align*}
 
+We begin by developing the syntax for $\Universe_1$.
+%
+\begin{align*}
+%
+\bnf{diSimplex}{-1} \quad & \bnfAssign & \bnfT{\Delta_{-1}} \;\; \bnfT{\langle} \;\; \bnfT{\rangle} \\
+%
+\bnf{diSimplex}{0} \quad & \bnfAssign & \bnfT{\Delta_0} \;\; \bnfT{\langle} \bnf{name}{} \bnfT{\rangle} \\
+%
+\bnf{diSimplex}{1} \quad & \bnfAssign & 
+  \bnfT{\Delta_1} \;\; \bnfT{\langle} \bnf{name}{}, \bnf{name}{} \bnfT{\rangle}
+%
+\end{align*}
+%
+where the structures refered to by a name in each of $\Delta_0$ and $\Delta_1$
+constructs must be $\Delta_{-1}$ and $\Delta_0$ structures respectively.
 
 \subsection{Denotational Semantics}
 
