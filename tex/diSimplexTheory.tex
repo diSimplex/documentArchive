@@ -66,7 +66,7 @@ Mathematics, is the \emph{internal} logic of \emph{the} Co-Algebraic Universe of
 Mathematics. We will refer to this Co-Algebraic Universe as \emph{`Plato's
 Universe'}, \Universe.
 
-We base our foundations of mathematics on generalized computation \emph{rather
+We base our foundations of mathematics on generalised computation \emph{rather
 than} Logic.
 
 Clearly, not all of classical Mathematics is (classically) `computable'. For
@@ -80,22 +80,22 @@ with these more limited abilities, as \emph{modipotent}.
 
 The classical theory of computation typically investigates the relative power of
 computation using turing machines \emph{extended} with oracles. We will instead
-introduce computation whose power is controled by the algebraic `size' of its
+introduce computation whose power is controlled by the algebraic `size' of its
 available data structures. For each \emph{algebraic} cardinal, $\gamma$, there
 is an associated computational power of a $\gamma$-modipotent being, or
 $\gamma$-being. The unlimited computational power of an omnipotent being (a
 `god') corresponds to the \emph{co-algebraic} cardinal, \Cardinal. Hence any
-omnipotent being will be refered to as a \Cardinal-being.
+omnipotent being will be referred to as a \Cardinal-being.
 
 The co-algebraic \emph{sub}universe of mathematics computable by an
-$\omega$-modipotent being, such as ourselves, will be refered to as
+$\omega$-modipotent being, such as ourselves, will be referred to as
 \emph{`Plato's Playground'}.
 
 One of our primary interests is in how \emph{`Plato's Playground'} fits `inside'
 \emph{`Plato's universe'}. Clearly, $\omega$-modipotent beings can `dream' of,
 and hence specify, structures which they can not construct using
 $\omega$-computational tools. That is there are structures whose specifications
-`exist' in Plato's playground but which can only be realized in Plato's
+`exist' in Plato's playground but which can only be realised in Plato's
 universe.
 
 Often to really understand a topic, it is useful to develop the same ideas using
@@ -104,7 +104,7 @@ foundations of mathematics using different tools.  In our case using computation
 rather than logic. However, not surprisingly, there will be rough
 correspondences between the different sets of tools. Again, in our case, each
 basic assumption in our computational theory of mathematics, corresponds to one
-or more of the axioms of Set Theory. The essentiality of these correspondences
+or more of the axioms of Set Theory. The essentially of these correspondences
 is what provides us with a deep understanding of what it \emph{means} to
 \emph{found} mathematics.
 
@@ -154,8 +154,8 @@ Our explicit thesis is that Mathematics \emph{is} computation.
 
 To begin, we must provide a model of computation. The classical models of
 computability, such as Turing Machines, the Lambda Calculus and General
-Recursive Functions, are all, more or less, about computational sequentiallity
-and `time'. While the model we are about to propose will be equivilant to any of
+Recursive Functions, are all, more or less, about computational sequentiality
+and `time'. While the model we are about to propose will be equivalent to any of
 the classical models, it is designed to be \emph{explicitly} about parallel
 computation and `space--time'. Moreover, since classical mathematics is
 mathematics from an omnipotent point of view, the computational model required
@@ -165,7 +165,7 @@ computational ability.
 Since Mathematics \emph{is} computation, we, as mathematicians, write \emph{in}
 a programming language. As in Computer Science, there are many programming
 languages, each suited to a different paradigm, there will be numerous
-mathamatical languages.
+mathematical languages.
 
 Again, in Theoretical Computer Science, given a programming language, the first
 question is: \emph{How do we know what this language computes?} This question is
@@ -174,7 +174,7 @@ language. Plato's universe, \emph{the} Co-Algebraic universe of Mathematics,
 is essentially, the fixed point of these Semantic descriptions.
 
 When the dust settles, to define Plato's Universe, \Universe, we will need to
-simultaineously define, via co--induction, the three structures of \Universe,
+simultaneously define, via co--induction, the three structures of \Universe,
 \Lists, \ListAutomorphisms:
 %
 \begin{align}
@@ -197,7 +197,7 @@ moment, we are getting ahead of our current (minimal) abilities.
 \subsection{Syntax: Marks in the sand}
 
 To be able to discuss the mathematics of an omnipotent \Cardinal-being, we
-\emph{explicity} place \emph{no limits} on the size of the syntax. This means we
+\emph{explicitly} place \emph{no limits} on the size of the syntax. This means we
 make no assumption about the numbers of symbols which can be used, the number of
 symbols which can be `written', nor the length of time which might be used to
 `write these symbols down', since, of course, an omnipotent \Cardinal-being has
@@ -267,7 +267,7 @@ form:
 %
 \end{align*}
 %
-where we have redundent representations unless the exponents of $\omega$ are
+where we have redundant representations unless the exponents of $\omega$ are
 strictly ordered $\beta_1, > \ldots > \beta_k \ge 0$.
 
 We postpone a potential numeration for a \Cardinal-being until after we have
@@ -302,8 +302,39 @@ We begin by developing the syntax for $\Universe_1$.
 %
 \end{align*}
 %
-where the structures refered to by a name in each of $\Delta_0$ and $\Delta_1$
+where the structures referred to by a name in each of $\Delta_0$ and $\Delta_1$
 constructs must be $\Delta_{-1}$ and $\Delta_0$ structures respectively.
+
+\subsection{new work}
+
+We ``build'' the rules for Plato's universe, \Universe, by simultaneously providing rules
+for construction, bi-simulation, and modal logic.
+
+When considering both the rules for bi-simulation and modal logic, it is important to
+realise that these rules apply to diSimplicial \emph{structures} and not to ``individual''
+simplicies in a given structure. Effectively a fragment of modal logic provides a
+specification of a ``subset'' of all diSimplicial structures which conform to that
+fragment of modal logic.
+
+It is equally important to realise that we take an explicitly \emph{structuralist}
+approach. An ``object'' which has \emph{no} relationships with anything else, does not
+exist (as far as ``everything else'' is concerned). This is essentially a mathematical 
+version of Mach's principle. Local structure is determined by global relationships.  This 
+approach \emph{determines} our rules for bi-similarity.
+
+We begin at the beginning:
+
+A context is a structure which encodes the relationships between the relevant parts of a 
+diSimplicial structure.
+
+
+\begin{prooftree}
+\AxiomC{A}
+\AxiomC{B}
+\BinaryInfC{D}
+\end{prooftree}
+
+
 
 \subsection{Denotational Semantics}
 
@@ -323,7 +354,7 @@ A sketch of nearly random ideas relating to the base of the foundations of
 mathematics via computational complexity.
 
 start by looking at finite computation as above BUT we need to generalize lists
-to encompase the supremum operator. See chapter 2 and 3 of Algebraic Set Theory.
+to encompass the supremum operator. See chapter 2 and 3 of Algebraic Set Theory.
 compare the trees used to prove the existence of ZF-Algebras (chapter 3) with
 those used to help motivate Aczel's Non-Well-Founded sets. compare these with
 Vopenka's (rigid graph/tree) principle in Adamek and Rosicky's book Locally
