@@ -316,16 +316,32 @@ simplicies in a given structure. Effectively a fragment of modal logic provides 
 specification of a ``subset'' of all diSimplicial structures which conform to that
 fragment of modal logic.
 
+A diSimplicial structure is a ``global'' ``object''.  It is made up of ``local'' simplicies. 
+Computation is ``local''. This means it proceeds by ``walking'' over the simplicies 
+``contained'' ``in'' a given diSimplicial structure. However, ``locality'' depends upon the 
+relative power of a given being. ``Locality'' for an $\omega$-being (or $\aleph_0$-being) 
+means finite collections of simplicies. ``Locality'' for an $\aleph_1$-being means countable 
+collections of simplicies. For an omnipotent \Cardinal-being, ``locality'' and ``globality'' 
+coincide.
+
 It is equally important to realise that we take an explicitly \emph{structuralist}
 approach. An ``object'' which has \emph{no} relationships with anything else, does not
 exist (as far as ``everything else'' is concerned). This is essentially a mathematical 
 version of Mach's principle. Local structure is determined by global relationships.  This 
 approach \emph{determines} our rules for bi-similarity.
 
-We begin at the beginning:
+We begin at the beginning\footnote{We follow the presentation in the HoTT book, 
+\cite[Appendix A2]{ufp2013hott} but of course with our own deviations.}:
 
-A context is a structure which encodes the relationships between the relevant parts of a 
-diSimplicial structure.
+A \define{judgement}{} is a ``unit'' ``fact'' in a given computation. A judgement might 
+either represent an assumption, or be the result of a computation.
+
+A \define{context}{}, \context{\Gamma}, is a collection of the currently accepted
+judgements. As such a context encodes the explicitly known relationships between the
+relevant parts of a collection of diSimplicial structures. A context is itself a
+judgement.
+
+
 
 
 \begin{prooftree}
