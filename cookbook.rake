@@ -12,6 +12,4 @@ end
 file '.gitignore' => 'create:default';
 task :create => '.gitignore';
 
-add_cookbook("/home/stg/ExpositionGit/tools/latexCookbook")
-
-
+add_cookbook("/home/stg/ExpositionGit/tools/diSimplexLaTeX/cookbook")
