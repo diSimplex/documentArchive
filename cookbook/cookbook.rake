@@ -6,6 +6,7 @@ task :cookPreConfig do
 end
 
 load_recipe 'create';
+load_recipe 'tex';
 load_recipe 'texStyles';
 load_recipe 'texFonts';
 load_recipe 'ruby';
