@@ -6,6 +6,10 @@ paper:
   name: diSimplexEngine
   version: 1.0.0
 
+biblatex:
+  ignoreFields:
+    - abstract
+
 texStyle:
   name: disitt-engine
   version: 1.0.0
@@ -62,3 +66,4 @@ lua:
           - csrc/diSimplexEngine/diSimplex.h
           - csrc/diSimplexEngine/diSimplex.c
           - csrc/diSiTTLua.h
+
