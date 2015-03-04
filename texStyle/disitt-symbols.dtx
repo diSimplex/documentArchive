@@ -221,6 +221,29 @@ and disitt.pdf.
 %    \end{macrocode}
 % \end{macro}
 %
+%\subsection{Judgements}
+%\subsubsection{Is a}
+%
+% We define the `is a' judgement:
+%
+% \begin{macro}{\isA}
+%    \begin{macrocode}
+%txs\isA#
+\newcommand{\isA}[2]{\ensuremath{{#1}::{#2}}}
+%    \end{macrocode}
+% \end{macro}
+%
+%\subsubsection{Part of}
+%
+% We define the `part of' judgement:
+%
+% \begin{macro}{\partOf}
+%    \begin{macrocode}
+%txs\partOf#
+\newcommand{\partOf}[2]{\ensuremath{{#1}:{#2}}}
+%    \end{macrocode}
+% \end{macro}
+%
 %\subsection{Important Objects}
 %\subsubsection{Universe}
 %
