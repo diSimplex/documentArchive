@@ -330,27 +330,90 @@ exist (as far as ``everything else'' is concerned). This is essentially a mathem
 version of Mach's principle. Local structure is determined by global relationships.  This 
 approach \emph{determines} our rules for bi-similarity.
 
-We begin at the beginning\footnote{We follow the presentation in the HoTT book, 
-\cite[Appendix A2]{ufp2013hott} but of course with our own deviations.}:
+We begin at the beginning\footnote{We loosely follow the presentations found in the HoTT
+book, \cite[Appendix A2]{ufp2013hott} and Bart Jacobs' \cite{jacobs1999catLogicTypeTh},
+but of course with our own deviations.}:
 
 A \define{judgement}{} is a ``unit'' ``fact'' in a given computation. A judgement might 
 either represent an assumption, or be the result of a computation.
 
-A \define{context}{}, \context{\Gamma}, is a collection of the currently accepted
+A \define{context}{}, \cJudgement{\Gamma}, is a collection of the currently accepted
 judgements. As such a context encodes the explicitly known relationships between the
 relevant parts of a collection of diSimplicial structures. A context is itself a
 judgement.
 
+A \define{part of judgement}{}, \judgement{b}{B}, is the statement that one diSimplicial 
+structure, $b$, is a (sub)part of another one, $B$.
 
+At the foundational level, these are the \emph{only} judgements. All other judgements are
+derived from these two.
 
+A \define{contextual judgement}{}, $\context{\Gamma} \vdash \mathcal{J}$, is the assertion 
+that, in the context, \context{\Gamma}, we can compute the judgement, $\mathcal{J}$. Note 
+that $\mathcal{J}$ can be either a context judgement, \cJudgement{\Gamma}, or a part of 
+judgement, \judgement{a}{A}, or any derived judgement.
+
+These and all other judgements are essentially defined by the collection of
+\define{inference rules}{} in which they participate. A typical inference rule, named,
+Name, has the form:
+%
+\begin{prooftree}
+\AxiomC{$c\mathcal{J}_0$}
+\AxiomC{$\cdots$}
+\AxiomC{$c\mathcal{J}_{\gamma}$}
+\RightLabel{Name}
+\TrinaryInfC{$c\mathcal{J}$}
+\end{prooftree}
+%
+For some ordinal, $\gamma$, and contextual judgements, $c\mathcal{J}_0, \cdots, 
+c\mathcal{J}_{\gamma}$ and $c\mathcal{J}$. 
+
+Following, \cite[section 2.5]{sangiorgi2012introBisimulationCoinduction}, we can read any
+rule in either the forward or backward direction.  In the forward direction a rule helps
+to define an algebra by showing one way in which an ``object'' is built up out of its
+parts. In the backward direction a rule helps to define a coalgebra by showing one way in
+which to observe the parts of an ``object''.  We will make explicit use of \emph{both} the
+forward and backward readings of any and all rules.
+
+\subsection{Context rules}
+
+\TODO{Translate these rules in to disitt-engine format; redefine them for transfinite use.}
 
 \begin{prooftree}
-\AxiomC{A}
-\AxiomC{B}
-\BinaryInfC{D}
+\AxiomC{}
+\RightLabel{empty-ctx}
+\UnaryInfC{\cJudgement{\cdot}}
 \end{prooftree}
 
+We begin with the finite case which we will generalise to the transfinite ordinal case
+once we have defined transfinite ordinals.
 
+\begin{prooftree}
+\AxiomC{$\context{\mathcal{J}_0, \ldots, \mathcal{J}_n} \vdash \mathcal{J}_{n+1}$}
+\RightLabel{successor-ctx}
+\UnaryInfC{\cJudgement{\mathcal{J}_0, \ldots, \mathcal{J}_n, \mathcal{J}_{n+1}}}
+\end{prooftree}
+
+\begin{prooftree}
+\AxiomC{$\context{\mathcal{J}_0, \ldots, \mathcal{J}_n} \vdash 
+\cJudgement{\mathcal{J}_{n+1}, \ldots, \mathcal{J}_{n+m}}$}
+\RightLabel{flatten-1-ctx}
+\UnaryInfC{$\context{\mathcal{J}_0, \ldots, \mathcal{J}_n, \mathcal{J}_{n+1}} \vdash 
+\cJudgement{\mathcal{J}_{n+2}, \ldots, \mathcal{J}_{n+m}}$}
+\end{prooftree}
+
+\begin{prooftree}
+\AxiomC{$\context{\mathcal{J}_0, \ldots, \mathcal{J}_n} \vdash 
+\cJudgement{\cJudgement{\mathcal{J}_{n+1,0},\ldots,\mathcal{J}_{n+1,k}}, \ldots, 
+\mathcal{J}_{n+m}}$}
+\RightLabel{flatten-2-ctx}
+\UnaryInfC{$\context{\mathcal{J}_0, \ldots, \mathcal{J}_n, \mathcal{J}_{n+1,0}} \vdash 
+\cJudgement{\cJudgement{\mathcal{J}_{n+1,1},\ldots,\mathcal{J}_{n+1,k}}, \ldots, 
+\mathcal{J}_{n+m}}$}
+\end{prooftree}
+
+\TODO{I now assert that the two flattens above provide sufficient computational power to 
+compute the total flattening of any countably structured context.... PROVE THIS}
 
 \subsection{Denotational Semantics}
 
