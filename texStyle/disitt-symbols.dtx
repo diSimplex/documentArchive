@@ -222,6 +222,20 @@ and disitt.pdf.
 % \end{macro}
 %
 %\subsection{Judgements}
+%\subsubsection{Part of}
+%
+% We start by defining the \emph{only} primary judgement, the `part of' 
+% judgement:
+%
+% \begin{macro}{\partOf}
+%    \begin{macrocode}
+%txs\partOf#
+\newcommand{\partOf}[2]{\ensuremath{{#1}:{#2}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% all other judgements can be defined using the `part of' judgement.
+%
 %\subsubsection{Is a}
 %
 % We define the `is a' judgement:
@@ -233,17 +247,6 @@ and disitt.pdf.
 %    \end{macrocode}
 % \end{macro}
 %
-%\subsubsection{Part of}
-%
-% We define the `part of' judgement:
-%
-% \begin{macro}{\partOf}
-%    \begin{macrocode}
-%txs\partOf#
-\newcommand{\partOf}[2]{\ensuremath{{#1}:{#2}}}
-%    \end{macrocode}
-% \end{macro}
-%
 %\subsection{Important Objects}
 %\subsubsection{Universe}
 %
@@ -251,8 +254,8 @@ and disitt.pdf.
 %
 % \begin{macro}{\Universe}
 %    \begin{macrocode}
-%txs\Universe#
-\newcommand{\Universe}{\ensuremath{\mathfrak{U}}}
+%txs\Universe{computingPower}{simplicialSize}#
+\newcommand{\Universe}[2]{\ensuremath{\mathfrak{U}_{#1}^{#2}}}
 %    \end{macrocode}
 % \end{macro}
 %
