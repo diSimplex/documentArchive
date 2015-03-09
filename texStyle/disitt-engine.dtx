@@ -212,29 +212,29 @@ and the derived files: disitt-engine.sty and disitt-engine.pdf.
 %
 %    \begin{macrocode}
 %<*qstest>
-\begin{qstest}{Simple DiSittFS FIFO/stack integration test}
-  {\CreateDiSittFS, \DestroyDiSittFS, 
-   \DiSittPush, \DiSittPop, \DiSittTop, \DiSittSize}
-  
-  \CreateDiSittFS{defaultValueA}
-  \Expect*{\DiSittTop}{defaultValueA}
-  \Expect*{\DiSittSize}{0}
-  \DiSittPush{firstValueFirstStack}
-  \Expect*{\DiSittTop}{firstValueFirstStack}
-  \Expect*{\DiSittSize}{1}
-  \CreateDiSittFS{defaultValueB}
-  \Expect*{\DiSittTop}{defaultValueB}
-  \Expect*{\DiSittSize}{0}
-  \DiSittPush{firstValueSecondStack}
-  \Expect*{\DiSittTop}{firstValueSecondStack}
-  \Expect*{\DiSittSize}{1}
-  \DestroyDiSittFS
-  \Expect*{\DiSittTop}{firstValueFirstStack}
-  \Expect*{\DiSittSize}{1}
-  \DiSittPop
-  \Expect*{\DiSittTop}{defaultValueA}
-  \Expect*{\DiSittSize}{0}
-\end{qstest}
+%\begin{qstest}{Simple DiSittFS FIFO/stack integration test}
+%  {\CreateDiSittFS, \DestroyDiSittFS, 
+%   \DiSittPush, \DiSittPop, \DiSittTop, \DiSittSize}
+%  
+%  \CreateDiSittFS{defaultValueA}
+%  \Expect*{\DiSittTop}{defaultValueA}
+%  \Expect*{\DiSittSize}{0}
+%  \DiSittPush{firstValueFirstStack}
+%  \Expect*{\DiSittTop}{firstValueFirstStack}
+%  \Expect*{\DiSittSize}{1}
+%  \CreateDiSittFS{defaultValueB}
+%  \Expect*{\DiSittTop}{defaultValueB}
+%  \Expect*{\DiSittSize}{0}
+%  \DiSittPush{firstValueSecondStack}
+%  \Expect*{\DiSittTop}{firstValueSecondStack}
+%  \Expect*{\DiSittSize}{1}
+%  \DestroyDiSittFS
+%  \Expect*{\DiSittTop}{firstValueFirstStack}
+%  \Expect*{\DiSittSize}{1}
+%  \DiSittPop
+%  \Expect*{\DiSittTop}{defaultValueA}
+%  \Expect*{\DiSittSize}{0}
+%\end{qstest}
 %</qstest>
 %    \end{macrocode}
 %
@@ -244,19 +244,19 @@ and the derived files: disitt-engine.sty and disitt-engine.pdf.
 %
 %    \begin{macrocode}
 %<*qstest>
-\begin{qstest}{First deAxiom integration test}
-  {\CreateDiSittFS, \DestroyDiSittFS, 
-   \DiSittPush, \DiSittPop, \DiSittTop, \DiSittSize}
-
-  \CreateDiSittFS{}
-  \conclusion{}{\judgement{a}{A}}
-  \Expect*{\DiSittSize}{1}
-  \Expect*{\DiSittTop}*{\ensuremath{ \vdash \judgement{a}{A}}}
-  \ifthenelse{1 < \DiSittSize}{\whiledo{1 < \DiSittSize}{\AxiomC{\DiSittShift}}}{\AxiomC{}}
-  \UnaryInfC{\DiSittShift}
+%\begin{qstest}{First deAxiom integration test}
+%  {\CreateDiSittFS, \DestroyDiSittFS, 
+%   \DiSittPush, \DiSittPop, \DiSittTop, \DiSittSize}
+%
+%  \CreateDiSittFS{}
+%  \conclusion{}{\judgement{a}{A}}
+%  \Expect*{\DiSittSize}{1}
+%  \Expect*{\DiSittTop}*{\ensuremath{ \vdash \judgement{a}{A}}}
+%  \ifthenelse{1 < \DiSittSize}{\whiledo{1 < \DiSittSize}{\AxiomC{\DiSittShift}}}{\AxiomC{}}
+%  \UnaryInfC{\DiSittShift}
 %  \DisplayProof
-  \DestroyDiSittFS
-\end{qstest}
+%  \DestroyDiSittFS
+%\end{qstest}
 %</qstest>
 %    \end{macrocode}
 %
@@ -584,13 +584,15 @@ end-lemma
 %
 % \begin{macro}{\pushHypothesis}
 %    \begin{macrocode}
-\newcommand{\pushHypothesis}[1]{\DiSittPush{#1}}
+%\newcommand{\pushHypothesis}[1]{\DiSittPush{#1}}
+\newcommand{\pushHypothesis}[1]{{#1}}
 %    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{\pushConclusion}
 %    \begin{macrocode}
-\newcommand{\pushConclusion}[1]{\DiSittPush{#1}}
+%\newcommand{\pushConclusion}[1]{\DiSittPush{#1}}
+\newcommand{\pushConclusion}[1]{{#1}}
 %    \end{macrocode}
 % \end{macro}
 %
