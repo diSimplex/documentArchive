@@ -64,7 +64,7 @@ First Order Predicate Logic, is less important then the ability to compute. We
 will show that First Order Predicate Logic, as traditionally used in
 Mathematics, is the \emph{internal} logic of \emph{the} Co-Algebraic Universe of
 Mathematics. We will refer to this Co-Algebraic Universe as \emph{`Plato's
-Universe'}, \Universe.
+Universe'}, \Universe{}{}.
 
 We base our foundations of mathematics on generalised computation \emph{rather
 than} Logic.
@@ -173,19 +173,21 @@ captured by the Denotational and Operational Semantics associated with a given
 language. Plato's universe, \emph{the} Co-Algebraic universe of Mathematics,
 is essentially, the fixed point of these Semantic descriptions.
 
-When the dust settles, to define Plato's Universe, \Universe, we will need to
-simultaneously define, via co--induction, the three structures of \Universe,
+When the dust settles, to define Plato's Universe, \Universe{}{}, we will need to
+simultaneously define, via co--induction, the three structures of \Universe{}{},
 \Lists, \ListAutomorphisms:
 %
 \begin{align}
-   \Universe          & \isomorphic \arrow{\ListAutomorphisms}{\Universe} & \text{Plato's Universe} \\
-   \Lists             & \isomorphic \one + \Universe \times \Lists        & \text{(Gernalized) Lists} \\
+   \Universe{}{}          & \isomorphic \arrow{\ListAutomorphisms}{\Universe{}{}} & 
+   \text{Plato's Universe} \\
+   \Lists             & \isomorphic \one + \Universe{}{} \times \Lists        & 
+   \text{(Gernalized) Lists} \\
    \ListAutomorphisms & \isomorphic \arrow{\Lists}{\Lists}                & \text{(Gernalized) List Automorphisms}
 \end{align}
 %
 Unfortunately, since we \emph{are} building the foundations of Mathematics, we,
 as yet, have no definitions of co--induction, $\isomorphic$, \one, $+$, $\times$,
-$\arrow{\cdot}{\cdot}$, let alone, \Universe, \Lists\ or even \ListAutomorphisms.
+$\arrow{\cdot}{\cdot}$, let alone, \Universe{}{}, \Lists\ or even \ListAutomorphisms.
 
 Again, when the dust settles, Lists, \Lists, is \emph{an} \emph{implementation}
 of the classical concept of the Ordinals, \Ordinal, and the isomorphism objects
@@ -289,7 +291,7 @@ For any being, names and variables are defined by:
 %
 \end{align*}
 
-We begin by developing the syntax for $\Universe_1$.
+We begin by developing the syntax for \Universe{}{1}.
 %
 \begin{align*}
 %
@@ -307,7 +309,7 @@ constructs must be $\Delta_{-1}$ and $\Delta_0$ structures respectively.
 
 \subsection{new work}
 
-We ``build'' the rules for Plato's universe, \Universe, by simultaneously providing rules
+We ``build'' the rules for Plato's universe, \Universe{}{}, by simultaneously providing rules
 for construction, bi-simulation, and modal logic.
 
 When considering both the rules for bi-simulation and modal logic, it is important to
@@ -412,8 +414,163 @@ once we have defined transfinite ordinals.
 \mathcal{J}_{n+m}}$}
 \end{prooftree}
 
-\TODO{I now assert that the two flattens above provide sufficient computational power to 
-compute the total flattening of any countably structured context.... PROVE THIS}
+\TODO{I now assert that the two flattens above provide sufficient computational power to
+compute the total flattening of any countably structured context.... PROVE THIS.
+Essentially given these rules, a context is a countably infinitely branching countably
+infinitely deep tree. To flatten it we need to follow a weaving breadth first pattern
+continuously revisiting nodes until in the ``countably inifinite time'' it is flattened. 
+This \emph{will} be a typcial problem/solution for diSimplicial structures. Essentially this 
+is nothing more nor less than a \emph{fair} parallel scheduling algorithm for the parallel 
+application of, in this case, the flattening rules on all branches simultaneously. }
+
+\subsection{\Universe{}{-1}, \Universe{}{0} and \Universe{}{1}}
+
+See \cite{bell1988topoiSetThLogic, joyalMoerdijk1995algSetTh, aczel1988nonWellFoundedSets}
+
+\begin{prooftree}
+\AxiomC{\cJudgement{\Gamma}}
+\RightLabel{empty-\Universe{}{0}}
+\UnaryInfC{$\context{\Gamma} \vdash \judgement{\cdot}{\Universe{}{}}$}
+\end{prooftree}
+
+\begin{prooftree}
+\AxiomC{$\context{\Gamma} \vdash \judgement{n}{\Universe{}{}}$}
+\RightLabel{empty-\Universe{}{0}}
+\UnaryInfC{$\context{\Gamma} \vdash \judgement{\Delta_{-1}(n)}{\Universe{}{-1}}$}
+\end{prooftree}
+
+\begin{prooftree}
+\AxiomC{$\context{\Gamma} \vdash \judgement{a}{\Universe{}{-1}}$}
+\RightLabel{empty-\Universe{}{0}}
+\UnaryInfC{$\context{\Gamma} \vdash \judgement{a}{\Universe{}{}}$}
+\end{prooftree}
+
+\begin{prooftree}
+\AxiomC{$\context{\Gamma} \vdash \judgement{n}{\Universe{}{}}$}
+\AxiomC{$\context{\Gamma} \vdash \judgement{a}{\Universe{}{-1}}$}
+\RightLabel{empty-\Universe{}{0}}
+\BinaryInfC{$\context{\Gamma} \vdash \judgement{\Delta_0(n;a)}{\Universe{}{0}}$}
+\end{prooftree}
+
+\begin{prooftree}
+\AxiomC{$\context{\Gamma} \vdash \judgement{a}{\Universe{}{0}}$}
+\RightLabel{empty-\Universe{}{0}}
+\UnaryInfC{$\context{\Gamma} \vdash \judgement{a}{\Universe{}{}}$}
+\end{prooftree}
+
+\begin{prooftree}
+\AxiomC{$\context{\Gamma} \vdash \judgement{n}{\Universe{}{}}$}
+\AxiomC{$\context{\Gamma} \vdash \judgement{a}{\Universe{}{0}}$}
+\AxiomC{$\context{\Gamma} \vdash \judgement{b}{\Universe{}{0}}$}
+\RightLabel{empty-\Universe{}{0}}
+\TrinaryInfC{$\context{\Gamma} \vdash \judgement{\Delta_1(n;a,b)}{\Universe{}{1}}$}
+\end{prooftree}
+
+\begin{prooftree}
+\AxiomC{$\context{\Gamma} \vdash \judgement{a}{\Universe{}{1}}$}
+\RightLabel{empty-\Universe{}{0}}
+\UnaryInfC{$\context{\Gamma} \vdash \judgement{a}{\Universe{}{}}$}
+\end{prooftree}
+
+\subsection{Definition of equality}
+
+The first and most important thing we must do is to, given the above definitions of
+Plato's universe, \Universe{}{}, define \define{equality}{}.  That is we need to show that
+we can compute the following:
+
+\begin{prooftree}
+\AxiomC{\hypothesis{\Gamma}{\judgement{a}{\Universe{}{0}}}}
+\AxiomC{\hypothesis{\Gamma}{\judgement{b}{\Universe{}{0}}}}
+\AxiomC{\hypothesis{\Gamma}{\judgement{a}{b}}}
+\AxiomC{\hypothesis{\Gamma}{\judgement{b}{a}}}
+\QuaternaryInfC{\conclusion{\Gamma}{\judgement{a = b}{\Universe{}{0}}}}
+\end{prooftree}
+
+\begin{prooftree}
+\AxiomC{\hypothesis{\Gamma}{\judgement{a}{\Universe{}{1}}}}
+\AxiomC{\hypothesis{\Gamma}{\judgement{b}{\Universe{}{1}}}}
+\AxiomC{\hypothesis{\Gamma}{\judgement{a}{b}}}
+\AxiomC{\hypothesis{\Gamma}{\judgement{b}{a}}}
+\QuaternaryInfC{\conclusion{\Gamma}{\judgement{a = b}{\Universe{}{1}}}}
+\end{prooftree}
+
+\subsection{\Universe{}{} is a Category}
+
+Given the above (partial) definition of Plato's universe, \Universe{}{}, our first
+intention is to show that it is a Category in the classical definition.  It is critical to
+note that we are explicitly assuming omnipotent, unlimited, computing power.
+
+To show that \Universe{}{} is a Category we need to show that we can compute the following 
+rules:
+
+\begin{prooftree}
+\AxiomC{\hypothesis{\Gamma}{\judgement{f}{\Universe{}{1}}}}
+\AxiomC{\hypothesis{\Gamma}{\judgement{g}{\Universe{}{1}}}}
+\AxiomC{\hypothesis{\Gamma}{\judgement{\pi_0(f) = \pi_1(g)}{\Universe{}{0}}}}
+\TrinaryInfC{\conclusion{\Gamma}{\judgement{f \circ g}{\Universe{}{1}}}}
+\end{prooftree}
+
+\begin{prooftree}
+\AxiomC{\hypothesis{\Gamma}{\judgement{f}{\Universe{}{1}}}}
+\AxiomC{\hypothesis{\Gamma}{\judgement{g}{\Universe{}{1}}}}
+\AxiomC{\hypothesis{\Gamma}{\judgement{h}{\Universe{}{1}}}}
+\AxiomC{\hypothesis{\Gamma}{\judgement{\pi_0(f) = \pi_1(g)}{\Universe{}{0}}}}
+\AxiomC{\hypothesis{\Gamma}{\judgement{\pi_0(g) = \pi_1(h)}{\Universe{}{0}}}}
+\QuinaryInfC{\conclusion{\Gamma}{\judgement{((f \circ g) \circ h) = (f \circ (g \circ h)) 
+}{\Universe{}{1}}}}
+\end{prooftree}
+
+\begin{prooftree}
+\AxiomC{\hypothesis{\Gamma}{\judgement{a}{\Universe{}{0}}}}
+\UnaryInfC{\conclusion{\Gamma}{\judgement{\one_a}{\Universe{}{1}}}}
+\end{prooftree}
+
+\begin{prooftree}
+\AxiomC{\hypothesis{\Gamma}{\judgement{\one_a}{\Universe{}{1}}}}
+\AxiomC{\hypothesis{\Gamma}{\judgement{f}{\Universe{}{1}}}}
+\AxiomC{\hypothesis{\Gamma}{\judgement{\pi_0(\one_a) = \pi_1(f)}{\Universe{}{0}}}}
+\TrinaryInfC{\conclusion{\Gamma}{\judgement{(f \circ \one_a) = f}{\Universe{}{1}}}}
+\end{prooftree}
+
+\begin{prooftree}
+\AxiomC{\hypothesis{\Gamma}{\judgement{\one_a}{\Universe{}{1}}}}
+\AxiomC{\hypothesis{\Gamma}{\judgement{f}{\Universe{}{1}}}}
+\AxiomC{\hypothesis{\Gamma}{\judgement{\pi_0(f) = \pi_1(\one_a)}{\Universe{}{0}}}}
+\TrinaryInfC{\conclusion{\Gamma}{\judgement{(\one_a \circ f)= f}{\Universe{}{1}}}}
+\end{prooftree}
+
+\subsection{(Von Neumann) Ordinals}
+
+See \cite{joyalMoerdijk1995algSetTh, aczel1988nonWellFoundedSets}
+
+\begin{prooftree}
+\AxiomC{$\context{\Gamma} \vdash \judgement{\cdot}{\Universe{}{}}$}
+\RightLabel{empty-\Universe{}{0}}
+\UnaryInfC{$\context{\Gamma} \vdash \judgement{\cdot}{\Ordinal}$}
+\end{prooftree}
+
+\begin{prooftree}
+\AxiomC{$\context{\Gamma} \vdash \judgement{n}{\Ordinal}$}
+\RightLabel{empty-\Universe{}{0}}
+\UnaryInfC{$\context{\Gamma} \vdash \judgement{\Delta_0(n; 
+\Delta_{-1}(n))}{\Ordinal}$}
+\end{prooftree}
+
+The following are both computable:
+
+\begin{prooftree}
+\AxiomC{$\context{\Gamma} \vdash \judgement{n}{\Ordinal}$}
+\RightLabel{empty-\Universe{}{0}}
+\UnaryInfC{$\context{\Gamma} \vdash \judgement{n}{\Universe{}{}}$}
+\end{prooftree}
+
+
+\begin{prooftree}
+\AxiomC{$\context{\Gamma} \vdash \judgement{n}{\Ordinal}$}
+\RightLabel{empty-\Universe{}{0}}
+\UnaryInfC{$\context{\Gamma} \vdash \judgement{\Delta_1(\cdot; n,\Delta_0(n; 
+\Delta_{-1}(n)))}{\Universe{}{1}}$}
+\end{prooftree}
 
 \subsection{Denotational Semantics}
 
