@@ -336,8 +336,9 @@ We begin at the beginning\footnote{We loosely follow the presentations found in 
 book, \cite[Appendix A2]{ufp2013hott} and Bart Jacobs' \cite{jacobs1999catLogicTypeTh},
 but of course with our own deviations.}:
 
-A \define{judgement}{} is a ``unit'' ``fact'' in a given computation. A judgement might 
-either represent an assumption, or be the result of a computation.
+A \define{judgement}{} is a reference to one or more computational structures in Plato's
+universe. A judgement might either represent an assumption that such a structure exists,
+or be the result of a computation.
 
 A \define{context}{}, \cJudgement{\Gamma}, is a collection of the currently accepted
 judgements. As such a context encodes the explicitly known relationships between the
@@ -379,7 +380,7 @@ forward and backward readings of any and all rules.
 
 \subsection{Context rules}
 
-\TODO{Translate these rules in to disitt-engine format; redefine them for transfinite use.}
+\TODO{Translate these rules into disitt-engine format; redefine them for transfinite use.}
 
 \begin{prooftree}
 \AxiomC{}
@@ -387,8 +388,18 @@ forward and backward readings of any and all rules.
 \UnaryInfC{\cJudgement{\cdot}}
 \end{prooftree}
 
-We begin with the finite case which we will generalise to the transfinite ordinal case
-once we have defined transfinite ordinals.
+\begin{prooftree}
+\AxiomC{$\context{\mathcal{\hat{J}}} \vdash \mathcal{J}$}
+\RightLabel{next-ctx}
+\UnaryInfC{\cJudgement{\mathcal{\hat{J}}, \mathcal{J}}}
+\end{prooftree}
+
+As any self respecting functional programmer will recognise, this is a twisted,
+\emph{co-algebraic}, definition of a list. Instead of growing to the right, this list
+structure grows to the left. As we will see below, the pair of inference rules, empty-ctx
+and next-ctx together imply that a context is a mapping from the \emph{computable}
+ordinals into the collection of judgements. For omnipotent beings, the computable ordinals
+\emph{are} the ordinals.
 
 \begin{prooftree}
 \AxiomC{$\context{\mathcal{J}_0, \ldots, \mathcal{J}_n} \vdash \mathcal{J}_{n+1}$}
@@ -429,8 +440,27 @@ See \cite{bell1988topoiSetThLogic, joyalMoerdijk1995algSetTh, aczel1988nonWellFo
 
 \begin{prooftree}
 \AxiomC{\cJudgement{\Gamma}}
-\RightLabel{empty-\Universe{}{0}}
+\RightLabel{empty-\Universe{}{}}
 \UnaryInfC{$\context{\Gamma} \vdash \judgement{\cdot}{\Universe{}{}}$}
+\end{prooftree}
+
+\begin{prooftree}
+\AxiomC{$\context{\Gamma} \vdash \judgement{a}{\Universe{}{}}$}
+\RightLabel{reflexive-partOf}
+\UnaryInfC{$\context{\Gamma} \vdash \judgement{a}{a}$}
+\end{prooftree}
+
+\begin{prooftree}
+\AxiomC{$\context{\Gamma} \vdash \judgement{a}{b}$}
+\AxiomC{$\context{\Gamma} \vdash \judgement{b}{a}$}
+\RightLabel{antisymmetry-partOf}
+\BinaryInfC{$\context{\Gamma} \vdash a =_{\Universe{}{}} b$}
+\end{prooftree}
+
+\begin{prooftree}
+\AxiomC{$\context{\Gamma, \judgement{b}{a}} \vdash \judgement{c}{b}$}
+\RightLabel{tansitive-partOf}
+\UnaryInfC{$\context{\Gamma} \vdash \judgement{c}{a}$}
 \end{prooftree}
 
 \begin{prooftree}
