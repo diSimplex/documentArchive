@@ -4,6 +4,10 @@
 \documentclass[a4paper,openany]{amsbook}
 \usepackage{disitt}
 \usepackage{disitt-symbols}
+\usepackage{mdframed}
+\newmdenv[linecolor=white,backgroundcolor=gray!10]{infobox}
+\newenvironment{myQuote}{\begin{quotation}}{\end{quotation}}
+\surroundwithmdframed[linecolor=white,backgroundcolor=gray!10]{myQuote}
 
 \begin{document}
 \frontmatter
@@ -66,8 +70,10 @@ Mathematics, is the \emph{internal} logic of \emph{the} Co-Algebraic Universe of
 Mathematics. We will refer to this Co-Algebraic Universe as \emph{`Plato's
 Universe'}, \Universe{}{}.
 
-We base our foundations of mathematics on generalised computation \emph{rather
-than} Logic.
+\begin{myQuote}
+Put simply, we base our foundations of mathematics on generalised
+computation \emph{rather than} Logic.
+\end{myQuote}
 
 Clearly, not all of classical Mathematics is (classically) `computable'. For
 example, the use of the (the unrestricted) Axiom of Choice, is un-computable by
@@ -75,7 +81,7 @@ a classical Turing Machine. This suggests that, to capture the whole of
 classical Mathematics, we will need a more nuanced model of computation. The
 critical point here is that classical mathematics is developed from an
 \emph{omnipotent} point of view, yet as finite beings, we only have far more
-limited computational abilities. In out best 'school Latin`, we christen beings
+limited computational abilities. In our best 'school Latin`, we christen beings
 with these more limited abilities, as \emph{modipotent}.
 
 The classical theory of computation typically investigates the relative power of
@@ -98,15 +104,14 @@ $\omega$-computational tools. That is there are structures whose specifications
 `exist' in Plato's playground but which can only be realised in Plato's
 universe.
 
-Often to really understand a topic, it is useful to develop the same ideas using
-very different tools. After just over 100 years, it is past time to develop the
-foundations of mathematics using different tools.  In our case using computation
-rather than logic. However, not surprisingly, there will be rough
-correspondences between the different sets of tools. Again, in our case, each
-basic assumption in our computational theory of mathematics, corresponds to one
-or more of the axioms of Set Theory. The essentially of these correspondences
-is what provides us with a deep understanding of what it \emph{means} to
-\emph{found} mathematics.
+Often to really understand a topic, it is useful to develop the same ideas using very
+different tools. After just over 100 years, it is past time to develop the foundations of
+mathematics using different tools.  In our case using computation rather than logic.
+However, not surprisingly, there will be rough correspondences between the different sets
+of tools. Again, in our case, each basic assumption in our computational theory of
+mathematics, corresponds to one or more of the axioms of Set Theory. The essentiality of
+these correspondences is what provides us with a \emph{deep} understanding of what it
+\emph{means} to \emph{found} mathematics.
 
 How can we understand the shift in focus from a Logical foundation for
 mathematics to a Computational foundation for mathematics? In the classical
@@ -150,7 +155,9 @@ much more detailed \textit{Directed Simplicial Theory Implemented in Haskell}.
 
 \section{Building Plato's Wilderness}
 
+\begin{myQuote}
 Our explicit thesis is that Mathematics \emph{is} computation.
+\end{myQuote}
 
 To begin, we must provide a model of computation. The classical models of
 computability, such as Turing Machines, the Lambda Calculus and General
