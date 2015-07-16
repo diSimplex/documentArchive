@@ -3,6 +3,5 @@
 
 project(diSimplexEngineTests)
 
-defineTestsFor( diSimplexEngine "lib" "dynUtf8Parser;hattrie" )
-add_dependencies(tests diSimpexEngineTests)
+defineTestsFor( diSimplexEngine "lib" "dynUtf8Parser;hattrie;cUtils" )
 

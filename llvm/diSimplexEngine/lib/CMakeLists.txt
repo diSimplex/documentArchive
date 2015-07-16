@@ -4,4 +4,3 @@
 project(diSimplexEngine)
 
 defineLibrary(diSimplexEngine "lib" "" "lib")
-add_dependencies(lib diSimplexEngine)

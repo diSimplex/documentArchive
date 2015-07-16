@@ -4,4 +4,3 @@
 project(diSimplexEngineBinary)
 
 defineExecutable(diSimplexEngine "bin" "" "bin")
-add_dependencies(bin diSimplexEngineBin)
