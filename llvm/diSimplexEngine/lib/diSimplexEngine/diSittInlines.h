@@ -15,11 +15,11 @@ inline void DiSITT::cleanUpUniverse(void) {
 }
 
 inline DiStructure DiSITT::getInitialStructure(void) {
-  return DiStructure(NULL);
+  return DiStructure(theUniverse->diStructures->getItemPtr(0));
 }
 
 inline DiStructure DiSITT::getFinalStructure(void) {
-  return DiStructure(NULL);
+  return DiStructure(theUniverse->diStructures->getItemPtr(1));
 }
 
 inline DiSimplex DiSITT::getFinalSimplexDim(size_t aDimension) {
@@ -38,7 +38,6 @@ inline DiSimplex DiSITT::getSide(DiSimplex aSimplex, size_t sideNum) {
   return theUniverse->getSide(aSimplex, sideNum);
 }
 
-
 inline DiSITT::DiSITT(DiSITTimpl *aUniverse) {
   ref = aUniverse;
 }
@@ -48,7 +47,15 @@ inline DiSITT::~DiSITT(void) {
 }
 
 inline DiSITTimpl::DiSITTimpl(void) {
+  diStructures = new DiStructureAllocator();
 
+  // create the initial and final structures as 0 and 1
+  size_t initialStruct = diStructures->allocateNewStructure();
+  ASSERT(initialStruct == 0);
+  diStructures->getItemPtr(0)->initializeStructure();
+  size_t finalStruct = diStructures->allocateNewStructure();
+  ASSERT(finalStruct == 1);
+  diStructures->getItemPtr(1)->initializeStructure(true);
 }
 
 inline DiSITTimpl::~DiSITTimpl(void) {
@@ -56,6 +63,7 @@ inline DiSITTimpl::~DiSITTimpl(void) {
     DiSimplexAllocator *allocator = diSimplicies.popItem();
     if (allocator) delete allocator;
   }
+  if (diStructures) delete diStructures;
 }
 
 inline DiStructure DiSITTimpl::getLabel(DiSimplex aSimplex) {

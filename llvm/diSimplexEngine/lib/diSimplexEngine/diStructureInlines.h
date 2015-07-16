@@ -10,12 +10,35 @@ inline bool DiStructure::isEmpty() {
 }
 
 inline bool DiStructure::contains(DiSimplex aSimplex) {
-  return false;
+  ASSERT(ref);
+
+  if (ref->diSimplicies.getNumItems() <= aSimplex.dimension) {
+    if ((ref->extendByFinalSimplicies) && (aSimplex.id == 0)) return true;
+    else return false;
+  }
+
+  BitSet bitSet = ref->diSimplicies.getItem(aSimplex.dimension, BitSet());
+
+  return bitSet.getBit(aSimplex.id) ? true : false;
 }
 
 inline size_t DiStructure::sizeDim(size_t aDimension) {
-  return 0;
+  ASSERT(ref);
+
+  if (ref->diSimplicies.getNumItems() <= aDimension) {
+    if (ref->extendByFinalSimplicies) return 1;
+    else                              return 0;
+  }
+
+  BitSet bitSet = ref->diSimplicies.getItem(aDimension, BitSet());
+
+  return bitSet.numNonZero();
 }
 
+
+inline bool DiStructureImpl::initializeStructure(bool final) {
+  extendByFinalSimplicies = final;
+  return true;
+}
 
 #endif

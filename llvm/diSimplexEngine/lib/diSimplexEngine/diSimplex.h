@@ -29,6 +29,7 @@ protected: // objects
   friend class DiSITT;
   friend class DiSITTimpl;
   friend class DiSimplexImpl;
+  friend class DiStructure;
 };
 
 typedef VarArray<DiSimplex> DiSimplexList;

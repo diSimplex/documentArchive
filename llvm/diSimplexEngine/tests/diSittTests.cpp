@@ -22,15 +22,16 @@ describe(DiSITT) {
     shouldBeEqual(universe0.ref, universe1.ref);
   } endIt();
 
-  pending_it("There should be an initial structure") {
+  it("There should be an initial structure") {
     DiSITT universe = DiSITT::getUniverse();
     shouldNotBeNULL(universe.ref);
     DiStructure initial = universe.getInitialStructure();
     shouldNotBeNULL(initial.ref);
     shouldBeTrue(initial.isEmpty());
+    for (size_t i = 0 ; i < 100 ; i++ ) shouldBeZero(initial.sizeDim(i));
   } endIt();
 
-  pending_it("There should be a terminal structure") {
+  it("There should be a terminal structure") {
     DiSITT universe = DiSITT::getUniverse();
     shouldNotBeNULL(universe.ref);
     DiStructure final = universe.getFinalStructure();

@@ -13,6 +13,7 @@ class DiStructure;
 #include "diSimplexEngine/diSimplex.h"
 #include "diSimplexEngine/diStructure.h"
 #include "diSimplexEngine/diSimplexAllocator.h"
+#include "diSimplexEngine/diStructureAllocator.h"
 
 class DiSITTimpl;
 
@@ -77,7 +78,7 @@ protected: // objects
   /// \brief The collection of non-empty simplicies of each dimension.
   VarArray<DiSimplexAllocator*> diSimplicies;
 
-  DiStructure *diStructures;
+  DiStructureAllocator *diStructures;
 
   friend class DiSITT;
 };
@@ -87,5 +88,6 @@ protected: // objects
 #include <diSimplexEngine/diSimplexInlines.h>
 #include <diSimplexEngine/diStructureInlines.h>
 #include <diSimplexEngine/diSimplexAllocatorInlines.h>
+#include <diSimplexEngine/diStructureAllocatorInlines.h>
 
 #endif
