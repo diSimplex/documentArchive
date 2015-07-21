@@ -13,7 +13,8 @@
 \frontmatter
 \sloppy
 
-\title[DiSimplicial Theory]{Reality of Mathematics: Directed Simplicial Theory}
+\title[DiSimplicial Theory]{Reality of Mathematics: Directed Simplicial Theory, A 
+categorical trans-finite computational foundation for Mathematics}
 \input{frontMatter}
 \subjclass[2010]{Primary unknown; Secondary unknown} %
 \keywords{Keyword one, keyword two etc.}%
@@ -85,13 +86,13 @@ limited computational abilities. In our best 'school Latin`, we christen beings
 with these more limited abilities, as \emph{modipotent}.
 
 The classical theory of computation typically investigates the relative power of
-computation using turing machines \emph{extended} with oracles. We will instead
-introduce computation whose power is controlled by the algebraic `size' of its
-available data structures. For each \emph{algebraic} cardinal, $\gamma$, there
-is an associated computational power of a $\gamma$-modipotent being, or
-$\gamma$-being. The unlimited computational power of an omnipotent being (a
-`god') corresponds to the \emph{co-algebraic} cardinal, \Cardinal. Hence any
-omnipotent being will be referred to as a \Cardinal-being.
+computation using turing machines \emph{extended} with oracles. We will instead introduce
+computation whose power is controlled by the algebraic `size' of its available data
+structures and/or the amount of `time' available for the computation. For each
+\emph{algebraic} cardinal, $\gamma$, there is an associated computational power of a
+$\gamma$-modipotent being, or $\gamma$-being. The unlimited computational power of an
+omnipotent being (a `god') corresponds to the \emph{co-algebraic} cardinal, \Cardinal.
+Hence any omnipotent being will be referred to as a \Cardinal-being.
 
 The co-algebraic \emph{sub}universe of mathematics computable by an
 $\omega$-modipotent being, such as ourselves, will be referred to as
@@ -180,16 +181,26 @@ captured by the Denotational and Operational Semantics associated with a given
 language. Plato's universe, \emph{the} Co-Algebraic universe of Mathematics,
 is essentially, the fixed point of these Semantic descriptions.
 
+Equally importantly, since `proof' is computation, how do we know that a `theorem' is
+`correct'. In Theoretical Computer Science, proofs that a given programaic artefact
+computes what it is meant to compute, are done using Axiomatic Semantics. Axiomatic
+Semantical proofs that a Theorem is correct are what we finite beings can use to show that
+Theorems which require trans-finite resources correctly compute the desired result. Given
+that we do not have classical `logic' at our disposal, we will use proof theoretic rules
+engine to build and verify these Axiomatic Semantical proofs.
+
 When the dust settles, to define Plato's Universe, \Universe{}{}, we will need to
-simultaneously define, via co--induction, the three structures of \Universe{}{},
-\Lists, \ListAutomorphisms:
+simultaneously define, via co--induction, the four structures of \Universe{}{},
+\Lists, \ListAutomorphisms, and the proof theoretical rule engine:
 %
 \begin{align}
    \Universe{}{}          & \isomorphic \arrow{\ListAutomorphisms}{\Universe{}{}} & 
    \text{Plato's Universe} \\
    \Lists             & \isomorphic \one + \Universe{}{} \times \Lists        & 
    \text{(Gernalized) Lists} \\
-   \ListAutomorphisms & \isomorphic \arrow{\Lists}{\Lists}                & \text{(Gernalized) List Automorphisms}
+   \ListAutomorphisms & \isomorphic \arrow{\Lists}{\Lists}                & 
+   \text{(Gernalized) List Automorphisms} \\
+    &  & \text{Rules Engine}
 \end{align}
 %
 Unfortunately, since we \emph{are} building the foundations of Mathematics, we,
