@@ -22,7 +22,7 @@ inline bool DiStructure::contains(DiSimplex aSimplex) {
   return bitSet.getBit(aSimplex.id) ? true : false;
 }
 
-inline size_t DiStructure::sizeDim(size_t aDimension) {
+inline size_t DiStructure::sizeDim(dim_t aDimension) {
   ASSERT(ref);
 
   if (ref->diSimplicies.getNumItems() <= aDimension) {

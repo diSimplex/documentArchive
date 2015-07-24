@@ -2,10 +2,10 @@
 
 DiSITTimpl *DiSITT::theUniverse = NULL;
 
-bool DiSITTimpl::ensureFinalSimplexOfDimExists(size_t aDimension) {
-  if (aDimension < diSimplicies.getNumItems()) return true;
+bool DiSITTimpl::ensureFinalSimplexOfDimExists(dim_t aDimension) {
+  if (aDimension + 1 < diSimplicies.getNumItems()) return true;
 
-  if (diSimplicies.getNumItems() < aDimension) {
+  if (diSimplicies.getNumItems() < aDimension + 1) {
     if (!ensureFinalSimplexOfDimExists(aDimension - 1)) return false;
   }
 
@@ -29,7 +29,7 @@ bool DiSITTimpl::ensureFinalSimplexOfDimExists(size_t aDimension) {
   return true;
 }
 
-DiSimplex DiSITTimpl::getSide(DiSimplex aSimplex, size_t sideNum) {
+DiSimplex DiSITTimpl::getSide(DiSimplex aSimplex, side_t sideNum) {
   size_t subDimension = 0;
   if (0 < aSimplex.dimension) subDimension = aSimplex.dimension - 1;
 

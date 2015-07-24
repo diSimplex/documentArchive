@@ -10,7 +10,7 @@ public:
 
 protected: // methods
 
-  DiSimplex(size_t aDimension, size_t anId);
+  DiSimplex(dim_t aDimension, simpId_t anId);
 
   ~DiSimplex(void);
 
@@ -18,13 +18,13 @@ protected: // methods
 
   DiStructure getLabel(void);
 
-  DiSimplex getSide(size_t sideNum);
+  DiSimplex getSide(side_t sideNum);
 
 protected: // objects
 
-  size_t dimension;
+  dim_t dimension;
 
-  size_t id;
+  simpId_t id;
 
   friend class DiSITT;
   friend class DiSITTimpl;
@@ -39,17 +39,17 @@ public:
 
 protected: // methods
 
-  bool initializeFinalSimplexDim(size_t dimension);
+  bool initializeFinalSimplexDim(dim_t dimension);
 
-  bool initializeSimplex(size_t aLabel, DiSimplexList &someSimplicies);
+  bool initializeSimplex(strucId_t aLabel, DiSimplexList &someSimplicies);
 
-  size_t getSide(size_t dimension, size_t sideNum);
+  simpId_t getSide(dim_t dimension, side_t sideNum);
 
 protected: // objects
 
-  size_t label;
+  strucId_t label;
 
-  size_t simplicies[0];
+  simpId_t simplicies[0];
 
   friend class DiSimplexAllocator;
   friend class DiSITTimpl;

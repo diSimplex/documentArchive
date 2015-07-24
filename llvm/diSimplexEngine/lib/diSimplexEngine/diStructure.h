@@ -1,7 +1,6 @@
 #ifndef DISTRUCTURE_H
 #define DISTRUCTURE_H
 
-#include <stdint.h>
 #include <cUtils/bitSet.h>
 
 // NOTE this header is not meant to be included on its own...
@@ -16,7 +15,7 @@ public:
 
   bool contains(DiSimplex aSimplex);
 
-  size_t sizeDim(size_t aDimension);
+  size_t sizeDim(dim_t aDimension);
 
 protected:
 

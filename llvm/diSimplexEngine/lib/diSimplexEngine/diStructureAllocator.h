@@ -10,7 +10,7 @@ public:
 
   ~DiStructureAllocator(void);
 
-  DiStructureImpl *getItemPtr(size_t itemNum);
+  DiStructureImpl *getItemPtr(strucId_t itemNum);
 
 protected:
 

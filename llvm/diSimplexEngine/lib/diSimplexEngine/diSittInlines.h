@@ -22,7 +22,7 @@ inline DiStructure DiSITT::getFinalStructure(void) {
   return DiStructure(theUniverse->diStructures->getItemPtr(1));
 }
 
-inline DiSimplex DiSITT::getFinalSimplexDim(size_t aDimension) {
+inline DiSimplex DiSITT::getFinalSimplexDim(dim_t aDimension) {
   if (!ref->ensureFinalSimplexOfDimExists(aDimension)) {
     ASSERT_MESSAGE(false,
       "Could not allocate simplicies of correct dimension");
@@ -34,8 +34,16 @@ inline DiStructure DiSITT::getLabel(DiSimplex aSimplex) {
   return theUniverse->getLabel(aSimplex);
 }
 
-inline DiSimplex DiSITT::getSide(DiSimplex aSimplex, size_t sideNum) {
+inline DiSimplex DiSITT::getSide(DiSimplex aSimplex, side_t sideNum) {
   return theUniverse->getSide(aSimplex, sideNum);
+}
+
+inline DiSimplex DiSITT::getSimplex(DiStructure label,
+                                    DiSimplexList &someSimplicies) {
+  
+
+  return DiSimplex(0,0);
+
 }
 
 inline DiSITT::DiSITT(DiSITTimpl *aUniverse) {
@@ -50,10 +58,10 @@ inline DiSITTimpl::DiSITTimpl(void) {
   diStructures = new DiStructureAllocator();
 
   // create the initial and final structures as 0 and 1
-  size_t initialStruct = diStructures->allocateNewStructure();
+  strucId_t initialStruct = diStructures->allocateNewStructure();
   ASSERT(initialStruct == 0);
   diStructures->getItemPtr(0)->initializeStructure();
-  size_t finalStruct = diStructures->allocateNewStructure();
+  strucId_t finalStruct = diStructures->allocateNewStructure();
   ASSERT(finalStruct == 1);
   diStructures->getItemPtr(1)->initializeStructure(true);
 }

@@ -1,8 +1,21 @@
 #ifndef DISITT_H
 #define DISITT_H
 
+#include <stdint.h>
+
 // start by including any required cUtils
 #include <cUtils/varArray.h>
+
+#ifdef __x86_64__
+// size_t is 8 bytes
+typedef int64_t dim_t;
+#else
+// size_t is 4 bytes
+typedef int32_t dim_t;
+#endif
+typedef size_t side_t;
+typedef size_t simpId_t;
+typedef size_t strucId_t;
 
 // Now forward declare the engine's implementation class
 // so it can be used as a pointer
@@ -43,11 +56,13 @@ public:
 
   DiStructure getFinalStructure(void);
 
-  DiSimplex getFinalSimplexDim(size_t aDimension);
+  DiSimplex getFinalSimplexDim(dim_t aDimension);
 
   DiStructure getLabel(DiSimplex aSimplex);
 
-  DiSimplex   getSide(DiSimplex aSimplex, size_t sideNum);
+  DiSimplex   getSide(DiSimplex aSimplex, side_t sideNum);
+
+  DiSimplex   getSimplex(DiStructure label, DiSimplexList &someSimplicies);
 
 protected: // methods
 
@@ -67,11 +82,11 @@ protected: // methods
 
   ~DiSITTimpl(void);
 
-  bool ensureFinalSimplexOfDimExists(size_t aDimension);
+  bool ensureFinalSimplexOfDimExists(dim_t aDimension);
 
   DiStructure getLabel(DiSimplex aSimplex);
 
-  DiSimplex   getSide(DiSimplex aSimplex, size_t sideNum);
+  DiSimplex   getSide(DiSimplex aSimplex, side_t sideNum);
 
 protected: // objects
 

@@ -6,15 +6,15 @@
 class DiSimplexAllocator : public IndexedBlockAllocator {
 public:
 
-  DiSimplexAllocator(size_t aDimension);
+  DiSimplexAllocator(dim_t aDimension);
 
   ~DiSimplexAllocator(void);
 
 protected:
 
-  size_t static dimension2size(size_t aDimension);
+  size_t static dimension2size(dim_t aDimension);
 
-  size_t dimension;
+  dim_t dimension;
 
 };
 

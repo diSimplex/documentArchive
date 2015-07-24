@@ -28,14 +28,14 @@ describe(DiSITTimpl) {
     shouldBeZero(diSitt->diSimplicies.getNumItems());
     //
     shouldBeTrue(diSitt->ensureFinalSimplexOfDimExists(0));
-    shouldBeEqual(diSitt->diSimplicies.getNumItems(), 1);
+    shouldBeEqual(diSitt->diSimplicies.getNumItems(), 2);
     DiSimplexAllocator *allocator = diSitt->diSimplicies.getTop();
     shouldNotBeNULL(allocator);
     shouldBeTrue(allocator->invariant());
     shouldBeEqual(allocator->nextIndex(), 1);
     //
     shouldBeTrue(diSitt->ensureFinalSimplexOfDimExists(10));
-    shouldBeEqual(diSitt->diSimplicies.getNumItems(), 11);
+    shouldBeEqual(diSitt->diSimplicies.getNumItems(), 12);
     for (size_t i = 0; i < diSitt->diSimplicies.getNumItems(); i++) {
       DiSimplexAllocator *allocator = diSitt->diSimplicies.getItem(i, NULL);
       shouldNotBeNULL(allocator);
@@ -44,7 +44,7 @@ describe(DiSITTimpl) {
     }
     //
     shouldBeTrue(diSitt->ensureFinalSimplexOfDimExists(100));
-    shouldBeEqual(diSitt->diSimplicies.getNumItems(), 101);
+    shouldBeEqual(diSitt->diSimplicies.getNumItems(), 102);
     for (size_t i = 0; i < diSitt->diSimplicies.getNumItems(); i++) {
       DiSimplexAllocator *allocator = diSitt->diSimplicies.getItem(i, NULL);
       shouldNotBeNULL(allocator);

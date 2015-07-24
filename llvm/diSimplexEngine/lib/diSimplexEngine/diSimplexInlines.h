@@ -4,7 +4,7 @@
 #include <stdint.h>
 #include <diSimplexEngine/diSimplex.h>
 
-inline DiSimplex::DiSimplex(size_t aDimension, size_t anId) {
+inline DiSimplex::DiSimplex(dim_t aDimension, simpId_t anId) {
   dimension = aDimension;
   id        = anId;
 }
@@ -22,25 +22,25 @@ inline DiStructure DiSimplex::getLabel(void) {
   return DiSITT::getUniverse().getLabel(*this);
 }
 
-inline DiSimplex DiSimplex::getSide(size_t sideNum) {
+inline DiSimplex DiSimplex::getSide(side_t sideNum) {
   return DiSITT::getUniverse().getSide(*this, sideNum);
 }
 
-inline bool DiSimplexImpl::initializeFinalSimplexDim(size_t aDimension) {
+inline bool DiSimplexImpl::initializeFinalSimplexDim(dim_t aDimension) {
   // create the *final* diSimplex of dimension aDimension
   label = 0;
-  for (size_t i = 0 ; i <= aDimension ; i++) {
+  for (dim_t i = 0 ; i <= aDimension ; i++) {
     simplicies[i] = 0;
   }
   return true;
 }
 
-inline bool DiSimplexImpl::initializeSimplex(size_t aLabel,
+inline bool DiSimplexImpl::initializeSimplex(strucId_t aLabel,
                                              DiSimplexList &someSimplicies) {
-  size_t dimension = someSimplicies.getNumItems();
+  dim_t dimension = someSimplicies.getNumItems() - 1;
   label = aLabel;
-  size_t subDimension = 0;
-  if (0 < dimension) subDimension = dimension - 1;
+  dim_t subDimension = -1;
+  if (-1 < dimension) subDimension = dimension - 1;
   DiSimplex nullSimplex(subDimension, 0);
   for (size_t i = 0; i < someSimplicies.getNumItems() ; i++ ) {
     simplicies[i] = someSimplicies.getItem(i, nullSimplex).id;
@@ -48,7 +48,7 @@ inline bool DiSimplexImpl::initializeSimplex(size_t aLabel,
   return true;
 }
 
-inline size_t DiSimplexImpl::getSide(size_t dimension, size_t sideNum) {
+inline simpId_t DiSimplexImpl::getSide(dim_t dimension, side_t sideNum) {
   if (dimension < sideNum) return 0;
 
   return simplicies[sideNum];

@@ -16,9 +16,9 @@ describe(DiSimplexAllocator) {
 
   it("should compute the correct itemSize") {
     shouldBeEqual(DiSimplexAllocator::dimension2size(0),
-      sizeof(DiSimplexImpl) + sizeof(size_t));
+      sizeof(DiSimplexImpl) + sizeof(simpId_t));
     shouldBeEqual(DiSimplexAllocator::dimension2size(1265),
-      sizeof(DiSimplexImpl) + 1266*sizeof(size_t));
+      sizeof(DiSimplexImpl) + 1266*sizeof(simpId_t));
   } endIt();
 
 } endDescribe(DiSimplexAllocator);

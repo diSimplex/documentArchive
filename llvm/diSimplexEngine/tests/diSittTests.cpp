@@ -44,4 +44,16 @@ describe(DiSITT) {
     }
   } endIt();
 
+  it("should be able to create a collection of simplicies") {
+    DiSITT universe = DiSITT::getUniverse();
+    shouldNotBeNULL(universe.ref);
+    DiStructure initial = universe.getInitialStructure();
+    shouldNotBeNULL(initial.ref);
+    DiSimplexList emptyList;
+    shouldBeZero(emptyList.getNumItems());
+    DiSimplex simplex0 = universe.getSimplex(initial, emptyList);
+    shouldBeEqual(simplex0.dimension, 0);
+    shouldNotBeZero(simplex0.id);
+  } endIt();
+
 } endDescribe(DiSITT);
