@@ -35,10 +35,10 @@ inline bool DiSimplexImpl::initializeFinalSimplexDim(dim_t aDimension) {
   return true;
 }
 
-inline bool DiSimplexImpl::initializeSimplex(strucId_t aLabel,
+inline bool DiSimplexImpl::initializeSimplex(DiStructure aLabel,
                                              DiSimplexList &someSimplicies) {
   dim_t dimension = someSimplicies.getNumItems() - 1;
-  label = aLabel;
+  label = aLabel.ref;
   dim_t subDimension = -1;
   if (-1 < dimension) subDimension = dimension - 1;
   DiSimplex nullSimplex(subDimension, 0);

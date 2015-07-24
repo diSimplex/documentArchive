@@ -8,7 +8,7 @@ inline DiStructureAllocator::DiStructureAllocator(void) :
 inline DiStructureAllocator::~DiStructureAllocator(void) {
 }
 
-inline DiStructureImpl *DiStructureAllocator::getItemPtr(size_t itemNum) {
+inline DiStructureImpl *DiStructureAllocator::getStructurePtr(size_t itemNum) {
   return (DiStructureImpl*)IndexedBlockAllocator::getItemPtr(itemNum);
 }
 

@@ -21,6 +21,7 @@ typedef size_t strucId_t;
 // so it can be used as a pointer
 class DiSimplex;
 class DiStructure;
+class DiStructureImpl;
 
 // Now include all of the engine sub-components
 #include "diSimplexEngine/diSimplex.h"
@@ -87,6 +88,8 @@ protected: // methods
   DiStructure getLabel(DiSimplex aSimplex);
 
   DiSimplex   getSide(DiSimplex aSimplex, side_t sideNum);
+
+  DiSimplex   getSimplex(DiStructure label, DiSimplexList &someSimplicies);
 
 protected: // objects
 

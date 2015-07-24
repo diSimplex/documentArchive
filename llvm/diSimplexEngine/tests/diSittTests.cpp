@@ -52,7 +52,7 @@ describe(DiSITT) {
     DiSimplexList emptyList;
     shouldBeZero(emptyList.getNumItems());
     DiSimplex simplex0 = universe.getSimplex(initial, emptyList);
-    shouldBeEqual(simplex0.dimension, 0);
+    shouldBeEqual(simplex0.dimension, -1);
     shouldNotBeZero(simplex0.id);
   } endIt();
 

@@ -25,7 +25,7 @@ protected:
 
   friend class DiSITT;
   friend class DiSITTimpl;
-
+  friend class DiSimplexImpl;
 };
 
 class DiStructureImpl {
@@ -42,7 +42,6 @@ protected: // objects
 
   friend class DiStructure;
   friend class DiSITTimpl;
-
 };
 
 #endif

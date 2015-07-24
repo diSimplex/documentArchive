@@ -41,13 +41,13 @@ protected: // methods
 
   bool initializeFinalSimplexDim(dim_t dimension);
 
-  bool initializeSimplex(strucId_t aLabel, DiSimplexList &someSimplicies);
+  bool initializeSimplex(DiStructure aLabel, DiSimplexList &someSimplicies);
 
   simpId_t getSide(dim_t dimension, side_t sideNum);
 
 protected: // objects
 
-  strucId_t label;
+  DiStructureImpl *label;
 
   simpId_t simplicies[0];
 
