@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# This bash script simply copies the diSimp script to the user's local 
+# bin directory.
+
+# Change the following shell variable to reflect the location you want 
+# to use for the diSimp build command
+#
+BINDIR=$HOME/bin
+
+# Change the following shell variable to reflect the location you want 
+# to use for the diSimp libraries and global configuration
+#
+GLOBALDIR=$HOME/.diSimp
+
+cp diSimp $BINDIR
+mkdir -p $GLOBALDIR/lib
+mkdir -p $GLOBALDIR/lib/diSimpBuilder
+mkdir -p $GLOBALDIR/lib/diSimpBuilder/commands
+cp -R lib/* $GLOBALDIR/lib
