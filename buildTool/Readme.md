@@ -4,6 +4,29 @@ The diSimp build tool is a Ruby/Mercenary based collection of scripts
 which implement various build actions which you might want to apply to 
 a diSimplex paper.
 
+# Requirements
+
+The diSimp build tool requires the following Ruby gems:
+
+* mercenary
+* readline
+
+# Installation
+
+On a Linux based OS, you can install the diSimp build tool by typing:
+
+> cd buildTool
+> ./setup
+
+# Use
+
+Again, on a Linux based OS, you can obtain basic usage information by 
+typing:
+
+> diSimp
+
+in any directory containing a diSimplex based LaTeX paper.
+
 # License
 
 The MIT License (MIT)

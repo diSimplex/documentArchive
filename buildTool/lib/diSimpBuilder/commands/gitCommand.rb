@@ -1,3 +1,4 @@
+require 'readline'
 
 module DiSimpBuilder
 
