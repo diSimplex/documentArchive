@@ -1,4 +1,3 @@
-
 # LaTeX files to ignore #
 *.acn
 *.acr
@@ -33,11 +32,9 @@
 *.xdy
 *.tdo
 
-# PerceptiSys (LaTeX) tool files to ignore #
+# diSimplex (LaTeX) tool files to ignore #
 *.bak
 *.bib
 *.pdf
-logs
-tmp
 gitHeadInfo.gin
-gitLogInfo.tex
+
