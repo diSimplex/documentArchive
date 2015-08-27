@@ -17,4 +17,5 @@ cp diSimp $BINDIR
 mkdir -p $GLOBALDIR/lib
 mkdir -p $GLOBALDIR/lib/diSimpBuilder
 mkdir -p $GLOBALDIR/lib/diSimpBuilder/commands
+mkdir -p $GLOBALDIR/lib/diSimpBuilder/templates
 cp -R lib/* $GLOBALDIR/lib

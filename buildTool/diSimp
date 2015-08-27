@@ -4,8 +4,8 @@
 
 STDOUT.sync = true
 $globalConfig = File.join(ENV['HOME'], '.diSimp', 'config.yaml')
-globalLib = File.join(ENV['HOME'], '.diSimp', 'lib')
-$LOAD_PATH.unshift(globalLib)
+$globalLib = File.join(ENV['HOME'], '.diSimp', 'lib')
+$LOAD_PATH.unshift($globalLib)
 
 require 'mercenary'
 require 'diSimpBuilder'
@@ -13,7 +13,7 @@ require 'diSimpBuilder'
 # Pre-load diSimpBuilder commands
 #
 libs = Array.new
-libs.push(globalLib)
+libs.push($globalLib)
 libs.push(Dir.pwd+'/diSimpLib')
 libs.each do |aLib|
   Dir.chdir(aLib) do 

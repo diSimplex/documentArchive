@@ -19,3 +19,24 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+-----------------------------------------------------------------------------
+
+The following files:
+
+  buildTool/lib/diSimpBuilder/templates/post-xxx-sample.erb
+
+is a modified copy of the post-xxx-sample.txt file in the GitInfo CTAN 
+package and are hence are copyrighted 2011 by Brent Longborough and are 
+licensed for redistribution using [LaTeX Project Public 
+License](http://www.latex-project.org/lppl.txt).
+
+Copies of the original GitInfo CTAN pacakge can be obtained from the 
+CTAN archive. At the current time a direct link to the GitInfo package 
+is:
+
+  https://www.ctan.org/pkg/gitinfo
+
+-----------------------------------------------------------------------------
+
+

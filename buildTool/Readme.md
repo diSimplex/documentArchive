@@ -11,6 +11,10 @@ The diSimp build tool requires the following Ruby gems:
 * mercenary
 * readline
 
+The diSimp build tool assumes the following CTAN packages are installed:
+
+* GitInfo
+
 # Installation
 
 On a Linux based OS, you can install the diSimp build tool by typing:
