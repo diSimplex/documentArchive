@@ -1,14 +1,14 @@
 #!/bin/bash
 
-# This bash script simply copies the diSimp script to the user's local 
+# This bash script simply copies the diSimp script to the user's local
 # bin directory.
 
-# Change the following shell variable to reflect the location you want 
+# Change the following shell variable to reflect the location you want
 # to use for the diSimp build command
 #
 BINDIR=$HOME/bin
 
-# Change the following shell variable to reflect the location you want 
+# Change the following shell variable to reflect the location you want
 # to use for the diSimp libraries and global configuration
 #
 GLOBALDIR=$HOME/.diSimp
@@ -19,3 +19,7 @@ mkdir -p $GLOBALDIR/lib/diSimpBuilder
 mkdir -p $GLOBALDIR/lib/diSimpBuilder/commands
 mkdir -p $GLOBALDIR/lib/diSimpBuilder/templates
 cp -R lib/* $GLOBALDIR/lib
+
+# Now we need to ensure all of the required gems are installed....
+echo "We will need your sudo password to install the required gems"
+sudo gem install mercenary
