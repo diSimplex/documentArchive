@@ -221,6 +221,34 @@ and disitt.pdf.
 %    \end{macrocode}
 % \end{macro}
 %
+% \begin{macro}{\compose}
+%    \begin{macrocode}
+%txs\compose#
+\newcommand{\compose}{\ensuremath{\circ}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\maps}
+%    \begin{macrocode}
+%txs\maps#
+\newcommand{\maps}{\ensuremath{\rightarrow}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\map}
+%    \begin{macrocode}
+%txs\map{name}{from}{to}#
+\newcommand{\map}[3]{\ensuremath{#1 \! : \! #2 \! \rightarrow \! #3}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\set}
+%    \begin{macrocode}
+%txs\set{of something...}#
+\newcommand{\set}[1]{\ensuremath{\{#1\}}}
+%    \end{macrocode}
+% \end{macro}
+%
 %\subsection{Judgements}
 %\subsubsection{Part of}
 %
