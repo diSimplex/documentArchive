@@ -71,8 +71,4 @@ inline DiSITTimpl::~DiSITTimpl(void) {
   if (diStructures) delete diStructures;
 }
 
-inline DiStructure DiSITTimpl::getLabel(DiSimplex aSimplex) {
-  return DiStructure(NULL);
-}
-
 #endif

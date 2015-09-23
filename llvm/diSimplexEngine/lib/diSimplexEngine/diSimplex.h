@@ -45,6 +45,8 @@ protected: // methods
 
   simpId_t getSide(dim_t dimension, side_t sideNum);
 
+  DiStructureImpl *getLabel(void);
+
 protected: // objects
 
   DiStructureImpl *label;

@@ -43,7 +43,10 @@ inline bool DiSimplexImpl::initializeSimplex(DiStructure aLabel,
   if (-1 < dimension) subDimension = dimension - 1;
   DiSimplex nullSimplex(subDimension, 0);
   for (size_t i = 0; i < someSimplicies.getNumItems() ; i++ ) {
-    simplicies[i] = someSimplicies.getItem(i, nullSimplex).id;
+    DiSimplex sideSimplex = someSimplicies.getItem(i, nullSimplex);
+    ASSERT_MESSAGE((sideSimplex.dimension == subDimension),
+      "Incorrect dimension of side");
+    simplicies[i] = sideSimplex.id;
   }
   return true;
 }
@@ -52,6 +55,11 @@ inline simpId_t DiSimplexImpl::getSide(dim_t dimension, side_t sideNum) {
   if (dimension < sideNum) return 0;
 
   return simplicies[sideNum];
+}
+
+inline DiStructureImpl *DiSimplexImpl::getLabel(void) {
+
+  return label;
 }
 
 #endif

@@ -45,6 +45,20 @@ DiSimplex DiSITTimpl::getSide(DiSimplex aSimplex, side_t sideNum) {
     aSimplexImpl->getSide(aSimplex.dimension, sideNum));
 }
 
+DiStructure DiSITTimpl::getLabel(DiSimplex aSimplex) {
+
+  DiSimplexAllocator *allocator =
+    diSimplicies.getItem(aSimplex.dimension + 1, NULL);
+  if (!allocator) return DiSITT::getUniverse().getInitialStructure();
+
+  DiSimplexImpl *aSimplexImpl =
+    (DiSimplexImpl*)allocator->getItemPtr(aSimplex.id);
+  if (!aSimplexImpl) return DiSITT::getUniverse().getInitialStructure();
+
+  return DiStructure(aSimplexImpl->getLabel());
+}
+
+
 DiSimplex DiSITTimpl::getSimplex(DiStructure label,
                                     DiSimplexList &someSimplicies) {
   dim_t dimension = someSimplicies.getNumItems() - 1;

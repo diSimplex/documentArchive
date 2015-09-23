@@ -44,7 +44,7 @@ describe(DiSITT) {
     }
   } endIt();
 
-  it("should be able to create a collection of simplicies") {
+  it("should be able to create a simplex from an empty collection of simplicies") {
     DiSITT universe = DiSITT::getUniverse();
     shouldNotBeNULL(universe.ref);
     DiStructure initial = universe.getInitialStructure();
@@ -54,6 +54,48 @@ describe(DiSITT) {
     DiSimplex simplex0 = universe.getSimplex(initial, emptyList);
     shouldBeEqual(simplex0.dimension, -1);
     shouldNotBeZero(simplex0.id);
+    shouldBeEqual(simplex0.getLabel().ref, initial.ref);
+  } endIt();
+
+  it("should be able to create a simplex from a collection of one simplex") {
+    DiSITT universe = DiSITT::getUniverse();
+    shouldNotBeNULL(universe.ref);
+    DiStructure initial = universe.getInitialStructure();
+    shouldNotBeNULL(initial.ref);
+    DiSimplexList listOfOne;
+    DiSimplex simplex0 = universe.getFinalSimplexDim(-1);
+    listOfOne.pushItem(simplex0);
+    shouldBeEqual(listOfOne.getNumItems(), 1);
+    DiSimplex simplex1 = universe.getSimplex(initial, listOfOne);
+    shouldBeEqual(simplex1.dimension, 0);
+    shouldNotBeZero(simplex1.id);
+    shouldBeEqual(simplex1.getLabel().ref, initial.ref);
+    DiSimplex simplex0a = simplex1.getSide(0);
+    shouldBeEqual(simplex0a.dimension, simplex0.dimension);
+    shouldBeEqual(simplex0a.id, simplex0.id);
+  } endIt();
+
+  it("should be able to create a simplex from a collection of two simplicies") {
+    DiSITT universe = DiSITT::getUniverse();
+    shouldNotBeNULL(universe.ref);
+    DiStructure initial = universe.getInitialStructure();
+    shouldNotBeNULL(initial.ref);
+    DiSimplexList listOfTwo;
+    DiSimplex simplex0 = universe.getFinalSimplexDim(0);
+    DiSimplex simplex1 = universe.getFinalSimplexDim(0);
+    listOfTwo.pushItem(simplex0);
+    listOfTwo.pushItem(simplex1);
+    shouldBeEqual(listOfTwo.getNumItems(), 2);
+    DiSimplex simplex2 = universe.getSimplex(initial, listOfTwo);
+    shouldBeEqual(simplex2.dimension, 1);
+    shouldNotBeZero(simplex2.id);
+    shouldBeEqual(simplex2.getLabel().ref, initial.ref);
+    DiSimplex simplex0a = simplex2.getSide(0);
+    shouldBeEqual(simplex0a.dimension, simplex0.dimension);
+    shouldBeEqual(simplex0a.id, simplex0.id);
+    DiSimplex simplex1a = simplex2.getSide(1);
+    shouldBeEqual(simplex1a.dimension, simplex1.dimension);
+    shouldBeEqual(simplex1a.id, simplex1.id);
   } endIt();
 
 } endDescribe(DiSITT);
