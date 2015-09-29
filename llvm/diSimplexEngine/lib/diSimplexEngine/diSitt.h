@@ -57,27 +57,32 @@ public:
 
   DiStructure getFinalStructure(void);
 
-  DiSimplex getFinalSimplexDim(dim_t aDimension);
-
-  DiStructure getLabel(DiSimplex aSimplex);
-
-  DiSimplex   getSide(DiSimplex aSimplex, side_t sideNum);
-
-  DiSimplex   getSimplex(DiStructure label, DiSimplexList &someSimplicies);
+//  DiSimplex   getSimplex(DiStructure label, DiSimplexList &someSimplicies);
 
 protected: // methods
 
-protected: // objects
+  DiSimplex getFinalSimplexDim(dim_t aDimension);
 
-  /// \brief *The* unique mathematical universe.
-  static DiSITTimpl *theUniverse;
+protected: // objects
 
   DiSITTimpl *ref;
 
 };
 
 class DiSITTimpl {
+
+public: // methods
+
+  /// \brief Get the unique mathematical universe.
+  static DiSITTimpl *getUniverse(void);
+
 protected: // methods
+
+  /// \brief Clean up the unique mathematical universe.
+  ///
+  /// This can only be called once, and should only be called at the
+  /// end of a given invocation of a diSimplexEngine.
+  static void cleanUpUniverse(void);
 
   DiSITTimpl(void);
 
@@ -85,11 +90,18 @@ protected: // methods
 
   bool ensureFinalSimplexOfDimExists(dim_t aDimension);
 
-  DiStructure getLabel(DiSimplex aSimplex);
+  DiStructureImpl *getInitialStructure(void);
 
-  DiSimplex   getSide(DiSimplex aSimplex, side_t sideNum);
+  DiStructureImpl *getFinalStructure(void);
 
-  DiSimplex   getSimplex(DiStructure label, DiSimplexList &someSimplicies);
+  DiSimplexImpl *getSimplex(DiSimplex aSimplex);
+
+  DiSimplexImpl *createSimplex(DiStructure label,
+                               DiSimplexList &someSimplicies);
+
+  DiSimplexImplTuple getNewSimplex(dim_t dimension);
+
+  DiStructureImpl *getNewStructure(void);
 
 protected: // objects
 
@@ -98,7 +110,13 @@ protected: // objects
 
   DiStructureAllocator *diStructures;
 
+  /// \brief *The* unique mathematical universe.
+  static DiSITTimpl *theUniverse;
+
   friend class DiSITT;
+  friend class DiSimplex;
+  friend class DiStructure;
+  friend class DiStructureImpl;
 };
 
 // Now include the inlines

@@ -54,9 +54,26 @@ protected: // objects
   simpId_t simplicies[0];
 
   friend class DiSimplexAllocator;
+  friend class DiSimplex;
   friend class DiSITTimpl;
 
 };
 
+class DiSimplexImplTuple {
+public:
+
+  DiSimplexImplTuple(dim_t aDimension, simpId_t anId, DiSimplexImpl *aRef) {
+    dimension = aDimension;
+    id        = anId;
+    ref       = aRef;
+  }
+
+  dim_t dimension;
+
+  simpId_t id;
+
+  DiSimplexImpl *ref;
+
+};
 
 #endif

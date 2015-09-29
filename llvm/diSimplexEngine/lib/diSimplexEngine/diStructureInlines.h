@@ -5,16 +5,31 @@ inline DiStructure::DiStructure(DiStructureImpl *aDiStructure) {
   ref = aDiStructure;
 }
 
-inline bool DiStructure::isEmpty() {
+inline bool DiStructure::isEmpty(void) {
+  ASSERT(ref);
+//  ASSERT_MESSAGE(false, "FIX DiStructure::isEmpty");
+  for (size_t i = 0; i < ref->diSimplicies.getNumItems(); i++) {
+    BitSet bitSet = ref->diSimplicies.getItem(i, BitSet());
+    if (!bitSet.isEmpty()) return false;
+  }
   return true;
+}
+
+inline bool DiStructure::isFinal(void) {
+  ASSERT(ref)
+  return ref->isFinalStructure;
 }
 
 inline bool DiStructure::contains(DiSimplex aSimplex) {
   ASSERT(ref);
 
+  if (ref->isFinalStructure) {
+    if (aSimplex.id == 0) return true;
+    return false;
+  }
+
   if (ref->diSimplicies.getNumItems() <= aSimplex.dimension) {
-    if ((ref->extendByFinalSimplicies) && (aSimplex.id == 0)) return true;
-    else return false;
+    return false;
   }
 
   BitSet bitSet = ref->diSimplicies.getItem(aSimplex.dimension, BitSet());
@@ -25,10 +40,9 @@ inline bool DiStructure::contains(DiSimplex aSimplex) {
 inline size_t DiStructure::sizeDim(dim_t aDimension) {
   ASSERT(ref);
 
-  if (ref->diSimplicies.getNumItems() <= aDimension) {
-    if (ref->extendByFinalSimplicies) return 1;
-    else                              return 0;
-  }
+  if (ref->isFinalStructure) return 1;
+
+  if (ref->diSimplicies.getNumItems() <= aDimension) return 0;
 
   BitSet bitSet = ref->diSimplicies.getItem(aDimension, BitSet());
 
@@ -36,8 +50,21 @@ inline size_t DiStructure::sizeDim(dim_t aDimension) {
 }
 
 
+inline DiStructure DiStructure::clone(void) {
+  return DiStructure(ref->clone());
+}
+
+inline DiStructureImpl *DiStructureImpl::clone(void) {
+  DiStructureImpl *newStructure = DiSITTimpl::getUniverse()->getNewStructure();
+  for ( VarArrayIterator<BitSet> iter = diSimplicies.getIterator() ;
+        iter.hasMoreItems() ; ) {
+    newStructure->diSimplicies.pushItem(iter.nextItem().clone());
+  }
+  return newStructure;
+}
+
 inline bool DiStructureImpl::initializeStructure(bool final) {
-  extendByFinalSimplicies = final;
+  isFinalStructure = final;
   return true;
 }
 

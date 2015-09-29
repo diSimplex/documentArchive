@@ -5,21 +5,19 @@
 #include "diSimplexEngine/diSitt.h"
 
 inline DiSITT DiSITT::getUniverse(void) {
-  if (!theUniverse) theUniverse = new DiSITTimpl();
-  return DiSITT(theUniverse);
+  return DiSITT(DiSITTimpl::getUniverse());
 }
 
 inline void DiSITT::cleanUpUniverse(void) {
-  if (theUniverse) delete theUniverse;
-  theUniverse = NULL;
+  DiSITTimpl::cleanUpUniverse();
 }
 
 inline DiStructure DiSITT::getInitialStructure(void) {
-  return DiStructure(theUniverse->diStructures->getStructurePtr(0));
+  return DiStructure(ref->getInitialStructure());
 }
 
 inline DiStructure DiSITT::getFinalStructure(void) {
-  return DiStructure(theUniverse->diStructures->getStructurePtr(1));
+  return DiStructure(ref->getFinalStructure());
 }
 
 inline DiSimplex DiSITT::getFinalSimplexDim(dim_t aDimension) {
@@ -30,18 +28,10 @@ inline DiSimplex DiSITT::getFinalSimplexDim(dim_t aDimension) {
   return DiSimplex(aDimension, 0);
 }
 
-inline DiStructure DiSITT::getLabel(DiSimplex aSimplex) {
-  return theUniverse->getLabel(aSimplex);
-}
-
-inline DiSimplex DiSITT::getSide(DiSimplex aSimplex, side_t sideNum) {
-  return theUniverse->getSide(aSimplex, sideNum);
-}
-
-inline DiSimplex DiSITT::getSimplex(DiStructure label,
-                                    DiSimplexList &someSimplicies) {
-  return theUniverse->getSimplex(label, someSimplicies);
-}
+//inline DiSimplex DiSITT::getSimplex(DiStructure label,
+//                                    DiSimplexList &someSimplicies) {
+//  return theUniverse->getSimplex(label, someSimplicies);
+//}
 
 inline DiSITT::DiSITT(DiSITTimpl *aUniverse) {
   ref = aUniverse;
@@ -51,13 +41,34 @@ inline DiSITT::~DiSITT(void) {
   ref = NULL;
 }
 
+inline DiSITTimpl *DiSITTimpl::getUniverse(void) {
+  if (!theUniverse) theUniverse = new DiSITTimpl();
+  return theUniverse;
+}
+
+inline void DiSITTimpl::cleanUpUniverse(void) {
+  if (theUniverse) delete theUniverse;
+  theUniverse = new DiSITTimpl();
+}
+
+inline DiStructureImpl *DiSITTimpl::getInitialStructure(void) {
+  ASSERT(theUniverse);
+  return theUniverse->diStructures->getStructurePtr(0);
+}
+
+inline DiStructureImpl *DiSITTimpl::getFinalStructure(void) {
+  ASSERT(theUniverse);
+  return theUniverse->diStructures->getStructurePtr(1);
+}
+
 inline DiSITTimpl::DiSITTimpl(void) {
   diStructures = new DiStructureAllocator();
 
   // create the initial and final structures as 0 and 1
   strucId_t initialStruct = diStructures->allocateNewStructure();
   ASSERT(initialStruct == 0);
-  diStructures->getStructurePtr(0)->initializeStructure();
+  diStructures->getStructurePtr(0)->initializeStructure(false);
+
   strucId_t finalStruct = diStructures->allocateNewStructure();
   ASSERT(finalStruct == 1);
   diStructures->getStructurePtr(1)->initializeStructure(true);
@@ -69,6 +80,13 @@ inline DiSITTimpl::~DiSITTimpl(void) {
     if (allocator) delete allocator;
   }
   if (diStructures) delete diStructures;
+}
+
+inline DiStructureImpl *DiSITTimpl::getNewStructure(void) {
+  strucId_t newStructureId = diStructures->allocateNewStructure();
+  ASSERT(newStructureId != 0);
+  ASSERT(newStructureId != 1);
+  return diStructures->getStructurePtr(newStructureId);
 }
 
 #endif

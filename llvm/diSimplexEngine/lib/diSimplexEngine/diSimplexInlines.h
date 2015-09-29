@@ -19,16 +19,25 @@ inline bool DiSimplex::isFinal(void) {
 }
 
 inline DiStructure DiSimplex::getLabel(void) {
-  return DiSITT::getUniverse().getLabel(*this);
+  DiSimplexImpl *simplexImpl = DiSITTimpl::getUniverse()->getSimplex(*this);
+  if (!simplexImpl) return DiSITT::getUniverse().getInitialStructure();
+  return DiStructure(simplexImpl->getLabel());
 }
 
 inline DiSimplex DiSimplex::getSide(side_t sideNum) {
-  return DiSITT::getUniverse().getSide(*this, sideNum);
+  size_t subDimension = -1;
+  if (-1 < dimension) subDimension = dimension - 1;
+
+  DiSimplexImpl *simplexImpl = DiSITTimpl::getUniverse()->getSimplex(*this);
+  if (!simplexImpl) return DiSimplex(subDimension, 0);
+
+  return DiSimplex(subDimension,
+    simplexImpl->getSide(dimension, sideNum));
 }
 
 inline bool DiSimplexImpl::initializeFinalSimplexDim(dim_t aDimension) {
   // create the *final* diSimplex of dimension aDimension
-  label = 0;
+  label = DiSITT::getUniverse().getFinalStructure().ref;
   for (dim_t i = 0 ; i <= aDimension ; i++) {
     simplicies[i] = 0;
   }

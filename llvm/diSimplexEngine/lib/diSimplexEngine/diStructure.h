@@ -11,11 +11,15 @@ class DiStructureImpl;
 class DiStructure {
 public:
 
-  bool isEmpty();
+  bool isEmpty(void);
+
+  bool isFinal(void);
 
   bool contains(DiSimplex aSimplex);
 
   size_t sizeDim(dim_t aDimension);
+
+  DiStructure clone(void);
 
 protected:
 
@@ -25,6 +29,7 @@ protected:
 
   friend class DiSITT;
   friend class DiSITTimpl;
+  friend class DiSimplex;
   friend class DiSimplexImpl;
 };
 
@@ -34,9 +39,13 @@ protected: // methods
 
   bool initializeStructure(bool final = false);
 
+  DiStructureImpl *clone(void);
+
+//  ToDO();
+
 protected: // objects
 
-  bool extendByFinalSimplicies;
+  bool isFinalStructure;
 
   VarArray<BitSet> diSimplicies;
 
