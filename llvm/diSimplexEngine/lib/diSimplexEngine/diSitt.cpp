@@ -63,27 +63,27 @@ DiSimplexImplTuple DiSITTimpl::getNewSimplex(dim_t dimension) {
   return DiSimplexImplTuple(dimension, newSimplexId, newSimplex);
 }
 
-//DiSimplexImpl *DiSITTimpl::getSimplex(DiStructure label,
-//                                    DiSimplexList &someSimplicies) {
-//  dim_t dimension = someSimplicies.getNumItems() - 1;
-//  if (!ensureFinalSimplexOfDimExists(dimension)) {
-//    ASSERT_MESSAGE(false,
-//      "Could not allocate simplicies of correct dimension");
-//  }
-//
-//  DiSimplexAllocator *allocator =
-//    diSimplicies.getItem(dimension + 1, NULL);
-//  if (!allocator) return DiSimplex(dimension, 0);
-//
-//  simpId_t newSimplexId = allocator->allocateNewStructure();
-//  if (newSimplexId == 0) return DiSimplex(dimension, 0);
-//
-//  DiSimplexImpl *newSimplex =
-//    (DiSimplexImpl*) allocator->getItemPtr(newSimplexId);
-//  if (!newSimplex) return DiSimplex(dimension, 0);
-//
-//  newSimplex->initializeSimplex(label, someSimplicies);
-//
-//  return DiSimplex(dimension, newSimplexId);
-//}
+DiSimplex DiSITTimpl::createSimplex(DiStructure label,
+                                    DiSimplexList &someSimplicies) {
+  dim_t dimension = someSimplicies.getNumItems() - 1;
+  if (!ensureFinalSimplexOfDimExists(dimension)) {
+    ASSERT_MESSAGE(false,
+      "Could not allocate simplicies of correct dimension");
+  }
+
+  DiSimplexAllocator *allocator =
+    diSimplicies.getItem(dimension + 1, NULL);
+  if (!allocator) return DiSimplex(dimension, 0);
+
+  simpId_t newSimplexId = allocator->allocateNewStructure();
+  if (newSimplexId == 0) return DiSimplex(dimension, 0);
+
+  DiSimplexImpl *newSimplex =
+    (DiSimplexImpl*) allocator->getItemPtr(newSimplexId);
+  if (!newSimplex) return DiSimplex(dimension, 0);
+
+  newSimplex->initializeSimplex(label, someSimplicies);
+
+  return DiSimplex(dimension, newSimplexId);
+}
 

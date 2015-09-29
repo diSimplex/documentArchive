@@ -96,8 +96,8 @@ protected: // methods
 
   DiSimplexImpl *getSimplex(DiSimplex aSimplex);
 
-  DiSimplexImpl *createSimplex(DiStructure label,
-                               DiSimplexList &someSimplicies);
+  DiSimplex createSimplex(DiStructure label,
+                          DiSimplexList &someSimplicies);
 
   DiSimplexImplTuple getNewSimplex(dim_t dimension);
 
