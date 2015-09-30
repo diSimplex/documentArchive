@@ -10,7 +10,7 @@
 
 #include <diSimplexEngine/diSitt.h>
 
-describe(DiSimplex) {
+pending_describe(DiSimplex) {
 
   specSize(DiSimplex);
 

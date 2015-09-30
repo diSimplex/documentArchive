@@ -10,7 +10,7 @@
 
 #include <diSimplexEngine/diSitt.h>
 
-describe(DiStructureImpl) {
+pending_describe(DiStructureImpl) {
 
   specSize(DiStructureImpl);
 

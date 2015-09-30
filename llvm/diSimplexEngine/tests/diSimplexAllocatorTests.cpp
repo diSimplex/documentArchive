@@ -10,7 +10,7 @@
 
 #include <diSimplexEngine/diSitt.h>
 
-describe(DiSimplexAllocator) {
+pending_describe(DiSimplexAllocator) {
 
   specSize(DiSimplexAllocator);
 
