@@ -25,21 +25,17 @@ class DiStructureImpl;
 
 // Now include all of the engine sub-components
 #include "diSimplexEngine/diSimplex.h"
-#include "diSimplexEngine/diStructure.h"
 #include "diSimplexEngine/diSimplexAllocator.h"
-#include "diSimplexEngine/diStructureAllocator.h"
+#include "diSimplexEngine/diStructure.h"
 
-class DiSITTimpl;
-
-/// \brief The DiSITT represents a *reference* to the whole
-/// Mathematical universe. All mathematical structures exist in the
-/// same universe.
+/// \brief The DiSITT represents the whole Mathematical universe. All
+/// mathematical structures exist in the same universe.
 ///
 class DiSITT {
 public:
 
   /// \brief Get the unique mathematical universe.
-  static DiSITT getUniverse(void);
+  static DiSITT *getUniverse(void);
 
   /// \brief Clean up the unique mathematical universe.
   ///
@@ -47,71 +43,36 @@ public:
   /// end of a given invocation of a diSimplexEngine.
   static void cleanUpUniverse(void);
 
+  DiStructure *getInitialStructure(void);
+
+  DiStructure *getFinalStructure(void);
+
+protected: // methods
+
+//  DiSimplex *getFinalSimplexDim(dim_t aDimension);
+
   /// \brief Create a new mathematical universe.
-  DiSITT(DiSITTimpl *aUniverse);
+  DiSITT(void);
 
   /// \brief Destroy a mathematical universe.
   ~DiSITT(void);
 
-  DiStructure getInitialStructure(void);
+//  bool ensureFinalSimplexOfDimExists(dim_t aDimension);
 
-  DiStructure getFinalStructure(void);
+//  DiSimplex createSimplex(DiStructure label,
+//                          DiSimplexList &someSimplicies);
 
-//  DiSimplex   getSimplex(DiStructure label, DiSimplexList &someSimplicies);
-
-protected: // methods
-
-  DiSimplex getFinalSimplexDim(dim_t aDimension);
+  DiStructure *getNewStructure(void);
 
 protected: // objects
 
-  DiSITTimpl *ref;
+  BlockAllocator *diStructures;
 
-};
-
-class DiSITTimpl {
-
-public: // methods
-
-  /// \brief Get the unique mathematical universe.
-  static DiSITTimpl *getUniverse(void);
-
-protected: // methods
-
-  /// \brief Clean up the unique mathematical universe.
-  ///
-  /// This can only be called once, and should only be called at the
-  /// end of a given invocation of a diSimplexEngine.
-  static void cleanUpUniverse(void);
-
-  DiSITTimpl(void);
-
-  ~DiSITTimpl(void);
-
-  bool ensureFinalSimplexOfDimExists(dim_t aDimension);
-
-  DiStructureImpl *getInitialStructure(void);
-
-  DiStructureImpl *getFinalStructure(void);
-
-  DiSimplexImpl *getSimplex(DiSimplex aSimplex);
-
-  DiSimplex createSimplex(DiStructure label,
-                          DiSimplexList &someSimplicies);
-
-  DiSimplexImplTuple getNewSimplex(dim_t dimension);
-
-  DiStructureImpl *getNewStructure(void);
-
-protected: // objects
-
-  /// \brief The collection of non-empty simplicies of each dimension.
-  VarArray<DiSimplexAllocator*> diSimplicies;
-
-  DiStructureAllocator *diStructures;
+  DiStructure *initialStruct;
+  DiStructure *finalStruct;
 
   /// \brief *The* unique mathematical universe.
-  static DiSITTimpl *theUniverse;
+  static DiSITT *theUniverse;
 
   friend class DiSITT;
   friend class DiSimplex;
@@ -121,9 +82,9 @@ protected: // objects
 
 // Now include the inlines
 #include <diSimplexEngine/diSittInlines.h>
-#include <diSimplexEngine/diSimplexInlines.h>
+//#include <diSimplexEngine/diSimplexInlines.h>
 #include <diSimplexEngine/diStructureInlines.h>
-#include <diSimplexEngine/diSimplexAllocatorInlines.h>
-#include <diSimplexEngine/diStructureAllocatorInlines.h>
+//#include <diSimplexEngine/diSimplexAllocatorInlines.h>
+//#include <diSimplexEngine/diStructureAllocatorInlines.h>
 
 #endif
