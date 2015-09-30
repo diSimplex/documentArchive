@@ -10,7 +10,7 @@ inline DiSimplexAllocator::~DiSimplexAllocator(void) {
 }
 
 inline size_t DiSimplexAllocator::dimension2size(dim_t aDimension) {
- return sizeof(DiSimplexImpl) + (aDimension+1)*sizeof(simpId_t);
+ return sizeof(DiSimplex) + (aDimension+1)*sizeof(DiSimplex*);
 }
 
 

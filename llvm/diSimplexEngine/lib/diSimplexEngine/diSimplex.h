@@ -8,71 +8,31 @@ class DiSimplex {
 
 public:
 
+typedef VarArray<DiSimplex*> List;
+
 protected: // methods
 
-  DiSimplex(dim_t aDimension, simpId_t anId);
+  DiStructure *getLabel(void);
+
+  DiSimplex *getSide(side_t sideNum);
+
+//  bool initializeFinalSimplexDim(dim_t dimension);
+
+  DiSimplex(DiStructure *aLabel, List &someSimplicies);
 
   ~DiSimplex(void);
 
-  bool isFinal(void);
-
-  DiStructure getLabel(void);
-
-  DiSimplex getSide(side_t sideNum);
+  bool initializeSimplex(DiStructure *aLabel, List &someSimplicies);
 
 protected: // objects
 
-  dim_t dimension;
+  DiStructure *label;
 
-  simpId_t id;
-
-  friend class DiSITT;
-  friend class DiSITTimpl;
-  friend class DiSimplexImpl;
-  friend class DiStructure;
-};
-
-typedef VarArray<DiSimplex> DiSimplexList;
-
-class DiSimplexImpl {
-public:
-
-protected: // methods
-
-  bool initializeFinalSimplexDim(dim_t dimension);
-
-  bool initializeSimplex(DiStructure aLabel, DiSimplexList &someSimplicies);
-
-  simpId_t getSide(dim_t dimension, side_t sideNum);
-
-  DiStructureImpl *getLabel(void);
-
-protected: // objects
-
-  DiStructureImpl *label;
-
-  simpId_t simplicies[0];
+  DiSimplex *sides[0];
 
   friend class DiSimplexAllocator;
   friend class DiSimplex;
   friend class DiSITTimpl;
-
-};
-
-class DiSimplexImplTuple {
-public:
-
-  DiSimplexImplTuple(dim_t aDimension, simpId_t anId, DiSimplexImpl *aRef) {
-    dimension = aDimension;
-    id        = anId;
-    ref       = aRef;
-  }
-
-  dim_t dimension;
-
-  simpId_t id;
-
-  DiSimplexImpl *ref;
 
 };
 

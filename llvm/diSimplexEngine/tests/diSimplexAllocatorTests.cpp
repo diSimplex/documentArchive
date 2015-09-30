@@ -10,15 +10,15 @@
 
 #include <diSimplexEngine/diSitt.h>
 
-pending_describe(DiSimplexAllocator) {
+describe(DiSimplexAllocator) {
 
   specSize(DiSimplexAllocator);
 
   it("should compute the correct itemSize") {
     shouldBeEqual(DiSimplexAllocator::dimension2size(0),
-      sizeof(DiSimplexImpl) + sizeof(simpId_t));
+      sizeof(DiSimplex) + sizeof(DiSimplex*));
     shouldBeEqual(DiSimplexAllocator::dimension2size(1265),
-      sizeof(DiSimplexImpl) + 1266*sizeof(simpId_t));
+      sizeof(DiSimplex) + 1266*sizeof(DiSimplex*));
   } endIt();
 
 } endDescribe(DiSimplexAllocator);

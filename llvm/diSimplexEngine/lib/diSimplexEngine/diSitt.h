@@ -82,9 +82,9 @@ protected: // objects
 
 // Now include the inlines
 #include <diSimplexEngine/diSittInlines.h>
-//#include <diSimplexEngine/diSimplexInlines.h>
+#include <diSimplexEngine/diSimplexInlines.h>
 #include <diSimplexEngine/diStructureInlines.h>
-//#include <diSimplexEngine/diSimplexAllocatorInlines.h>
+#include <diSimplexEngine/diSimplexAllocatorInlines.h>
 //#include <diSimplexEngine/diStructureAllocatorInlines.h>
 
 #endif
