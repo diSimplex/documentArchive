@@ -22,7 +22,7 @@ DiSimplex *DiStructure::addSimplex(DiStructure *aLabel,
   DiSimplexAllocator *allocator = diSimplicies.getItem(numSides, NULL);
   ASSERT(allocator);
 
-  DiSimplex *simplex = allocator->allocateNewStructure();
+  DiSimplex *simplex = allocator->allocateNewSimplex();
   ASSERT(simplex);
 
   simplex->initializeSimplex(aLabel, someSimplicies);

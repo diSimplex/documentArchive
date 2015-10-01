@@ -3,6 +3,8 @@
 
 #include <cUtils/indexedBlockAllocator.h>
 
+class DiSimplexAllocatorIterator;
+
 class DiSimplexAllocator : public BlockAllocator {
 public:
 
@@ -13,7 +15,9 @@ public:
   /// \brief Allocate an indexed new (sub)structure.
   ///
   /// The indexes returns are contiquous.
-  DiSimplex *allocateNewStructure(void);
+  DiSimplex *allocateNewSimplex(void);
+
+  DiSimplexAllocatorIterator getIterator(void);
 
 protected:
 
@@ -27,7 +31,34 @@ protected:
 
   size_t itemSize;
 
+  friend class DiSimplexAllocatorIterator;
+
 };
 
+class DiSimplexAllocatorIterator {
+public:
+
+  bool hasMoreItems(void);
+
+  DiSimplex *nextItem(void);
+
+  ~DiSimplexAllocatorIterator(void);
+
+protected:
+
+  DiSimplexAllocatorIterator(DiSimplexAllocator *allocator);
+
+protected:
+
+  DiSimplexAllocator *baseAllocator;
+
+  char* curAllocationByte;
+
+  char* endAllocationByte;
+
+  size_t curBlock;
+
+  friend class DiSimplexAllocator;
+};
 
 #endif
