@@ -8,13 +8,15 @@ class DiSimplex {
 
 public:
 
-typedef VarArray<DiSimplex*> List;
+  typedef VarArray<DiSimplex*> List;
 
-protected: // methods
+  dim_t dimension(void);
 
   DiStructure *getLabel(void);
 
   DiSimplex *getSide(side_t sideNum);
+
+protected: // methods
 
 //  bool initializeFinalSimplexDim(dim_t dimension);
 
@@ -26,13 +28,14 @@ protected: // methods
 
 protected: // objects
 
+  size_t numSides;
+
   DiStructure *label;
 
   DiSimplex *sides[0];
 
   friend class DiSimplexAllocator;
-  friend class DiSimplex;
-  friend class DiSITTimpl;
+  friend class DiStructure;
 
 };
 

@@ -8,13 +8,8 @@ inline DiSITT::DiSITT(void) {
   diStructures = new BlockAllocator( (1<<5)*sizeof(DiStructure) );
 
   // create the initial and final structures
-  initialStruct =
-    (DiStructure*)diStructures->allocateNewStructure(sizeof(DiStructure));
-  ASSERT(initialStruct);
-
-  finalStruct =
-    (DiStructure*)diStructures->allocateNewStructure(sizeof(DiStructure));
-  ASSERT(finalStruct);
+  initialStruct = getNewStructure(DiStructure::FROZEN);
+  finalStruct   = getNewStructure(DiStructure::FROZEN | DiStructure::FINAL);
 }
 
 inline DiSITT::~DiSITT(void) {
@@ -57,11 +52,12 @@ inline DiStructure *DiSITT::getFinalStructure(void) {
 //  return theUniverse->getSimplex(label, someSimplicies);
 //}
 
-//inline DiStructureImpl *DiSITTimpl::getNewStructure(void) {
-//  strucId_t newStructureId = diStructures->allocateNewStructure();
-//  ASSERT(newStructureId != 0);
-//  ASSERT(newStructureId != 1);
-//  return diStructures->getStructurePtr(newStructureId);
-//}
+inline DiStructure *DiSITT::getNewStructure(size_t flags) {
+  DiStructure *newStructure =
+    (DiStructure*)diStructures->allocateNewStructure(sizeof(DiStructure));
+  ASSERT(newStructure);
+  newStructure->initializeStructure(flags);
+  return newStructure;
+}
 
 #endif

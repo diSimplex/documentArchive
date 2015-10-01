@@ -47,6 +47,8 @@ public:
 
   DiStructure *getFinalStructure(void);
 
+  DiStructure *getNewStructure(size_t flags = 0);
+
 protected: // methods
 
 //  DiSimplex *getFinalSimplexDim(dim_t aDimension);
@@ -61,8 +63,6 @@ protected: // methods
 
 //  DiSimplex createSimplex(DiStructure label,
 //                          DiSimplexList &someSimplicies);
-
-  DiStructure *getNewStructure(void);
 
 protected: // objects
 

@@ -7,6 +7,10 @@
 inline DiSimplex::~DiSimplex(void) {
 }
 
+inline dim_t DiSimplex::dimension(void) {
+  return numSides - 1;
+}
+
 inline DiStructure *DiSimplex::getLabel(void) {
   return label;
 }
@@ -37,7 +41,8 @@ inline DiSimplex::DiSimplex(DiStructure *aLabel,
 
 inline bool DiSimplex::initializeSimplex(DiStructure *aLabel,
                                          DiSimplex::List &someSimplicies) {
-  dim_t dimension = someSimplicies.getNumItems() - 1;
+  numSides = someSimplicies.getNumItems();
+  dim_t dimension = numSides - 1;
   label = aLabel;
   dim_t subDimension = -1;
   if (-1 < dimension) subDimension = dimension - 1;

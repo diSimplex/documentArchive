@@ -9,19 +9,36 @@
 class DiStructure {
 public:
 
+  static const size_t FINAL  = 1<<0;
+  static const size_t FROZEN = 1<<1;
+
   bool isEmpty(void);
 
   bool isFinal(void);
 
+  void freeze(void);
+
+  bool isFrozen(void);
+
+  DiStructure *clone(void);
+
+  DiSimplex *addSimplex(DiStructure *aLabel, DiSimplex::List &someSimplicies);
+
 protected: // methods
 
-  bool initializeStructure(bool final = false);
+  DiStructure(void);
+
+  ~DiStructure(void);
+
+  bool initializeStructure(size_t flags = 0);
+
+  bool ensureSimpliciesOfNumSidesExist(size_t numSides);
 
 protected: // objects
 
-  bool isFinalStructure;
+  size_t flags;
 
-  VarArray<BlockAllocator*> diSimplicies;
+  VarArray<DiSimplexAllocator*> diSimplicies;
 
   friend class DiSITT;
 };
