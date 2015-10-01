@@ -16,6 +16,10 @@ public:
 
   DiSimplex *getSide(side_t sideNum);
 
+  bool shallowEquals(DiSimplex *other);
+
+//  bool deepEquals(DiSimplex *other);
+
 protected: // methods
 
 //  bool initializeFinalSimplexDim(dim_t dimension);

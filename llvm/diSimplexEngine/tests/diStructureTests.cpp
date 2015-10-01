@@ -99,6 +99,26 @@ describe(DiStructure) {
     shouldBeEqual(simplex->getLabel(), initial);
   } endIt();
 
+  it("adding the same -1 simplex twice should return the same object") {
+    DiSITT *universe = DiSITT::getUniverse();
+    shouldNotBeNULL(universe);
+    DiStructure *initial   = universe->getInitialStructure();
+    shouldNotBeNULL(initial);
+    DiStructure *structure = universe->getNewStructure();
+    shouldNotBeNULL(structure);
+    DiSimplex::List emptyList;
+    shouldBeZero(emptyList.getNumItems());
+    DiSimplex *simplexA = structure->addSimplex(initial, emptyList);
+    shouldNotBeNULL(simplexA);
+    shouldBeEqual(simplexA->dimension(), -1);
+    shouldBeEqual(simplexA->getLabel(), initial);
+    DiSimplex *simplexB = structure->addSimplex(initial, emptyList);
+    shouldNotBeNULL(simplexB);
+    shouldBeEqual(simplexA->dimension(), -1);
+    shouldBeEqual(simplexA->getLabel(), initial);
+    shouldBeEqual(simplexA, simplexB);
+  } endIt();
+
   it("should be able to create a simplex from a collection of a one simplex") {
     DiSITT *universe = DiSITT::getUniverse();
     shouldNotBeNULL(universe);

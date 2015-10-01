@@ -14,3 +14,19 @@ bool DiStructure::ensureSimpliciesOfNumSidesExist(size_t numSides) {
   return true;
 }
 
+DiSimplex *DiStructure::addSimplex(DiStructure *aLabel,
+                                          DiSimplex::List &someSimplicies) {
+  size_t numSides = someSimplicies.getNumItems();
+  ensureSimpliciesOfNumSidesExist(numSides);
+
+  DiSimplexAllocator *allocator = diSimplicies.getItem(numSides, NULL);
+  ASSERT(allocator);
+
+  DiSimplex *simplex = allocator->allocateNewStructure();
+  ASSERT(simplex);
+
+  simplex->initializeSimplex(aLabel, someSimplicies);
+
+  return simplex;
+}
+

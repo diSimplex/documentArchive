@@ -25,6 +25,20 @@ inline DiSimplex *DiSimplex::getSide(side_t sideNum) {
   return sides[sideNum];
 }
 
+inline bool DiSimplex::shallowEquals(DiSimplex *other) {
+  if (this == other) return true;
+
+  if (numSides != other->numSides) return false;
+
+  if (label != other->label) return false;
+
+  for ( size_t i = 0 ; i < numSides ; i++ ) {
+    if (sides[i] != other->sides[i]) return false;
+  }
+
+  return true;
+}
+
 //inline bool DiSimplexImpl::initializeFinalSimplexDim(dim_t aDimension) {
 //  // create the *final* diSimplex of dimension aDimension
 //  label = DiSITT::getUniverse().getFinalStructure().ref;

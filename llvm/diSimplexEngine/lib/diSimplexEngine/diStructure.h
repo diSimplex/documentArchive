@@ -12,6 +12,10 @@ public:
   static const size_t FINAL  = 1<<0;
   static const size_t FROZEN = 1<<1;
 
+//  bool shallowEquals(DiStructure *other);
+
+//  bool deepEquals(DiStructure *other);
+
   bool isEmpty(void);
 
   bool isFinal(void);
