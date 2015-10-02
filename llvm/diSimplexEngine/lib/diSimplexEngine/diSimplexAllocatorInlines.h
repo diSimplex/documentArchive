@@ -71,16 +71,16 @@ inline DiSimplex *DiSimplexAllocatorIterator::nextItem(void) {
   ASSERT(baseAllocator);
   ASSERT(curBlock < baseAllocator->blocks.getNumItems());
 
-  DiSimplex *simplex = (DiSimplex*)curAllocationByte;
-
-  curAllocationByte += baseAllocator->itemSize;
   if (endAllocationByte <= curAllocationByte) {
     curBlock++;
+    ASSERT(curBlock < baseAllocator->blocks.getNumItems());
     curAllocationByte = baseAllocator->blocks.getItem(curBlock, NULL);
     ASSERT(curAllocationByte);
     endAllocationByte = curAllocationByte + baseAllocator->blockSize;
   }
 
+  DiSimplex *simplex = (DiSimplex*)curAllocationByte;
+  curAllocationByte += baseAllocator->itemSize;
   return simplex;
 }
 

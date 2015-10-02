@@ -18,12 +18,14 @@ describe(DiSimplexAllocatorIterator) {
     DiSimplexAllocator *allocator = new DiSimplexAllocator(0,2);
     shouldNotBeNULL(allocator);
     DiSimplex::List emptyList;
+    // fill multiple blocks but leave the last block part full
     size_t i = 0;
     for ( i = 0 ; i < 10 ; i++ ) {
       DiSimplex *simplex = allocator->allocateNewSimplex();
       shouldNotBeNULL(simplex);
       simplex->initializeSimplex((DiStructure*)i, emptyList);
     }
+    // test iterator with a last unfully filled block
     DiSimplexAllocatorIterator iter = allocator->getIterator();
     for ( i = 0 ; iter.hasMoreItems() ; i++ ) {
       DiSimplex *simplex = iter.nextItem();
@@ -32,16 +34,21 @@ describe(DiSimplexAllocatorIterator) {
     }
     shouldBeEqual(i, 10);
 
+    // now fully fill the last block
     DiSimplex *simplex = allocator->allocateNewSimplex();
     shouldNotBeNULL(simplex);
     simplex->initializeSimplex((DiStructure*)10, emptyList);
+    simplex = allocator->allocateNewSimplex();
+    shouldNotBeNULL(simplex);
+    simplex->initializeSimplex((DiStructure*)11, emptyList);
+    // test iterator with a last fully filled block
     iter = allocator->getIterator();
     for ( i = 0 ; iter.hasMoreItems() ; i++ ) {
       DiSimplex *simplex = iter.nextItem();
       shouldNotBeNULL(simplex);
       shouldBeEqual(simplex->getLabel(), (DiSimplex*)i);
     }
-    shouldBeEqual(i, 11);
+    shouldBeEqual(i, 12);
 
     delete allocator;
   } endIt();
