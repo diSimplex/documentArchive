@@ -114,8 +114,6 @@ describe(DiStructure) {
     shouldBeEqual(simplexA->getLabel(), initial);
     DiSimplex *simplexB = structure->addSimplex(initial, emptyList);
     shouldNotBeNULL(simplexB);
-    shouldBeEqual(simplexA->dimension(), -1);
-    shouldBeEqual(simplexA->getLabel(), initial);
     shouldBeEqual(simplexA, simplexB);
   } endIt();
 
@@ -141,6 +139,33 @@ describe(DiStructure) {
     shouldNotBeNULL(simplex0a);
     shouldBeEqual(simplex0a, simplex0);
     shouldBeEqual(simplex0a->dimension(), simplex0->dimension());
+  } endIt();
+
+  it("adding the same 0 simplex twice should return the same object") {
+    DiSITT *universe = DiSITT::getUniverse();
+    shouldNotBeNULL(universe);
+    DiStructure *initial = universe->getInitialStructure();
+    shouldNotBeNULL(initial);
+    DiStructure *structure = universe->getNewStructure();
+    shouldNotBeNULL(structure);
+    DiSimplex::List emptyList;
+    shouldBeZero(emptyList.getNumItems());
+    DiSimplex *simplex0 = structure->addSimplex(initial, emptyList);
+    shouldNotBeNULL(simplex0);
+    DiSimplex::List listOfOne;
+    listOfOne.pushItem(simplex0);
+    shouldBeEqual(listOfOne.getNumItems(), 1);
+    DiSimplex *simplex1A = structure->addSimplex(initial, listOfOne);
+    shouldNotBeNULL(simplex1A);
+    shouldBeEqual(simplex1A->dimension(), 0);
+    shouldBeEqual(simplex1A->getLabel(), initial);
+    DiSimplex *simplex0a = simplex1A->getSide(0);
+    shouldNotBeNULL(simplex0a);
+    shouldBeEqual(simplex0a, simplex0);
+    shouldBeEqual(simplex0a->dimension(), simplex0->dimension());
+    DiSimplex *simplex1B = structure->addSimplex(initial, listOfOne);
+    shouldNotBeNULL(simplex1B);
+    shouldBeEqual(simplex1A, simplex1B);
   } endIt();
 
   it("should be able to create a simplex from a collection of two simplicies") {
@@ -172,6 +197,39 @@ describe(DiStructure) {
     DiSimplex *simplex1Ab = simplex2->getSide(1);
     shouldBeEqual(simplex1Ab->dimension(), simplex1b->dimension());
     shouldBeEqual(simplex1Ab, simplex1b);
+  } endIt();
+
+  it("adding the same 1 simplex twice should return the same object") {
+    DiSITT *universe = DiSITT::getUniverse();
+    shouldNotBeNULL(universe);
+    DiStructure *initial = universe->getInitialStructure();
+    shouldNotBeNULL(initial);
+    DiStructure *structure = universe->getNewStructure();
+    shouldNotBeNULL(structure);
+    DiSimplex::List emptyList;
+    DiSimplex *simplex0 = structure->addSimplex(initial, emptyList);
+    shouldNotBeNULL(simplex0);
+    DiSimplex::List listOfOne;
+    listOfOne.pushItem(simplex0);
+    DiSimplex *simplex1a = structure->addSimplex(initial, listOfOne);
+    shouldNotBeNULL(simplex1a);
+    DiSimplex *simplex1b = structure->addSimplex(structure, listOfOne);
+    shouldNotBeNULL(simplex1b);
+    DiSimplex::List listOfTwo;
+    listOfTwo.pushItem(simplex1a);
+    listOfTwo.pushItem(simplex1b);
+    shouldBeEqual(listOfTwo.getNumItems(), 2);
+    DiSimplex *simplex2A = structure->addSimplex(initial, listOfTwo);
+    shouldBeEqual(simplex2A->dimension(), 1);
+    shouldBeEqual(simplex2A->getLabel(), initial);
+    DiSimplex *simplex1Aa = simplex2A->getSide(0);
+    shouldBeEqual(simplex1Aa->dimension(), simplex1a->dimension());
+    shouldBeEqual(simplex1Aa, simplex1a);
+    DiSimplex *simplex1Ab = simplex2A->getSide(1);
+    shouldBeEqual(simplex1Ab->dimension(), simplex1b->dimension());
+    shouldBeEqual(simplex1Ab, simplex1b);
+    DiSimplex *simplex2B = structure->addSimplex(initial, listOfTwo);
+    shouldBeEqual(simplex2A, simplex2B);
   } endIt();
 
 } endDescribe(DiStructure);
