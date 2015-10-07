@@ -17,6 +17,10 @@ describe(DiSimplexAllocatorIterator) {
   it("should be able to iterate over lots of simplicies") {
     DiSimplexAllocator *allocator = new DiSimplexAllocator(0,2);
     shouldNotBeNULL(allocator);
+    DiSimplexAllocatorIterator iter = allocator->getIterator();
+    // test iterator on empty allocator
+    shouldBeFalse(iter.hasMoreItems());
+
     DiSimplex::List emptyList;
     // fill multiple blocks but leave the last block part full
     size_t i = 0;
@@ -26,7 +30,7 @@ describe(DiSimplexAllocatorIterator) {
       simplex->initializeSimplex((DiStructure*)i, emptyList);
     }
     // test iterator with a last unfully filled block
-    DiSimplexAllocatorIterator iter = allocator->getIterator();
+    iter = allocator->getIterator();
     for ( i = 0 ; iter.hasMoreItems() ; i++ ) {
       DiSimplex *simplex = iter.nextItem();
       shouldNotBeNULL(simplex);

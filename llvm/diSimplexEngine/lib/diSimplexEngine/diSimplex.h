@@ -16,6 +16,8 @@ public:
 
   DiSimplex *getSide(side_t sideNum);
 
+  bool shallowEquals(DiStructure *aLabel, List &someSimplicies);
+
   bool shallowEquals(DiSimplex *other);
 
 //  bool deepEquals(DiSimplex *other);

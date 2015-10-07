@@ -43,9 +43,12 @@ inline DiSimplexAllocatorIterator::DiSimplexAllocatorIterator(DiSimplexAllocator
   baseAllocator = anAllocator;
   curBlock = 0;
   curAllocationByte = baseAllocator->blocks.getItem(curBlock, NULL);
-  ASSERT(curAllocationByte);
+//  ASSERT(curAllocationByte);
 
-  endAllocationByte = curAllocationByte + baseAllocator->blockSize;
+  endAllocationByte = NULL;
+  if (curAllocationByte) {
+    endAllocationByte = curAllocationByte + baseAllocator->blockSize;
+  }
 }
 
 inline DiSimplexAllocatorIterator::~DiSimplexAllocatorIterator(void) {

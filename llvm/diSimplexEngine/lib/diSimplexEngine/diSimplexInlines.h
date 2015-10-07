@@ -25,6 +25,20 @@ inline DiSimplex *DiSimplex::getSide(side_t sideNum) {
   return sides[sideNum];
 }
 
+inline bool DiSimplex::shallowEquals(DiStructure *aLabel,
+                                     DiSimplex::List &someSimplicies) {
+  if (numSides != someSimplicies.getNumItems()) return false;
+
+  if (label != aLabel) return false;
+
+  VarArrayIterator<DiSimplex*> iter = someSimplicies.getIterator();
+  for ( size_t i = 0 ; iter.hasMoreItems() ; i++ ) {
+    if (sides[i] != iter.nextItem()) return false;
+  }
+
+  return true;
+}
+
 inline bool DiSimplex::shallowEquals(DiSimplex *other) {
   if (this == other) return true;
 

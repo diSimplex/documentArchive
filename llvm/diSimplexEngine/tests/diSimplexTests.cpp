@@ -25,7 +25,7 @@ describe(DiSimplex) {
     delete simplex;
   } endIt();
 
-  it("shallowEquals should fail") {
+  it("shallowEquals other should fail except when pointers equal") {
     DiSITT *universe = DiSITT::getUniverse();
     shouldNotBeNULL(universe);
     DiStructure *initial = universe->getInitialStructure();
@@ -62,6 +62,36 @@ describe(DiSimplex) {
     shouldBeFalse(simplex1a->shallowEquals(simplex1));
     // identical equals
     shouldBeTrue(simplex0->shallowEquals(simplex0));
+  } endIt();
+
+  it("shallowEquals parts specifications") {
+    DiSITT *universe = DiSITT::getUniverse();
+    shouldNotBeNULL(universe);
+    DiStructure *initial = universe->getInitialStructure();
+    shouldNotBeNULL(initial);
+    DiStructure *clone = initial->clone();
+    shouldNotBeNULL(clone);
+    DiSimplex::List emptyList;
+    DiSimplex *simplex0 = clone->addSimplex(initial, emptyList);
+    shouldNotBeNULL(simplex0);
+    DiSimplex::List listOfOne;
+    listOfOne.pushItem(simplex0);
+    DiSimplex *simplex1 = clone->addSimplex(initial, listOfOne);
+    shouldNotBeNULL(simplex1);
+    shouldNotBeEqual(simplex0, simplex1);
+    // equal parts
+    shouldBeTrue(simplex0->shallowEquals(initial, emptyList));
+    shouldBeTrue(simplex1->shallowEquals(initial, listOfOne));
+    // unequal dimensions
+    shouldBeFalse(simplex0->shallowEquals(initial, listOfOne));
+    shouldBeFalse(simplex1->shallowEquals(initial, emptyList));
+    // unequal labels
+    shouldBeFalse(simplex0->shallowEquals(clone, emptyList));
+    shouldBeFalse(simplex1->shallowEquals(clone, listOfOne));
+    // unequal lists (of correct dimension)
+    DiSimplex::List listOfOneA;
+    listOfOneA.pushItem(simplex1);
+    shouldBeFalse(simplex1->shallowEquals(initial, listOfOneA));
   } endIt();
 
 //  it("There should be final simplicies of each dimension") {
