@@ -1,0 +1,36 @@
+% LaTeX source for the <%= Conf.paper.name %> document
+%
+
+\documentclass[a4paper,openany]{ams<%= Conf.documentType %>}
+\usepackage{disitt}
+\usepackage{disitt-symbols}
+\usepackage{mdframed}
+\newmdenv[linecolor=white,backgroundcolor=gray!10]{infobox}
+\newenvironment{myQuote}{\begin{quotation}}{\end{quotation}}
+\surroundwithmdframed[linecolor=white,backgroundcolor=gray!10]{myQuote}
+
+\begin{document}
+<% if Conf.isBook %>\frontmatter<% end %>
+\sloppy
+
+\title[Short Title]{Long Title}
+\input{frontMatter}
+\subjclass[2010]{Primary unknown; Secondary unknown} %
+\keywords{Keyword one, keyword two etc.}%
+
+\begin{abstract}
+... put abstract here ...
+\end{abstract} 
+\maketitle 
+\tableofcontents 
+<% if Conf.isBook %>\mainmatter<% end %>
+
+<% if Conf.isBook %>\chapter{Introduction}<% else %>\section{Introduction}<% end %>
+
+<% if Conf.isBook %>\backmatter<% end %>
+
+\bibliographystyle{amsalpha}
+\bibliography{<%= Conf.paper.name %>}
+
+\end{document}
+

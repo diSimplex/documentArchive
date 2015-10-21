@@ -22,6 +22,10 @@ class ConfStack
   end
 
   def reportNoMethodError(errorObject)
+#    puts "reportNoMethodError"
+#    pp errorObject
+#    pp @confStack
+#    puts "END reportNoMethodError"
 
     # Take off the base object (Conf) so that we can use it later to 
     # get the missingKey messages
@@ -47,7 +51,7 @@ class ConfStack
     puts "Could not find the key [#{top[1].to_s}]";
     puts "in the configuration path [#{confPath}]\n\n";
 
-    puts errorObject.backtrace.join("\n");
+    puts errorObject.backtrace.join("\n") unless errorObject.backtrace.nil?;
 
     # Now construct a more user friendly discussion of the problem for 
     # novice users.
@@ -378,13 +382,15 @@ class Conf
 
     def method_missing(meth, *args)
       Thread.current[:confStack] = ConfStack.new(self, :Conf, args);
+      Thread.current[:confStack].calling(self, meth, :method_missing, args);
       meth_s = meth.to_s
       if @@data.respond_to?(meth) ||
         @@data.data.has_key?(meth) ||
         meth_s[-1..-1] == '='then
         @@data.method_missing(meth, *args);
       else 
-        self.reportNoMethodError();
+        Thread.current[:confStack].reportNoMethodError(
+           NoMethodError.new("no such key #{meth} in construct"))
       end
     end
 
