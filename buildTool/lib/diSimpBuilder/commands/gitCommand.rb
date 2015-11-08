@@ -25,23 +25,23 @@ module DiSimpBuilder
   end
 
 
-#  class CleanCommand < Command
-#    def self.init_with_program(p)
-#      p.command(:clean) do |c|
-#        c.syntax 'clean'
-#        c.description 'Removes the _site and xapian directories'
-#
-#        c.action do |args, options|
-#          begin
-#            puts ""
-#            system('rm -rf _site xapian')
-#          rescue Exception
-#            puts ""
-#          end
-#        end
-#      end
-#    end
-#  end
+  class CleanCommand < Command
+    def self.init_with_program(p)
+      p.command(:clean) do |c|
+        c.syntax 'clean'
+        c.description 'Removes the transient TeX files'
+
+        c.action do |args, options|
+          begin
+            puts ""
+            system('rm -rf *.aux *.bbl *.bib *.blg *.log *.out *.synctex.gz *.toc')
+          rescue Exception
+            puts ""
+          end
+        end
+      end
+    end
+  end
 
 end
 
