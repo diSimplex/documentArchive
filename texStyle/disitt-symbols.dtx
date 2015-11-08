@@ -228,13 +228,6 @@ and disitt.pdf.
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\maps}
-%    \begin{macrocode}
-%txs\maps#
-\newcommand{\maps}{\ensuremath{\rightarrow}}
-%    \end{macrocode}
-% \end{macro}
-%
 % \begin{macro}{\map}
 %    \begin{macrocode}
 %txs\map{name}{from}{to}#
@@ -246,6 +239,24 @@ and disitt.pdf.
 %    \begin{macrocode}
 %txs\set{of something...}#
 \newcommand{\set}[1]{\ensuremath{\{#1\}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsection{Symbols}
+%
+% We define the following ``symbol'' commands:
+%
+% \begin{macro}{\bottom}
+%    \begin{macrocode}
+%txs\bottom#
+\newcommand{\bottom}{\ensuremath{\bot}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\maps}
+%    \begin{macrocode}
+%txs\maps#
+\newcommand{\maps}{\ensuremath{\rightarrow}}
 %    \end{macrocode}
 % \end{macro}
 %
