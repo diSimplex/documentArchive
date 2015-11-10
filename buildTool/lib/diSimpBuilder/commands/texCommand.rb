@@ -101,9 +101,11 @@ module DiSimpBuilder
           # The biblatexFile does not yet exist...
           # ... so create one with our standard copyright header.
           #
-          header = IO.read("/home/stg/ExpositionGit/tools/texmf/copyrightLicenseHeader.tex");
           biblatexFile = File.open(biblatexFileName, "w")
-          biblatexFile.puts(header);
+          if Conf.has_key?(:copyrightLicenseHeader) then
+            header = IO.read(Conf.copyrightLicenseHeader);
+            biblatexFile.puts(header);
+          end
           biblatexFile.puts('');
           biblatexFile.close();
         end  
