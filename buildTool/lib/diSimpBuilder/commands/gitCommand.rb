@@ -34,7 +34,7 @@ module DiSimpBuilder
         c.action do |args, options|
           begin
             puts ""
-            system('rm -rf *.aux *.bbl *.bib *.blg *.log *.out *.synctex.gz *.toc')
+            system('rm -rf *.aux *.bbl *.bib *.bcf *.run.xml *.blg *.log *.out *.synctex.gz *.toc')
           rescue Exception
             puts ""
           end

@@ -52,6 +52,7 @@ module DiSimpBuilder
 
           wgetResult.each_line() do | line |
             next if line =~ /^\s*$/
+            next if line =~ /=\s*\{\s*\}/ # ignore empty fields
 #            next if line =~ ignoreRegExp
             bibFile.puts line;
           end
@@ -118,7 +119,8 @@ module DiSimpBuilder
         #
         Dir.glob(auxFilePattern) do | auxFileName |  
           File.open(auxFileName, "r").each_line() do | auxLine |
-            if (auxLine =~ /citation\{(.*)\}/) then
+#            if (auxLine =~ /citation\{(.*)\}/) then
+            if (auxLine =~ /\@aux\@cite\{(.*)\}/) then
               biblatexID = $1;
               #
               # normalize the biblatexID (first letter MUST be lowercase)
@@ -146,6 +148,7 @@ module DiSimpBuilder
           system "pdflatex -synctex=1 -halt-on-error #{Conf.paperName}.tex"
           extractCitations(Conf.paperName+'.aux', Conf.paperName+'.bib')
           File.unlink(Conf.paperName+'.pdf')
+          system "biber #{Conf.paperName}"
         end
       end
 
@@ -206,6 +209,7 @@ module DiSimpBuilder
             doIn('tex') do
               Conf.texFiles = Dir.glob('**/*.tex')
               buildBiblatexDB
+              buildLaTeXDocument
             end
           end
         end # :bib command
