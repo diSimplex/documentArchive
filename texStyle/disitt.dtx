@@ -227,7 +227,7 @@ and disitt.pdf.
 %    \begin{macrocode}
 %txs\disittIncludeOnly{aFileToPotentiallyInclude}#n
 \DeclareOption{includeAll}{%
-\newcommand{\disittIncludeOnly}[1]{}%
+\renewcommand{\disittIncludeOnly}[1]{}%
 }
 %    \end{macrocode}
 %   \end{macro}
@@ -249,7 +249,7 @@ and disitt.pdf.
 %txs\begin{cTikzPicture}#n
 %txs\end{cTikzPicture}#n
 \DeclareOption{tikzAll}{%
-\newenvironment{cTikzPicture}%
+\renewenvironment{cTikzPicture}%
 {\begin{center}\begin{tikzpicture}}%
 {\end{tikzpicture}\end{center}}
 }
