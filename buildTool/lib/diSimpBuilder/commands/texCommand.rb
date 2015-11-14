@@ -214,6 +214,24 @@ module DiSimpBuilder
           end
         end # :bib command
 
+        p.command(:wc) do |c|
+          c.syntax 'wc'
+          c.description 'Store the current version in the working copy repository'
+          
+          c.action do |args, options|
+            loadConfiguration(options)
+            doIn('tex') do
+              pp Conf.tex
+              if Conf.tex.has_key?(:workingCopyDir) then
+                system "echo cp #{Conf.paperName}.pdf #{Conf.tex.workingCopyDir}"
+                system "cp #{Conf.paperName}.pdf #{Conf.tex.workingCopyDir}"
+              else
+                puts "No local working copy directory specified"
+              end
+            end
+          end
+        end
+
       end # init_with_program
 
     end
