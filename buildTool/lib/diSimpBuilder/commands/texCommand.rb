@@ -221,7 +221,6 @@ module DiSimpBuilder
           c.action do |args, options|
             loadConfiguration(options)
             doIn('tex') do
-              pp Conf.tex
               if Conf.tex.has_key?(:workingCopyDir) then
                 system "echo cp #{Conf.paperName}.pdf #{Conf.tex.workingCopyDir}"
                 system "cp #{Conf.paperName}.pdf #{Conf.tex.workingCopyDir}"
