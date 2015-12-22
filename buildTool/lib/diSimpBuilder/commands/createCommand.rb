@@ -61,9 +61,9 @@ module DiSimpBuilder
 
             writeFile(File.join(aDir, "#{Conf.paper.name}.bib"), "")
 
-            writeFile(File.join(aDir, "includeAll.tex"), "")
+#            writeFile(File.join(aDir, "includeAll.tex"), "")
 
-            writeFile(File.join(aDir, "tikzAll.tex"), "")
+#            writeFile(File.join(aDir, "tikzAll.tex"), "")
           end
         end
       end

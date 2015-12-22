@@ -145,7 +145,9 @@ module DiSimpBuilder
         bibDependencies.concat(Conf.texFiles);
 
         doIfNeeded(Conf.paperName+'.bib', bibDependencies) do
-          system "pdflatex -synctex=1 -halt-on-error #{Conf.paperName}.tex"
+          codeSwitch = ""
+          codeSwitch = "-shell-escape" if Conf.has_key?(:code)
+          system "pdflatex #{codeSwitch} -synctex=1 -halt-on-error #{Conf.paperName}.tex"
           extractCitations(Conf.paperName+'.aux', Conf.paperName+'.bib')
           File.unlink(Conf.paperName+'.pdf')
           system "biber #{Conf.paperName}"
@@ -157,15 +159,17 @@ module DiSimpBuilder
         pdfDependencies.concat(Conf.texFiles)
 
         doIfNeeded(Conf.paperName+'.pdf', pdfDependencies) do
-          system "pdflatex -synctex=1 -halt-on-error #{Conf.paperName}.tex"
+          codeSwitch = ""
+          codeSwitch = "-shell-escape" if Conf.has_key?(:code)
+          system "pdflatex #{codeSwitch} -synctex=1 -halt-on-error #{Conf.paperName}.tex"
           extractCitations(Conf.paperName+'.aux', Conf.paperName+'.bib')
-          system "pdflatex -synctex=1 #{Conf.paperName}.tex"
+          system "pdflatex #{codeSwitch} -synctex=1 #{Conf.paperName}.tex"
           system "makeindex -s gind.ist #{Conf.paperName}" if
             File.exists?(Conf.paperName+'.idx')
           system "makeindex -s gglo.ist -o #{Conf.paperName}.gls #{Conf.paperName}.glo" if
             File.exists?(Conf.paperName+'.glo')
-          system "pdflatex -synctex=1 #{Conf.paperName}.tex"
-          system "pdflatex -synctex=1 #{Conf.paperName}.tex"
+          system "pdflatex #{codeSwitch} -synctex=1 #{Conf.paperName}.tex"
+          system "pdflatex #{codeSwitch} -synctex=1 #{Conf.paperName}.tex"
         end
       end
 
@@ -185,8 +189,7 @@ module DiSimpBuilder
           c.alias(:tex)
           c.syntax 'latex'
           c.description 'Build a LaTeX document.'
-          c.option 'force', '-f', '--force', 'Force creation even if path already exists.'
-          c.option 'blank', '-b', '--blank', 'Creates scaffolding but with empty files.'
+          c.option 'code', '-c', '--code', 'Ensure LaTeX allows --shell-escapes for minted.'
 
           c.action do |args, options|
             loadConfiguration(options)

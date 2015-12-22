@@ -2,8 +2,13 @@
 %
 
 \documentclass[a4paper,openany]{ams<%= Conf.documentType %>}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
 \usepackage{disitt}
 \usepackage{disitt-symbols}
+%\usepackage{disitt-code}
+\usepackage[backend=biber,style=alphabetic,citestyle=alphabetic]{biblatex}
+\addbibresource{<%= Conf.paper.name %>.bib}
 \usepackage{mdframed}
 \newmdenv[linecolor=white,backgroundcolor=gray!10]{infobox}
 \newenvironment{myQuote}{\begin{quotation}}{\end{quotation}}
@@ -29,8 +34,6 @@
 
 <% if Conf.isBook %>\backmatter<% end %>
 
-\bibliographystyle{amsalpha}
-\bibliography{<%= Conf.paper.name %>}
-
+\printbibliography
 \end{document}
 
