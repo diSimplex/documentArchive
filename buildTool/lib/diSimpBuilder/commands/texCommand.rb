@@ -204,8 +204,7 @@ module DiSimpBuilder
         p.command(:bib) do |c|
           c.syntax 'bib'
           c.description 'Collect the citations for a LaTeX document from our reference database.'
-          c.option 'force', '-f', '--force', 'Force creation even if path already exists.'
-          c.option 'blank', '-b', '--blank', 'Creates scaffolding but with empty files.'
+          c.option 'code', '-c', '--code', 'Ensure LaTeX allows --shell-escapes for minted.'
 
           c.action do |args, options|
             loadConfiguration(options)
