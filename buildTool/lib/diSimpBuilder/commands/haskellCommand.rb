@@ -2,7 +2,7 @@ require 'erb'
 
 module DiSimpBuilder
 
-  module GuileUtils
+  module HaskellUtils
 
     def computeTexConfiguration(options)
       Conf.addDefaults do
@@ -18,53 +18,52 @@ module DiSimpBuilder
       end
     end
 
-    def extractGuileCodeFrom(texFileName)
+    def extractHaskellCodeFrom(texFileName)
       texFile   = File.open(texFileName, "r")
       if (texFile.nil?) then
         puts "Could not open (la)tex file: [#{texFileName}]"
         return
       end
-      guileFileName = 'generatedGuileCode/'+texFileName.sub(/\.tex$/,'.guile')
-      guileFile = File.open(guileFileName, "w")
-      if (guileFile.nil?) then
-        puts "Could not open guile file: [#{guileFileName}]"
+      haskellFileName = 'generatedHaskellCode/'+texFileName.sub(/\.tex$/,'.hs')
+      haskellFile = File.open(haskellFileName, "w")
+      if (haskellFile.nil?) then
+        puts "Could not open haskell file: [#{haskellFileName}]"
         return
       end
-      guileFile.puts "#!/usr/bin/guile -s"
-      guileFile.puts "!#"
+      haskellFile.puts "-- Haskell code extracted from #{texFileName}"
 
       puts "Processing [#{texFileName}]"
   
-      outsideGuile = true
+      outsideHaskell = true
       lineNumber = 0
  
       texFile.each_line do | aLine |
         lineNumber+=1
         aLine.chomp!
-        if (outsideGuile) then
+        if (outsideHaskell) then
           next if (aLine =~ /^[ \t]*$/)
-          if (aLine =~ /^[ \n]*\\begin\{guile/) then
+          if (aLine =~ /^[ \n]*\\begin\{haskell/) then
             puts ""
-            guileFile.puts "\n;; #{texFileName}(#{lineNumber})\n\n"
-            outsideGuile = false
+            haskellFile.puts "\n-- #{texFileName}(#{lineNumber})\n\n"
+            outsideHaskell = false
           end
         else
-          if (aLine =~ /^[ \n]*\\end\{guile/) then
+          if (aLine =~ /^[ \n]*\\end\{haskell/) then
             puts ""
-            guileFile.puts "\n;; #{texFileName}(#{lineNumber})\n\n"
-            outsideGuile = true
+            haskellFile.puts "\n-- #{texFileName}(#{lineNumber})\n\n"
+            outsideHaskell = true
           else
             aLine.gsub!(/\t/, '  ')
 #            aLine.gsub!(/^%pragma /,'')
 #            aLine.gsub!(/\\mapsTo/, '->')
 #            aLine.gsub!(/\\/,'')
-#            puts "#{guileFileName}[#{lineNumber}]:#{aLine}"
-            guileFile.puts aLine
+#            puts "#{haskellFileName}[#{lineNumber}]:#{aLine}"
+            haskellFile.puts aLine
           end
         end
       end
-      guileFile.chmod(0755)
-      guileFile.close
+      haskellFile.chmod(0755)
+      haskellFile.close
     end
 
     def writeFile(outFilePath, contents, mode = 0644)
@@ -74,29 +73,29 @@ module DiSimpBuilder
     end
   end
 
-  class GuileCommand < Command
-    extend GuileUtils
+  class HaskellCommand < Command
+    extend HaskellUtils
 
     def self.init_with_program(p)
-      p.command(:guile) do |c|
-        c.syntax "guile"
-        c.description 'extract and compile Guile code'
+      p.command(:haskell) do |c|
+        c.syntax "haskell"
+        c.description 'extract and compile Haskell code'
         c.action do |args, options|
           computeTexConfiguration(options)
           Conf.texDirectories.each do | aDir |
             Dir.chdir(aDir) do
-              puts "Compiled Guile"
+              puts "Compiled Haskell"
               puts "PWD: #{Dir.getwd}"
-              if (File.directory?("generatedGuileCode")) then
-                system("rm -rf generatedGuileCode/*");
+              if (File.directory?("generatedHaskellCode")) then
+                system("rm -rf generatedHaskellCode/*");
               else
-                system("rm -rf generatedGuileCode");
-                system("mkdir generatedGuileCode");
+                system("rm -rf generatedHaskellCode");
+                system("mkdir generatedHaskellCode");
               end
               Dir.glob("*.tex").each do | aTexFile |
-                extractGuileCodeFrom(aTexFile)
+                extractHaskellCodeFrom(aTexFile)
               end
-              system "generatedGuileCode/#{Conf.paper.name}.guile"
+              system "runhaskell generatedHaskellCode/#{Conf.paper.name}.hs"
             end
           end
         end
