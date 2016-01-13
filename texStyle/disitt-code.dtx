@@ -113,6 +113,100 @@ and disitt.pdf.
   [2015/12/22 v1.0 DiSiTT Code]
 %    \end{macrocode}
 %
+% \section{DiSiTT Backus-Naur Form}
+%
+% This \LaTeX code has been minimally altered from Adrian Robson's 
+% backnaur CTAN package ( \verb|https://www.ctan.org/pkg/backnaur| ).
+%
+% \subsection{BNF environments}
+%
+% \begin{environment}{bnf}
+% A production list with line numbers.
+%txs\begin{bnf}#
+%txs\end{bnf}#
+%    \begin{macrocode}
+\newenvironment{bnf}%
+{\begin{eqnarray}}%
+{\end{eqnarray}\ignorespacesafterend}
+%    \end{macrocode}
+% \end{environment}
+%
+% \begin{environment}{bnf*}
+% A production list with line numbers.
+%txs\begin{bnf*}#
+%txs\end{bnf*}#
+%    \begin{macrocode}
+\newenvironment{bnf*}%
+{\begin{eqnarray*}}%
+{\end{eqnarray*}\ignorespacesafterend}
+%    \end{macrocode}
+% \end{environment}
+%
+% \subsection{BNF definition commands}
+%
+% \begin{macro}{\bnfPN}
+%txs\bnfPN{non-terminal}#
+%    \begin{macrocode}
+\newcommand{\bnfPN}[1]{\langle \textnormal{#1} \rangle}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\bnfOR}
+%txs\bnfOR#
+%    \begin{macrocode}
+\newcommand{\bnfOR}{\; \mid \;}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\bnfSP}
+%txs\bnfSP#
+%    \begin{macrocode}
+\newcommand{\bnfSP}{\;}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\bnfES}
+%txs\bnfES#
+%    \begin{macrocode}
+\newcommand{\bnfES}{\lambda}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\bnfTD}
+%txs\bnfTD#
+%    \begin{macrocode}
+\newcommand{\bnfTD}[1]{\textnormal{#1}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\bnfSK}
+%txs\bnfSK#
+%    \begin{macrocode}
+\newcommand{\bnfSK}{\dots}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\bnfPO}
+%txs\bnfPO#
+%    \begin{macrocode}
+\newcommand{\bnfPO}{::=}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\bnfProd}
+%txs\bnfProd{nonTerminal}{production}#
+%    \begin{macrocode}
+\newcommand{\bnfProd}[2]{\bnfPN{#1} & \bnfPO & #2 \\}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\bnfAlt}
+%txs\bnfAlt{alternate production}#
+%    \begin{macrocode}
+\newcommand{\bnfAlt}[1]{ & \bnfOR & #1 \\}
+%    \end{macrocode}
+% \end{macro}
+%
 % \section{minted environments}
 %
 %    \begin{macrocode}
@@ -120,7 +214,7 @@ and disitt.pdf.
 %    \end{macrocode}
 %
 % \begin{macro}{\racketRequire}
-%txs\racketRequire#
+%txs\racketRequire{requiredFileName}#
 %    \begin{macrocode}
 \newcommand{\racketRequire}[1]{}
 %    \end{macrocode}
