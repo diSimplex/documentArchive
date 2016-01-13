@@ -119,6 +119,22 @@ and disitt.pdf.
 \RequirePackage{minted}%
 %    \end{macrocode}
 %
+% \begin{environment}{racket}
+%txs\begin{racket}
+%txs\end{racket}
+%    \begin{macrocode}
+\newminted[racket]{scheme}{}
+%    \end{macrocode
+% \end{environment}
+%
+% \begin{environment}{racketPragmas}
+%txs\begin{racketPragmas}
+%txs\end{racketPragmas}
+%    \begin{macrocode}
+\newenvironment{racketPragmas}{\comment}{\endcomment}
+%    \end{macrocode
+% \end{environment}
+%
 % \begin{environment}{guile}
 %txs\begin{guile}
 %txs\end{guile}
