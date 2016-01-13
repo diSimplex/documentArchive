@@ -7,7 +7,7 @@
 \usepackage{disitt}
 \usepackage{hyperref}
 \newcommand{\define}[2]{\emph{\textbf{#1}}}
-\GetFileInfo{disitt-code.sty}
+\GetFileInfo{disitt-engine.sty}
 \CodelineIndex
 \EnableCrossrefs
 \RecordChanges
@@ -122,9 +122,9 @@ and disitt.pdf.
 %
 % \begin{environment}{bnf}
 % A production list with line numbers.
+%    \begin{macrocode}
 %txs\begin{bnf}#
 %txs\end{bnf}#
-%    \begin{macrocode}
 \newenvironment{bnf}%
 {\begin{eqnarray}}%
 {\end{eqnarray}\ignorespacesafterend}
@@ -133,9 +133,9 @@ and disitt.pdf.
 %
 % \begin{environment}{bnf*}
 % A production list with line numbers.
+%    \begin{macrocode}
 %txs\begin{bnf*}#
 %txs\end{bnf*}#
-%    \begin{macrocode}
 \newenvironment{bnf*}%
 {\begin{eqnarray*}}%
 {\end{eqnarray*}\ignorespacesafterend}
@@ -145,64 +145,71 @@ and disitt.pdf.
 % \subsection{BNF definition commands}
 %
 % \begin{macro}{\bnfPN}
-%txs\bnfPN{non-terminal}#
 %    \begin{macrocode}
+%txs\bnfPN{non-terminal}#
 \newcommand{\bnfPN}[1]{\langle \textnormal{#1} \rangle}
 %    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{\bnfOR}
-%txs\bnfOR#
 %    \begin{macrocode}
+%txs\bnfOR#
 \newcommand{\bnfOR}{\; \mid \;}
 %    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{\bnfSP}
-%txs\bnfSP#
 %    \begin{macrocode}
+%txs\bnfSP#
 \newcommand{\bnfSP}{\;}
 %    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{\bnfES}
-%txs\bnfES#
 %    \begin{macrocode}
+%txs\bnfES#
 \newcommand{\bnfES}{\lambda}
 %    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{\bnfTD}
-%txs\bnfTD#
 %    \begin{macrocode}
+%txs\bnfTD{terminal}#
 \newcommand{\bnfTD}[1]{\textnormal{#1}}
 %    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{\bnfSK}
-%txs\bnfSK#
 %    \begin{macrocode}
+%txs\bnfSK#
 \newcommand{\bnfSK}{\dots}
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\bnfPO}
-%txs\bnfPO#
+% \begin{macro}{\bnfKS}
 %    \begin{macrocode}
+%txs\bnfKS{base}{expoent}#
+\newcommand{\bnfKS}[2]{\lbrace #1 \rbrace^{#2}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\bnfPO}
+%    \begin{macrocode}
+%txs\bnfPO#
 \newcommand{\bnfPO}{::=}
 %    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{\bnfProd}
-%txs\bnfProd{nonTerminal}{production}#
 %    \begin{macrocode}
+%txs\bnfProd{nonTerminal}{production}#
 \newcommand{\bnfProd}[2]{\bnfPN{#1} & \bnfPO & #2 \\}
 %    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{\bnfAlt}
-%txs\bnfAlt{alternate production}#
 %    \begin{macrocode}
+%txs\bnfAlt{alternate production}#
 \newcommand{\bnfAlt}[1]{ & \bnfOR & #1 \\}
 %    \end{macrocode}
 % \end{macro}
@@ -214,58 +221,58 @@ and disitt.pdf.
 %    \end{macrocode}
 %
 % \begin{macro}{\racketRequire}
-%txs\racketRequire{requiredFileName}#
 %    \begin{macrocode}
+%txs\racketRequire{requiredFileName}#
 \newcommand{\racketRequire}[1]{}
 %    \end{macrocode}
 % \end{macro}
 %
 % \begin{environment}{racket}
+%    \begin{macrocode}
 %txs\begin{racket}
 %txs\end{racket}
-%    \begin{macrocode}
 \newminted[racket]{racket}{}
-%    \end{macrocode
+%    \end{macrocode}
 % \end{environment}
 %
 % \begin{environment}{racketPragmas}
+%    \begin{macrocode}
 %txs\begin{racketPragmas}
 %txs\end{racketPragmas}
-%    \begin{macrocode}
 \newenvironment{racketPragmas}{\comment}{\endcomment}
-%    \end{macrocode
+%    \end{macrocode}
 % \end{environment}
 %
 % \begin{environment}{guile}
+%    \begin{macrocode}
 %txs\begin{guile}
 %txs\end{guile}
-%    \begin{macrocode}
 \newminted[guile]{scheme}{}
-%    \end{macrocode
+%    \end{macrocode}
 % \end{environment}
 %
 % \begin{environment}{guilePragmas}
+%    \begin{macrocode}
 %txs\begin{guilePragmas}
 %txs\end{guilePragmas}
-%    \begin{macrocode}
 \newenvironment{guilePragmas}{\comment}{\endcomment}
-%    \end{macrocode
+%    \end{macrocode}
 % \end{environment}
 %
 % \begin{environment}{haskell}
+%    \begin{macrocode}
 %txs\begin{haskell}
 %txs\end{haskell}
-%    \begin{macrocode}
 \newminted[haskell]{haskell}{}
-%    \end{macrocode
+%    \end{macrocode}
 % \end{environment}
 %
 % \begin{environment}{haskellPragmas}
+%    \begin{macrocode}
 %txs\begin{haskellPragmas}
 %txs\end{haskellPragmas}
-%    \begin{macrocode}
 \newenvironment{haskellPragmas}{\comment}{\endcomment}
-%    \end{macrocode
+%    \end{macrocode}
 % \end{environment}
 %
 % \subsection{Finishing off}

@@ -131,9 +131,9 @@ module DiSimpBuilder
             Conf.loadConfiguration(options)
             doIn('texStyle') do
               computeDependencies
-              extractTeXStudioCWLfiles
               buildTexStyles
               runTexStyleTests
+              extractTeXStudioCWLfiles
               initialClean
               globalRelease
               localRelease
