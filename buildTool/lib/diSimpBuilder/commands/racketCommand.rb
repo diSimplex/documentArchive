@@ -43,15 +43,20 @@ module DiSimpBuilder
         aLine.chomp!
         if (outsideRacket) then
           next if (aLine =~ /^[ \t]*$/)
-          if (aLine =~ /^[ \n]*\\begin\{racket/) then
-            puts ""
-            racketFile.puts "\n;; #{texFileName}(#{lineNumber})\n\n"
+          if (aLine =~ /^[ \t]*\\racketRequire\{([^\}]+)\}/) then
+            requiredFileName = $1
+            racketFile.puts "\n;; require racket module from #{texFileName}(#{lineNumber})"
+            racketFile.puts "(require \"#{requiredFileName}\")"
+          end
+          if (aLine =~ /^[ \t]*\\begin\{racket/) then
+#            puts ""
+            racketFile.puts "\n;; begin racket code from #{texFileName}(#{lineNumber})\n\n"
             outsideRacket = false
           end
         else
-          if (aLine =~ /^[ \n]*\\end\{racket/) then
-            puts ""
-            racketFile.puts "\n;; #{texFileName}(#{lineNumber})\n\n"
+          if (aLine =~ /^[ \t]*\\end\{racket/) then
+#            puts ""
+            racketFile.puts "\n;; end racket code from #{texFileName}(#{lineNumber})\n\n"
             outsideRacket = true
           else
             aLine.gsub!(/\t/, '  ')
