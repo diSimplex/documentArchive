@@ -79,6 +79,7 @@ module DiSimpBuilder
 
     def self.init_with_program(p)
       p.command(:racket) do |c|
+        c.alias :rkt
         c.syntax "racket"
         c.description 'extract and compile Racket code'
         c.action do |args, options|
