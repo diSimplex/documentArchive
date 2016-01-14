@@ -220,10 +220,17 @@ and disitt.pdf.
 \RequirePackage{minted}%
 %    \end{macrocode}
 %
-% \begin{macro}{\racketRequire}
+% \begin{macro}{\racketRequirePkg}
 %    \begin{macrocode}
-%txs\racketRequire{requiredFileName}#
-\newcommand{\racketRequire}[1]{}
+%txs\racketRequirePkg{requiredPackage}#
+\newcommand{\racketRequirePkg}[1]{}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\racketRequireFile}
+%    \begin{macrocode}
+%txs\racketRequireFile{requiredFileName}#
+\newcommand{\racketRequireFile}[1]{}
 %    \end{macrocode}
 % \end{macro}
 %
