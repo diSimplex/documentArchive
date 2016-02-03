@@ -2,11 +2,10 @@
 %
 \InputIfFileExists{options}{}{}
 \documentclass[a4paper,openany]{amsbook}
-%\usepackage{perceptisys}
-%\usepackage{perceptisysChapter}
-%\usepackage{perceptisysSymbols}
 \usepackage{disitt}
 \usepackage{disitt-symbols}
+\usepackage[backend=biber,style=alphabetic,citestyle=alphabetic]{biblatex}
+\addbibresource{diSimplexEngine.bib}
 
 \begin{document}
 \frontmatter
@@ -479,8 +478,6 @@ See the OrdinalArithmetic paper.
 
 \chapter{Cowellfounded Topos Type Theory}
 
-\bibliographystyle{amsalpha}
-\bibliography{diSimplexEngine}
-
+\printbibliography
 \end{document}
 
