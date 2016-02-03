@@ -5,6 +5,8 @@
 \documentclass[a4paper]{amsart}
 \usepackage{disitt}
 \usepackage{disitt-symbols}
+\usepackage[backend=biber,style=alphabetic,citestyle=alphabetic]{biblatex}
+\addbibresource{simplicialStructures.bib}
 
 \begin{document}
 \sloppy
@@ -33,8 +35,6 @@ logical factorization system of the classical topos of presheaves, $[
 This logical factorization system provides us with the ``logic'' required for
 Directed Simplicial Type Theory. }
 
-\bibliographystyle{amsalpha}
-\bibliography{simplicialStructures}
-
+\printbibliography
 \end{document}
 
