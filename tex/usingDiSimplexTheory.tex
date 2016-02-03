@@ -2,8 +2,10 @@
 %
 
 \documentclass[a4paper]{amsart}
-\usepackage{perceptisys}
-\usepackage{perceptisysArticle}
+\usepackage{disitt}
+\usepackage{disitt-symbols}
+\usepackage[backend=biber,style=alphabetic,citestyle=alphabetic]{biblatex}
+\addbibresource{usingDiSimplexTheory.bib}
 
 \begin{document}
 \sloppy
@@ -11,7 +13,7 @@
 \title[Using DiSimplicil Theory]{Using Directed Simplicial Type Theory 
 to formally check ``informal'' mathematics}
 %
-\collectionTitle{A mathematical theory of Reality}
+%\collectionTitle{A mathematical theory of Reality}
 %
 \input{frontMatter} 
 \subjclass[2010]{Primary unknown; Secondary unknown} % 
@@ -153,9 +155,6 @@ equivalent proof.
 %
 \end{verbatim}
 
-
-\bibliographystyle{amsalpha}
-\bibliography{usingDiSimplexTheory}
-
+\printbibliography
 \end{document}
 
