@@ -32,9 +32,19 @@
 *.xdy
 *.tdo
 
+# biblatex files to ignore #
+*.bcf
+*.run.xml
+
 # diSimplex (LaTeX) tool files to ignore #
 *.bak
 *.bib
 *.pdf
 gitHeadInfo.gin
 
+# Minted/Racket/Guile/Haskel file to ignore #
+_minted*
+generatedGuileCode
+generatedHaskellCode
+generatedRacketCode
+tmp

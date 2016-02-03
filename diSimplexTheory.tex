@@ -4,6 +4,8 @@
 \documentclass[a4paper,openany]{amsbook}
 \usepackage{disitt}
 \usepackage{disitt-symbols}
+\usepackage[backend=biber,style=alphabetic,citestyle=alphabetic]{biblatex}
+\addbibresource{diSimplexTheory.bib}
 \usepackage{mdframed}
 \newmdenv[linecolor=white,backgroundcolor=gray!10]{infobox}
 \newenvironment{myQuote}{\begin{quotation}}{\end{quotation}}
@@ -46,7 +48,8 @@ Any answer to this question, which forms part of this cycle of papers, must of
 necessity be circular: \emph{what is the Reality of the beings who consider the
 validity of the mathematics which provides a mathematical description of
 Reality?} To break this circularity, we take the pragmatic approach,
-bastardising Descartes, and state: \emph{I make marks in the sand, so I exist}.
+bastardising Descartes, and state: \emph{I make marks in the sand, so I exist},
+or to honour John McCarthy, \emph{I can build a Lisp Machine, so I exist}.
 
 Any discussion of the `Reality' or `Validity' of Mathematics is essentially a
 discussion of the \textit{Foundations of Mathematics}. Classically Mathematics
@@ -668,8 +671,6 @@ look at: lucas2001transfiniteRewrite,
 dershowitzKaplanPlaisted1989transfiinteRewrite,
 jacobs2011coalgebraicComputation
 
-\bibliographystyle{amsalpha}
-\bibliography{diSimplexTheory}
-
+\printbibliography
 \end{document}
 
