@@ -1,44 +1,21 @@
-#!/usr/bin/env ruby
+#!/bin/bash
 
-# This is a Mercenary based build tool for the diSimplex based papers
+# This bash shell determines which base application to use:
+#  racket if the first argument is check
+#  ruby otherwise
 
-STDOUT.sync = true
-$globalConfig = File.join(ENV['HOME'], '.diSimp', 'config.yaml')
-$globalLib = File.join(ENV['HOME'], '.diSimp', 'lib')
-$LOAD_PATH.unshift($globalLib)
+diSimpLib=$HOME/.diSimp/lib
 
-require 'mercenary'
-require 'diSimpBuilder'
+if [ 0 -lt $# ]; then 
+  if [ $1 = 'check' ]; then
+    if [ -r $diSimpLib/main.rkt ]; then
+      #
+      # Fire up racket with the diSimp main
+      #
+      exec racket --script $diSimpLib/main.rkt --curDir $PWD $*
+    fi
+  fi
+fi
 
-# Pre-load diSimpBuilder commands
-#
-libs = Array.new
-libs.push($globalLib)
-libs.push(Dir.pwd+'/diSimpLib')
-libs.each do |aLib|
-  Dir.chdir(aLib) do 
-    $LOAD_PATH.unshift Dir.pwd
-    Dir[File.join("**", "*.rb")].sort.each do |f|
-      require f
-    end
-  end if Dir.exists?(aLib)
-end
-
-Mercenary.program(:diSimp) do |p|
-  p.version DiSimpBuilder::VERSION
-  p.description 'diSimp is a build tool for diSimplex based papers'
-  p.syntax 'diSimp <subcommand> [options]'
-
-  DiSimpBuilder::Command.subclasses.each { |c| c.init_with_program(p) }
-
-  p.action do |args, options|
-    if args.empty?
-      puts p
-    else
-      unless p.has_command?(args.first)
-        puts "Invalid command. Use --help for more information"
-      end
-    end
-  end
-end
-
+# Fire up ruby ....
+exec ruby $diSimpLib/main.rb $PWD $*
