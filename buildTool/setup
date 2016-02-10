@@ -13,12 +13,14 @@ BINDIR=$HOME/bin
 #
 GLOBALDIR=$HOME/.diSimp
 
+RUBYLIB=$GLOBALDIR/ruby/lib
+
 cp diSimp $BINDIR
-mkdir -p $GLOBALDIR/lib
-mkdir -p $GLOBALDIR/lib/diSimpBuilder
-mkdir -p $GLOBALDIR/lib/diSimpBuilder/commands
-mkdir -p $GLOBALDIR/lib/diSimpBuilder/templates
-cp -R lib/* $GLOBALDIR/lib
+mkdir -p $RUBYLIB
+mkdir -p $RUBYLIB/diSimpBuilder
+mkdir -p $RUBYLIB/diSimpBuilder/commands
+mkdir -p $RUBYLIB/diSimpBuilder/templates
+cp -R lib/* $RUBYLIB
 
 # Now we need to ensure all of the required gems are installed....
 echo "We will need your sudo password to install the required gems"

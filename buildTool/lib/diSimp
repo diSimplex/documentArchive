@@ -1,9 +1,12 @@
+#!/usr/bin/env ruby
+
 # This is a Mercenary based build tool for the diSimplex based papers
-Dir.chdir(ARGV.shift)
+
+#Dir.chdir(ARGV.shift)
 
 STDOUT.sync = true
 $globalConfig = File.join(ENV['HOME'], '.diSimp', 'config.yaml')
-$globalLib = File.join(ENV['HOME'], '.diSimp', 'lib')
+$globalLib = File.join(ENV['HOME'], '.diSimp', 'ruby', 'lib')
 $LOAD_PATH.unshift($globalLib)
 
 require 'mercenary'
