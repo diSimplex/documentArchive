@@ -386,6 +386,41 @@ end-lemma
 %    \end{macrocode}
 % \end{environment}
 %
+% \subsection{Observation commands}
+%
+% An \emph{observation} is asserted to exist for a given ``object'' in an 
+% optional context as follows:
+%
+% \begin{macro}{\observation}
+%    \begin{macrocode}
+%txs\observation{anObject}{aContext}{theObservation}#
+\newcommand{\observation}[3]{\ensuremath{#1 | #2 \vdash #3}}
+%    \end{macrocode}
+% \end{macro}
+%
+% There are two fundamental possible observations: car and cdr. 
+%
+% \begin{macro}{\car}
+%   \begin{macro}{\cdr}
+%    \begin{macrocode}
+%txs\car{aStructure}#
+%txs\cdr{aStructure}#
+\newcommand{\car}[1]{\ensuremath{(\:\text{car}\:#1\:)}}
+\newcommand{\cdr}[1]{\ensuremath{(\:\text{cdr}\:#1\:)}}
+%    \end{macrocode}
+%   \end{macro}
+% \end{macro}
+%
+%
+% To assist in building up complex observations, we can name an observation:
+%
+% \begin{macro}{\name}
+%    \begin{macrocode}
+%txs\name{aName}{anObservation}#
+\newcommand{\name}[2]{\ensuremath{#1 := #2}}
+%    \end{macrocode}
+% \end{macro}
+%
 % \subsection{Judgement commands}
 %
 % \begin{macro}{\context}
