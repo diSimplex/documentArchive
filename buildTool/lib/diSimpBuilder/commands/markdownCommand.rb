@@ -43,23 +43,20 @@ module DiSimpBuilder
         #
         mdLines = Array.new
         File.open(markdownFilePath, 'r') do | md |
-          mdLines = md.readlines
+          mdLines = md.read.split($/)
         end
-        #
-        # Remove line endings
-        #
-        mdLines.collect! { | aLine | aLine.chomp! }
         #
         # Remove any existing TOC
         #
         foundEndTOC = false
         trialMDLines = mdLines.select do | aLine |
-          oldFoundEndTOC = foundEndTOC
           foundEndTOC = foundEndTOC || aLine =~ /\<\!\-\-\- END TOC/ 
-          oldFoundEndTOC
         end
-        mdLines = trialMDLines unless trialMDLines.empty?
-        while (mdLines[0] =~ /^[ \t]*$/) do mdLines.shift end
+        if not trialMDLines.empty? then
+          mdLines = trialMDLines
+          mdLines.shift
+          while (mdLines[0] =~ /^[ \t]*$/) do mdLines.shift end
+        end
         #
         # collect the new TOC
         #
@@ -74,7 +71,9 @@ module DiSimpBuilder
         #
         # Write out the Markdown file with TOC
         #
-        File.write(markdownFilePath, mdLines.join("\n"))
+        File.open(markdownFilePath, 'w') do | md |
+          md.write(mdLines.join("\n"))
+        end 
       end
 
       def findMarkdownFiles(curDir)
