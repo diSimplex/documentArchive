@@ -1,8 +1,12 @@
 
+require 'fileutils'
+
 module DiSimpBuilder
 
-  class TableOfContentsCommand < Command
+  class MarkdownCommand < Command
     class << self
+
+      TOC_TIME_STAMP_PATH = ".tocTimeStamp"
 
       DEPTH_PREFIX = [ 
         '',         # 0 
@@ -29,6 +33,10 @@ module DiSimpBuilder
       # AND we only deal with a depth of 5
       #
       def updateTOC(markdownFilePath)
+        #
+        # Check to see if any changes need updating
+        #
+        return if FileUtils.uptodate?(TOC_TIME_STAMP_PATH, [markdownFilePath])
         puts "Regenerating TOC for [#{markdownFilePath}]"
         #
         # Read in the Markdown file as individual lines
@@ -92,6 +100,8 @@ module DiSimpBuilder
           c.action do |args, options|
             Conf.loadConfiguration(options)
             findMarkdownFiles(".")
+            sleep(1)
+            FileUtils.touch(TOC_TIME_STAMP_PATH)
           end
         end # :toc command
 
