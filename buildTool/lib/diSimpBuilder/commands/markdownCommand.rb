@@ -10,11 +10,11 @@ module DiSimpBuilder
 
       DEPTH_PREFIX = [ 
         '',         # 0 
-        ' - ',      # 1
-        '  - ',     # 2
-        '   - ',    # 3
-        '    - ',   # 4
-        '     - ',  # 5
+        '  - ',      # 1
+        '    - ',     # 2
+        '      - ',    # 3
+        '        - ',   # 4
+        '          - ',  # 5
       ]
 
       def createTag(origHeader)
@@ -64,10 +64,13 @@ module DiSimpBuilder
         mdHeaders.collect! { | aLine | createTag(aLine) }
         #
         # Merge the new TOC into the existing Markdown lines
+        # ... but only if there is more than one item
         #
-        mdLines.unshift("\n<!--- END TOC -->\n")
-        mdHeaders.reverse.each { | aLine | mdLines.unshift(aLine) }
-        mdLines.unshift("**Table of Contents**\n")
+        if 1 < mdHeaders.length then
+          mdLines.unshift("\n<!--- END TOC -->\n")
+          mdHeaders.reverse.each { | aLine | mdLines.unshift(aLine) }
+          mdLines.unshift("**Table of Contents**\n")
+        end
         #
         # Write out the Markdown file with TOC
         #
