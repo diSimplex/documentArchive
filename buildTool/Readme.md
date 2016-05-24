@@ -20,7 +20,7 @@ The diSimp build tool assumes the following CTAN packages are installed:
 On a Linux based OS, you can install the diSimp build tool by typing:
 
 > cd buildTool
-> ./setup
+> ./diSimp-install
 
 # Use
 
