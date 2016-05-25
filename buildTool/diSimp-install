@@ -25,3 +25,4 @@ cp -R lib/* $RUBYLIB
 # Now we need to ensure all of the required gems are installed....
 echo "We will need your sudo password to install the required gems"
 sudo gem install mercenary
+sudo gem install ptools
