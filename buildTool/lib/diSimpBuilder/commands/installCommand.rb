@@ -12,7 +12,7 @@ module DiSimpBuilder
           begin
             if File.exist?("buildTool/diSimp-install") then
               Dir.chdir("buildTool") do
-                system("diSimp-install")
+                system("./diSimp-install")
               end
             else
               puts ""
