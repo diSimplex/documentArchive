@@ -214,10 +214,10 @@ and disitt.pdf.
 %    \end{macrocode}
 % \end{macro}
 %
-% \section{minted environments}
+% \section{code environments}
 %
 %    \begin{macrocode}
-\RequirePackage{minted}%
+\RequirePackage{fancyvrb}%
 %    \end{macrocode}
 %
 % \begin{macro}{\racketRequirePkg}
@@ -238,7 +238,7 @@ and disitt.pdf.
 %    \begin{macrocode}
 %txs\begin{racket}
 %txs\end{racket}
-\newminted[racket]{racket}{}
+\DefineVerbatimEnvironment{racket}{Verbatim}{frame=lines, framerule=0.2mm}
 %    \end{macrocode}
 % \end{environment}
 %
@@ -250,27 +250,11 @@ and disitt.pdf.
 %    \end{macrocode}
 % \end{environment}
 %
-% \begin{environment}{guile}
-%    \begin{macrocode}
-%txs\begin{guile}
-%txs\end{guile}
-\newminted[guile]{scheme}{}
-%    \end{macrocode}
-% \end{environment}
-%
-% \begin{environment}{guilePragmas}
-%    \begin{macrocode}
-%txs\begin{guilePragmas}
-%txs\end{guilePragmas}
-\newenvironment{guilePragmas}{\comment}{\endcomment}
-%    \end{macrocode}
-% \end{environment}
-%
 % \begin{environment}{haskell}
 %    \begin{macrocode}
 %txs\begin{haskell}
 %txs\end{haskell}
-\newminted[haskell]{haskell}{}
+\DefineVerbatimEnvironment{haskell}{Verbatim}{frame=lines, framerule=0.2mm}
 %    \end{macrocode}
 % \end{environment}
 %
