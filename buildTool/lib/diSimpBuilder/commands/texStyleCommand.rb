@@ -126,6 +126,7 @@ module DiSimpBuilder
           c.description 'Build a LaTeX Style.'
           c.option 'force', '-f', '--force', 'Force creation even if path already exists.'
           c.option 'blank', '-b', '--blank', 'Creates scaffolding but with empty files.'
+          c.option 'code', '-c', '--code', 'Ensure LaTeX allows --shell-escapes for minted.'
         
           c.action do |args, options|
             Conf.loadConfiguration(options)
