@@ -223,6 +223,36 @@ and disitt.pdf.
 \RequirePackage{fancyvrb}%
 %    \end{macrocode}
 %
+% \begin{macro}{\joyLoLRequirePkg}
+%    \begin{macrocode}
+%txs\joyLoLRequirePkg{requiredPackage}#
+\newcommand{\joyLoLRequirePkg}[1]{}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\joyLoLRequireFile}
+%    \begin{macrocode}
+%txs\joyLoLRequireFile{requiredFileName}#
+\newcommand{\joyLoLRequireFile}[1]{}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{environment}{joyLoL}
+%    \begin{macrocode}
+%txs\begin{joyLoL}
+%txs\end{joyLoL}
+\DefineVerbatimEnvironment{joyLoL}{Verbatim}{frame=lines, framerule=0.2mm}
+%    \end{macrocode}
+% \end{environment}
+%
+% \begin{environment}{joyLoLPragmas}
+%    \begin{macrocode}
+%txs\begin{joyLoLPragmas}
+%txs\end{joyLoLPragmas}
+\newenvironment{joyLoLPragmas}{\comment}{\endcomment}
+%    \end{macrocode}
+% \end{environment}
+%
 % \begin{macro}{\racketRequirePkg}
 %    \begin{macrocode}
 %txs\racketRequirePkg{requiredPackage}#
