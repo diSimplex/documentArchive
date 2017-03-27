@@ -15,7 +15,7 @@ GLOBALDIR=$HOME/.diSimp
 
 RUBYLIB=$GLOBALDIR/ruby/lib
 
-cp diSimp $BINDIR
+cp diSimpLaTeX $BINDIR
 mkdir -p $RUBYLIB
 mkdir -p $RUBYLIB/diSimpBuilder
 mkdir -p $RUBYLIB/diSimpBuilder/commands
