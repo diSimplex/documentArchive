@@ -100,7 +100,7 @@ else
   report('re-indexing TeX files')
   report('')
   report('----------------------------------------------------------------------')
-  resolvers.instance.renewcache = true
+  resolvers.renewcache()
   trackers.enable("resolvers.locating")
   resolvers.load()
   report('----------------------------------------------------------------------')
