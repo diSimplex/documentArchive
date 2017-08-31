@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# This bash script setups up various scripts which are useful for keeping a 
+# ConTeXt standalone installation up to date. 
+
+if [ "$#" -ne 1 ]; then
+  echo "usage: setupContext <full path to root of the ConTeXt standalone installations>"
+  exit -1
+fi
+
+
+echo "ensuring $1 exists..."
+mkdir -p $1
+
+echo "copying over maintenance scripts..."
+cp downLoad-* update-* $1
+
+echo "done."
