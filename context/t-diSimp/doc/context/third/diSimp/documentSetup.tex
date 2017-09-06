@@ -1,0 +1,36 @@
+% A ConTeXt document [master document: diSimp.tex]
+
+\chapter[title=Setting up diSimp documents]
+
+\startMkIVCode
+\setupinteraction[
+  state=start,
+  color=green,
+  stype=bold
+]
+\placebookmarks[chapter, section, subsection][chapter, section]
+\setupinteractionscreen[option=bookmark]
+
+\setuppapersize[A4]
+
+\setupindenting[medium,yes]
+
+% do not indent after itemize
+\setupitemgroup[itemize][indentnext=no]
+
+% indent the paragraphs after all sectioning heads 
+\setupheads[indentnext=yes] 
+
+% indent paragraphs after formulas if there is a blank space in between
+\setupformulas[indentnext=auto] 
+
+\usebtxdataset[joylolBib.lua]
+\usebtxdefinitions[apa]
+\setupbtxlist[apa][
+  alternative=paragraph,
+  width=fit,
+  distance=.5em,
+  margin=3em % hanging list
+]
+\stopMkIVCode
+

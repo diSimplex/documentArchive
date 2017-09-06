@@ -1,0 +1,69 @@
+-- A Lua Lakefile
+
+local docDir    = 't-diSimp/doc/context/third/diSimp'
+local moduleDir = 't-diSimp/tex/context/third/diSimp'
+local srcFiles = {
+  docDir..'/diSimp.tex',
+  docDir..'/overview.tex',
+  docDir..'/documentSetup.tex',
+  docDir..'/preamble.tex',
+  docDir..'/lakefile.tex'
+}
+
+local diSimpDoc =
+  'cd '..docDir..' ; context -once diSimp.tex ; diSimp bib ; context diSimp.tex'
+
+local moduleTargets = {
+  't-diSimp.mkiv',
+  't-diSimp.lua',
+  't-diSimp-templates.lua'
+}
+
+local buildTargets   = { }
+local diffTargets    = { }
+local installTargets = { }
+
+for i, aTarget in ipairs(moduleTargets) do
+
+  table.insert(buildTargets, target(
+    'build/'..aTarget,
+    srcFiles,
+    diSimpDoc
+  ))
+
+  table.insert(diffTargets, target(
+    'diff-'..aTarget,
+    'build/'..aTarget,
+    'diff $(DEPENDS) '..moduleDir..'/'..aTarget
+  ))
+
+  table.insert(installTargets, target(
+    moduleDir..'/'..aTarget,
+    'build/'..aTarget,
+    'cp $(DEPENDS) $(TARGET)'
+  ))
+end
+
+table.insert(buildTargets, target(
+  'build/lakefile',
+  srcFiles,
+  diSimpDoc
+))
+
+table.insert(diffTargets, target(
+  'diff-lakefile',
+  'build/lakefile',
+  'diff $(DEPENDS) lakefile'
+))
+
+table.insert(installTargets, target(
+  'lakefile',
+  'build/lakefile',
+  'cp $(DEPENDS) $(TARGET)'
+))
+
+target('install', installTargets)
+
+target('diff', diffTargets)
+
+default(buildTargets)
