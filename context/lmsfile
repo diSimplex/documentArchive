@@ -1,0 +1,24 @@
+-- A Lua Make System file
+
+require 'lms.litProgs'
+
+lpTargets = litProgs.targets{
+  mainDoc  = 'diSimp.tex',
+  docFiles = {
+    'overview.tex',
+    'documentSetup.tex',
+    'preamble.tex',
+    'conclusions.tex',
+  },
+  docDir    = 't-diSimp/doc/context/third/diSimp',
+}
+
+require 'lms.contextMod'
+
+contextMod.targets(lpTargets, {
+  moduleFiles = {
+    't-diSimp.mkiv',
+    't-diSimp.lua',
+  },
+  moduleDir = 't-diSimp/tex/context/third/diSimp',
+})

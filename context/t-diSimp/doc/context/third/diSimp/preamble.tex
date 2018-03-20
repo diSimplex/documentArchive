@@ -53,11 +53,6 @@
 \protect \endinput
 \stopMkIVCode
 
-\createMkIVCodeFile%
-  {default}%
-  {../../../../../build/t-diSimp.mkiv}%
-  {A ConTeXt MkIV module}
-
 \prependLuaCode{default}
 \startLuaCode
 -- This is the lua code associated with t-diSimp.mkiv
@@ -86,34 +81,3 @@ local toStr   = tostring
 interfaces.writestatus('diSimp', "loaded diSimp macros")
 \stopLuaCode
 
-\createLuaCodeFile%
-  {default}%
-  {../../../../../build/t-diSimp.lua}%
-  {-- A Lua file}
-
-\prependLuaTemplate{default}
-\startLuaTemplate
-if not modules then modules = { } end modules ['t-diSimp-templates'] = {
-    version   = 1.000,
-    comment   = "ConTeXt macros for diSimplex papers - templates",
-    author    = "PerceptiSys Ltd (Stephen Gaito)",
-    copyright = "PerceptiSys Ltd (Stephen Gaito)",
-    license   = "MIT License"
-}
-
-thirddata              = thirddata        or {}
-thirddata.diSimpCoAlgs = thirddata.diSimp or {}
-
-local diSimp     = thirddata.diSimp
-
-local templates  = { }
-
-diSimp.templates = templates
-
-interfaces.writestatus('diSimp', 'loaded diSimp templates')
-\stopLuaTemplate
-
-\createLuaTemplateFile%
-  {default}%
-  {../../../../../build/t-diSimp-templates.lua}%
-  {-- A Lua template file}

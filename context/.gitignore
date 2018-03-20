@@ -1,4 +1,4 @@
-build
+buildDir
 *.pdf
 *.log
 *.tuc
