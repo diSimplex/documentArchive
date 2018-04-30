@@ -8,7 +8,11 @@
   color=green,
   stype=bold
 ]
-\placebookmarks[chapter, section, subsection][chapter, section]
+
+\placebookmarks%
+  [title, chapter, section, subsection] % these are the headers to bookmark
+  [chapter, section] % these are the headers which will be OPEN in the bookmark list
+
 \setupinteractionscreen[option=bookmark]
 
 \setuppapersize[A4]
@@ -38,5 +42,73 @@
 
 \def\ToDo#1{\color[red]{\bf TODO: #1}}
 \let\TODO\ToDo
-\stopMkIVCode
 
+\def\setShortTitle#1{
+
+  \setuppagenumbering[alternative=doublesided, way=bypart]
+  \setupheadertexts[]
+  \setupheadertexts[\setups{oddPageHeader}][][][\setups{evenPageHeader}]
+
+  \startsetups[oddPageHeader]
+    \framed[topframe=off, leftframe=off, rightframe=off, bottomframe=on, width=max]{
+      \rlap{\headnumber[section][current]}
+      \hfill
+      \getmarking[chapter]
+    }
+  \stopsetups
+
+  \startsetups[evenPageHeader]
+    \framed[topframe=off, leftframe=off, rightframe=off, bottomframe=on, width=max]{
+      \getmarking[section]
+      \hfill
+      \llap{\headnumber[section][current]}
+    }
+  \stopsetups
+
+  \setupfootertexts[]
+  \setupfootertexts[\setups{oddPageFooter}][][][\setups{evenPageFooter}]
+
+  \startsetups[oddPageFooter]
+    \framed[topframe=on, leftframe=off, rightframe=off, bottomframe=off, width=max]{
+      \rlap{\pagenumber}
+      \hfill
+      \llap{#1}
+    }
+  \stopsetups
+
+  \startsetups[evenPageFooter]
+    \framed[topframe=on, leftframe=off, rightframe=off, bottomframe=off, width=max]{
+      \rlap{#1}
+      \hfill
+      \llap{\pagenumber}
+    }
+  \stopsetups
+}
+
+\def\placeTitlePage#1{
+  \startmakeup
+
+  \blank[10cm]
+  \startalignment[center]
+  \dontleavehmode
+  \tfd\bf
+  #1
+  \stopalignment
+
+  \blank[10cm]
+
+  \startalignment[flushright]
+  \dontleavehmode
+  \tfa\bf
+  \bTABLE
+    \setupTABLE[r][each][frame=off]
+    \bTR \bTD Dr Stephen Gaito \eTD \eTR
+    \bTR \bTD PerceptiSys Ltd \eTD \eTR
+    \bTR \bTD \date \eTD \eTR
+  \eTABLE
+  \stopalignment
+
+  \stopmakeup
+}
+
+\stopMkIVCode
