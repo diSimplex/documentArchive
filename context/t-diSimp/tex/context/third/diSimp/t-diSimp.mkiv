@@ -164,10 +164,13 @@
 \def\lol{\inlinemath{\text{LoL}}}
 \def\sets{\inlinemath{\text{Set}}}
 
-\def\classical#1{\color[red]{\emph{#1}}}
-\definestartstop
-  [MMundi]
-  [before=\color[red]]
+\def\MMundi#1{\color[red]{\emph{#1}}}
+\def\startMMundi{\startcolor[red]}
+\def\stopMMundi {\stopcolor}
+%\definestartstop
+%  [MMundi]
+%  [before=\startcolor[red],
+%   after=\stopcolor]
 
 % from file: preamble.tex after line: 50
 
