@@ -137,6 +137,28 @@
   \stopsetups
 }
 
+%% Enuciations(AMS)/Enumerations(ConTeXt)
+%%
+%% AKA: Theorems, Lemmas, Proofs, etc
+%%
+%% See "AMS Style Guide" Seciton 4.1 Enuciations page 31
+%% See "Excurions" Enumerations / Numbered Definitions Chapter 19 page 46
+%%
+%% See also the second (MkIV) half of: http://wiki.contextgarden.net/Proclaim
+%%
+
+%% Counters can be specified OR use \setupcounter (can be iherited from
+%% \defineenumeartion?!?!
+
+\defineenumeration
+  [Definition]
+  [
+    alternative=hanging,
+    text=Definition,
+    prefix=yes,
+    prefixsegments=chapter:section
+  ]
+
 \def\placeTitlePage#1{
   \startmakeup
 
