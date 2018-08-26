@@ -12,8 +12,15 @@
 \def\lol{\inlinemath{\text{LoL}}}
 \def\sets{\inlinemath{\text{Set}}}
 
-\def\MMundi#1{\color[blue]{\sans #1}}
-\def\startMMundi{\startcolor[blue]\sans}
+%\def\MMundi#1{\color[blue]{\sans #1}}
+%\def\startMMundi{\startcolor[blue]\sans}
+%\def\stopMMundi {\stopcolor}
+
+\def\MMundi#1{\color[gray-4]{\sans #1}}
+\def\startMMundi{\startcolor[gray-4]\sans}
 \def\stopMMundi {\stopcolor}
-   
+
+\def\ToDo#1{\color[red]{\bf TODO: #1}}
+\let\TODO\ToDo
+
 \stopMkIVCode

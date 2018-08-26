@@ -46,6 +46,37 @@
 
 \ctxloadluafile{t-diSimp}
 
+% from file: pageLayout.tex after line: 0
+
+\definepapersize
+  [ustrade]
+  [
+    width=6in,
+    height=9in,
+    offset=0pt
+  ]
+
+
+%\setuppapersize[A4]
+%\setuppapersize[ustrade][A4]
+\setuppapersize[ustrade]
+
+\setuplayout
+  [
+    topspace=12.7mm,
+    backspace=12.7mm,
+    height=203.2mm,
+    width=130.4mm,
+    header=10mm,
+    footer=10mm,
+    margin=20mm,
+    location=middle,
+    marking=on
+  ]
+%\setuplayout[marking=on]
+
+\setupbodyfont[10pt]
+
 % from file: documentSetup.tex after line: 0
 
 \setupinteraction[
@@ -60,8 +91,6 @@
 
 \setupinteractionscreen[option=bookmark]
 
-\setuppapersize[A4]
-
 \setupindenting[medium,yes]
 
 % do not indent after itemize
@@ -74,7 +103,9 @@
 \setupformulas[indentnext=auto]
 
 % block quotes
-\setupdelimitedtext[blockquote][style=\slx,before={\setupinterlinespace[line=2.4ex]}]
+\setupdelimitedtext
+  [blockquote]
+  [style=\slx,before={\setupinterlinespace[line=2.4ex]}]
 
 %\usebtxdataset[joylolBib.lua]
 \usebtxdefinitions[apa]
@@ -91,9 +122,6 @@
   distance=.5em,
   margin=3em % hanging list
 ]
-
-\def\ToDo#1{\color[red]{\bf TODO: #1}}
-\let\TODO\ToDo
 
 \def\setShortTitle#1{
 
@@ -137,28 +165,6 @@
   \stopsetups
 }
 
-%% Enuciations(AMS)/Enumerations(ConTeXt)
-%%
-%% AKA: Theorems, Lemmas, Proofs, etc
-%%
-%% See "AMS Style Guide" Seciton 4.1 Enuciations page 31
-%% See "Excurions" Enumerations / Numbered Definitions Chapter 19 page 46
-%%
-%% See also the second (MkIV) half of: http://wiki.contextgarden.net/Proclaim
-%%
-
-%% Counters can be specified OR use \setupcounter (can be iherited from
-%% \defineenumeartion?!?!
-
-\defineenumeration
-  [Definition]
-  [
-    alternative=hanging,
-    text=Definition,
-    prefix=yes,
-    prefixsegments=chapter:section
-  ]
-
 \def\placeTitlePage#1{
   \startmakeup
 
@@ -191,6 +197,30 @@
   \stopmakeup
 }
 
+% from file: mathEnunciations.tex after line: 0
+
+%% Enunciations(AMS)/Enumerations(ConTeXt)
+%%
+%% AKA: Theorems, Lemmas, Proofs, etc
+%%
+%% See "AMS Style Guide" Seciton 4.1 Enuciations page 31
+%% See "Excurions" Enumerations / Numbered Definitions Chapter 19 page 46
+%%
+%% See also the second (MkIV) half of: http://wiki.contextgarden.net/Proclaim
+%%
+
+%% Counters can be specified OR use \setupcounter (can be iherited from
+%% \defineenumeartion?!?!
+
+\defineenumeration
+  [Definition]
+  [
+    alternative=hanging,
+    text=Definition,
+    prefix=yes,
+    prefixsegments=chapter:section
+  ]
+
 % from file: diSimplexMacros.tex after line: 0
 
 \def\lol{\inlinemath{\text{LoL}}}
@@ -201,9 +231,16 @@
 \def\lol{\inlinemath{\text{LoL}}}
 \def\sets{\inlinemath{\text{Set}}}
 
-\def\MMundi#1{\color[blue]{\sans #1}}
-\def\startMMundi{\startcolor[blue]\sans}
+%\def\MMundi#1{\color[blue]{\sans #1}}
+%\def\startMMundi{\startcolor[blue]\sans}
+%\def\stopMMundi {\stopcolor}
+
+\def\MMundi#1{\color[gray-4]{\sans #1}}
+\def\startMMundi{\startcolor[gray-4]\sans}
 \def\stopMMundi {\stopcolor}
+
+\def\ToDo#1{\color[red]{\bf TODO: #1}}
+\let\TODO\ToDo
 
 % from file: preamble.tex after line: 50
 

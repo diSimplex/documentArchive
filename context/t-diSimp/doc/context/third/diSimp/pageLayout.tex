@@ -1,0 +1,36 @@
+% A ConTeXt document [master document: diSimp.tex]
+
+\chapter[title=Setting Page Layout]
+
+\startMkIVCode
+
+\definepapersize
+  [ustrade]
+  [
+    width=6in,
+    height=9in,
+    offset=0pt
+  ]
+
+
+%\setuppapersize[A4]
+%\setuppapersize[ustrade][A4]
+\setuppapersize[ustrade]
+
+\setuplayout
+  [
+    topspace=12.7mm,
+    backspace=12.7mm,
+    height=203.2mm,
+    width=130.4mm,
+    header=10mm,
+    footer=10mm,
+    margin=20mm,
+    location=middle,
+    marking=on
+  ]
+%\setuplayout[marking=on]
+
+\setupbodyfont[10pt]
+
+\stopMkIVCode

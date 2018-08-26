@@ -6,7 +6,9 @@ lpTargets = litProgs.targets{
   mainDoc  = 'diSimp.tex',
   docFiles = {
     'overview.tex',
+    'pageLayout.tex',
     'documentSetup.tex',
+    'mathEnunciations.tex',
     'diSimplexMacros.tex',
     'preamble.tex',
     'conclusions.tex',
