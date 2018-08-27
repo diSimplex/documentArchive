@@ -231,13 +231,32 @@
 \def\lol{\inlinemath{\text{LoL}}}
 \def\sets{\inlinemath{\text{Set}}}
 
-%\def\MMundi#1{\color[blue]{\sans #1}}
-%\def\startMMundi{\startcolor[blue]\sans}
-%\def\stopMMundi {\stopcolor}
+\definesidebar
+  [MMundiBar]
+  [rulecolor=gray-6]
 
-\def\MMundi#1{\color[gray-4]{\sans #1}}
-\def\startMMundi{\startcolor[gray-4]\sans}
-\def\stopMMundi {\stopcolor}
+\defineframedtext
+  [MMundiFramedText]
+  [
+    leftframe=no,
+    rightframe=no,
+    width=\hsize,
+    height=fit,
+    offset=2pt
+  ]
+ 
+\def\MMundi#1{
+  \inframed
+    [leftframe=no,rightframe=no,height=fit,offset=none]
+    {\startsidebar[MMundiBar]#1\stopsidebar}
+  }
+
+\def\startMMundi{
+  \startMMundiFramedText\startsidebar[MMundiBar]\indent
+}
+\def\stopMMundi{
+  \stopsidebar\stopMMundiFramedText
+}
 
 \def\ToDo#1{\color[red]{\bf TODO: #1}}
 \let\TODO\ToDo
