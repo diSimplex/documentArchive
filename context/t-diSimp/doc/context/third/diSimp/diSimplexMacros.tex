@@ -25,19 +25,41 @@
     height=fit,
     offset=2pt
   ]
-  
+
+%\def\MMundi#1{#1}
 \def\MMundi#1{
   \inframed
     [leftframe=no,rightframe=no,height=fit,offset=none]
     {\startsidebar[MMundiBar]#1\stopsidebar}
   }
 
+\startuseMPgraphic{MMundiTopBar}{textWidth,textHeight}
+  draw
+    (0                ,0                 ) -- 
+    (0                ,\MPvar{textHeight}) -- 
+    (\MPvar{textWidth},\MPvar{textHeight}) ;
+\stopuseMPgraphic
+  
+\startuseMPgraphic{MMundiBottomBar}{textWidth,textHeight}
+  draw 
+    (0                ,0                 ) -- 
+    (\MPvar{textWidth},0                 ) -- 
+    (\MPvar{textWidth},\MPvar{textHeight}) ;
+\stopuseMPgraphic
+
 \def\startMMundi{
-  \startMMundiFramedText\startsidebar[MMundiBar]\indent
+  \setupMPvariables[MMundiTopBar]
+    [textWidth=\textwidth,textHeight=0.5\lineheight]
+  \strut\useMPgraphic{MMundiTopBar}
 }
+%  \startsidebar[MMundiBar]
+
 \def\stopMMundi{
-  \stopsidebar\stopMMundiFramedText
+  \setupMPvariables[MMundiBottomBar]
+    [textWidth=\textwidth,textHeight=0.5\lineheight]
+  \useMPgraphic{MMundiBottomBar}\strut
 }
+%\stopsidebar
 
 \def\ToDo#1{\color[red]{\bf TODO: #1}}
 \let\TODO\ToDo

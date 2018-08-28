@@ -49,43 +49,84 @@
 
 \def\setShortTitle#1{
 
-  \setuppagenumbering[alternative=doublesided, way=bypart]
+  \setuppagenumbering
+    [
+      alternative=doublesided,
+      way=bypart
+    ]
+  
   \setupheadertexts[]
-  \setupheadertexts[\setups{oddPageHeader}][][][\setups{evenPageHeader}]
+  \setupheadertexts
+    [\setups{oddPageHeader}]
+    []
+    []
+    [\setups{evenPageHeader}]
 
   \startsetups[oddPageHeader]
-    \framed[topframe=off, leftframe=off, rightframe=off, bottomframe=on, width=max]{
-      \rlap{\headnumber[section][current]}
-      \hfill
-      \getmarking[chapter]
-    }
+    \framed
+      [
+        topframe=off,
+        leftframe=off,
+        rightframe=off,
+        bottomframe=on,
+        width=\textwidth
+      ]{
+        \rlap{\headnumber[section][current]}
+        \hfill
+        \getmarking[chapter]
+      }
   \stopsetups
 
   \startsetups[evenPageHeader]
-    \framed[topframe=off, leftframe=off, rightframe=off, bottomframe=on, width=max]{
-      \getmarking[section]
-      \hfill
-      \llap{\headnumber[section][current]}
-    }
+    silly\framed
+      [
+        topframe=off,
+        leftframe=off,
+        rightframe=off,
+        bottomframe=on,
+        width=\textwidth
+      ]{
+        \getmarking[section]
+        \hfill
+        \llap{\headnumber[section][current]}
+      }
   \stopsetups
 
   \setupfootertexts[]
-  \setupfootertexts[\setups{oddPageFooter}][][][\setups{evenPageFooter}]
+  \setupfootertexts
+    [\setups{oddPageFooter}]
+    []
+    []
+    [\setups{evenPageFooter}]
 
   \startsetups[oddPageFooter]
-    \framed[topframe=on, leftframe=off, rightframe=off, bottomframe=off, width=max]{
-      \rlap{\pagenumber}
-      \hfill
-      \llap{#1}
-    }
+    \framed
+      [
+        topframe=on,
+        leftframe=off,
+        rightframe=off,
+        bottomframe=off,
+        width=\textwidth
+      ]{
+        \rlap{\pagenumber}
+        \hfill
+        \llap{#1}
+      }
   \stopsetups
 
   \startsetups[evenPageFooter]
-    \framed[topframe=on, leftframe=off, rightframe=off, bottomframe=off, width=max]{
-      \rlap{#1}
-      \hfill
-      \llap{\pagenumber}
-    }
+    \framed
+      [
+        topframe=on,
+        leftframe=off,
+        rightframe=off,
+        bottomframe=off,
+        width=\textwidth
+      ]{
+        \rlap{#1}
+        \hfill
+        \llap{\pagenumber}
+      }
   \stopsetups
 }
 
