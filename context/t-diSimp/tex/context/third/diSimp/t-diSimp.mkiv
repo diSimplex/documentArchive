@@ -56,27 +56,59 @@
     offset=0pt
   ]
 
+\setvariable{diSimp}{layoutSize}{ustrade} %DEFAULT
 
-%\setuppapersize[A4]
-%\setuppapersize[ustrade][A4]
-\setuppapersize[ustrade]
+\doifmode{layout-ustrade}{
+  \setvariable{diSimp}{layoutSize}{ustrade}
+}
+\doifmode{layout-letter}{
+  \setvariable{diSimp}{layoutSize}{letter}
+}
+\doifmode{layout-a4}{
+  \setvariable{diSimp}{layoutSize}{A4}
+}
 
-\setuplayout
-  [
-    topspace=12.7mm,
-    backspace=12.7mm,
-    height=203.2mm,
-    width=127mm,
-    header=10mm,
-    footer=10mm,
-    margin=10mm,
-    margindistance=2.7mm,
-    location=middle,
-    marking=on
-  ]
-%\setuplayout[marking=on]
+\setvariable{diSimp}{printSize}{A4} %DEFAULT
 
-\setupbodyfont[10pt]
+\doifmode{print-ustrade}{
+  \setvariable{diSimp}{printSize}{ustrade}
+}
+\doifmode{print-letter}{
+  \setvariable{diSimp}{printSize}{letter}
+}
+\doifmode{print-a4}{
+  \setvariable{diSimp}{printSize}{A4}
+}
+
+\setuppapersize
+  [\getvariable{diSimp}{layoutSize}]
+  [\getvariable{diSimp}{printSize}]
+
+\startsetups[diSimp:layout:ustrade]
+  \setuplayout
+    [
+      topspace=12.7mm,
+      backspace=12.7mm,
+      height=203.2mm,
+      width=127mm,
+      header=10mm,
+      footer=10mm,
+      margin=10mm,
+      margindistance=2.7mm,
+      location=middle,
+      marking=on
+    ]
+  \setuplayout[marking=on]
+  \setupbodyfont[10pt]
+\stopsetups
+
+\startsetups[diSimp:layout:letter]
+\stopsetups
+
+\startsetups[diSimp:layout:A4]
+\stopsetups
+
+\setups[diSimp:layout:\getvariable{diSimp}{layoutSize}]
 
 % from file: documentSetup.tex after line: 0
 
@@ -263,6 +295,25 @@
   \stopalignment
 
   \stopmakeup
+}
+
+\def\placeCopyrightPage#1{
+  \startmakeup
+
+\blank[10cm]
+ 
+Copyright © \currentdate[year] PerceptiSys Ltd (Stephen Gaito) some rights reserved.
+
+\blank
+
+This work is licensed under a Creative Commons Attribution-ShareAlike 4.0
+International License.
+
+\blank
+
+\type{http://creativecommons.org/licenses/by-sa/4.0/}
+
+\stopmakeup
 }
 
 % from file: mathEnunciations.tex after line: 0
