@@ -54,14 +54,27 @@
       alternative=doublesided,
       way=bypart
     ]
-  
-  \setupheadertexts[]
-  \setupheadertexts
-    [\setups{oddPageHeader}]
-    []
-    []
-    [\setups{evenPageHeader}]
 
+  \setupheadertexts[]
+  \setupheadertexts[text]
+    [\setups{oddPageHeader}]
+    [\setups{headerBar}]
+    [\setups{headerBar}]
+    [\setups{evenPageHeader}]
+    
+  \startsetups[headerBar]
+    \framed
+      [
+        topframe=off,
+        leftframe=off,
+        rightframe=off,
+        bottomframe=on,
+        width=\textwidth
+      ]{
+        \hfill
+      }
+  \stopsetups
+  
   \startsetups[oddPageHeader]
     \framed
       [
@@ -71,14 +84,14 @@
         bottomframe=on,
         width=\textwidth
       ]{
-        \rlap{\headnumber[section][current]}
+        \rlap{\headnumber[chapter][current]}
         \hfill
         \getmarking[chapter]
       }
   \stopsetups
 
   \startsetups[evenPageHeader]
-    silly\framed
+    \framed
       [
         topframe=off,
         leftframe=off,
@@ -95,10 +108,23 @@
   \setupfootertexts[]
   \setupfootertexts
     [\setups{oddPageFooter}]
-    []
-    []
+    [\setups{footerBar}]
+    [\setups{footerBar}]
     [\setups{evenPageFooter}]
 
+  \startsetups[footerBar]
+    \framed
+      [
+        topframe=on,
+        leftframe=off,
+        rightframe=off,
+        bottomframe=off,
+        width=\textwidth
+      ]{
+        \hfill
+      }
+  \stopsetups
+  
   \startsetups[oddPageFooter]
     \framed
       [
