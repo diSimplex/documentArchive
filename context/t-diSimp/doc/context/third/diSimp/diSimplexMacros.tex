@@ -12,54 +12,51 @@
 \def\lol{\inlinemath{\text{LoL}}}
 \def\sets{\inlinemath{\text{Set}}}
 
-\definesidebar
-  [MMundiBar]
-  [rulecolor=gray-6]
-
-\defineframedtext
-  [MMundiFramedText]
-  [
-    leftframe=no,
-    rightframe=no,
-    width=\hsize,
-    height=fit,
-    offset=2pt
-  ]
-
-%\def\MMundi#1{#1}
-\def\MMundi#1{
-  \inframed
-    [leftframe=no,rightframe=no,height=fit,offset=none]
-    {\startsidebar[MMundiBar]#1\stopsidebar}
-  }
-
 \startuseMPgraphic{MMundiTopBar}{textWidth,textHeight}
   draw
-    (0                ,0                 ) -- 
-    (0                ,\MPvar{textHeight}) -- 
-    (\MPvar{textWidth},\MPvar{textHeight}) ;
+    (0                ,0                   ) --
+    (0                ,\MPvar{textHeight}  ) --
+    (\MPvar{textWidth},\MPvar{textHeight}  )
+    withpen   pencircle scaled 3pt
+    withcolor \MPcolor{gray} ;
+    
+  label("Classical", (0.25*\MPvar{textWidth}, \MPvar{textHeight})) ;
+    
+  setbounds currentpicture to
+    (0                ,0                   ) --
+    (0                ,2*\MPvar{textHeight}) --
+    (\MPvar{textWidth},2*\MPvar{textHeight}) --
+    (\MPvar{textWidth},0                   ) --
+    cycle ;
 \stopuseMPgraphic
   
 \startuseMPgraphic{MMundiBottomBar}{textWidth,textHeight}
   draw 
-    (0                ,0                 ) -- 
-    (\MPvar{textWidth},0                 ) -- 
-    (\MPvar{textWidth},\MPvar{textHeight}) ;
+    (0                ,\MPvar{textHeight}  ) -- 
+    (\MPvar{textWidth},\MPvar{textHeight}  ) -- 
+    (\MPvar{textWidth},2*\MPvar{textHeight})
+    withpen   pencircle scaled 3pt
+    withcolor  \MPcolor{gray} ;
+    
+  setbounds currentpicture to
+    (0                ,0                   ) --
+    (0                ,2*\MPvar{textHeight}) --
+    (\MPvar{textWidth},2*\MPvar{textHeight}) --
+    (\MPvar{textWidth},0                   ) --
+    cycle ;
 \stopuseMPgraphic
 
 \def\startMMundi{
   \setupMPvariables[MMundiTopBar]
     [textWidth=\textwidth,textHeight=0.5\lineheight]
-  \strut\useMPgraphic{MMundiTopBar}
+  \useMPgraphic{MMundiTopBar}
 }
-%  \startsidebar[MMundiBar]
 
 \def\stopMMundi{
   \setupMPvariables[MMundiBottomBar]
     [textWidth=\textwidth,textHeight=0.5\lineheight]
-  \useMPgraphic{MMundiBottomBar}\strut
+  \endgraf\useMPgraphic{MMundiBottomBar}
 }
-%\stopsidebar
 
 \def\ToDo#1{\color[red]{\bf TODO: #1}}
 \let\TODO\ToDo
