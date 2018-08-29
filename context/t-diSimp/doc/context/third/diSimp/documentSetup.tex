@@ -188,12 +188,17 @@
   \stopmakeup
 }
 
-\def\placeCopyrightPage#1{
+\def\placeCopyrightPage#1#2{
   \startmakeup
 
 \blank[10cm]
-  
-Copyright © \currentdate[year] PerceptiSys Ltd (Stephen Gaito) some rights reserved.
+
+\doifvariable{diSimp}{ISBN}{
+ISBN-13: \getvariable{diSimp}{ISBN}
+\blank
+}
+
+Copyright © \currentdate[year] #1 some rights reserved.
 
 \blank
 
