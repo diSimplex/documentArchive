@@ -9,22 +9,84 @@
 %%
 %% AKA: Theorems, Lemmas, Proofs, etc
 %%
-%% See "AMS Style Guide" Seciton 4.1 Enuciations page 31
-%% See "Excurions" Enumerations / Numbered Definitions Chapter 19 page 46
+%% See "AMS Style Guide" Section 4.1 Enunciations page 31
+%% See "Excursions" Enumerations / Numbered Definitions Chapter 19 page 46
 %%
 %% See also the second (MkIV) half of: http://wiki.contextgarden.net/Proclaim
 %%
 
-%% Counters can be specified OR use \setupcounter (can be iherited from 
-%% \defineenumeartion?!?!
+%% NOTE there is currently a bug in the prefixsegments parser which 
+%% REQUIRES either the comma or a ']' at the end of the prefixsegments 
+%% value. 
+
+\defineenumeration
+  [mathEnuciations]
+  [
+    alternative=serried,
+    right={.~},
+    prefix=yes,
+    prefixsegments=chapter:section,
+    way=bysection,
+  ]
+
+%% Theorem enunciations (section 4.1.1 AMS Style Guide: Journals)
+
+\defineenumeration
+  [Theorem]
+  [mathEnuciations] 
+  [
+    text=Theorem,
+    style=\it,
+    closesymbol=$\Box$,
+  ]
+
+\defineenumeration
+  [Lemma]
+  [Theorem]
+  [
+    text=Lemma,
+  ]
+
+%% Proof enunciations (section 4.1.2 AMS Style Guide: Journals)
+
+\defineenumeration
+  [Proof]
+  [
+    text=Proof{.~},
+    headstyle=\bi,
+    alternative=serried,
+    right={.~},
+    closesymbol=$\Box$,
+    number=no,
+  ]
+  
+%% Definition enunciations (section 4.1.3 AMS Style Guide: Journals)
 
 \defineenumeration
   [Definition]
+  [mathEnuciations]
   [
-    alternative=hanging,
     text=Definition,
-    prefix=yes,
-    prefixsegments=chapter:section
+    closesymbol=$\Box$,
+  ]
+  
+\defineenumeration
+  [Example]
+  [Definition]
+  [
+    text=Example,
+    closesymbol=$\Box$,
   ]
 
+%% Remark enunciations (section 4.1.4 AMS Style Guide: Journals)
+
+\defineenumeration
+  [Remark]
+  [mathEnuciations]
+  [
+    text=Remark,
+    headstyle=\bi,
+    closesymbol=$\Box$,
+  ]
+  
 \stopMkIVCode
