@@ -4,6 +4,12 @@
 
 \startMkIVCode
 
+\def\longRightIsoArrow{
+  \setbox\diSimpTmpBox=\hbox{$\longrightarrow$}
+  \diSimpTmpDimen\wd\diSimpTmpBox
+  \mathrel{\hbox{\rlap{$\longrightarrow$}\raise0.7ex\hbox to \diSimpTmpDimen {\hfil$\sim$\hfil\hfil}}}
+}
+
 \def\lol{\inlinemath{\text{LoL}}}
 
 \def\joylol{\inlinemath{\text{JoyLoL}}}

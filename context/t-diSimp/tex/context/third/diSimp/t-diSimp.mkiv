@@ -46,6 +46,10 @@
 
 \ctxloadluafile{t-diSimp}
 
+\newbox\diSimpTmpBox
+\newdimen\diSimpTmpDimen
+\newskip\diSimpTmpSkip
+
 % from file: pageLayout.tex after line: 0
 
 % see: http://wiki.contextgarden.net/Layout
@@ -419,6 +423,12 @@ International License.
 ]
 
 % from file: diSimplexMacros.tex after line: 0
+
+\def\longRightIsoArrow{
+  \setbox\diSimpTmpBox=\hbox{$\longrightarrow$}
+  \diSimpTmpDimen\wd\diSimpTmpBox
+  \mathrel{\hbox{\rlap{$\longrightarrow$}\raise0.7ex\hbox to \diSimpTmpDimen {\hfil$\sim$\hfil\hfil}}}
+}
 
 \def\lol{\inlinemath{\text{LoL}}}
 
