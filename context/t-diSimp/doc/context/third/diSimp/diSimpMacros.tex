@@ -19,6 +19,36 @@
 \def\lols{\inlinemath{\text{LoLs}}}
 \def\sets{\inlinemath{\text{Set}}}
 
+\startuseMPgraphic{MMundiNarrowTopBar}{textWidth,textHeight}
+  draw
+    (0                ,0                       ) --
+    (0                ,0.75*\MPvar{textHeight}  ) --
+    (\MPvar{textWidth},0.75*\MPvar{textHeight}  )
+    withpen   pencircle scaled 2pt
+    withcolor \MPcolor{gray} ;
+\stopuseMPgraphic
+
+\startuseMPgraphic{MMundiNarrowBottomBar}{textWidth,textHeight}
+  draw 
+    (0                ,\MPvar{textHeight}  ) -- 
+    (\MPvar{textWidth},\MPvar{textHeight}  ) -- 
+    (\MPvar{textWidth},1.75*\MPvar{textHeight})
+    withpen   pencircle scaled 2pt
+    withcolor  \MPcolor{gray} ;
+\stopuseMPgraphic
+
+\def\MMundi#1{%
+\setbox\diSimpTmpBox=\hbox{#1}%
+\diSimpTmpDimen\wd\diSimpTmpBox%
+\setupMPvariables[MMundiNarrowTopBar]%
+[textWidth=1.05\diSimpTmpDimen,textHeight=0.5\lineheight]%
+\setupMPvariables[MMundiNarrowBottomBar]%
+[textWidth=1.05\diSimpTmpDimen,textHeight=0.5\lineheight]%
+\hbox to 1.05\diSimpTmpDimen {%
+\rlap{\raise0.5ex\hbox{\useMPgraphic{MMundiNarrowTopBar}}}%
+\rlap{\lower0.5ex\hbox{\useMPgraphic{MMundiNarrowBottomBar}}}%
+\hfil\hbox{#1}\hfil}}
+
 \startuseMPgraphic{MMundiTopBar}{textWidth,textHeight}
   draw
     (0                ,0                   ) --
@@ -36,7 +66,7 @@
     (\MPvar{textWidth},0                   ) --
     cycle ;
 \stopuseMPgraphic
-  
+
 \startuseMPgraphic{MMundiBottomBar}{textWidth,textHeight}
   draw 
     (0                ,\MPvar{textHeight}  ) -- 
