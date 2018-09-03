@@ -9,7 +9,7 @@ lpTargets = litProgs.targets{
     'pageLayout.tex',
     'documentSetup.tex',
     'mathEnunciations.tex',
-    'diSimplexMacros.tex',
+    'diSimpMacros.tex',
     'preamble.tex',
     'conclusions.tex',
   },
