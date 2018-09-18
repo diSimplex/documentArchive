@@ -156,7 +156,7 @@
   \stopsetups
 }
 
-\def\placeTitlePage#1{
+\def\placeTitlePage#1#2#3{
   \startmakeup
 
   \blank[5cm]
@@ -167,7 +167,23 @@
   #1
   \stopalignment
 
-  \blank[10cm]
+  \blank[1cm]
+
+  \startalignment[center]
+  \dontleavehmode
+  \tfc\bf
+  #2
+  \stopalignment
+
+  \blank[1cm]
+
+  \startalignment[center]
+  \dontleavehmode
+  \tfb\bf
+  #3
+  \stopalignment
+
+  \blank[8cm]
 
   \startalignment[flushright]
   \dontleavehmode

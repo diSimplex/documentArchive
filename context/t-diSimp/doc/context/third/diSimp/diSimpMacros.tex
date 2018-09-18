@@ -4,6 +4,24 @@
 
 \startMkIVCode
 
+
+% see: https://www.contextgarden.net/Rsfs
+%
+% unfortunately this is mkii style ;-(
+%  the \definefamilysynonym has changed but I can not find out the
+%  mkiv equivalent
+%
+%\starttypescript [math] [modern,computer-modern,latin-modern,ams] [size]
+%     \definebodyfont [17.3pt,14.4pt,12pt,11pt,10pt,9pt][mm][mc=rsfs10 sa 1]
+%     \definebodyfont [8pt,7pt] [mm] [mc=rsfs7 sa 1]
+%     \definebodyfont [6pt,5pt,4pt] [mm] [mc=rsfs5 sa 1]
+%\stoptypescript
+%
+%\definefamilysynonym [default] [scriptfamily] [mc]
+%
+%\def\scr{\fam\purefamily{scriptfamily}} % To use ${\scr ABC}$
+%\def\script#1{{\scr#1}}                 % To use $\script{ABC}$
+
 \def\longRightIsoArrow{
   \setbox\diSimpTmpBox=\hbox{$\longrightarrow$}
   \diSimpTmpDimen\wd\diSimpTmpBox
@@ -19,6 +37,12 @@
 \def\wflol{\inlinemath{\text{wf-LoL}}}
 \def\lols{\inlinemath{\text{LoLs}}}
 \def\wflols{\inlinemath{\text{wf-LoLs}}}
+
+\def\catLoL{\inlinemath{\text{\bf LoL}}}
+\def\catWFLoL{\inlinemath{\text{\bf LoL}_{wf}}}
+\def\funcLoL{\inlinemath{L}}
+\def\funcWFLoL{\inlinemath{L_{wf}}}
+
 \def\sets{\inlinemath{\text{Set}}}
 
 \startuseMPgraphic{MMundiNarrowTopBar}{textWidth,textHeight}
