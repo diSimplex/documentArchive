@@ -464,6 +464,43 @@ International License.
 %\def\scr{\fam\purefamily{scriptfamily}} % To use ${\scr ABC}$
 %\def\script#1{{\scr#1}}                 % To use $\script{ABC}$
 
+% see:  https://wiki.contextgarden.net/math_calligraphic
+% NOW included in context-experimental..
+%
+%\definefallbackfamily
+%  [mainface]
+%  [math]
+%  [Asana Math]
+%  [range={uppercasescript,lowercasescript}]
+%
+%\definefontfamily [mainface] [rm] [Latin Modern]
+%\definefontfamily [mainface] [math] [Latin Modern Math]
+%
+%\setupbodyfont[mainface]
+%
+%\starttext
+%${\cal ABCDEFGHIJKLMNOPQRSTUVWXYZ}$
+%
+%${\cal abcdefghijklmnopqrstuvwxyz}$
+%
+%The space of distributions on $\Omega$ is denoted by ${\cal D}'(\Omega)$, while ${\cal S}({\Bbb R}^n)$ is the space of Schwartz functions, and ${\cal S}'({\Bbb R}^n)$ is its dual.
+%
+%\startformula
+%\langle T,\phi \rangle_{{\cal D}'(\Omega),{\cal D}(\Omega)}
+%\stopformula
+%
+%\noindent The set of admissible controls is denoted by ${\cal U}_{\rm ad}$.
+%\stoptext
+%
+% ConTeXt's default body font is: modern-designsize
+% as defined in:
+%
+%font-set.mkvi:54:     {\def\m_font_fallback_name{modern-designsize}}%       % this might become 'modern'
+%
+% note that it is defined via \m_font_fallback_name as part of the default
+% font loading process in font-set.mkvi. As such the above might not work.
+
+
 \def\longRightIsoArrow{
   \setbox\diSimpTmpBox=\hbox{$\longrightarrow$}
   \diSimpTmpDimen\wd\diSimpTmpBox
@@ -481,9 +518,18 @@ International License.
 \def\wflols{\inlinemath{\text{wf-LoLs}}}
 
 \def\catLoL{\inlinemath{\text{\bf LoL}}}
-\def\catWFLoL{\inlinemath{\text{\bf LoL}_{wf}}}
+\def\catWFLoL{\inlinemath{\text{\bf LoL}_{\rm wf}}}
 \def\funcLoL{\inlinemath{L}}
-\def\funcWFLoL{\inlinemath{L_{wf}}}
+\def\funcWFLoL{\inlinemath{L_{\rm wf}}}
+
+\unexpanded\def\powerSet{\dosingleempty\doPowerSet}
+\unexpanded\def\doPowerSet[#1]{%
+  \iffirstargument\doPowerSetSingle{#1}%
+  \else\doPowerSetZero%
+  \fi%
+}
+\def\doPowerSetSingle#1{\inlinemath{\cal P(#1)}}
+\def\doPowerSetZero{\inlinemath{\cal P}}
 
 \def\sets{\inlinemath{\text{Set}}}
 
