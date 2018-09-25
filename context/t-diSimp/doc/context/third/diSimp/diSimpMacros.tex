@@ -64,13 +64,11 @@
   \mathrel{\hbox{\rlap{$\longrightarrow$}\raise0.7ex\hbox to \diSimpTmpDimen {\hfil$\sim$\hfil\hfil}}}
 }
 
-\def\lol{\inlinemath{\text{LoL}}}
-
 \def\joylol{\inlinemath{\text{JoyLoL}}}
 \def\joylolZero{\inlinemath{\text{JoyLoL}_0}}
 
 \def\lol{\inlinemath{\text{LoL}}}
-\def\wflol{\inlinemath{\text{wf-LoL}}}
+\def\wflol{\inlinemath{\text{LoL}_{\rm wf}}}
 \def\lols{\inlinemath{\text{LoLs}}}
 \def\wflols{\inlinemath{\text{wf-LoLs}}}
 
@@ -80,6 +78,18 @@
 \def\funcWFLoL{\inlinemath{L_{\rm wf}}}
 
 \def\Set{\inlinemath{\text{\bf Set}}}
+
+\def\explicitCompose#1#2{\inlinemath{#1;#2}}
+\def\compose#1#2{\inlinemath{#1 \; #2}}
+\def\ndChoice#1#2{\inlinemath{#1 \Vert #2}}
+\def\repets#1{\inlinemath{#1^{\star}}}
+\def\test#1{\inlinemath{#1?}}
+
+\def\true{\type{true}}
+\def\false{\type{false}}
+\def\isNil{\type{isNil}}
+\let\bottom=\bot
+\let\emptySet=\emptyset
 
 \unexpanded\def\powerSet{\dosingleempty\doPowerSet}
 \unexpanded\def\doPowerSet[#1]{%
