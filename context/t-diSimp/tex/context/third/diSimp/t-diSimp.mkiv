@@ -142,9 +142,16 @@
 \setupformulas[indentnext=auto]
 
 % block quotes
+\definedelimitedtext
+  [BlockQuote]
+  [\v!blockquote]
 \setupdelimitedtext
-  [blockquote]
-  [style=\slx,before={\setupinterlinespace[line=2.4ex]}]
+  [BlockQuote]
+  [
+    style=\sl,
+    before={\setupinterlinespace[line=2.4ex]\blank[1ex]},
+    after={\blank[1ex]}
+  ]
 
 %\usebtxdataset[joylolBib.lua]
 \usebtxdefinitions[apa]
