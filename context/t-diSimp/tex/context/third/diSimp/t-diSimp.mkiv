@@ -420,28 +420,32 @@ International License.
 
 \newdimen\appendixDimen
 
-\def\startChapterAppendices{
-  \directlua{thirddata.diSimp.startAppendices(3)}
-  \startsidebar[rulethickness=10bp, rulecolor=gray, distance=10bp]
-  \appendixDimen=\textwidth
-  \advance\appendixDimen by 20bp
-  \startsidebar[rulethickness=10bp, rulecolor=lightgray, distance=-\appendixDimen]
-}
-\def\startSectionAppendices{
-  \directlua{thirddata.diSimp.startAppendices(4)}
+\def\startAppendicesBar{
   \startsidebar[rulethickness=10bp, rulecolor=gray, distance=10bp]
   \appendixDimen=\textwidth
   \advance\appendixDimen by 20bp
   \startsidebar[rulethickness=10bp, rulecolor=lightgray, distance=-\appendixDimen]
 }
 
-\def\stopChapterAppendices{
+\def\stopAppendicesBar{
   \stopsidebar
   \stopsidebar
 }
+
+\def\startChapterAppendices{
+  \directlua{thirddata.diSimp.startAppendices(3)}
+  \startAppendicesBar
+}
+\def\startSectionAppendices{
+  \directlua{thirddata.diSimp.startAppendices(4)}
+  \startAppendicesBar
+}
+
+\def\stopChapterAppendices{
+  \stopAppendicesBar
+}
 \def\stopSectionAppendices{
-  \stopsidebar
-  \stopsidebar
+  \stopAppendicesBar
 }
 
 % from file: mathEnunciations.tex after line: 0
