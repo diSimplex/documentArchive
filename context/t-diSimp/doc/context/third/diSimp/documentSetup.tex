@@ -10,8 +10,15 @@
 ]
 
 \placebookmarks%
-  [title, chapter, section, subsection] % these are the headers to bookmark
-  [chapter, section] % these are the headers which will be OPEN in the bookmark list
+  [ % these are the headers to bookmark (the order here seems important :-(
+    chapter,
+    section,    chapterAppendix,
+    subsection, subChapterAppendix, sectionAppendix,
+  ]
+  [ % these are the headers which will be OPEN in the bookmark list
+    chapter,
+    section, chapterAppendix
+  ]
 
 \setupinteractionscreen[option=bookmark]
 
@@ -53,6 +60,8 @@
   distance=.5em,
   margin=3em % hanging list
 ]
+
+% TITLE PAGES
 
 \def\setShortTitle#1{
 
@@ -237,3 +246,107 @@ International License.
 }
 
 \stopMkIVCode
+
+
+\section[title=Setup chapter and section appendices]
+
+\startMkIVCode
+
+\defineconversionset[chapterAppendix][numbers,numbers,Characters][numbers]
+\definehead
+  [chapterAppendix]
+  [\c!section=\s!section-3,
+   \c!default=\v!section,
+   sectionconversionset=chapterAppendix]
+
+\definehead
+  [subChapterAppendix]
+  [\c!section=\s!section-4,
+   \c!default=\v!subsection,
+   sectionconversionset=chapterAppendix]
+
+\definehead
+  [subSubChapterAppendix]
+  [\c!section=\s!section-5,
+   \c!default=\v!subsubsection,
+   sectionconversionset=chapterAppendix]
+
+\defineconversionset[sectionAppendix][numbers,numbers,numbers,Characters][numbers]
+\definehead
+  [sectionAppendix]
+  [\c!section=\s!section-4,
+   \c!default=\v!subsection,
+   sectionconversionset=sectionAppendix]
+
+\definehead
+  [subSectionAppendix]
+  [\c!section=\s!section-5,
+   \c!default=\v!subsubsection,
+   sectionconversionset=sectionAppendix]
+
+\definecombinedlist
+  [\v!content]
+  [\v!part,
+   \v!chapter,
+   \v!section,
+   chapterAppendix,
+   \v!subsection,
+   subChapterAppendix,
+   sectionAppendix,
+   \v!subsubsection,
+   subsubChapterAppendix,
+   subSectionAppendix,
+   \v!subsubsubsection,
+   \v!subsubsubsubsection]
+  [\c!level=\v!subsubsubsubsection,
+   \c!criterium=\v!local]
+
+\setuplist [chapterAppendix]       [\c!width=3\emwidth]
+\setuplist [subChapterAppendix]    [\c!width=4\emwidth]
+\setuplist [subSubChapterAppendix] [\c!width=5\emwidth]
+
+\setuplist [sectionAppendix]    [\c!width=4\emwidth]
+\setuplist [subSectionAppendix] [\c!width=5\emwidth]
+
+\newdimen\appendixDimen
+
+\def\startChapterAppendices{
+  \directlua{thirddata.diSimp.startAppendices(3)}
+  \startsidebar[rulethickness=10bp, rulecolor=gray, distance=10bp]
+  \appendixDimen=\textwidth
+  \advance\appendixDimen by 20bp
+  \startsidebar[rulethickness=10bp, rulecolor=lightgray, distance=-\appendixDimen]
+}
+\def\startSectionAppendices{
+  \directlua{thirddata.diSimp.startAppendices(4)}
+  \startsidebar[rulethickness=10bp, rulecolor=gray, distance=10bp]
+  \appendixDimen=\textwidth
+  \advance\appendixDimen by 20bp
+  \startsidebar[rulethickness=10bp, rulecolor=lightgray, distance=-\appendixDimen]
+}
+
+\def\stopChapterAppendices{
+  \stopsidebar
+  \stopsidebar
+}
+\def\stopSectionAppendices{
+  \stopsidebar
+  \stopsidebar
+}
+
+\stopMkIVCode
+
+\startLuaCode
+
+-- repeat after me... this WILL break!!!
+--
+local function startAppendices(sectionDepth)
+  local numbers = structures.documents.data.numbers
+  for i=sectionDepth,#numbers,1 do
+    numbers[i] = 0
+  end
+end
+
+diSimp.startAppendices = startAppendices
+
+\stopLuaCode

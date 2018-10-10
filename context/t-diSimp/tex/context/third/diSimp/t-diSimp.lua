@@ -26,3 +26,16 @@ local sMatch  = string.match
 local toStr   = tostring
 
 interfaces.writestatus('diSimp', "loaded diSimp macros")
+
+-- from file: documentSetup.tex after line: 300
+
+-- repeat after me... this WILL break!!!
+--
+local function startAppendices(sectionDepth)
+  local numbers = structures.documents.data.numbers
+  for i=sectionDepth,#numbers,1 do
+    numbers[i] = 0
+  end
+end
+
+diSimp.startAppendices = startAppendices
