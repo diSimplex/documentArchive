@@ -27,7 +27,7 @@ local toStr   = tostring
 
 interfaces.writestatus('diSimp', "loaded diSimp macros")
 
--- from file: documentSetup.tex after line: 300
+-- from file: documentSetup.tex after line: 350
 
 -- repeat after me... this WILL break!!!
 --

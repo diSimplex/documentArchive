@@ -362,6 +362,24 @@ International License.
 
 % from file: documentSetup.tex after line: 250
 
+\defineprocessor
+  [definition]
+  [style=bold]
+
+\defineregister
+  [indexSymbol]
+  [indexSymbols]
+
+\def\defineWord#1{\index[definition->]{#1}#1}
+\def\defineSymb#1{\indexSymbol[definition->]{#1}#1}
+\def\defineBoth#1{\index[definition->]{#1}\indexSymbol[definition->]{#1}#1}
+
+\def\useWord#1{\index{#1}#1}
+\def\useSymb#1{\indexSymbol{#1}#1}
+\def\useBoth#1{\index{#1}\indexSymbol{#1}#1}
+
+% from file: documentSetup.tex after line: 250
+
 \defineconversionset[chapterAppendix][numbers,numbers,Characters][numbers]
 \definehead
   [chapterAppendix]
