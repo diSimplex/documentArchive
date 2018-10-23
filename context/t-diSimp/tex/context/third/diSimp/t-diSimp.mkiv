@@ -126,11 +126,13 @@
 
 \placebookmarks%
   [ % these are the headers to bookmark (the order here seems important :-(
+    part,
     chapter,
     section,    chapterAppendix,
     subsection, subChapterAppendix, sectionAppendix,
   ]
   [ % these are the headers which will be OPEN in the bookmark list
+    part,
     chapter,
     section, chapterAppendix
   ]
@@ -144,6 +146,7 @@
 
 % indent the paragraphs after all sectioning heads
 \setupheads[indentnext=yes]
+\setuphead[part][placehead=yes]
 
 % indent paragraphs after formulas if there is a blank space in between
 \setupformulas[indentnext=auto]
