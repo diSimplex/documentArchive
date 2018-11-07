@@ -273,6 +273,108 @@ International License.
 
 \stopMkIVCode
 
+\section[title=Relative Environments and Components]
+
+\startMkIVCode
+
+%% repeat after me.... this WILL break!!!
+%%
+%% this call pattern has been modeled upon the
+%% definition of \environment in file-job.mkvi
+%% on 2018/Nov/07 (experimental distribution)
+%%
+\unexpanded\def\relativeEnvironment{%
+  \doifelsenextoptionalcs%
+    \useRelativeEnvironment%
+    \syst_structure_arg_relative_environment%
+}
+
+\def\syst_structure_arg_relative_environment  #1 {\useRelativeEnvironment  [#1]}
+
+\unexpanded\def\useRelativeEnvironment  [#1]{%
+  \directlua{
+    thirddata.diSimp.relativeComponent('environment', '#1')
+  }
+}
+
+%% repeat after me.... this WILL break!!!
+%%
+%% this call pattern has been modeled upon the
+%% definition of \component in file-job.mkvi
+%% on 2018/Nov/07 (experimental distribution)
+%%
+\unexpanded\def\relativeComponent{%
+  \doifelsenextoptionalcs%
+    \useRelativeComponent%
+    \syst_structure_arg_relative_component%
+}
+
+\def\syst_structure_arg_relative_component  #1 {  \useRelativeComponent  [#1]}
+
+\unexpanded\def\useRelativeComponent  [#1]{%
+  \directlua{
+    thirddata.diSimp.relativeComponent('component', '#1')
+  }
+}
+
+\def\popRelativePath{
+  \directlua{
+    thirddata.diSimp.popRelativePath()
+  }
+}
+
+\stopMkIVCode
+
+\startLuaCode
+
+local relativePaths = {}
+local pathSeparator = package.config:sub(1, 1)
+
+local function pushRelativePath(aRelativePath)
+  local pp = require 'pl.pretty'
+  local aRelativePathDir =
+    aRelativePath:gsub('[^'..pathSeparator..']+$', '')
+  tInsert(relativePaths, aRelativePathDir)
+end
+
+-- repeat after me... this WILL break!!!
+--
+-- the use of environments.arguments.fulljobname
+-- was infered from grep'ing the experimental distribution
+-- for fulljobname and finding it defined in the
+-- the environment table. 
+-- (defined in core-sys.lua)
+--
+pushRelativePath(environment.arguments.fulljobname)
+
+local function popRelativePath()
+  pp = require 'pl.pretty'
+  texio.write_nl('     relativePaths: ['..pp.write(relativePaths)..']')
+  tRemove(relativePaths)
+  texio.write_nl('     relativePaths: ['..pp.write(relativePaths)..']')
+end
+
+diSimp.popRelativePath = popRelativePath
+
+local function relativeComponent(componentType, componentPath)
+  local thisComponentPath = tConcat(relativePaths)..componentPath
+  thisComponentPath = file.collapsepath(thisComponentPath, true)
+  texio.write_nl('relativeComponent: ['..componentType..']')
+  texio.write_nl('relativeComponent: ['..componentPath..']')
+  texio.write_nl('relativeComponent: ['..thisComponentPath..']')
+  pushRelativePath(componentPath)
+  pp = require 'pl.pretty'
+  texio.write_nl('     relativePaths: ['..pp.write(relativePaths)..']')
+  tex.print({
+    '\\'..componentType..' '..thisComponentPath,
+    '\\popRelativePath'
+  })
+end
+
+diSimp.relativeComponent = relativeComponent
+
+\stopLuaCode
+
 \section[title=Setup chapter and section appendices]
 
 \startMkIVCode

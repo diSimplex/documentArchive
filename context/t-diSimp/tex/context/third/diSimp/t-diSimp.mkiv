@@ -383,6 +383,54 @@ International License.
 
 % from file: documentSetup.tex after line: 250
 
+%% repeat after me.... this WILL break!!!
+%%
+%% this call pattern has been modeled upon the
+%% definition of \environment in file-job.mkvi
+%% on 2018/Nov/07 (experimental distribution)
+%%
+\unexpanded\def\relativeEnvironment{%
+  \doifelsenextoptionalcs%
+    \useRelativeEnvironment%
+    \syst_structure_arg_relative_environment%
+}
+
+\def\syst_structure_arg_relative_environment  #1 {\useRelativeEnvironment  [#1]}
+
+\unexpanded\def\useRelativeEnvironment  [#1]{%
+  \directlua{
+    thirddata.diSimp.relativeComponent('environment', '#1')
+  }
+}
+
+%% repeat after me.... this WILL break!!!
+%%
+%% this call pattern has been modeled upon the
+%% definition of \component in file-job.mkvi
+%% on 2018/Nov/07 (experimental distribution)
+%%
+\unexpanded\def\relativeComponent{%
+  \doifelsenextoptionalcs%
+    \useRelativeComponent%
+    \syst_structure_arg_relative_component%
+}
+
+\def\syst_structure_arg_relative_component  #1 {  \useRelativeComponent  [#1]}
+
+\unexpanded\def\useRelativeComponent  [#1]{%
+  \directlua{
+    thirddata.diSimp.relativeComponent('component', '#1')
+  }
+}
+
+\def\popRelativePath{
+  \directlua{
+    thirddata.diSimp.popRelativePath()
+  }
+}
+
+% from file: documentSetup.tex after line: 350
+
 \defineconversionset[chapterAppendix][numbers,numbers,Characters][numbers]
 \definehead
   [chapterAppendix]
