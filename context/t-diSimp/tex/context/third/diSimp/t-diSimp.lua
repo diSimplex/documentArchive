@@ -29,15 +29,15 @@ interfaces.writestatus('diSimp', "loaded diSimp macros")
 
 -- from file: documentSetup.tex after line: 300
 
-local fullComponentPaths = {}
-local pathSeparator      = package.config:sub(1, 1)
+local diSimpPaths   = {}
+local pathSeparator = package.config:sub(1, 1)
 
-local function lastRelativePath()
-  return fullComponentPaths[#fullComponentPaths] or ""
+local function lastDiSimpPath()
+  return diSimpPaths[#diSimpPaths] or ""
 end
 
-local function pushRelativePath(aFullPath)
-  texio.write_nl('pushRelativePath('..aFullPath..')')
+local function pushDiSimpPath(aFullPath)
+  texio.write_nl('pushDiSimpPath('..aFullPath..')')
   local pp = require 'pl.pretty'
   local aFullPathDir =
     aFullPath:gsub('[^'..pathSeparator..']+$', '')
@@ -45,8 +45,8 @@ local function pushRelativePath(aFullPath)
   if aFullPathDir:sub(-1) ~= '/' then
     aFullPathDir = aFullPathDir..pathSeparator
   end
-  tInsert(fullComponentPaths, aFullPathDir)
-  texio.write_nl('fullComponentPaths: ['..pp.write(fullComponentPaths)..']')
+  tInsert(diSimpPaths, aFullPathDir)
+  texio.write_nl('diSimpPaths: ['..pp.write(fullComponentPaths)..']')
 end
 
 -- repeat after me... this WILL break!!!
@@ -57,18 +57,18 @@ end
 -- the environment table.
 -- (defined in core-sys.lua)
 --
-pushRelativePath(file.collapsepath(environment.arguments.fulljobname,true))
+pushDiSimpPath(file.collapsepath(environment.arguments.fulljobname,true))
 
-local function popRelativePath()
-  texio.write_nl('popRelativePath()')
+local function popDiSimpPath()
+  texio.write_nl('popDiSimpPath()')
   pp = require 'pl.pretty'
-  texio.write_nl('fullComponentPaths: ['..pp.write(fullComponentPaths)..']')
-  tRemove(fullComponentPaths)
-  texio.write_nl('fullComponentPaths: ['..pp.write(fullComponentPaths)..']')
+  texio.write_nl('diSimpPaths: ['..pp.write(diSimpPaths)..']')
+  tRemove(diSimpPaths)
+  texio.write_nl('diSimpPaths: ['..pp.write(diSimpPaths)..']')
   texio.write_nl('<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<')
 end
 
-diSimp.popRelativePath = popRelativePath
+diSimp.popDiSimpPath = popDiSimpPath
 
 local function findDiSimpPath(curBasePath, componentPath, origBasePath)
   texio.write_nl('findDiSimpPath(['..curBasePath..'],['..componentPath..'],['..origBasePath..'])')
@@ -93,20 +93,20 @@ local function findDiSimpPath(curBasePath, componentPath, origBasePath)
   return findDiSimpPath(newCurBasePath, componentPath, origBasePath)
 end
 
-local function relativeComponent(componentType, componentPath)
+local function diSimpComponent(componentType, componentPath)
   texio.write_nl('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
-  texio.write_nl('relativeComponent(['..componentType..'],['..componentPath..'])')
-  local basePath = lastRelativePath()
+  texio.write_nl('diSimpComponent(['..componentType..'],['..componentPath..'])')
+  local basePath = lastDiSimpPath()
   local thisComponentPath = findDiSimpPath(basePath, componentPath, basePath)
   texio.write_nl(' thisComponentPath: ['..thisComponentPath..']')
-  pushRelativePath(thisComponentPath)
+  pushDiSimpPath(thisComponentPath)
   tex.print({
     '\\'..componentType..' '..thisComponentPath,
-    '\\popRelativePath'
+    '\\popDiSimpPath'
   })
 end
 
-diSimp.relativeComponent = relativeComponent
+diSimp.diSimpComponent = diSimpComponent
 
 -- from file: documentSetup.tex after line: 500
 

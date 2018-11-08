@@ -273,7 +273,26 @@ International License.
 
 \stopMkIVCode
 
-\section[title=Relative Environments and Components]
+\section[title=DiSimplex document Environments and Components macros]
+
+We specialize the standard \type{\environment} and \type{\component} macros 
+to ensure two things:
+
+\startitemize[n]
+
+\item \bold{complex collections of sub-components found in \quote{relative} 
+paths}. DiSimp documents may be built using multiple associated artifacts 
+such as, for example, CoAlgebras. We need the ability to specify 
+components which might not be in the traditional \ConTeXt\ hierarchical 
+directory structures.
+
+\item \bold{knowledge of \quote{doc} directories}. DiSimp documents usually 
+produce computational artifacts which might need separate compilation. To 
+keep these \emph{derived} computational artefacts separate from the main 
+document, we keep \ConTeXt\ files in \quote{doc} directories and any 
+derived computational artefacts in \quote{buildDir} directories.
+
+\stopitemize
 
 \startMkIVCode
 
@@ -283,17 +302,17 @@ International License.
 %% definition of \environment in file-job.mkvi
 %% on 2018/Nov/07 (experimental distribution)
 %%
-\unexpanded\def\relativeEnvironment{%
+\unexpanded\def\diSimpEnvironment{%
   \doifelsenextoptionalcs%
-    \useRelativeEnvironment%
-    \syst_structure_arg_relative_environment%
+    \useDiSimpEnvironment%
+    \syst_structure_arg_disimp_environment%
 }
 
-\def\syst_structure_arg_relative_environment  #1 {\useRelativeEnvironment  [#1]}
+\def\syst_structure_arg_disimp_environment  #1 {\useDiSimpEnvironment  [#1]}
 
-\unexpanded\def\useRelativeEnvironment  [#1]{%
+\unexpanded\def\useDiSimpEnvironment  [#1]{%
   \directlua{
-    thirddata.diSimp.relativeComponent('environment', '#1')
+    thirddata.diSimp.diSimpComponent('environment', '#1')
   }
 }
 
@@ -303,23 +322,23 @@ International License.
 %% definition of \component in file-job.mkvi
 %% on 2018/Nov/07 (experimental distribution)
 %%
-\unexpanded\def\relativeComponent{%
+\unexpanded\def\diSimpComponent{%
   \doifelsenextoptionalcs%
-    \useRelativeComponent%
-    \syst_structure_arg_relative_component%
+    \useDiSimpComponent%
+    \syst_structure_arg_disimp_component%
 }
 
-\def\syst_structure_arg_relative_component  #1 {  \useRelativeComponent  [#1]}
+\def\syst_structure_arg_disimp_component  #1 {  \useDiSimpComponent  [#1]}
 
-\unexpanded\def\useRelativeComponent  [#1]{%
+\unexpanded\def\useDiSimpComponent  [#1]{%
   \directlua{
-    thirddata.diSimp.relativeComponent('component', '#1')
+    thirddata.diSimp.diSimpComponent('component', '#1')
   }
 }
 
-\def\popRelativePath{
+\def\popDiSimpPath{
   \directlua{
-    thirddata.diSimp.popRelativePath()
+    thirddata.diSimp.popDiSimpPath()
   }
 }
 
@@ -327,15 +346,15 @@ International License.
 
 \startLuaCode
 
-local fullComponentPaths = {}
-local pathSeparator      = package.config:sub(1, 1)
+local diSimpPaths   = {}
+local pathSeparator = package.config:sub(1, 1)
 
-local function lastRelativePath()
-  return fullComponentPaths[#fullComponentPaths] or ""
+local function lastDiSimpPath()
+  return diSimpPaths[#diSimpPaths] or ""
 end
 
-local function pushRelativePath(aFullPath)
-  texio.write_nl('pushRelativePath('..aFullPath..')')
+local function pushDiSimpPath(aFullPath)
+  texio.write_nl('pushDiSimpPath('..aFullPath..')')
   local pp = require 'pl.pretty'
   local aFullPathDir =
     aFullPath:gsub('[^'..pathSeparator..']+$', '')
@@ -343,8 +362,8 @@ local function pushRelativePath(aFullPath)
   if aFullPathDir:sub(-1) ~= '/' then
     aFullPathDir = aFullPathDir..pathSeparator
   end
-  tInsert(fullComponentPaths, aFullPathDir)
-  texio.write_nl('fullComponentPaths: ['..pp.write(fullComponentPaths)..']')
+  tInsert(diSimpPaths, aFullPathDir)
+  texio.write_nl('diSimpPaths: ['..pp.write(fullComponentPaths)..']')
 end
 
 -- repeat after me... this WILL break!!!
@@ -355,18 +374,18 @@ end
 -- the environment table. 
 -- (defined in core-sys.lua)
 --
-pushRelativePath(file.collapsepath(environment.arguments.fulljobname,true))
+pushDiSimpPath(file.collapsepath(environment.arguments.fulljobname,true))
 
-local function popRelativePath()
-  texio.write_nl('popRelativePath()')
+local function popDiSimpPath()
+  texio.write_nl('popDiSimpPath()')
   pp = require 'pl.pretty'
-  texio.write_nl('fullComponentPaths: ['..pp.write(fullComponentPaths)..']')
-  tRemove(fullComponentPaths)
-  texio.write_nl('fullComponentPaths: ['..pp.write(fullComponentPaths)..']')
+  texio.write_nl('diSimpPaths: ['..pp.write(diSimpPaths)..']')
+  tRemove(diSimpPaths)
+  texio.write_nl('diSimpPaths: ['..pp.write(diSimpPaths)..']')
   texio.write_nl('<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<')
 end
 
-diSimp.popRelativePath = popRelativePath
+diSimp.popDiSimpPath = popDiSimpPath
 
 local function findDiSimpPath(curBasePath, componentPath, origBasePath)
   texio.write_nl('findDiSimpPath(['..curBasePath..'],['..componentPath..'],['..origBasePath..'])')
@@ -391,20 +410,20 @@ local function findDiSimpPath(curBasePath, componentPath, origBasePath)
   return findDiSimpPath(newCurBasePath, componentPath, origBasePath)
 end
 
-local function relativeComponent(componentType, componentPath)
+local function diSimpComponent(componentType, componentPath)
   texio.write_nl('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
-  texio.write_nl('relativeComponent(['..componentType..'],['..componentPath..'])')
-  local basePath = lastRelativePath()
+  texio.write_nl('diSimpComponent(['..componentType..'],['..componentPath..'])')
+  local basePath = lastDiSimpPath()
   local thisComponentPath = findDiSimpPath(basePath, componentPath, basePath)
   texio.write_nl(' thisComponentPath: ['..thisComponentPath..']')
-  pushRelativePath(thisComponentPath)
+  pushDiSimpPath(thisComponentPath)
   tex.print({
     '\\'..componentType..' '..thisComponentPath,
-    '\\popRelativePath'
+    '\\popDiSimpPath'
   })
 end
 
-diSimp.relativeComponent = relativeComponent
+diSimp.diSimpComponent = diSimpComponent
 
 \stopLuaCode
 
