@@ -110,7 +110,48 @@ end
 
 diSimp.diSimpComponent = diSimpComponent
 
--- from file: documentSetup.tex after line: 500
+local insideComponent = {}
+insideComponent['component']   = 0
+insideComponent['environment'] = 0
+insideComponent['product']     = 0
+insideComponent['project']     = 0
+
+local function startDiSimpComponent(componentType, componentName)
+  texio.write_nl('startDiSimpComponent(['..componentType..'],['..componentName..']')
+  local pp = require 'pl.pretty'
+  texio.write_nl('insideComponent = '..pp.write(insideComponent))
+  if insideComponent[componentType] < 1 then
+    tex.print('\\start'..componentType)
+  end
+  insideComponent[componentType] = insideComponent[componentType] + 1
+  texio.write_nl(
+    '\\startDiSimpComponent('..componentType..')'..
+    '['..toStr(insideComponent[componentType])..']'
+  )
+end
+
+diSimp.startDiSimpComponent = startDiSimpComponent
+
+local function stopDiSimpComponent(componentType)
+  texio.write_nl('stopDiSimpComponent(['..componentType..']')
+  local pp = require 'pl.pretty'
+  texio.write_nl('insideComponent = '..pp.write(insideComponent))
+  texio.write_nl(
+    '\\stopDiSimpComponent('..componentType..')'..
+    '['..toStr(insideComponent[componentType])..']'
+  )
+  insideComponent[componentType] = insideComponent[componentType] - 1
+  if insideComponent[componentType] < 1 then
+    if insideComponent[componentType] < 0 then
+      texio.write_nl('ERRROR: unbalanced number of \\stop'..componentType)
+    end
+    tex.print('\\stop'..componentType)
+  end
+end
+
+diSimp.stopDiSimpComponent = stopDiSimpComponent
+
+-- from file: documentSetup.tex after line: 550
 
 -- repeat after me... this WILL break!!!
 --

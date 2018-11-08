@@ -406,6 +406,32 @@ International License.
 %% repeat after me.... this WILL break!!!
 %%
 %% this call pattern has been modeled upon the
+%% definition of \startcomponent in file-job.mkvi
+%% on 2018/Nov/07 (experimental distribution)
+%%
+\unexpanded\def\startDiSimpComponent{%
+  \doifelsenextoptionalcs%
+    \useStartDiSimpComponent%
+    \syst_structure_arg_start_disimp_component%
+}
+
+\def\syst_structure_arg_start_disimp_component  #1 {\useStartDiSimpComponent[#1]}
+
+\unexpanded\def\useStartDiSimpComponent  [#1]{%
+  \directlua{
+    thirddata.diSimp.startDiSimpComponent('component', '#1')
+  }
+}
+
+\def\stopDiSimpComponent{%
+  \directlua{
+    thirddata.diSimp.stopDiSimpComponent('component')
+  }
+}
+
+%% repeat after me.... this WILL break!!!
+%%
+%% this call pattern has been modeled upon the
 %% definition of \component in file-job.mkvi
 %% on 2018/Nov/07 (experimental distribution)
 %%
@@ -435,7 +461,7 @@ International License.
   }
 }
 
-% from file: documentSetup.tex after line: 400
+% from file: documentSetup.tex after line: 500
 
 \defineconversionset[chapterAppendix][numbers,numbers,Characters][numbers]
 \definehead
