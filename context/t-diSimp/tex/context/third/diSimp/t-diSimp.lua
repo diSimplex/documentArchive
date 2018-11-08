@@ -29,14 +29,24 @@ interfaces.writestatus('diSimp', "loaded diSimp macros")
 
 -- from file: documentSetup.tex after line: 300
 
-local relativePaths = {}
-local pathSeparator = package.config:sub(1, 1)
+local fullComponentPaths = {}
+local pathSeparator      = package.config:sub(1, 1)
 
-local function pushRelativePath(aRelativePath)
+local function lastRelativePath()
+  return fullComponentPaths[#fullComponentPaths] or ""
+end
+
+local function pushRelativePath(aFullPath)
+  texio.write_nl('pushRelativePath('..aFullPath..')')
   local pp = require 'pl.pretty'
-  local aRelativePathDir =
-    aRelativePath:gsub('[^'..pathSeparator..']+$', '')
-  tInsert(relativePaths, aRelativePathDir)
+  local aFullPathDir =
+    aFullPath:gsub('[^'..pathSeparator..']+$', '')
+  texio.write_nl('  aFullPathDir: ['..pp.write(aFullPathDir)..']')
+  if aFullPathDir:sub(-1) ~= '/' then
+    aFullPathDir = aFullPathDir..pathSeparator
+  end
+  tInsert(fullComponentPaths, aFullPathDir)
+  texio.write_nl('fullComponentPaths: ['..pp.write(fullComponentPaths)..']')
 end
 
 -- repeat after me... this WILL break!!!
@@ -47,26 +57,49 @@ end
 -- the environment table.
 -- (defined in core-sys.lua)
 --
-pushRelativePath(environment.arguments.fulljobname)
+pushRelativePath(file.collapsepath(environment.arguments.fulljobname,true))
 
 local function popRelativePath()
+  texio.write_nl('popRelativePath()')
   pp = require 'pl.pretty'
-  texio.write_nl('     relativePaths: ['..pp.write(relativePaths)..']')
-  tRemove(relativePaths)
-  texio.write_nl('     relativePaths: ['..pp.write(relativePaths)..']')
+  texio.write_nl('fullComponentPaths: ['..pp.write(fullComponentPaths)..']')
+  tRemove(fullComponentPaths)
+  texio.write_nl('fullComponentPaths: ['..pp.write(fullComponentPaths)..']')
+  texio.write_nl('<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<')
 end
 
 diSimp.popRelativePath = popRelativePath
 
+local function findDiSimpPath(curBasePath, componentPath, origBasePath)
+  texio.write_nl('findDiSimpPath(['..curBasePath..'],['..componentPath..'],['..origBasePath..'])')
+  local potentialPath =
+    file.collapsepath(curBasePath..componentPath, true)
+  if lfs.attributes(potentialPath..'.tex', 'mode') == 'file' then
+    texio.write_nl('found: ['..potentialPath..']')
+    return potentialPath
+  end
+  potentialPath =
+    file.collapsepath(curBasePath..'doc/'..componentPath, true)
+  if lfs.attributes(potentialPath..'.tex', 'mode') == 'file' then
+    texio.write_nl('found: ['..potentialPath..']')
+    return potentialPath
+  end
+  if curBasePath == '' or curBasePath == pathSeparator then
+    texio.write_nl('no path found using: ['..origBasePath..componentPath..']')
+    return file.collapsepath(origBasePath..componentPath, true)
+  end
+  local newCurBasePath =
+    curBasePath:gsub('[^'..pathSeparator..']+'..pathSeparator..'$','')
+  return findDiSimpPath(newCurBasePath, componentPath, origBasePath)
+end
+
 local function relativeComponent(componentType, componentPath)
-  local thisComponentPath = tConcat(relativePaths)..componentPath
-  thisComponentPath = file.collapsepath(thisComponentPath, true)
-  texio.write_nl('relativeComponent: ['..componentType..']')
-  texio.write_nl('relativeComponent: ['..componentPath..']')
-  texio.write_nl('relativeComponent: ['..thisComponentPath..']')
-  pushRelativePath(componentPath)
-  pp = require 'pl.pretty'
-  texio.write_nl('     relativePaths: ['..pp.write(relativePaths)..']')
+  texio.write_nl('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
+  texio.write_nl('relativeComponent(['..componentType..'],['..componentPath..'])')
+  local basePath = lastRelativePath()
+  local thisComponentPath = findDiSimpPath(basePath, componentPath, basePath)
+  texio.write_nl(' thisComponentPath: ['..thisComponentPath..']')
+  pushRelativePath(thisComponentPath)
   tex.print({
     '\\'..componentType..' '..thisComponentPath,
     '\\popRelativePath'
@@ -75,7 +108,7 @@ end
 
 diSimp.relativeComponent = relativeComponent
 
--- from file: documentSetup.tex after line: 450
+-- from file: documentSetup.tex after line: 500
 
 -- repeat after me... this WILL break!!!
 --
