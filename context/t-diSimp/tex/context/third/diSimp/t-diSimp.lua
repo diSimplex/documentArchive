@@ -27,7 +27,7 @@ local toStr   = tostring
 
 interfaces.writestatus('diSimp', "loaded diSimp macros")
 
--- from file: documentSetup.tex after line: 300
+-- from file: documentSetup.tex after line: 350
 
 local diSimpPaths   = {}
 local pathSeparator = package.config:sub(1, 1)
@@ -35,6 +35,8 @@ local pathSeparator = package.config:sub(1, 1)
 local function lastDiSimpPath()
   return diSimpPaths[#diSimpPaths] or ""
 end
+
+diSimp.lastDiSimpPath = lastDiSimpPath
 
 local function pushDiSimpPath(aFullPath)
   texio.write_nl('pushDiSimpPath('..aFullPath..')')

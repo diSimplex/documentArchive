@@ -342,6 +342,12 @@ derived computational artefacts in \quote{buildDir} directories.
   }
 }
 
+\def\currentDiSimpPath{
+  \directlua{
+    tex.print(thirddata.diSimp.lastDiSimpPath())
+  }
+}
+
 \stopMkIVCode
 
 \startLuaCode
@@ -352,6 +358,8 @@ local pathSeparator = package.config:sub(1, 1)
 local function lastDiSimpPath()
   return diSimpPaths[#diSimpPaths] or ""
 end
+
+diSimp.lastDiSimpPath = lastDiSimpPath
 
 local function pushDiSimpPath(aFullPath)
   texio.write_nl('pushDiSimpPath('..aFullPath..')')

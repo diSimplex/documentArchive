@@ -429,6 +429,12 @@ International License.
   }
 }
 
+\def\currentDiSimpPath{
+  \directlua{
+    tex.print(thirddata.diSimp.lastDiSimpPath())
+  }
+}
+
 % from file: documentSetup.tex after line: 400
 
 \defineconversionset[chapterAppendix][numbers,numbers,Characters][numbers]
