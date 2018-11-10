@@ -29,6 +29,12 @@ interfaces.writestatus('diSimp', "loaded diSimp macros")
 
 -- from file: documentSetup.tex after line: 350
 
+local insideComponent = {}
+insideComponent['component']   = 0
+insideComponent['environment'] = 0
+insideComponent['product']     = 0
+insideComponent['project']     = 0
+
 local diSimpPaths   = {}
 local pathSeparator = package.config:sub(1, 1)
 
@@ -98,23 +104,23 @@ end
 local function diSimpComponent(componentType, componentPath)
   texio.write_nl('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
   texio.write_nl('diSimpComponent(['..componentType..'],['..componentPath..'])')
-  local basePath = lastDiSimpPath()
-  local thisComponentPath = findDiSimpPath(basePath, componentPath, basePath)
-  texio.write_nl(' thisComponentPath: ['..thisComponentPath..']')
-  pushDiSimpPath(thisComponentPath)
-  tex.print({
-    '\\'..componentType..' '..thisComponentPath,
-    '\\popDiSimpPath'
-  })
+  if componentType == 'environment' and 1 < insideComponent['component'] then
+    -- do nothing
+  else
+    -- we are either NOT an environment
+    -- OR we are an environment but inside the first start/stop component pair
+    local basePath = lastDiSimpPath()
+    local thisComponentPath = findDiSimpPath(basePath, componentPath, basePath)
+    texio.write_nl(' thisComponentPath: ['..thisComponentPath..']')
+    pushDiSimpPath(thisComponentPath)
+    tex.print({
+      '\\'..componentType..' '..thisComponentPath,
+      '\\popDiSimpPath'
+    })
+  end
 end
 
 diSimp.diSimpComponent = diSimpComponent
-
-local insideComponent = {}
-insideComponent['component']   = 0
-insideComponent['environment'] = 0
-insideComponent['product']     = 0
-insideComponent['project']     = 0
 
 local function startDiSimpComponent(componentType, componentName)
   texio.write_nl('startDiSimpComponent(['..componentType..'],['..componentName..']')
@@ -145,6 +151,7 @@ local function stopDiSimpComponent(componentType)
     if insideComponent[componentType] < 0 then
       texio.write_nl('ERRROR: unbalanced number of \\stop'..componentType)
     end
+    texio.write_nl('CALLING \\stop'..componentType)
     tex.print('\\stop'..componentType..'\\relax')
   end
 end
