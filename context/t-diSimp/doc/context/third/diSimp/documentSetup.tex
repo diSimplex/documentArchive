@@ -294,6 +294,14 @@ derived computational artefacts in \quote{buildDir} directories.
 
 \stopitemize
 
+We implement \type{\startDiSimpComponent} and \type{\stopDiSimpComponent} 
+in order to ensure that our complex collection of nested components does 
+not break \ConTeXt's native \quote{project}, \quote{product}, and 
+\quote{component} system. We effectively only make use of 
+\quote{components}, but we explicitly allow them to be nested multiple 
+levels deep. To do this we only actually let \ConTeXt\ \quote{see} the 
+outer most start/stop \quote{component} declaration.
+
 \startMkIVCode
 
 %% repeat after me.... this WILL break!!!
@@ -470,7 +478,7 @@ local function startDiSimpComponent(componentType, componentName)
   local pp = require 'pl.pretty'
   texio.write_nl('insideComponent = '..pp.write(insideComponent))
   if insideComponent[componentType] < 1 then
-    tex.print('\\start'..componentType)
+    tex.print('\\start'..componentType..' '..componentName..'\\relax')
   end
   insideComponent[componentType] = insideComponent[componentType] + 1
   texio.write_nl(
@@ -494,7 +502,7 @@ local function stopDiSimpComponent(componentType)
     if insideComponent[componentType] < 0 then
       texio.write_nl('ERRROR: unbalanced number of \\stop'..componentType)
     end
-    tex.print('\\stop'..componentType)
+    tex.print('\\stop'..componentType..'\\relax')
   end
 end
 

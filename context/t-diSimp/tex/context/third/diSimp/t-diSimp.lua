@@ -121,7 +121,7 @@ local function startDiSimpComponent(componentType, componentName)
   local pp = require 'pl.pretty'
   texio.write_nl('insideComponent = '..pp.write(insideComponent))
   if insideComponent[componentType] < 1 then
-    tex.print('\\start'..componentType)
+    tex.print('\\start'..componentType..' '..componentName..'\\relax')
   end
   insideComponent[componentType] = insideComponent[componentType] + 1
   texio.write_nl(
@@ -145,13 +145,13 @@ local function stopDiSimpComponent(componentType)
     if insideComponent[componentType] < 0 then
       texio.write_nl('ERRROR: unbalanced number of \\stop'..componentType)
     end
-    tex.print('\\stop'..componentType)
+    tex.print('\\stop'..componentType..'\\relax')
   end
 end
 
 diSimp.stopDiSimpComponent = stopDiSimpComponent
 
--- from file: documentSetup.tex after line: 550
+-- from file: documentSetup.tex after line: 600
 
 -- repeat after me... this WILL break!!!
 --
