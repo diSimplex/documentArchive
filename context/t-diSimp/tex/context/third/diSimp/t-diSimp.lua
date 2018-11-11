@@ -46,15 +46,16 @@ diSimp.lastDiSimpPath = lastDiSimpPath
 
 local function pushDiSimpPath(aFullPath)
   texio.write_nl('pushDiSimpPath('..aFullPath..')')
-  local pp = require 'pl.pretty'
   local aFullPathDir =
     aFullPath:gsub('[^'..pathSeparator..']+$', '')
-  texio.write_nl('  aFullPathDir: ['..pp.write(aFullPathDir)..']')
+  texio.write_nl('  aFullPathDir: ['..aFullPathDir..']')
   if aFullPathDir:sub(-1) ~= '/' then
     aFullPathDir = aFullPathDir..pathSeparator
   end
   tInsert(diSimpPaths, aFullPathDir)
-  texio.write_nl('diSimpPaths: ['..pp.write(fullComponentPaths)..']')
+  for i, aPath in ipairs(diSimpPaths) do
+    texio.write_nl('diSimpPaths['..toStr(i)..']: ['..aPath..']')
+  end
 end
 
 -- repeat after me... this WILL break!!!
@@ -69,10 +70,10 @@ pushDiSimpPath(file.collapsepath(environment.arguments.fulljobname,true))
 
 local function popDiSimpPath()
   texio.write_nl('popDiSimpPath()')
-  pp = require 'pl.pretty'
-  texio.write_nl('diSimpPaths: ['..pp.write(diSimpPaths)..']')
   tRemove(diSimpPaths)
-  texio.write_nl('diSimpPaths: ['..pp.write(diSimpPaths)..']')
+  for i, aPath in ipairs(diSimpPaths) do
+    texio.write_nl('diSimpPaths['..toStr(i)..']: ['..aPath..']')
+  end
   texio.write_nl('<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<')
 end
 
@@ -124,8 +125,9 @@ diSimp.diSimpComponent = diSimpComponent
 
 local function startDiSimpComponent(componentType, componentName)
   texio.write_nl('startDiSimpComponent(['..componentType..'],['..componentName..']')
-  local pp = require 'pl.pretty'
-  texio.write_nl('insideComponent = '..pp.write(insideComponent))
+  for k,v in pairs(insideComponent) do
+    texio.write_nl('insideComponent['..k..'] = '..toStr(v))
+  end
   if insideComponent[componentType] < 1 then
     tex.print('\\start'..componentType..' '..componentName..'\\relax')
   end
@@ -140,13 +142,14 @@ diSimp.startDiSimpComponent = startDiSimpComponent
 
 local function stopDiSimpComponent(componentType)
   texio.write_nl('stopDiSimpComponent(['..componentType..']')
-  local pp = require 'pl.pretty'
-  texio.write_nl('insideComponent = '..pp.write(insideComponent))
   texio.write_nl(
     '\\stopDiSimpComponent('..componentType..')'..
     '['..toStr(insideComponent[componentType])..']'
   )
   insideComponent[componentType] = insideComponent[componentType] - 1
+  for k,v in pairs(insideComponent) do
+    texio.write_nl('insideComponent['..k..'] = '..toStr(v))
+  end
   if insideComponent[componentType] < 1 then
     if insideComponent[componentType] < 0 then
       texio.write_nl('ERRROR: unbalanced number of \\stop'..componentType)
