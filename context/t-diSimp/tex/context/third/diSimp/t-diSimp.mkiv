@@ -539,9 +539,23 @@
 \blank[6cm]
 
 \doifvariable{diSimp}{ISBN}{
-ISBN-13: \getvariable{diSimp}{ISBN}
+\bold{ISBN-13:} \getvariable{diSimp}{ISBN}
 \blank
 }
+
+\doifvariable{diSimp}{VERSION}{
+\bold{Version:} \getvariable{diSimp}{VERSION}
+\blank
+}
+
+This document was prepared using \ConTeXt\ and \LuaTeX\ on
+\currentdate[month] \currentdate[day], \currentdate[year].
+
+
+\blank
+
+\hrule
+\blank[medium]
 
 Unless explicitly stated otherwise, all content contained in this
 document which is \emph{not software code} is
@@ -610,7 +624,7 @@ License.
 \stopmakeup
 }
 
-% from file: copyrights.tex after line: 50
+% from file: copyrights.tex after line: 100
 
 \def\placeMkIVCopyright#1{\addApacheLicense{MkIVCode}{}{#1}}
 
@@ -618,8 +632,12 @@ License.
 
 \def\placeCHeaderCopyright#1{\addApacheLicense{CHeader}{//}{#1}}
 \def\placeCCodeCopyright#1{\addApacheLicense{CCode}{//}{#1}}
+\def\addCTestCopyright#1{\addCTestApacheLicense{default}{#1}}
 
-\def\placeJoylolCopyright#1{\addApacheLicense{JoylolCode}{//}{#1}}
+\def\placeJoylolCodeCopyright#1{\addApacheLicense{JoylolCode}{//}{#1}}
+\def\placeJoylolCopyright#1{\addApacheLicense{Joylol}{//}{#1}}
+
+\def\placeLmsfileCopyright#1{\addApacheLicense{Lmsfile}{--}{#1}}
 
 % from file: mathEnunciations.tex after line: 0
 
