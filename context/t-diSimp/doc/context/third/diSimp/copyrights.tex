@@ -1,0 +1,101 @@
+% A ConTeXt document [master document: diSimp.tex]
+
+\chapter[title=diSimp Copyrights]
+
+We use the following dual Creative Commons Attribution-ShareAlike and Apache
+Licenses for all documents.
+
+\startMkIVCode
+\def\placeCopyrightPage#1#2{
+  \startmakeup
+
+%\blank[10cm]
+\blank[6cm]
+
+\doifvariable{diSimp}{ISBN}{
+ISBN-13: \getvariable{diSimp}{ISBN}
+\blank
+}
+
+Unless explicitly stated otherwise, all content contained in this
+document which is \emph{not software code} is
+
+\blank[small]
+
+\startcenteraligned
+\bold{Copyright © \currentdate[year] #1}
+\stopcenteraligned
+
+\blank[small]
+
+and is licensed for release under the Creative Commons
+Attribution-ShareAlike 4.0 International License (CC-BY-SA 4.0 License).
+You may obtain a copy of the License at
+
+\blank[small]
+
+\startcenteraligned
+\bold{\type{http://creativecommons.org/licenses/by-sa/4.0/}}
+\stopcenteraligned
+
+\blank[small]
+
+Unless required by applicable law or agreed to in writing, all non-code
+content distributed under the above CC-BY-SA 4.0 License is distributed
+on an \quote{AS IS} BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+either express or implied. See the CC-BY-SA 4.0 License whose URL is
+listed above for the specific language governing permissions and
+limitations under the License.
+
+\blank[medium]
+\hrule
+\blank[medium]
+
+Again, unless explicitly stated otherwise, all content contained in this
+document which is \emph{software code} is
+
+\blank[small]
+
+\startcenteraligned
+\bold{Copyright © \currentdate[year] #1}
+\stopcenteraligned
+
+\blank[small]
+
+and is licensed under the Apache License, Version 2.0 (the "License");
+you may not use this code except in compliance with the License. You may
+obtain a copy of the License at
+
+\blank[small]
+
+\startcenteraligned
+\bold{\type{http://www.apache.org/licenses/LICENSE-2.0}}
+\stopcenteraligned
+
+\blank[small]
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the Apache 4.0 License is distributed on an \quote{AS
+IS} BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+or implied. See the Apache 2.0 License whose URL is listed above for the
+specific language governing permissions and limitations under the
+License.
+
+\stopmakeup
+}
+\stopMkIVCode
+
+We use the following Apache License for all code produced from diSimplex 
+documents.
+
+\startMkIVCode
+\def\placeMkIVCopyright#1{\addApacheLicense{MkIVCode}{}{#1}}
+
+\def\placeLuaCopyright#1{\addApacheLicense{LuaCode}{--}{#1}}
+
+\def\placeCHeaderCopyright#1{\addApacheLicense{CHeader}{//}{#1}}
+\def\placeCCodeCopyright#1{\addApacheLicense{CCode}{//}{#1}}
+
+\def\placeJoylolCopyright#1{\addApacheLicense{JoylolCode}{//}{#1}}
+\stopMkIVCode
+

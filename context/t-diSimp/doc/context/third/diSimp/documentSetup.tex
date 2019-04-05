@@ -223,31 +223,6 @@
 
   \stopmakeup
 }
-
-\def\placeCopyrightPage#1#2{
-  \startmakeup
-
-\blank[10cm]
-
-\doifvariable{diSimp}{ISBN}{
-ISBN-13: \getvariable{diSimp}{ISBN}
-\blank
-}
-
-Copyright © \currentdate[year] #1 some rights reserved.
-
-\blank
-
-This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 
-International License. 
-
-\blank
-
-\type{http://creativecommons.org/licenses/by-sa/4.0/}
-
-\stopmakeup
-}
-
 \stopMkIVCode
 
 

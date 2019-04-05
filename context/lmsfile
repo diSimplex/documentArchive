@@ -8,6 +8,7 @@ lpTargets = litProgs.targets{
     'overview.tex',
     'pageLayout.tex',
     'documentSetup.tex',
+    'copyrights.tex',
     'mathEnunciations.tex',
     'diSimpMacros.tex',
     'preamble.tex',
