@@ -102,13 +102,16 @@ local function extractReferencesFrom(aFile)
     if obj.userdata then
       if obj.userdata.btxref then
         local citeId = obj.userdata.btxref
-        if bibRefs[citeId] == nil or bibRefs[citeId]['notFound'] then
-          report('  getting ['..citeId..']')
-          local prefix = citeId:sub(1,2)
-          local url = 'http://noteserver/refs/cite/'..prefix..'/'..citeId..'.lua'
-          local body, code = http.request(url)
-          if code ~= 200 then
-            body = [=[
+        if citeId:match('%?+') then
+          report('  ignoring ['..citeId..']')
+        else
+          if bibRefs[citeId] == nil or bibRefs[citeId]['notFound'] then
+            report('  getting ['..citeId..']')
+            local prefix = citeId:sub(1,2)
+            local url = 'http://noteserver/refs/cite/'..prefix..'/'..citeId..'.lua'
+            local body, code = http.request(url)
+            if code ~= 200 then
+              body = [=[
   return {
     title    = "Unknown-]=]..citeId..[=[",
     author   = "Unknown-]=]..citeId..[=[",
@@ -116,11 +119,12 @@ local function extractReferencesFrom(aFile)
     notFound = true
   }
 ]=]
-          end
-          local ok, refLua = pcall(load, body)
-          if ok then refLua = refLua() else refLua = nil end
-          if refLua and refLua.tag then
-            bibRefs[refLua.tag] = refLua
+            end
+            local ok, refLua = pcall(load, body)
+            if ok then refLua = refLua() else refLua = nil end
+            if refLua and refLua.tag then
+              bibRefs[refLua.tag] = refLua
+            end
           end
         end
       end
