@@ -19,7 +19,7 @@
 %\definefamilysynonym [default] [scriptfamily] [mc]
 %
 %\def\scr{\fam\purefamily{scriptfamily}} % To use ${\scr ABC}$
-%\def\script#1{{\scr#1}}                 % To use $\script{ABC}$
+%\def\script#1{ {\scr#1}}                 % To use $\script{ABC}$
 
 % see:  https://wiki.contextgarden.net/math_calligraphic
 % NOW included in context-experimental..
@@ -43,7 +43,7 @@
 %The space of distributions on $\Omega$ is denoted by ${\cal D}'(\Omega)$, while ${\cal S}({\Bbb R}^n)$ is the space of Schwartz functions, and ${\cal S}'({\Bbb R}^n)$ is its dual.
 %
 %\startformula
-%\langle T,\phi \rangle_{{\cal D}'(\Omega),{\cal D}(\Omega)}
+%\langle T,\phi \rangle_{ {\cal D}'(\Omega),{\cal D}(\Omega)}
 %\stopformula
 %
 %\noindent The set of admissible controls is denoted by ${\cal U}_{\rm ad}$.
@@ -99,7 +99,7 @@
 \let\infinity=\infty
 
 \unexpanded\def\powerSet{\dosingleempty\doPowerSet}
-\unexpanded\def\doPowerSet[#1]{%
+\unexpanded\def\doPowerSet[#1]{
   \iffirstargument\doPowerSetSingle{#1}%
   \else\doPowerSetZero%
   \fi%
@@ -127,14 +127,14 @@
     withcolor  \MPcolor{gray} ;
 \stopuseMPgraphic
 
-\def\MMundi#1{%
+\def\MMundi#1{
 \setbox\diSimpTmpBox=\hbox{#1}%
 \diSimpTmpDimen\wd\diSimpTmpBox%
 \setupMPvariables[MMundiNarrowTopBar]%
 [textWidth=1.05\diSimpTmpDimen,textHeight=0.5\lineheight]%
 \setupMPvariables[MMundiNarrowBottomBar]%
 [textWidth=1.05\diSimpTmpDimen,textHeight=0.5\lineheight]%
-\hbox to 1.05\diSimpTmpDimen {%
+\hbox to 1.05\diSimpTmpDimen {
 \rlap{\raise0.5ex\hbox{\useMPgraphic{MMundiNarrowTopBar}}}%
 \rlap{\lower0.5ex\hbox{\useMPgraphic{MMundiNarrowBottomBar}}}%
 \hfil\hbox{#1}\hfil}}

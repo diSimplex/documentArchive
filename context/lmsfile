@@ -4,16 +4,6 @@ require 'lms.litProgs'
 
 lpTargets = litProgs.targets{
   mainDoc  = 'diSimp.tex',
-  docFiles = {
-    'overview.tex',
-    'pageLayout.tex',
-    'documentSetup.tex',
-    'copyrights.tex',
-    'mathEnunciations.tex',
-    'diSimpMacros.tex',
-    'preamble.tex',
-    'conclusions.tex',
-  },
   docDir    = 't-diSimp/doc/context/third/diSimp',
 }
 
@@ -26,3 +16,7 @@ contextMod.targets(lpTargets, {
   },
   moduleDir = 't-diSimp/tex/context/third/diSimp',
 })
+
+require 'lms.contextDoc'
+
+contextDoc.targets(lpTargets)
