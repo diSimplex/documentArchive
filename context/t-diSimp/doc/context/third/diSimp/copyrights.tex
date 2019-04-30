@@ -112,8 +112,16 @@ documents.
 \def\addCTestCopyright#1{\addCTestApacheLicense{default}{#1}}
 
 \def\placeJoylolCodeCopyright#1{\addApacheLicense{JoylolCode}{//}{#1}}
-\def\placeJoylolCopyright#1{\addApacheLicense{Joylol}{//}{#1}}
+\def\prependJoylolCodeCopyright#1{
+  \prependJoylolCode{default}
+  \addApacheLicense{JoylolCode}{//}{#1}
+}
 
 \def\placeLmsfileCopyright#1{\addApacheLicense{Lmsfile}{--}{#1}}
+\def\prependLmsfileCopyright#1{
+  \prependLmsfile{default}
+  \addApacheLicense{Lmsfile}{--}{#1}
+}
+
 \stopMkIVCode
 

@@ -370,7 +370,7 @@
 %% definition of \environment in file-job.mkvi
 %% on 2018/Nov/07 (experimental distribution)
 %%
-\unexpanded\def\diSimpEnvironment{%
+\unexpanded\def\diSimpEnvironment{
   \doifelsenextoptionalcs%
     \useDiSimpEnvironment%
     \syst_structure_arg_disimp_environment%
@@ -378,7 +378,7 @@
 
 \def\syst_structure_arg_disimp_environment  #1 {\useDiSimpEnvironment  [#1]}
 
-\unexpanded\def\useDiSimpEnvironment  [#1]{%
+\unexpanded\def\useDiSimpEnvironment  [#1]{
   \directlua{
     thirddata.diSimp.diSimpComponent('environment', '#1')
   }
@@ -390,7 +390,7 @@
 %% definition of \startcomponent in file-job.mkvi
 %% on 2018/Nov/07 (experimental distribution)
 %%
-\unexpanded\def\startDiSimpComponent{%
+\unexpanded\def\startDiSimpComponent{
   \doifelsenextoptionalcs%
     \useStartDiSimpComponent%
     \syst_structure_arg_start_disimp_component%
@@ -398,13 +398,13 @@
 
 \def\syst_structure_arg_start_disimp_component  #1 {\useStartDiSimpComponent[#1]}
 
-\unexpanded\def\useStartDiSimpComponent  [#1]{%
+\unexpanded\def\useStartDiSimpComponent  [#1]{
   \directlua{
     thirddata.diSimp.startDiSimpComponent('component', '#1')
   }
 }
 
-\def\stopDiSimpComponent{%
+\def\stopDiSimpComponent{
   \directlua{
     thirddata.diSimp.stopDiSimpComponent('component')
   }
@@ -416,7 +416,7 @@
 %% definition of \component in file-job.mkvi
 %% on 2018/Nov/07 (experimental distribution)
 %%
-\unexpanded\def\diSimpComponent{%
+\unexpanded\def\diSimpComponent{
   \doifelsenextoptionalcs%
     \useDiSimpComponent%
     \syst_structure_arg_disimp_component%
@@ -424,7 +424,7 @@
 
 \def\syst_structure_arg_disimp_component  #1 {  \useDiSimpComponent  [#1]}
 
-\unexpanded\def\useDiSimpComponent  [#1]{%
+\unexpanded\def\useDiSimpComponent  [#1]{
   \directlua{
     thirddata.diSimp.diSimpComponent('component', '#1')
   }
@@ -635,9 +635,16 @@ License.
 \def\addCTestCopyright#1{\addCTestApacheLicense{default}{#1}}
 
 \def\placeJoylolCodeCopyright#1{\addApacheLicense{JoylolCode}{//}{#1}}
-\def\placeJoylolCopyright#1{\addApacheLicense{Joylol}{//}{#1}}
+\def\prependJoylolCodeCopyright#1{
+  \prependJoylolCode{default}
+  \addApacheLicense{JoylolCode}{//}{#1}
+}
 
 \def\placeLmsfileCopyright#1{\addApacheLicense{Lmsfile}{--}{#1}}
+\def\prependLmsfileCopyright#1{
+  \prependLmsfile{default}
+  \addApacheLicense{Lmsfile}{--}{#1}
+}
 
 % from file: mathEnunciations.tex after line: 0
 
@@ -757,7 +764,7 @@ License.
 %\definefamilysynonym [default] [scriptfamily] [mc]
 %
 %\def\scr{\fam\purefamily{scriptfamily}} % To use ${\scr ABC}$
-%\def\script#1{{\scr#1}}                 % To use $\script{ABC}$
+%\def\script#1{ {\scr#1}}                 % To use $\script{ABC}$
 
 % see:  https://wiki.contextgarden.net/math_calligraphic
 % NOW included in context-experimental..
@@ -781,7 +788,7 @@ License.
 %The space of distributions on $\Omega$ is denoted by ${\cal D}'(\Omega)$, while ${\cal S}({\Bbb R}^n)$ is the space of Schwartz functions, and ${\cal S}'({\Bbb R}^n)$ is its dual.
 %
 %\startformula
-%\langle T,\phi \rangle_{{\cal D}'(\Omega),{\cal D}(\Omega)}
+%\langle T,\phi \rangle_{ {\cal D}'(\Omega),{\cal D}(\Omega)}
 %\stopformula
 %
 %\noindent The set of admissible controls is denoted by ${\cal U}_{\rm ad}$.
@@ -837,7 +844,7 @@ License.
 \let\infinity=\infty
 
 \unexpanded\def\powerSet{\dosingleempty\doPowerSet}
-\unexpanded\def\doPowerSet[#1]{%
+\unexpanded\def\doPowerSet[#1]{
   \iffirstargument\doPowerSetSingle{#1}%
   \else\doPowerSetZero%
   \fi%
@@ -865,14 +872,14 @@ License.
     withcolor  \MPcolor{gray} ;
 \stopuseMPgraphic
 
-\def\MMundi#1{%
+\def\MMundi#1{
 \setbox\diSimpTmpBox=\hbox{#1}%
 \diSimpTmpDimen\wd\diSimpTmpBox%
 \setupMPvariables[MMundiNarrowTopBar]%
 [textWidth=1.05\diSimpTmpDimen,textHeight=0.5\lineheight]%
 \setupMPvariables[MMundiNarrowBottomBar]%
 [textWidth=1.05\diSimpTmpDimen,textHeight=0.5\lineheight]%
-\hbox to 1.05\diSimpTmpDimen {%
+\hbox to 1.05\diSimpTmpDimen {
 \rlap{\raise0.5ex\hbox{\useMPgraphic{MMundiNarrowTopBar}}}%
 \rlap{\lower0.5ex\hbox{\useMPgraphic{MMundiNarrowBottomBar}}}%
 \hfil\hbox{#1}\hfil}}
