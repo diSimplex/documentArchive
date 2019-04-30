@@ -5,11 +5,15 @@
 \addDocumentDirectory%
   {t-diSimp/doc/context/third/diSimp}
 
+\prependMkIVCode{default}
+\addMITLicense{MkIVCode}{}{PerceptiSys Ltd (Stephen Gaito)}
 \createMkIVCodeFile%
   {default}%
   {t-diSimp.mkiv}%
   {A ConTeXt MkIV module}
 
+\prependLuaCode{default}
+\addMITLicense{LuaCode}{--}{PerceptiSys Ltd (Stephen Gaito)}
 \createLuaCodeFile%
   {default}%
   {t-diSimp.lua}%
@@ -37,6 +41,8 @@ contextDoc.targets(lpTargets)
 
 \stopLmsfile
 
+\prependLmsfile{default}
+\addMITLicense{Lmsfile}{--}{PerceptiSys Ltd (Stephen Gaito)}
 \createLmsfileFile%
   {default}%
   {lmsfile}%

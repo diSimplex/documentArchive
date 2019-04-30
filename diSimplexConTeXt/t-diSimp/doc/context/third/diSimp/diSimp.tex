@@ -1,0 +1,55 @@
+% A ConTeXt document
+
+\usemodule[t-diSimp]
+\usemodule[t-literate-progs]
+
+\setupinteraction[
+  state=start,
+  color=green,
+  stype=bold
+]
+\placebookmarks[chapter, section, subsection][chapter, section]
+\setupinteractionscreen[option=bookmark]
+
+\setuppapersize[A4]
+
+\setupindenting[medium,yes]
+
+% do not indent after itemize
+\setupitemgroup[itemize][indentnext=no]
+
+% indent the paragraphs after all sectioning heads 
+\setupheads[indentnext=yes]
+
+% indent paragraphs after formulas if there is a blank space in between
+\setupformulas[indentnext=auto]
+
+\starttext
+
+\component titlePages
+
+\component overview
+
+\component pageLayout
+
+\component documentSetup
+
+\component copyrights
+
+\component mathEnunciations
+
+\component diSimpMacros
+
+\startbackmatter
+
+  \component preamble
+
+  \component conclusions
+  
+  \startchapter[title=Bibliography]
+    \placelistofpublications
+  \stopchapter
+  
+\stopbackmatter
+
+\stoptext
