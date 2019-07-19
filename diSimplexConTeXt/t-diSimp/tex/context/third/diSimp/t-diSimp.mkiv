@@ -469,7 +469,19 @@
   }
 }
 
-% from file: documentSetup.tex after line: 500
+\def\showDiSimpMessages{
+  \directlua{
+    thirddata.diSimp.showDiSimpMessages(true)
+  }
+}
+
+\def\hideDiSimpMessages{
+  \directlua{
+    thirddata.diSimp.showDiSimpMessages(false)
+  }
+}
+
+% from file: documentSetup.tex after line: 550
 
 \defineconversionset[chapterAppendix][numbers,numbers,Characters][numbers]
 \definehead

@@ -81,6 +81,14 @@ interfaces.writestatus('diSimp', "loaded diSimp macros")
 
 -- from file: documentSetup.tex after line: 350
 
+local showMessages = false
+
+local function showDiSimpMessages(aShowMessages)
+  showMessages = aShowMessages
+end
+
+diSimp.showDiSimpMessages = showDiSimpMessages
+
 local insideComponent = {}
 insideComponent['component']   = 0
 insideComponent['environment'] = 0
@@ -97,16 +105,22 @@ end
 diSimp.lastDiSimpPath = lastDiSimpPath
 
 local function pushDiSimpPath(aFullPath)
-  texio.write_nl('pushDiSimpPath('..aFullPath..')')
+  if showMessages then
+    texio.write_nl('pushDiSimpPath('..aFullPath..')')
+  end
   local aFullPathDir =
     aFullPath:gsub('[^'..pathSeparator..']+$', '')
-  texio.write_nl('  aFullPathDir: ['..aFullPathDir..']')
+  if showMessages then
+    texio.write_nl('  aFullPathDir: ['..aFullPathDir..']')
+  end
   if aFullPathDir:sub(-1) ~= '/' then
     aFullPathDir = aFullPathDir..pathSeparator
   end
   tInsert(diSimpPaths, aFullPathDir)
-  for i, aPath in ipairs(diSimpPaths) do
-    texio.write_nl('diSimpPaths['..toStr(i)..']: ['..aPath..']')
+  if showMessages then
+    for i, aPath in ipairs(diSimpPaths) do
+      texio.write_nl('diSimpPaths['..toStr(i)..']: ['..aPath..']')
+    end
   end
 end
 
@@ -121,28 +135,40 @@ end
 pushDiSimpPath(file.collapsepath(environment.arguments.fulljobname,true))
 
 local function popDiSimpPath()
-  texio.write_nl('popDiSimpPath()')
-  tRemove(diSimpPaths)
-  for i, aPath in ipairs(diSimpPaths) do
-    texio.write_nl('diSimpPaths['..toStr(i)..']: ['..aPath..']')
+  if showMessages then
+    texio.write_nl('popDiSimpPath()')
   end
-  texio.write_nl('<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<')
+  tRemove(diSimpPaths)
+  if showMessages then
+    for i, aPath in ipairs(diSimpPaths) do
+      texio.write_nl('diSimpPaths['..toStr(i)..']: ['..aPath..']')
+    end
+  end
+  if showMessages then
+    texio.write_nl('<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<')
+  end
 end
 
 diSimp.popDiSimpPath = popDiSimpPath
 
 local function findDiSimpPath(curBasePath, componentPath, origBasePath)
-  texio.write_nl('findDiSimpPath(['..curBasePath..'],['..componentPath..'],['..origBasePath..'])')
+  if showMessages then
+    texio.write_nl('findDiSimpPath(['..curBasePath..'],['..componentPath..'],['..origBasePath..'])')
+  end
   local potentialPath =
     file.collapsepath(curBasePath..componentPath, true)
   if lfs.attributes(potentialPath..'.tex', 'mode') == 'file' then
-    texio.write_nl('found: ['..potentialPath..']')
+    if showMessages then
+      texio.write_nl('found: ['..potentialPath..']')
+    end
     return potentialPath
   end
   potentialPath =
     file.collapsepath(curBasePath..'doc/'..componentPath, true)
   if lfs.attributes(potentialPath..'.tex', 'mode') == 'file' then
-    texio.write_nl('found: ['..potentialPath..']')
+    if showMessages then
+      texio.write_nl('found: ['..potentialPath..']')
+    end
     return potentialPath
   end
   if curBasePath == '' or curBasePath == pathSeparator then
@@ -155,8 +181,10 @@ local function findDiSimpPath(curBasePath, componentPath, origBasePath)
 end
 
 local function diSimpComponent(componentType, componentPath)
-  texio.write_nl('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
-  texio.write_nl('diSimpComponent(['..componentType..'],['..componentPath..'])')
+  if showMessages then
+    texio.write_nl('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
+    texio.write_nl('diSimpComponent(['..componentType..'],['..componentPath..'])')
+  end
   if componentType == 'environment' and 1 < insideComponent['component'] then
     -- do nothing
   else
@@ -164,7 +192,9 @@ local function diSimpComponent(componentType, componentPath)
     -- OR we are an environment but inside the first start/stop component pair
     local basePath = lastDiSimpPath()
     local thisComponentPath = findDiSimpPath(basePath, componentPath, basePath)
-    texio.write_nl(' thisComponentPath: ['..thisComponentPath..']')
+    if showMessages then
+      texio.write_nl(' thisComponentPath: ['..thisComponentPath..']')
+    end
     pushDiSimpPath(thisComponentPath)
     tex.print({
       '\\'..componentType..' '..thisComponentPath,
@@ -176,44 +206,54 @@ end
 diSimp.diSimpComponent = diSimpComponent
 
 local function startDiSimpComponent(componentType, componentName)
-  texio.write_nl('startDiSimpComponent(['..componentType..'],['..componentName..']')
-  for k,v in pairs(insideComponent) do
-    texio.write_nl('insideComponent['..k..'] = '..toStr(v))
+  if showMessages then
+    texio.write_nl('startDiSimpComponent(['..componentType..'],['..componentName..']')
+    for k,v in pairs(insideComponent) do
+      texio.write_nl('insideComponent['..k..'] = '..toStr(v))
+    end
   end
   if insideComponent[componentType] < 1 then
     tex.print('\\start'..componentType..' '..componentName..'\\relax')
   end
   insideComponent[componentType] = insideComponent[componentType] + 1
-  texio.write_nl(
-    '\\startDiSimpComponent('..componentType..')'..
-    '['..toStr(insideComponent[componentType])..']'
-  )
+  if showMessages then
+    texio.write_nl(
+      '\\startDiSimpComponent('..componentType..')'..
+      '['..toStr(insideComponent[componentType])..']'
+    )
+  end
 end
 
 diSimp.startDiSimpComponent = startDiSimpComponent
 
 local function stopDiSimpComponent(componentType)
-  texio.write_nl('stopDiSimpComponent(['..componentType..']')
-  texio.write_nl(
-    '\\stopDiSimpComponent('..componentType..')'..
-    '['..toStr(insideComponent[componentType])..']'
-  )
+  if showMessages then
+    texio.write_nl('stopDiSimpComponent(['..componentType..']')
+    texio.write_nl(
+      '\\stopDiSimpComponent('..componentType..')'..
+      '['..toStr(insideComponent[componentType])..']'
+    )
+  end
   insideComponent[componentType] = insideComponent[componentType] - 1
-  for k,v in pairs(insideComponent) do
-    texio.write_nl('insideComponent['..k..'] = '..toStr(v))
+  if showMessages then
+    for k,v in pairs(insideComponent) do
+      texio.write_nl('insideComponent['..k..'] = '..toStr(v))
+    end
   end
   if insideComponent[componentType] < 1 then
     if insideComponent[componentType] < 0 then
       texio.write_nl('ERRROR: unbalanced number of \\stop'..componentType)
     end
-    texio.write_nl('CALLING \\stop'..componentType)
+    if showMessages then
+      texio.write_nl('CALLING \\stop'..componentType)
+    end
     tex.print('\\stop'..componentType..'\\relax')
   end
 end
 
 diSimp.stopDiSimpComponent = stopDiSimpComponent
 
--- from file: documentSetup.tex after line: 550
+-- from file: documentSetup.tex after line: 600
 
 -- repeat after me... this WILL break!!!
 --
