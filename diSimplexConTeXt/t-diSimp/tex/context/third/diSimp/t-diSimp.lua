@@ -79,7 +79,15 @@ local toStr   = tostring
 
 interfaces.writestatus('diSimp', "loaded diSimp macros")
 
--- from file: documentSetup.tex after line: 350
+-- from file: documentSetup.tex after line: 0
+
+local function setCodeOnly(codeOnlyBollean)
+  diSimp.codeOnly = codeOnlyBoolean
+end
+
+diSimp.setCodeOnly = setCodeOnly
+
+-- from file: documentSetup.tex after line: 400
 
 local showMessages = false
 
@@ -253,7 +261,7 @@ end
 
 diSimp.stopDiSimpComponent = stopDiSimpComponent
 
--- from file: documentSetup.tex after line: 600
+-- from file: documentSetup.tex after line: 650
 
 -- repeat after me... this WILL break!!!
 --
@@ -265,4 +273,45 @@ local function startAppendices(sectionDepth)
 end
 
 diSimp.startAppendices = startAppendices
+
+-- from file: documentSetup.tex after line: 700
+
+local function diSimpRecurseComponent(componentType, basePath, componentName)
+  diSimp.recurseDirs = diSimp.recurseDirs or { }
+  tInsert(diSimp.recurseDirs, basePath)
+  if not diSimp.codeOnly then
+    build.docDir = build.docDir or 'doc'
+    diSimpComponent(
+      componentType,
+      makePath{ '..', basePath, build.docDir, componentName}
+    )
+  end
+end
+
+diSimp.diSimpRecurseComponent = diSimpRecurseComponent
+
+local function addDiSimpRecurseDirs(aCodeStream)
+  if (type(diSimp.recurseDirs) ~= 'nil') and
+     (type(litProgs) ~= 'nil') and
+     (type(litProgs.setCodeStream) ~= 'nil') and
+     (type(litProgs.markCodeOrigin) ~= 'nil') and
+     (type(litProgs.addCode) ~= 'nil') and
+     (type(litProgs.addCode.default) ~= 'nil') then
+    aCodeStream = aCodeStream or 'default'
+    litProgs.setCodeStream('Lmsfile', aCodeStream)
+    litProgs.markCodeOrigin('Lmsfile')
+    local lmsfile = {}
+    tInsert(lmsfile, "recurseTargets{")
+    tInsert(lmsfile, "  subDirs = {")
+    for i, aSubDir in ipairs(diSimp.recurseTargets) do
+      tInsert(lmsfile, "    '"..aSubDir.."',")
+    end
+    tInsert(lmsfile, "  },")
+    tInsert(lmsfile, "}")
+--  litProgs.setPrepend('Lmsfile', aCodeStream, true)
+    litProgs.addCode.default('Lmsfile', tConcat(lmsfile, '\n'))
+  end
+end
+
+diSimp.addDiSimpRecuseDirs = addDiSimpRecurseDirs
 

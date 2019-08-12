@@ -150,6 +150,18 @@
 
 % from file: documentSetup.tex after line: 0
 
+\doifmodeelse{codeOnly}{
+  \directlua{
+    thirddata.diSimp.setCodeOnly(true)
+  }
+} {
+  \directlua{
+    thirddata.diSimp.setCodeOnly(false)
+  }
+}
+
+% from file: documentSetup.tex after line: 0
+
 \setupinteraction[
   state=start,
   color=green,
@@ -371,7 +383,7 @@
   \stopmakeup
 }
 
-% from file: documentSetup.tex after line: 200
+% from file: documentSetup.tex after line: 250
 
 \defineprocessor
   [definition]
@@ -389,7 +401,7 @@
 \def\useSymb#1{\indexSymbol{#1}#1}
 \def\useBoth#1{\index{#1}\indexSymbol{#1}#1}
 
-% from file: documentSetup.tex after line: 250
+% from file: documentSetup.tex after line: 300
 
 %% repeat after me.... this WILL break!!!
 %%
@@ -567,6 +579,20 @@
 }
 \def\stopSectionAppendices{
   \stopAppendicesBar
+}
+
+% from file: documentSetup.tex after line: 650
+
+\def\diSimpRecurseComponent#1#2{
+  \directlua{
+    thirddata.diSimp.diSimpRecurseComponent('component', '#1', '#2')
+  }
+}
+
+\def\addDiSimpRecurseDirs#1{
+  \directlua{
+    thirddata.diSimp.addDiSimpRecurseDirs('#1')
+  }
 }
 
 % from file: copyrights.tex after line: 0
