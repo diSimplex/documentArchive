@@ -2,3 +2,4 @@ buildDir
 *.pdf
 *.log
 *.tuc
+lmsfileInfo
