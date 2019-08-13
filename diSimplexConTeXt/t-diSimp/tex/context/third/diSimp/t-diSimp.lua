@@ -68,6 +68,7 @@ thirddata        = thirddata        or {}
 thirddata.diSimp = thirddata.diSimp or {}
 
 local diSimp   = thirddata.diSimp
+local litProgs = thirddata.literateProgs
 
 local tInsert = table.insert
 local tConcat = table.concat
@@ -81,8 +82,18 @@ interfaces.writestatus('diSimp', "loaded diSimp macros")
 
 -- from file: documentSetup.tex after line: 0
 
-local function setCodeOnly(codeOnlyBollean)
+local function setCodeOnly(codeOnlyBoolean)
+  if codeOnlyBoolean then
+    texio.write_nl('setCodeOnly to true')
+  else
+    texio.write_nl('setCodeOnly to false')
+  end
   diSimp.codeOnly = codeOnlyBoolean
+  if diSimp.codeOnly then
+    texio.write_nl('setCodeOnly now true')
+  else
+    texio.write_nl('setCodeOnly now false')
+  end
 end
 
 diSimp.setCodeOnly = setCodeOnly
@@ -276,42 +287,17 @@ diSimp.startAppendices = startAppendices
 
 -- from file: documentSetup.tex after line: 700
 
-local function diSimpRecurseComponent(componentType, basePath, componentName)
-  diSimp.recurseDirs = diSimp.recurseDirs or { }
-  tInsert(diSimp.recurseDirs, basePath)
+local function diSimpRecurseComponent(componentType, basePath, docDir, componentName)
+  if litProgs and litProgs.addLmsfileSubDirectory then
+    litProgs.addLmsfileSubDirectory(basePath)
+  end
   if not diSimp.codeOnly then
-    build.docDir = build.docDir or 'doc'
     diSimpComponent(
       componentType,
-      makePath{ '..', basePath, build.docDir, componentName}
+      makePath{ '..', basePath, docDir, componentName}
     )
   end
 end
 
 diSimp.diSimpRecurseComponent = diSimpRecurseComponent
-
-local function addDiSimpRecurseDirs(aCodeStream)
-  if (type(diSimp.recurseDirs) ~= 'nil') and
-     (type(litProgs) ~= 'nil') and
-     (type(litProgs.setCodeStream) ~= 'nil') and
-     (type(litProgs.markCodeOrigin) ~= 'nil') and
-     (type(litProgs.addCode) ~= 'nil') and
-     (type(litProgs.addCode.default) ~= 'nil') then
-    aCodeStream = aCodeStream or 'default'
-    litProgs.setCodeStream('Lmsfile', aCodeStream)
-    litProgs.markCodeOrigin('Lmsfile')
-    local lmsfile = {}
-    tInsert(lmsfile, "recurseTargets{")
-    tInsert(lmsfile, "  subDirs = {")
-    for i, aSubDir in ipairs(diSimp.recurseTargets) do
-      tInsert(lmsfile, "    '"..aSubDir.."',")
-    end
-    tInsert(lmsfile, "  },")
-    tInsert(lmsfile, "}")
---  litProgs.setPrepend('Lmsfile', aCodeStream, true)
-    litProgs.addCode.default('Lmsfile', tConcat(lmsfile, '\n'))
-  end
-end
-
-diSimp.addDiSimpRecuseDirs = addDiSimpRecurseDirs
 

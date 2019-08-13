@@ -583,15 +583,9 @@
 
 % from file: documentSetup.tex after line: 650
 
-\def\diSimpRecurseComponent#1#2{
+\def\diSimpRecurseComponent#1#2#3{
   \directlua{
-    thirddata.diSimp.diSimpRecurseComponent('component', '#1', '#2')
-  }
-}
-
-\def\addDiSimpRecurseDirs#1{
-  \directlua{
-    thirddata.diSimp.addDiSimpRecurseDirs('#1')
+    thirddata.diSimp.diSimpRecurseComponent('component', '#1', '#2', '#3')
   }
 }
 
