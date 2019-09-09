@@ -1,6 +1,6 @@
 % A ConTeXt MkIV module
 
-% from file: conclusions.tex after line: 0
+% from file: ~/ExpositionGit/tools/conTeXt/diSimplexConTeXt/diSimplexConTeXt/t-diSimp/doc/context/third/diSimp/conclusions.tex after line: 0
 
 %C Copyright 2019 PerceptiSys Ltd (Stephen Gaito)
 %C
@@ -26,7 +26,7 @@
 %C FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 %C OTHER DEALINGS IN THE SOFTWARE.
 
-% from file: preamble.tex after line: 0
+% from file: ~/ExpositionGit/tools/conTeXt/diSimplexConTeXt/diSimplexConTeXt/t-diSimp/doc/context/third/diSimp/preamble.tex after line: 0
 
 %C Copyright 2019 PerceptiSys Ltd (Stephen Gaito)
 %C
@@ -52,7 +52,7 @@
 %C FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 %C OTHER DEALINGS IN THE SOFTWARE.
 
-% from file: preamble.tex after line: 0
+% from file: ~/ExpositionGit/tools/conTeXt/diSimplexConTeXt/diSimplexConTeXt/t-diSimp/doc/context/third/diSimp/preamble.tex after line: 0
 
 %D \module
 %D   [     file=t-diSimp,
@@ -82,7 +82,7 @@
 \newdimen\diSimpTmpDimen
 \newskip\diSimpTmpSkip
 
-% from file: pageLayout.tex after line: 0
+% from file: ~/ExpositionGit/tools/conTeXt/diSimplexConTeXt/diSimplexConTeXt/t-diSimp/doc/context/third/diSimp/pageLayout.tex after line: 0
 
 % see: http://wiki.contextgarden.net/Layout
 
@@ -148,19 +148,7 @@
 
 \setups[diSimp:layout:\getvariable{diSimp}{layoutSize}]
 
-% from file: documentSetup.tex after line: 0
-
-\doifmodeelse{codeOnly}{
-  \directlua{
-    thirddata.diSimp.setCodeOnly(true)
-  }
-} {
-  \directlua{
-    thirddata.diSimp.setCodeOnly(false)
-  }
-}
-
-% from file: documentSetup.tex after line: 0
+% from file: ~/ExpositionGit/tools/conTeXt/diSimplexConTeXt/diSimplexConTeXt/t-diSimp/doc/context/third/diSimp/documentSetup.tex after line: 0
 
 \setupinteraction[
   state=start,
@@ -383,7 +371,7 @@
   \stopmakeup
 }
 
-% from file: documentSetup.tex after line: 250
+% from file: ~/ExpositionGit/tools/conTeXt/diSimplexConTeXt/diSimplexConTeXt/t-diSimp/doc/context/third/diSimp/documentSetup.tex after line: 200
 
 \defineprocessor
   [definition]
@@ -401,99 +389,7 @@
 \def\useSymb#1{\indexSymbol{#1}#1}
 \def\useBoth#1{\index{#1}\indexSymbol{#1}#1}
 
-% from file: documentSetup.tex after line: 300
-
-%% repeat after me.... this WILL break!!!
-%%
-%% this call pattern has been modeled upon the
-%% definition of \environment in file-job.mkvi
-%% on 2018/Nov/07 (experimental distribution)
-%%
-\unexpanded\def\diSimpEnvironment{
-  \doifelsenextoptionalcs%
-    \useDiSimpEnvironment%
-    \syst_structure_arg_disimp_environment%
-}
-
-\def\syst_structure_arg_disimp_environment  #1 {\useDiSimpEnvironment  [#1]}
-
-\unexpanded\def\useDiSimpEnvironment  [#1]{
-  \directlua{
-    thirddata.diSimp.diSimpComponent('environment', '#1')
-  }
-}
-
-%% repeat after me.... this WILL break!!!
-%%
-%% this call pattern has been modeled upon the
-%% definition of \startcomponent in file-job.mkvi
-%% on 2018/Nov/07 (experimental distribution)
-%%
-\unexpanded\def\startDiSimpComponent{
-  \doifelsenextoptionalcs%
-    \useStartDiSimpComponent%
-    \syst_structure_arg_start_disimp_component%
-}
-
-\def\syst_structure_arg_start_disimp_component  #1 {\useStartDiSimpComponent[#1]}
-
-\unexpanded\def\useStartDiSimpComponent  [#1]{
-  \directlua{
-    thirddata.diSimp.startDiSimpComponent('component', '#1')
-  }
-}
-
-\def\stopDiSimpComponent{
-  \directlua{
-    thirddata.diSimp.stopDiSimpComponent('component')
-  }
-}
-
-%% repeat after me.... this WILL break!!!
-%%
-%% this call pattern has been modeled upon the
-%% definition of \component in file-job.mkvi
-%% on 2018/Nov/07 (experimental distribution)
-%%
-\unexpanded\def\diSimpComponent{
-  \doifelsenextoptionalcs%
-    \useDiSimpComponent%
-    \syst_structure_arg_disimp_component%
-}
-
-\def\syst_structure_arg_disimp_component  #1 {  \useDiSimpComponent  [#1]}
-
-\unexpanded\def\useDiSimpComponent  [#1]{
-  \directlua{
-    thirddata.diSimp.diSimpComponent('component', '#1')
-  }
-}
-
-\def\popDiSimpPath{
-  \directlua{
-    thirddata.diSimp.popDiSimpPath()
-  }
-}
-
-\def\currentDiSimpPath{
-  \directlua{
-    tex.print(thirddata.diSimp.lastDiSimpPath())
-  }
-}
-
-\def\showDiSimpMessages{
-  \directlua{
-    thirddata.diSimp.showDiSimpMessages(true)
-  }
-}
-
-\def\hideDiSimpMessages{
-  \directlua{
-    thirddata.diSimp.showDiSimpMessages(false)
-  }
-}
-
-% from file: documentSetup.tex after line: 550
+% from file: ~/ExpositionGit/tools/conTeXt/diSimplexConTeXt/diSimplexConTeXt/t-diSimp/doc/context/third/diSimp/documentSetup.tex after line: 250
 
 \defineconversionset[chapterAppendix][numbers,numbers,Characters][numbers]
 \definehead
@@ -581,15 +477,19 @@
   \stopAppendicesBar
 }
 
-% from file: documentSetup.tex after line: 650
+% from file: ~/ExpositionGit/tools/conTeXt/diSimplexConTeXt/diSimplexConTeXt/t-diSimp/doc/context/third/diSimp/documentSetup.tex after line: 350
 
-\def\diSimpRecurseComponent#1#2#3{
-  \directlua{
-    thirddata.diSimp.diSimpRecurseComponent('component', '#1', '#2', '#3')
-  }
-}
+\let\diSimpEnvironment\litProgsEnvironment
+\let\startDiSimpComponent\startLitProgsComponent
+\let\stopDiSimpComponent\stopLitProgsComponent
+\let\diSimpComponent\litProgsComponent
+\let\popDiSimpPath\popLitProgsPath
+\let\currentDiSimpPath\currentLitProgsPath
+\let\showDiSimpMessages\showLitProgsMessages
+\let\hideDiSimpMessages\hideLitProgsMessages
+\let\diSimpRecurseComponent\litProgsRecurseComponent
 
-% from file: copyrights.tex after line: 0
+% from file: ~/ExpositionGit/tools/conTeXt/diSimplexConTeXt/diSimplexConTeXt/t-diSimp/doc/context/third/diSimp/copyrights.tex after line: 0
 
 \def\placeCopyrightPage#1#2{
   \startmakeup
@@ -683,7 +583,7 @@ License.
 \stopmakeup
 }
 
-% from file: copyrights.tex after line: 100
+% from file: ~/ExpositionGit/tools/conTeXt/diSimplexConTeXt/diSimplexConTeXt/t-diSimp/doc/context/third/diSimp/copyrights.tex after line: 100
 
 \def\placeMkIVCopyright#1{\addApacheLicense{MkIVCode}{}{#1}}
 
@@ -705,7 +605,7 @@ License.
   \addApacheLicense{Lmsfile}{--}{#1}
 }
 
-% from file: mathEnunciations.tex after line: 0
+% from file: ~/ExpositionGit/tools/conTeXt/diSimplexConTeXt/diSimplexConTeXt/t-diSimp/doc/context/third/diSimp/mathEnunciations.tex after line: 0
 
 %% Enunciations(AMS)/Enumerations(ConTeXt)
 %%
@@ -806,7 +706,7 @@ License.
   way=bysection,
 ]
 
-% from file: diSimpMacros.tex after line: 0
+% from file: ~/ExpositionGit/tools/conTeXt/diSimplexConTeXt/diSimplexConTeXt/t-diSimp/doc/context/third/diSimp/diSimpMacros.tex after line: 0
 
 % see: https://www.contextgarden.net/Rsfs
 %
@@ -992,7 +892,7 @@ License.
 \def\ToDo#1{\color[red]{\bf TODO: #1}}
 \let\TODO\ToDo
 
-% from file: preamble.tex after line: 0
+% from file: ~/ExpositionGit/tools/conTeXt/diSimplexConTeXt/diSimplexConTeXt/t-diSimp/doc/context/third/diSimp/preamble.tex after line: 0
 
 \protect \endinput
 

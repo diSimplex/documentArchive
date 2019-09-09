@@ -3,6 +3,10 @@
 \usemodule[t-diSimp]
 \usemodule[t-literate-progs]
 
+\showLitProgsMessages
+
+\startLitProgsComponent diSimp
+
 \setupinteraction[
   state=start,
   color=green,
@@ -26,25 +30,25 @@
 
 \starttext
 
-\component titlePages
+\litProgsComponent titlePages
 
-\component overview
+\litProgsComponent overview
 
-\component pageLayout
+\litProgsComponent pageLayout
 
-\component documentSetup
+\litProgsComponent documentSetup
 
-\component copyrights
+\litProgsComponent copyrights
 
-\component mathEnunciations
+\litProgsComponent mathEnunciations
 
-\component diSimpMacros
+\litProgsComponent diSimpMacros
 
 \startbackmatter
 
-  \component preamble
+  \litProgsComponent preamble
 
-  \component conclusions
+  \litProgsComponent conclusions
   
   \startchapter[title=Bibliography]
     \placelistofpublications
@@ -53,3 +57,5 @@
 \stopbackmatter
 
 \stoptext
+
+\stopLitProgsComponent
