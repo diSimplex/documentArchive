@@ -47,7 +47,7 @@ local application = logs.application {
 local report = application.report
 local lfs    = require('lfs')
 local http   = require('socket.http')
-local pp     = require('pl.pretty') -- for use while debugging
+--local pp     = require('pl.pretty') -- for use while debugging
 
 scripts               = scripts or { }
 scripts.xrefs         = scripts.xrefs or { }
