@@ -1,0 +1,41 @@
+% A ConTeXt document [master document: diSimp.tex]
+
+\chapter[title=Conclusion]
+
+\addDocumentDirectory%
+  {t-diSimp/doc/context/third/diSimp}
+
+\prependMkIVCode{default}
+\addMITLicense{MkIVCode}{}{PerceptiSys Ltd (Stephen Gaito)}
+\createMkIVCodeFile%
+  {default}%
+  {t-diSimp.mkiv}%
+  {A ConTeXt MkIV module}
+
+\prependLuaCode{default}
+\addMITLicense{LuaCode}{--}{PerceptiSys Ltd (Stephen Gaito)}
+\createLuaCodeFile%
+  {default}%
+  {t-diSimp.lua}%
+  {-- A Lua file}
+
+\addMainDocument{diSimp.tex}
+\addSubDocument{overview.tex}
+\addSubDocument{pageLayout.tex}
+\addSubDocument{documentSetup.tex}
+\addSubDocument{copyrights.tex}
+\addSubDocument{mathEnunciations.tex}
+\addSubDocument{diSimpMacros.tex}
+\addSubDocument{preamble.tex}
+\addSubDocument{conclusions.tex}
+\addConTeXtModuleDirectory%
+  {t-diSimp/tex/context/third/diSimp}
+
+\compileLmsfile{default}
+
+\prependLmsfile{default}
+\addMITLicense{Lmsfile}{--}{PerceptiSys Ltd (Stephen Gaito)}
+\createLmsfileFile%
+  {default}%
+  {lmsfile}%
+  {-- A Lua Make System file}

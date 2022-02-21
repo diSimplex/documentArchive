@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# This bash script automates running the ConTeXt mtxrun server
+
+echo ""
+echo "We are running the ConTeXt 'goodies' webserver in the foreground"
+echo "and on the local loop-back ip address for security reasons."
+echo ""
+echo "Type Ctrl-C to stop the server"
+echo ""
+
+xdg-open http://localhost:8088/mtx-server-ctx-startup.lua
+
+exec mtxrun --script server --auto

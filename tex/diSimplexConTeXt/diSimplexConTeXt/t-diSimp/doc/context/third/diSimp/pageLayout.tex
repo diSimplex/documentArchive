@@ -1,0 +1,84 @@
+% A ConTeXt document [master document: diSimp.tex]
+
+\chapter[title=Setting Page Layout]
+
+The following \ConTeXt\ commands can be very helpful in determining the 
+correct layout of all elements. 
+
+\starttyping
+  \showlayout
+  \showstruts
+  \showglyphs
+  \showfontkerns
+  \showmakeup[hbox]
+  \showmakeup[line]
+  \showallmakeup
+\stoptyping
+
+\startMkIVCode
+
+% see: http://wiki.contextgarden.net/Layout
+
+\definepapersize
+  [ustrade]
+  [
+    width=6in,
+    height=9in,
+    offset=0pt
+  ]
+
+\setvariable{diSimp}{layoutSize}{ustrade} %DEFAULT
+
+\doifmode{layout-ustrade}{
+  \setvariable{diSimp}{layoutSize}{ustrade}
+}
+\doifmode{layout-letter}{
+  \setvariable{diSimp}{layoutSize}{letter}
+}
+\doifmode{layout-a4}{
+  \setvariable{diSimp}{layoutSize}{A4}
+}
+
+\setvariable{diSimp}{printSize}{A4} %DEFAULT
+
+\doifmode{print-ustrade}{
+  \setvariable{diSimp}{printSize}{ustrade}
+}
+\doifmode{print-letter}{
+  \setvariable{diSimp}{printSize}{letter}
+}
+\doifmode{print-a4}{
+  \setvariable{diSimp}{printSize}{A4}
+}
+
+\setuppapersize
+  [\getvariable{diSimp}{layoutSize}]
+  [\getvariable{diSimp}{printSize}]
+
+\startsetups[diSimp:layout:ustrade]
+  \setuplayout
+    [
+      topspace=12.7mm,
+      backspace=12.7mm,
+      height=203.2mm,
+      width=127mm,
+      header=10mm,
+      footer=10mm,
+      margin=10mm,
+      margindistance=2.7mm,
+      location=middle,
+      marking=on
+    ]
+  \setuplayout[marking=on]
+  \setupbodyfont[10pt]
+\stopsetups
+
+\startsetups[diSimp:layout:letter]
+\stopsetups
+
+\startsetups[diSimp:layout:A4]
+\stopsetups
+
+\setups[diSimp:layout:\getvariable{diSimp}{layoutSize}]
+
+\stopMkIVCode

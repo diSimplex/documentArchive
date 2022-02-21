@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# This bash script runs the webfsd in the foreground
+
+if [ -z "$TEXROOT" ];  then
+  echo "Please choose which ConTeXt installation to use first"
+  exit 1
+fi
+
+echo ""
+echo "We are running webfsd in the foreground"
+echo "and on the local loop-back ip address"
+echo "for security reasons."
+echo ""
+echo "Type Ctrl-C to stop the server"
+echo ""
+
+cd $TEXROOT/../xrefs
+pwd
+
+xdg-open http://localhost:8000
+
+exec /usr/bin/webfsd -4 -i 127.0.0.1 -F -f index.html -e 0 $*

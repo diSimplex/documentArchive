@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# This bash script setups up various scripts which are useful for using a 
+# ConTeXt standalone installation up to date. 
+
+# ONLY use IF you place the following at the top of your .bashrc script:
+# ---------------------
+## The following lines ensure we source the .all.sh personal profile.d
+## scripts
+#if [ -d $HOME/.bash_profile.d ]; then
+#  for i in $HOME/.bash_profile.d/*.all.sh; do
+#    if [ -r $i ]; then
+#      source $i
+#    fi
+#  done
+#  unset i
+#fi
+# ---------------------
+#mkdir -p $HOME/.bash_profile.d
+#cp context.all.sh $HOME/.bash_profile.d
+
+cp ta-* $HOME/bin # start textadept
+cp web* $HOME/bin # start web servers to browse local ConTeXt code
+

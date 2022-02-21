@@ -1,0 +1,78 @@
+% A ConTeXt document [master document: diSimp.tex]
+
+\startchapter[title=Preamble]
+
+\prependMkIVCode{default}
+\startMkIVCode
+%D \module
+%D   [     file=t-diSimp,
+%D      version=2017.09.06,
+%D        title=\CONTEXT\ User module,
+%D     subtitle=The standard \ConTeXt\ module for diSimplex documents,
+%D       author=Stephen Gaito,
+%D         date=\currentdate,
+%D    copyright=PerceptiSys Ltd (Stephen Gaito),
+%D        email=stephen@perceptisys.co.uk,
+%D      license=MIT License]
+
+% begin info
+%
+% title   : diSimplex \ConTeXt\ definitions
+% comment : Provides standard \ConTeX\ macros for diSimplex papers
+% status  : under development, mkiv only
+%
+% end info
+
+\usemodule[literate-progs]
+
+\unprotect
+
+\ctxloadluafile{t-diSimp}
+\ctxloadluafile{t-diSimp-config}
+
+\newbox\diSimpTmpBox
+\newdimen\diSimpTmpDimen
+\newskip\diSimpTmpSkip
+
+\stopMkIVCode
+
+\prependMkIVCode{default}
+\addMITLicense{MkIVCode}{}{PerceptiSys Ltd (Stephen Gaito)}
+
+\startMkIVCode
+\protect \endinput
+\stopMkIVCode
+
+\prependLuaCode{default}
+\startLuaCode
+-- This is the lua code associated with t-diSimp.mkiv
+
+if not modules then modules = { } end modules ['t-diSimp'] = {
+    version   = 1.000,
+    comment   = "ConTeXt macros for diSimplex papers -- lua",
+    author    = "PerceptiSys Ltd (Stephen Gaito)",
+    copyright = "PerceptiSys Ltd (Stephen Gaito)",
+    license   = "MIT License"
+}
+
+thirddata        = thirddata        or {}
+thirddata.diSimp = thirddata.diSimp or {}
+
+local diSimp   = thirddata.diSimp
+local litProgs = thirddata.literateProgs
+
+local tInsert = table.insert
+local tConcat = table.concat
+local tRemove = table.remove
+local tSort   = table.sort
+local sFmt    = string.format
+local sMatch  = string.match
+local toStr   = tostring
+
+interfaces.writestatus('diSimp', "loaded diSimp macros")
+\stopLuaCode
+
+\prependLuaCode{default}
+\addMITLicense{LuaCode}{--}{PerceptiSys Ltd (Stephen Gaito)}
+
+

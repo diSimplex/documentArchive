@@ -1,0 +1,900 @@
+% A ConTeXt MkIV module
+
+% from file: ~/ExpositionGit/tools/conTeXt/diSimplexConTeXt/diSimplexConTeXt/t-diSimp/doc/context/third/diSimp/conclusions.tex after line: 0
+
+%C Copyright 2019 PerceptiSys Ltd (Stephen Gaito)
+%C
+%C Permission is hereby granted, free of charge, to any person
+%C obtaining a copy of this software and associated documentation
+%C files (the "Software"), to deal in the Software without
+%C restriction, including without limitation the rights to use,
+%C copy, modify, merge, publish, distribute, sublicense, and/or sell
+%C copies of the Software, and to permit persons to whom the
+%C Software is furnished to do so, subject to the following
+%C conditions:
+%C
+%C    The above copyright notice and this permission notice shall
+%C    be included in all copies or substantial portions of the
+%C    Software.
+%C
+%C THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+%C EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+%C OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+%C NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+%C HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+%C WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+%C FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+%C OTHER DEALINGS IN THE SOFTWARE.
+
+% from file: ~/ExpositionGit/tools/conTeXt/diSimplexConTeXt/diSimplexConTeXt/t-diSimp/doc/context/third/diSimp/preamble.tex after line: 0
+
+%C Copyright 2019 PerceptiSys Ltd (Stephen Gaito)
+%C
+%C Permission is hereby granted, free of charge, to any person
+%C obtaining a copy of this software and associated documentation
+%C files (the "Software"), to deal in the Software without
+%C restriction, including without limitation the rights to use,
+%C copy, modify, merge, publish, distribute, sublicense, and/or sell
+%C copies of the Software, and to permit persons to whom the
+%C Software is furnished to do so, subject to the following
+%C conditions:
+%C
+%C    The above copyright notice and this permission notice shall
+%C    be included in all copies or substantial portions of the
+%C    Software.
+%C
+%C THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+%C EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+%C OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+%C NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+%C HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+%C WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+%C FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+%C OTHER DEALINGS IN THE SOFTWARE.
+
+% from file: ~/ExpositionGit/tools/conTeXt/diSimplexConTeXt/diSimplexConTeXt/t-diSimp/doc/context/third/diSimp/preamble.tex after line: 0
+
+%D \module
+%D   [     file=t-diSimp,
+%D      version=2017.09.06,
+%D        title=\CONTEXT\ User module,
+%D     subtitle=The standard \ConTeXt\ module for diSimplex documents,
+%D       author=Stephen Gaito,
+%D         date=\currentdate,
+%D    copyright=PerceptiSys Ltd (Stephen Gaito),
+%D        email=stephen@perceptisys.co.uk,
+%D      license=MIT License]
+
+% begin info
+%
+% title   : diSimplex \ConTeXt\ definitions
+% comment : Provides standard \ConTeX\ macros for diSimplex papers
+% status  : under development, mkiv only
+%
+% end info
+
+\usemodule[literate-progs]
+
+\unprotect
+
+\ctxloadluafile{t-diSimp}
+\ctxloadluafile{t-diSimp-config}
+
+\newbox\diSimpTmpBox
+\newdimen\diSimpTmpDimen
+\newskip\diSimpTmpSkip
+
+% from file: ~/ExpositionGit/tools/conTeXt/diSimplexConTeXt/diSimplexConTeXt/t-diSimp/doc/context/third/diSimp/pageLayout.tex after line: 0
+
+% see: http://wiki.contextgarden.net/Layout
+
+\definepapersize
+  [ustrade]
+  [
+    width=6in,
+    height=9in,
+    offset=0pt
+  ]
+
+\setvariable{diSimp}{layoutSize}{ustrade} %DEFAULT
+
+\doifmode{layout-ustrade}{
+  \setvariable{diSimp}{layoutSize}{ustrade}
+}
+\doifmode{layout-letter}{
+  \setvariable{diSimp}{layoutSize}{letter}
+}
+\doifmode{layout-a4}{
+  \setvariable{diSimp}{layoutSize}{A4}
+}
+
+\setvariable{diSimp}{printSize}{A4} %DEFAULT
+
+\doifmode{print-ustrade}{
+  \setvariable{diSimp}{printSize}{ustrade}
+}
+\doifmode{print-letter}{
+  \setvariable{diSimp}{printSize}{letter}
+}
+\doifmode{print-a4}{
+  \setvariable{diSimp}{printSize}{A4}
+}
+
+\setuppapersize
+  [\getvariable{diSimp}{layoutSize}]
+  [\getvariable{diSimp}{printSize}]
+
+\startsetups[diSimp:layout:ustrade]
+  \setuplayout
+    [
+      topspace=12.7mm,
+      backspace=12.7mm,
+      height=203.2mm,
+      width=127mm,
+      header=10mm,
+      footer=10mm,
+      margin=10mm,
+      margindistance=2.7mm,
+      location=middle,
+      marking=on
+    ]
+  \setuplayout[marking=on]
+  \setupbodyfont[10pt]
+\stopsetups
+
+\startsetups[diSimp:layout:letter]
+\stopsetups
+
+\startsetups[diSimp:layout:A4]
+\stopsetups
+
+\setups[diSimp:layout:\getvariable{diSimp}{layoutSize}]
+
+% from file: ~/ExpositionGit/tools/conTeXt/diSimplexConTeXt/diSimplexConTeXt/t-diSimp/doc/context/third/diSimp/documentSetup.tex after line: 0
+
+\setupinteraction[
+  state=start,
+  color=green,
+  stype=bold
+]
+
+\placebookmarks%
+  [ % these are the headers to bookmark (the order here seems important :-(
+    part,
+    chapter,
+    section,    chapterAppendix,
+    subsection, subChapterAppendix, sectionAppendix,
+  ]
+  [ % these are the headers which will be OPEN in the bookmark list
+    part,
+    chapter,
+    section, chapterAppendix
+  ]
+
+\setupinteractionscreen[option=bookmark]
+
+\setupindenting[medium,yes]
+
+% do not indent after itemize
+\setupitemgroup[itemize][indentnext=no]
+
+% indent the paragraphs after all sectioning heads
+\setupheads[indentnext=yes]
+\setuphead[part][placehead=yes]
+
+% indent paragraphs after formulas if there is a blank space in between
+\setupformulas[indentnext=auto]
+
+% block quotes
+\definedelimitedtext
+  [BlockQuote]
+  [\v!blockquote]
+\setupdelimitedtext
+  [BlockQuote]
+  [
+    style=\sl,
+    before={\setupinterlinespace[line=2.4ex]\blank[1ex]},
+    after={\blank[1ex]}
+  ]
+
+%\usebtxdataset[joylolBib.lua]
+\usebtxdefinitions[apa]
+%\setupbtx[apa:cite][ % see mkiv-publications.pdf page: 15
+%  alternative=short
+%]
+%\setupbtxrendering[apa][ % see mkiv-publications.pdf page: ??
+%  sorttype=short,
+%  numbering=short
+%]
+\setupbtxlist[apa][
+  alternative=paragraph,
+  width=fit,
+  distance=.5em,
+  margin=3em % hanging list
+]
+
+% TITLE PAGES
+
+\def\setShortTitle#1{
+
+  \setuppagenumbering
+    [
+      alternative=doublesided,
+      way=bypart
+    ]
+
+  \setupheadertexts[]
+  \setupheadertexts[text]
+    [\setups{oddPageHeader}]
+    [\setups{headerBar}]
+    [\setups{headerBar}]
+    [\setups{evenPageHeader}]
+ 
+  \startsetups[headerBar]
+    \framed
+      [
+        topframe=off,
+        leftframe=off,
+        rightframe=off,
+        bottomframe=on,
+        width=\textwidth
+      ]{
+        \hfill
+      }
+  \stopsetups
+ 
+  \startsetups[oddPageHeader]
+    \framed
+      [
+        topframe=off,
+        leftframe=off,
+        rightframe=off,
+        bottomframe=on,
+        width=\textwidth
+      ]{
+        \rlap{\headnumber[chapter][current]}
+        \hfill
+        \getmarking[chapter]
+      }
+  \stopsetups
+
+  \startsetups[evenPageHeader]
+    \framed
+      [
+        topframe=off,
+        leftframe=off,
+        rightframe=off,
+        bottomframe=on,
+        width=\textwidth
+      ]{
+        \getmarking[section]
+        \hfill
+        \llap{\headnumber[section][current]}
+      }
+  \stopsetups
+
+  \setupfootertexts[]
+  \setupfootertexts
+    [\setups{oddPageFooter}]
+    [\setups{footerBar}]
+    [\setups{footerBar}]
+    [\setups{evenPageFooter}]
+
+  \startsetups[footerBar]
+    \framed
+      [
+        topframe=on,
+        leftframe=off,
+        rightframe=off,
+        bottomframe=off,
+        width=\textwidth
+      ]{
+        \hfill
+      }
+  \stopsetups
+ 
+  \startsetups[oddPageFooter]
+    \framed
+      [
+        topframe=on,
+        leftframe=off,
+        rightframe=off,
+        bottomframe=off,
+        width=\textwidth
+      ]{
+        \rlap{\pagenumber}
+        \hfill
+        \llap{#1}
+      }
+  \stopsetups
+
+  \startsetups[evenPageFooter]
+    \framed
+      [
+        topframe=on,
+        leftframe=off,
+        rightframe=off,
+        bottomframe=off,
+        width=\textwidth
+      ]{
+        \rlap{#1}
+        \hfill
+        \llap{\pagenumber}
+      }
+  \stopsetups
+}
+
+\def\placeTitlePage#1#2#3{
+  \startmakeup
+
+  \blank[5cm]
+ 
+  \startalignment[center]
+  \dontleavehmode
+  \tfd\bf
+  #1
+  \stopalignment
+
+  \blank[1cm]
+
+  \startalignment[center]
+  \dontleavehmode
+  \tfc\bf
+  #2
+  \stopalignment
+
+  \blank[1cm]
+
+  \startalignment[center]
+  \dontleavehmode
+  \tfb\bf
+  #3
+  \stopalignment
+
+  \blank[8cm]
+
+  \startalignment[flushright]
+  \dontleavehmode
+  \tfa\bf
+  \bTABLE
+    \setupTABLE[r][each][frame=off]
+    \bTR \bTD Dr Stephen Gaito \eTD \eTR
+    \bTR \bTD PerceptiSys Ltd \eTD \eTR
+    \bTR \bTD \date \eTD \eTR
+  \eTABLE
+  \stopalignment
+
+  \blank[5cm]
+
+  \startalignment[center]
+  Perish \emph{then} Publish Press.
+  \stopalignment
+
+  \stopmakeup
+}
+
+% from file: ~/ExpositionGit/tools/conTeXt/diSimplexConTeXt/diSimplexConTeXt/t-diSimp/doc/context/third/diSimp/documentSetup.tex after line: 200
+
+\defineprocessor
+  [definition]
+  [style=bold]
+
+\defineregister
+  [indexSymbol]
+  [indexSymbols]
+
+\def\defineWord#1{\index[definition->]{#1}#1}
+\def\defineSymb#1{\indexSymbol[definition->]{#1}#1}
+\def\defineBoth#1{\index[definition->]{#1}\indexSymbol[definition->]{#1}#1}
+
+\def\useWord#1{\index{#1}#1}
+\def\useSymb#1{\indexSymbol{#1}#1}
+\def\useBoth#1{\index{#1}\indexSymbol{#1}#1}
+
+% from file: ~/ExpositionGit/tools/conTeXt/diSimplexConTeXt/diSimplexConTeXt/t-diSimp/doc/context/third/diSimp/documentSetup.tex after line: 250
+
+\defineconversionset[chapterAppendix][numbers,numbers,Characters][numbers]
+\definehead
+  [chapterAppendix]
+  [\c!section=\s!section-3,
+   \c!default=\v!section,
+   sectionconversionset=chapterAppendix]
+
+\definehead
+  [subChapterAppendix]
+  [\c!section=\s!section-4,
+   \c!default=\v!subsection,
+   sectionconversionset=chapterAppendix]
+
+\definehead
+  [subSubChapterAppendix]
+  [\c!section=\s!section-5,
+   \c!default=\v!subsubsection,
+   sectionconversionset=chapterAppendix]
+
+\defineconversionset[sectionAppendix][numbers,numbers,numbers,Characters][numbers]
+\definehead
+  [sectionAppendix]
+  [\c!section=\s!section-4,
+   \c!default=\v!subsection,
+   sectionconversionset=sectionAppendix]
+
+\definehead
+  [subSectionAppendix]
+  [\c!section=\s!section-5,
+   \c!default=\v!subsubsection,
+   sectionconversionset=sectionAppendix]
+
+\definecombinedlist
+  [\v!content]
+  [\v!part,
+   \v!chapter,
+   \v!section,
+   chapterAppendix,
+   \v!subsection,
+   subChapterAppendix,
+   sectionAppendix,
+   \v!subsubsection,
+   subsubChapterAppendix,
+   subSectionAppendix,
+   \v!subsubsubsection,
+   \v!subsubsubsubsection]
+  [\c!level=\v!subsubsubsubsection,
+   \c!criterium=\v!local]
+
+\setuplist [chapterAppendix]       [\c!width=3\emwidth]
+\setuplist [subChapterAppendix]    [\c!width=4\emwidth]
+\setuplist [subSubChapterAppendix] [\c!width=5\emwidth]
+
+\setuplist [sectionAppendix]    [\c!width=4\emwidth]
+\setuplist [subSectionAppendix] [\c!width=5\emwidth]
+
+\newdimen\appendixDimen
+
+\def\startAppendicesBar{
+  \startsidebar[rulethickness=10bp, rulecolor=gray, distance=10bp]
+  \appendixDimen=\textwidth
+  \advance\appendixDimen by 20bp
+  \startsidebar[rulethickness=10bp, rulecolor=lightgray, distance=-\appendixDimen]
+}
+
+\def\stopAppendicesBar{
+  \stopsidebar
+  \stopsidebar
+}
+
+\def\startChapterAppendices{
+  \directlua{thirddata.diSimp.startAppendices(3)}
+  \startAppendicesBar
+}
+\def\startSectionAppendices{
+  \directlua{thirddata.diSimp.startAppendices(4)}
+  \startAppendicesBar
+}
+
+\def\stopChapterAppendices{
+  \stopAppendicesBar
+}
+\def\stopSectionAppendices{
+  \stopAppendicesBar
+}
+
+% from file: ~/ExpositionGit/tools/conTeXt/diSimplexConTeXt/diSimplexConTeXt/t-diSimp/doc/context/third/diSimp/documentSetup.tex after line: 350
+
+\let\diSimpEnvironment\litProgsEnvironment
+\let\startDiSimpComponent\startLitProgsComponent
+\let\stopDiSimpComponent\stopLitProgsComponent
+\let\diSimpComponent\litProgsComponent
+\let\popDiSimpPath\popLitProgsPath
+\let\currentDiSimpPath\currentLitProgsPath
+\let\showDiSimpMessages\showLitProgsMessages
+\let\hideDiSimpMessages\hideLitProgsMessages
+\let\diSimpRecurseComponent\litProgsRecurseComponent
+
+% from file: ~/ExpositionGit/tools/conTeXt/diSimplexConTeXt/diSimplexConTeXt/t-diSimp/doc/context/third/diSimp/copyrights.tex after line: 0
+
+\def\placeCopyrightPage#1#2{
+  \startmakeup
+
+%\blank[10cm]
+\blank[6cm]
+
+\doifvariable{diSimp}{ISBN}{
+\bold{ISBN-13:} \getvariable{diSimp}{ISBN}
+\blank
+}
+
+\doifvariable{diSimp}{VERSION}{
+\bold{Version:} \getvariable{diSimp}{VERSION}
+\blank
+}
+
+This document was prepared using \ConTeXt\ and \LuaTeX\ on
+\currentdate[month] \currentdate[day], \currentdate[year].
+
+
+\blank
+
+\hrule
+\blank[medium]
+
+Unless explicitly stated otherwise, all content contained in this
+document which is \emph{not software code} is
+
+\blank[small]
+
+\startcenteraligned
+\bold{Copyright © \currentdate[year] #1}
+\stopcenteraligned
+
+\blank[small]
+
+and is licensed for release under the Creative Commons
+Attribution-ShareAlike 4.0 International License (CC-BY-SA 4.0 License).
+You may obtain a copy of the License at
+
+\blank[small]
+
+\startcenteraligned
+\bold{\type{http://creativecommons.org/licenses/by-sa/4.0/}}
+\stopcenteraligned
+
+\blank[small]
+
+Unless required by applicable law or agreed to in writing, all non-code
+content distributed under the above CC-BY-SA 4.0 License is distributed
+on an \quote{AS IS} BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+either express or implied. See the CC-BY-SA 4.0 License whose URL is
+listed above for the specific language governing permissions and
+limitations under the License.
+
+\blank[medium]
+\hrule
+\blank[medium]
+
+Again, unless explicitly stated otherwise, all content contained in this
+document which is \emph{software code} is
+
+\blank[small]
+
+\startcenteraligned
+\bold{Copyright © \currentdate[year] #1}
+\stopcenteraligned
+
+\blank[small]
+
+and is licensed under the Apache License, Version 2.0 (the "License");
+you may not use this code except in compliance with the License. You may
+obtain a copy of the License at
+
+\blank[small]
+
+\startcenteraligned
+\bold{\type{http://www.apache.org/licenses/LICENSE-2.0}}
+\stopcenteraligned
+
+\blank[small]
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the Apache 4.0 License is distributed on an \quote{AS
+IS} BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+or implied. See the Apache 2.0 License whose URL is listed above for the
+specific language governing permissions and limitations under the
+License.
+
+\stopmakeup
+}
+
+% from file: ~/ExpositionGit/tools/conTeXt/diSimplexConTeXt/diSimplexConTeXt/t-diSimp/doc/context/third/diSimp/copyrights.tex after line: 100
+
+\def\placeMkIVCopyright#1{\addApacheLicense{MkIVCode}{}{#1}}
+
+\def\placeLuaCopyright#1{\addApacheLicense{LuaCode}{--}{#1}}
+
+\def\placeCHeaderCopyright#1{\addApacheLicense{CHeader}{//}{#1}}
+\def\placeCCodeCopyright#1{\addApacheLicense{CCode}{//}{#1}}
+\def\addCTestCopyright#1{\addCTestApacheLicense{default}{#1}}
+
+\def\placeJoylolCodeCopyright#1{\addApacheLicense{JoylolCode}{//}{#1}}
+\def\prependJoylolCodeCopyright#1{
+  \prependJoylolCode{default}
+  \addApacheLicense{JoylolCode}{//}{#1}
+}
+
+\def\placeLmsfileCopyright#1{\addApacheLicense{Lmsfile}{--}{#1}}
+\def\prependLmsfileCopyright#1{
+  \prependLmsfile{default}
+  \addApacheLicense{Lmsfile}{--}{#1}
+}
+
+% from file: ~/ExpositionGit/tools/conTeXt/diSimplexConTeXt/diSimplexConTeXt/t-diSimp/doc/context/third/diSimp/mathEnunciations.tex after line: 0
+
+%% Enunciations(AMS)/Enumerations(ConTeXt)
+%%
+%% AKA: Theorems, Lemmas, Proofs, etc
+%%
+%% See "AMS Style Guide" Section 4.1 Enunciations page 31
+%% See "Excursions" Enumerations / Numbered Definitions Chapter 19 page 46
+%%
+%% See also the second (MkIV) half of: http://wiki.contextgarden.net/Proclaim
+%%
+
+%% NOTE there is currently a bug in the prefixsegments parser which
+%% REQUIRES either the comma or a ']' at the end of the prefixsegments
+%% value.
+
+\defineenumeration
+  [mathEnuciations]
+  [
+    alternative=serried,
+    right={.~},
+    prefix=yes,
+    prefixsegments=chapter:section,
+    way=bysection,
+  ]
+
+%% Theorem enunciations (section 4.1.1 AMS Style Guide: Journals)
+
+\defineenumeration
+  [Theorem]
+  [mathEnuciations]
+  [
+    text=Theorem,
+    style=\it,
+    closesymbol=$\Box$,
+  ]
+
+\defineenumeration
+  [Lemma]
+  [Theorem]
+  [
+    text=Lemma,
+  ]
+
+\defineenumeration
+  [Assertion]
+  [Theorem]
+  [
+    text=Assertion,
+  ]
+
+%% Proof enunciations (section 4.1.2 AMS Style Guide: Journals)
+
+\defineenumeration
+  [Proof]
+  [
+    text=Proof{.~},
+    headstyle=\bi,
+    alternative=serried,
+    right={.~},
+    closesymbol=$\Box$,
+    number=no,
+  ]
+ 
+%% Definition enunciations (section 4.1.3 AMS Style Guide: Journals)
+
+\defineenumeration
+  [Definition]
+  [mathEnuciations]
+  [
+    text=Definition,
+    closesymbol=$\Box$,
+  ]
+ 
+\defineenumeration
+  [Example]
+  [Definition]
+  [
+    text=Example,
+    closesymbol=$\Box$,
+  ]
+
+%% Remark enunciations (section 4.1.4 AMS Style Guide: Journals)
+
+\defineenumeration
+  [Remark]
+  [mathEnuciations]
+  [
+    text=Remark,
+    headstyle=\bi,
+    closesymbol=$\Box$,
+  ]
+ 
+%% Math formula numbers ... numbers by chapter:section
+
+\setupformula[
+  prefix=yes,
+  prefixsegments=chapter:section,
+  way=bysection,
+]
+
+% from file: ~/ExpositionGit/tools/conTeXt/diSimplexConTeXt/diSimplexConTeXt/t-diSimp/doc/context/third/diSimp/diSimpMacros.tex after line: 0
+
+% see: https://www.contextgarden.net/Rsfs
+%
+% unfortunately this is mkii style ;-(
+%  the \definefamilysynonym has changed but I can not find out the
+%  mkiv equivalent
+%
+%\starttypescript [math] [modern,computer-modern,latin-modern,ams] [size]
+%     \definebodyfont [17.3pt,14.4pt,12pt,11pt,10pt,9pt][mm][mc=rsfs10 sa 1]
+%     \definebodyfont [8pt,7pt] [mm] [mc=rsfs7 sa 1]
+%     \definebodyfont [6pt,5pt,4pt] [mm] [mc=rsfs5 sa 1]
+%\stoptypescript
+%
+%\definefamilysynonym [default] [scriptfamily] [mc]
+%
+%\def\scr{\fam\purefamily{scriptfamily}} % To use ${\scr ABC}$
+%\def\script#1{ {\scr#1}}                 % To use $\script{ABC}$
+
+% see:  https://wiki.contextgarden.net/math_calligraphic
+% NOW included in context-experimental..
+%
+%\definefallbackfamily
+%  [mainface]
+%  [math]
+%  [Asana Math]
+%  [range={uppercasescript,lowercasescript}]
+%
+%\definefontfamily [mainface] [rm] [Latin Modern]
+%\definefontfamily [mainface] [math] [Latin Modern Math]
+%
+%\setupbodyfont[mainface]
+%
+%\starttext
+%${\cal ABCDEFGHIJKLMNOPQRSTUVWXYZ}$
+%
+%${\cal abcdefghijklmnopqrstuvwxyz}$
+%
+%The space of distributions on $\Omega$ is denoted by ${\cal D}'(\Omega)$, while ${\cal S}({\Bbb R}^n)$ is the space of Schwartz functions, and ${\cal S}'({\Bbb R}^n)$ is its dual.
+%
+%\startformula
+%\langle T,\phi \rangle_{ {\cal D}'(\Omega),{\cal D}(\Omega)}
+%\stopformula
+%
+%\noindent The set of admissible controls is denoted by ${\cal U}_{\rm ad}$.
+%\stoptext
+%
+% ConTeXt's default body font is: modern-designsize
+% as defined in:
+%
+%font-set.mkvi:54:     {\def\m_font_fallback_name{modern-designsize}}%       % this might become 'modern'
+%
+% note that it is defined via \m_font_fallback_name as part of the default
+% font loading process in font-set.mkvi. As such the above might not work.
+
+
+\def\longRightIsoArrow{
+  \setbox\diSimpTmpBox=\hbox{$\longrightarrow$}
+  \diSimpTmpDimen\wd\diSimpTmpBox
+  \mathrel{\hbox{\rlap{$\longrightarrow$}\raise0.7ex\hbox to \diSimpTmpDimen {\hfil$\sim$\hfil\hfil}}}
+}
+
+\def\joylol{\inlinemath{\type{JoyLoL}}}
+\def\joylolZero{\inlinemath{\type{JoyLoL}_0}}
+\def\joylolMinus{\inlinemath{\type{JoyLoL}_{-1}}}
+\def\joylolCoAlg{\inlinemath{\type{JoyLoLCoAlg}}}
+\def\joylolSExp{\inlinemath{\type{JoyLoLSExp}}}
+\def\joylolRM{\inlinemath{\type{JoyLoLRM}}}
+\def\joylolCF{\inlinemath{\type{JoyLoLCF}}}
+\def\jPeg{\inlinemath{\type{jPEG}}}
+\def\jPEG{\inlinemath{\type{jPEG}}}
+\def\lol{\inlinemath{\text{LoL}}}
+\def\wflol{\inlinemath{\text{LoL}_{\rm wf}}}
+\def\lols{\inlinemath{\text{LoLs}}}
+\def\wflols{\inlinemath{\text{wf-LoLs}}}
+
+\def\catLoL{\inlinemath{\text{\bf LoL}}}
+\def\catWFLoL{\inlinemath{\text{\bf LoL}_{\rm wf}}}
+\def\funcLoL{\inlinemath{L}}
+\def\funcWFLoL{\inlinemath{L_{\rm wf}}}
+
+\def\Set{\inlinemath{\text{\bf Set}}}
+
+\def\explicitCompose#1#2{\inlinemath{#1;#2}}
+\def\compose#1#2{\inlinemath{#1 \; #2}}
+\def\ndChoice#1#2{\inlinemath{#1 \Vert #2}}
+\def\repets#1{\inlinemath{#1^{\star}}}
+\def\test#1{\inlinemath{#1?}}
+
+\def\true{\type{true}}
+\def\false{\type{false}}
+\def\isNil{\type{isNil}}
+\let\bottom=\bot
+\let\emptySet=\emptyset
+\let\infinity=\infty
+
+\unexpanded\def\powerSet{\dosingleempty\doPowerSet}
+\unexpanded\def\doPowerSet[#1]{
+  \iffirstargument\doPowerSetSingle{#1}%
+  \else\doPowerSetZero%
+  \fi%
+}
+\def\doPowerSetSingle#1{\inlinemath{\cal P(#1)}}
+\def\doPowerSetZero{\inlinemath{\cal P}}
+
+\def\sets{\inlinemath{\text{Set}}}
+
+\startuseMPgraphic{MMundiNarrowTopBar}{textWidth,textHeight}
+  draw
+    (0                ,0                       ) --
+    (0                ,0.75*\MPvar{textHeight}  ) --
+    (\MPvar{textWidth},0.75*\MPvar{textHeight}  )
+    withpen   pencircle scaled 2pt
+    withcolor \MPcolor{gray} ;
+\stopuseMPgraphic
+
+\startuseMPgraphic{MMundiNarrowBottomBar}{textWidth,textHeight}
+  draw
+    (0                ,\MPvar{textHeight}  ) --
+    (\MPvar{textWidth},\MPvar{textHeight}  ) --
+    (\MPvar{textWidth},1.75*\MPvar{textHeight})
+    withpen   pencircle scaled 2pt
+    withcolor  \MPcolor{gray} ;
+\stopuseMPgraphic
+
+\def\MMundi#1{
+\setbox\diSimpTmpBox=\hbox{#1}%
+\diSimpTmpDimen\wd\diSimpTmpBox%
+\setupMPvariables[MMundiNarrowTopBar]%
+[textWidth=1.05\diSimpTmpDimen,textHeight=0.5\lineheight]%
+\setupMPvariables[MMundiNarrowBottomBar]%
+[textWidth=1.05\diSimpTmpDimen,textHeight=0.5\lineheight]%
+\hbox to 1.05\diSimpTmpDimen {
+\rlap{\raise0.5ex\hbox{\useMPgraphic{MMundiNarrowTopBar}}}%
+\rlap{\lower0.5ex\hbox{\useMPgraphic{MMundiNarrowBottomBar}}}%
+\hfil\hbox{#1}\hfil}}
+
+\startuseMPgraphic{MMundiTopBar}{textWidth,textHeight}
+  draw
+    (0                ,0                   ) --
+    (0                ,\MPvar{textHeight}  ) --
+    (\MPvar{textWidth},\MPvar{textHeight}  )
+    withpen   pencircle scaled 3pt
+    withcolor \MPcolor{gray} ;
+ 
+  label("\color[darkgray]{Classical commentary}", (0.25*\MPvar{textWidth}, \MPvar{textHeight})) ;
+ 
+  setbounds currentpicture to
+    (0                ,0                   ) --
+    (0                ,2*\MPvar{textHeight}) --
+    (\MPvar{textWidth},2*\MPvar{textHeight}) --
+    (\MPvar{textWidth},0                   ) --
+    cycle ;
+\stopuseMPgraphic
+
+\startuseMPgraphic{MMundiBottomBar}{textWidth,textHeight}
+  draw
+    (0                ,\MPvar{textHeight}  ) --
+    (\MPvar{textWidth},\MPvar{textHeight}  ) --
+    (\MPvar{textWidth},2*\MPvar{textHeight})
+    withpen   pencircle scaled 3pt
+    withcolor  \MPcolor{gray} ;
+ 
+  setbounds currentpicture to
+    (0                ,0                   ) --
+    (0                ,2*\MPvar{textHeight}) --
+    (\MPvar{textWidth},2*\MPvar{textHeight}) --
+    (\MPvar{textWidth},0                   ) --
+    cycle ;
+\stopuseMPgraphic
+
+\def\startMMundi{
+  \setupMPvariables[MMundiTopBar]
+    [textWidth=\textwidth,textHeight=0.5\lineheight]
+  \useMPgraphic{MMundiTopBar}
+}
+
+\def\stopMMundi{
+  \setupMPvariables[MMundiBottomBar]
+    [textWidth=\textwidth,textHeight=0.5\lineheight]
+  \endgraf\useMPgraphic{MMundiBottomBar}
+}
+
+\def\ToDo#1{\color[red]{\bf TODO: #1}}
+\let\TODO\ToDo
+
+% from file: ~/ExpositionGit/tools/conTeXt/diSimplexConTeXt/diSimplexConTeXt/t-diSimp/doc/context/third/diSimp/preamble.tex after line: 0
+
+\protect \endinput
+

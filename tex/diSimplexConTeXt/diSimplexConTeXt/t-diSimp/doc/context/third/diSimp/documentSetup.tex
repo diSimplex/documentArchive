@@ -1,0 +1,366 @@
+% A ConTeXt document [master document: diSimp.tex]
+
+\chapter[title=Setting up diSimp documents]
+
+\startMkIVCode
+\setupinteraction[
+  state=start,
+  color=green,
+  stype=bold
+]
+
+\placebookmarks%
+  [ % these are the headers to bookmark (the order here seems important :-(
+    part,
+    chapter,
+    section,    chapterAppendix,
+    subsection, subChapterAppendix, sectionAppendix,
+  ]
+  [ % these are the headers which will be OPEN in the bookmark list
+    part,
+    chapter,
+    section, chapterAppendix
+  ]
+
+\setupinteractionscreen[option=bookmark]
+
+\setupindenting[medium,yes]
+
+% do not indent after itemize
+\setupitemgroup[itemize][indentnext=no]
+
+% indent the paragraphs after all sectioning heads 
+\setupheads[indentnext=yes]
+\setuphead[part][placehead=yes]
+
+% indent paragraphs after formulas if there is a blank space in between
+\setupformulas[indentnext=auto] 
+
+% block quotes
+\definedelimitedtext
+  [BlockQuote]
+  [\v!blockquote]
+\setupdelimitedtext
+  [BlockQuote]
+  [
+    style=\sl,
+    before={\setupinterlinespace[line=2.4ex]\blank[1ex]},
+    after={\blank[1ex]}
+  ]
+
+%\usebtxdataset[joylolBib.lua]
+\usebtxdefinitions[apa]
+%\setupbtx[apa:cite][ % see mkiv-publications.pdf page: 15
+%  alternative=short
+%]
+%\setupbtxrendering[apa][ % see mkiv-publications.pdf page: ??
+%  sorttype=short,
+%  numbering=short
+%]
+\setupbtxlist[apa][
+  alternative=paragraph,
+  width=fit,
+  distance=.5em,
+  margin=3em % hanging list
+]
+
+% TITLE PAGES
+
+\def\setShortTitle#1{
+
+  \setuppagenumbering
+    [
+      alternative=doublesided,
+      way=bypart
+    ]
+
+  \setupheadertexts[]
+  \setupheadertexts[text]
+    [\setups{oddPageHeader}]
+    [\setups{headerBar}]
+    [\setups{headerBar}]
+    [\setups{evenPageHeader}]
+    
+  \startsetups[headerBar]
+    \framed
+      [
+        topframe=off,
+        leftframe=off,
+        rightframe=off,
+        bottomframe=on,
+        width=\textwidth
+      ]{
+        \hfill
+      }
+  \stopsetups
+  
+  \startsetups[oddPageHeader]
+    \framed
+      [
+        topframe=off,
+        leftframe=off,
+        rightframe=off,
+        bottomframe=on,
+        width=\textwidth
+      ]{
+        \rlap{\headnumber[chapter][current]}
+        \hfill
+        \getmarking[chapter]
+      }
+  \stopsetups
+
+  \startsetups[evenPageHeader]
+    \framed
+      [
+        topframe=off,
+        leftframe=off,
+        rightframe=off,
+        bottomframe=on,
+        width=\textwidth
+      ]{
+        \getmarking[section]
+        \hfill
+        \llap{\headnumber[section][current]}
+      }
+  \stopsetups
+
+  \setupfootertexts[]
+  \setupfootertexts
+    [\setups{oddPageFooter}]
+    [\setups{footerBar}]
+    [\setups{footerBar}]
+    [\setups{evenPageFooter}]
+
+  \startsetups[footerBar]
+    \framed
+      [
+        topframe=on,
+        leftframe=off,
+        rightframe=off,
+        bottomframe=off,
+        width=\textwidth
+      ]{
+        \hfill
+      }
+  \stopsetups
+  
+  \startsetups[oddPageFooter]
+    \framed
+      [
+        topframe=on,
+        leftframe=off,
+        rightframe=off,
+        bottomframe=off,
+        width=\textwidth
+      ]{
+        \rlap{\pagenumber}
+        \hfill
+        \llap{#1}
+      }
+  \stopsetups
+
+  \startsetups[evenPageFooter]
+    \framed
+      [
+        topframe=on,
+        leftframe=off,
+        rightframe=off,
+        bottomframe=off,
+        width=\textwidth
+      ]{
+        \rlap{#1}
+        \hfill
+        \llap{\pagenumber}
+      }
+  \stopsetups
+}
+
+\def\placeTitlePage#1#2#3{
+  \startmakeup
+
+  \blank[5cm]
+  
+  \startalignment[center]
+  \dontleavehmode
+  \tfd\bf
+  #1
+  \stopalignment
+
+  \blank[1cm]
+
+  \startalignment[center]
+  \dontleavehmode
+  \tfc\bf
+  #2
+  \stopalignment
+
+  \blank[1cm]
+
+  \startalignment[center]
+  \dontleavehmode
+  \tfb\bf
+  #3
+  \stopalignment
+
+  \blank[8cm]
+
+  \startalignment[flushright]
+  \dontleavehmode
+  \tfa\bf
+  \bTABLE
+    \setupTABLE[r][each][frame=off]
+    \bTR \bTD Dr Stephen Gaito \eTD \eTR
+    \bTR \bTD PerceptiSys Ltd \eTD \eTR
+    \bTR \bTD \date \eTD \eTR
+  \eTABLE
+  \stopalignment
+
+  \blank[5cm]
+
+  \startalignment[center]
+  Perish \emph{then} Publish Press.
+  \stopalignment
+
+  \stopmakeup
+}
+\stopMkIVCode
+
+\section[title=Indexing Symbols and Subjects]
+
+\startMkIVCode
+
+\defineprocessor
+  [definition]
+  [style=bold]
+
+\defineregister
+  [indexSymbol]
+  [indexSymbols]
+
+\def\defineWord#1{\index[definition->]{#1}#1}
+\def\defineSymb#1{\indexSymbol[definition->]{#1}#1}
+\def\defineBoth#1{\index[definition->]{#1}\indexSymbol[definition->]{#1}#1}
+
+\def\useWord#1{\index{#1}#1}  
+\def\useSymb#1{\indexSymbol{#1}#1}  
+\def\useBoth#1{\index{#1}\indexSymbol{#1}#1}
+
+\stopMkIVCode
+
+\section[title=Setup chapter and section appendices]
+
+\startMkIVCode
+
+\defineconversionset[chapterAppendix][numbers,numbers,Characters][numbers]
+\definehead
+  [chapterAppendix]
+  [\c!section=\s!section-3,
+   \c!default=\v!section,
+   sectionconversionset=chapterAppendix]
+
+\definehead
+  [subChapterAppendix]
+  [\c!section=\s!section-4,
+   \c!default=\v!subsection,
+   sectionconversionset=chapterAppendix]
+
+\definehead
+  [subSubChapterAppendix]
+  [\c!section=\s!section-5,
+   \c!default=\v!subsubsection,
+   sectionconversionset=chapterAppendix]
+
+\defineconversionset[sectionAppendix][numbers,numbers,numbers,Characters][numbers]
+\definehead
+  [sectionAppendix]
+  [\c!section=\s!section-4,
+   \c!default=\v!subsection,
+   sectionconversionset=sectionAppendix]
+
+\definehead
+  [subSectionAppendix]
+  [\c!section=\s!section-5,
+   \c!default=\v!subsubsection,
+   sectionconversionset=sectionAppendix]
+
+\definecombinedlist
+  [\v!content]
+  [\v!part,
+   \v!chapter,
+   \v!section,
+   chapterAppendix,
+   \v!subsection,
+   subChapterAppendix,
+   sectionAppendix,
+   \v!subsubsection,
+   subsubChapterAppendix,
+   subSectionAppendix,
+   \v!subsubsubsection,
+   \v!subsubsubsubsection]
+  [\c!level=\v!subsubsubsubsection,
+   \c!criterium=\v!local]
+
+\setuplist [chapterAppendix]       [\c!width=3\emwidth]
+\setuplist [subChapterAppendix]    [\c!width=4\emwidth]
+\setuplist [subSubChapterAppendix] [\c!width=5\emwidth]
+
+\setuplist [sectionAppendix]    [\c!width=4\emwidth]
+\setuplist [subSectionAppendix] [\c!width=5\emwidth]
+
+\newdimen\appendixDimen
+
+\def\startAppendicesBar{
+  \startsidebar[rulethickness=10bp, rulecolor=gray, distance=10bp]
+  \appendixDimen=\textwidth
+  \advance\appendixDimen by 20bp
+  \startsidebar[rulethickness=10bp, rulecolor=lightgray, distance=-\appendixDimen]
+}
+
+\def\stopAppendicesBar{
+  \stopsidebar
+  \stopsidebar
+}
+
+\def\startChapterAppendices{
+  \directlua{thirddata.diSimp.startAppendices(3)}
+  \startAppendicesBar
+}
+\def\startSectionAppendices{
+  \directlua{thirddata.diSimp.startAppendices(4)}
+  \startAppendicesBar
+}
+
+\def\stopChapterAppendices{
+  \stopAppendicesBar
+}
+\def\stopSectionAppendices{
+  \stopAppendicesBar
+}
+\stopMkIVCode
+
+\startLuaCode
+
+-- repeat after me... this WILL break!!!
+--
+local function startAppendices(sectionDepth)
+  local numbers = structures.documents.data.numbers
+  for i=sectionDepth,#numbers,1 do
+    numbers[i] = 0
+  end
+end
+
+diSimp.startAppendices = startAppendices
+
+\stopLuaCode
+
+\startMkIVCode
+\let\diSimpEnvironment\litProgsEnvironment
+\let\startDiSimpComponent\startLitProgsComponent
+\let\stopDiSimpComponent\stopLitProgsComponent
+\let\diSimpComponent\litProgsComponent
+\let\popDiSimpPath\popLitProgsPath
+\let\currentDiSimpPath\currentLitProgsPath
+\let\showDiSimpMessages\showLitProgsMessages
+\let\hideDiSimpMessages\hideLitProgsMessages
+\let\diSimpRecurseComponent\litProgsRecurseComponent
+\stopMkIVCode

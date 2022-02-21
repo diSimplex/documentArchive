@@ -1,0 +1,27 @@
+#!/bin/bash
+
+# This bash script downloads the ConTeXt beta standalone
+
+# Ensure we have a clean installation
+#
+sudo rm -rf beta
+sudo mkdir beta
+cd beta
+
+# Get the install script
+#
+sudo wget http://minimals.contextgarden.net/setup/first-setup.sh
+
+# Install MKiv and all modules using the beta
+#
+sudo sh ./first-setup.sh --context=beta -- engine=luatex --modules=all
+
+# Now ensure our mtx-xrefs scripts a linked in
+#
+echo "installing local changes"
+
+sudo mkdir -p xrefs
+sudo chown -R stg.stg xrefs
+
+sudo chmod -R a+w tex/texmf-cache
+

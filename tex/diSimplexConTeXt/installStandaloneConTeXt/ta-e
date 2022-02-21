@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# This bash script starts up textadept using the experimental ConTeXt
+
+. /usr/local/context/experimental/tex/setuptex
+
+exec textadept

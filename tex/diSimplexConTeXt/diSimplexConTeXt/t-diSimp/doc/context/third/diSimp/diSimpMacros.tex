@@ -1,0 +1,191 @@
+% A ConTeXt document [master document: diSimp.tex]
+
+\chapter[title=diSimplex macros]
+
+\startMkIVCode
+
+% see: https://www.contextgarden.net/Rsfs
+%
+% unfortunately this is mkii style ;-(
+%  the \definefamilysynonym has changed but I can not find out the
+%  mkiv equivalent
+%
+%\starttypescript [math] [modern,computer-modern,latin-modern,ams] [size]
+%     \definebodyfont [17.3pt,14.4pt,12pt,11pt,10pt,9pt][mm][mc=rsfs10 sa 1]
+%     \definebodyfont [8pt,7pt] [mm] [mc=rsfs7 sa 1]
+%     \definebodyfont [6pt,5pt,4pt] [mm] [mc=rsfs5 sa 1]
+%\stoptypescript
+%
+%\definefamilysynonym [default] [scriptfamily] [mc]
+%
+%\def\scr{\fam\purefamily{scriptfamily}} % To use ${\scr ABC}$
+%\def\script#1{ {\scr#1}}                 % To use $\script{ABC}$
+
+% see:  https://wiki.contextgarden.net/math_calligraphic
+% NOW included in context-experimental..
+%
+%\definefallbackfamily
+%  [mainface]
+%  [math]
+%  [Asana Math]
+%  [range={uppercasescript,lowercasescript}]
+%
+%\definefontfamily [mainface] [rm] [Latin Modern]
+%\definefontfamily [mainface] [math] [Latin Modern Math]
+%
+%\setupbodyfont[mainface]
+%
+%\starttext
+%${\cal ABCDEFGHIJKLMNOPQRSTUVWXYZ}$
+%
+%${\cal abcdefghijklmnopqrstuvwxyz}$
+%
+%The space of distributions on $\Omega$ is denoted by ${\cal D}'(\Omega)$, while ${\cal S}({\Bbb R}^n)$ is the space of Schwartz functions, and ${\cal S}'({\Bbb R}^n)$ is its dual.
+%
+%\startformula
+%\langle T,\phi \rangle_{ {\cal D}'(\Omega),{\cal D}(\Omega)}
+%\stopformula
+%
+%\noindent The set of admissible controls is denoted by ${\cal U}_{\rm ad}$.
+%\stoptext
+%
+% ConTeXt's default body font is: modern-designsize
+% as defined in: 
+%
+%font-set.mkvi:54:     {\def\m_font_fallback_name{modern-designsize}}%       % this might become 'modern'
+%
+% note that it is defined via \m_font_fallback_name as part of the default
+% font loading process in font-set.mkvi. As such the above might not work.
+
+
+\def\longRightIsoArrow{
+  \setbox\diSimpTmpBox=\hbox{$\longrightarrow$}
+  \diSimpTmpDimen\wd\diSimpTmpBox
+  \mathrel{\hbox{\rlap{$\longrightarrow$}\raise0.7ex\hbox to \diSimpTmpDimen {\hfil$\sim$\hfil\hfil}}}
+}
+
+\def\joylol{\inlinemath{\type{JoyLoL}}}
+\def\joylolZero{\inlinemath{\type{JoyLoL}_0}}
+\def\joylolMinus{\inlinemath{\type{JoyLoL}_{-1}}}
+\def\joylolCoAlg{\inlinemath{\type{JoyLoLCoAlg}}}
+\def\joylolSExp{\inlinemath{\type{JoyLoLSExp}}}
+\def\joylolRM{\inlinemath{\type{JoyLoLRM}}}
+\def\joylolCF{\inlinemath{\type{JoyLoLCF}}}
+\def\jPeg{\inlinemath{\type{jPEG}}}
+\def\jPEG{\inlinemath{\type{jPEG}}}
+\def\lol{\inlinemath{\text{LoL}}}
+\def\wflol{\inlinemath{\text{LoL}_{\rm wf}}}
+\def\lols{\inlinemath{\text{LoLs}}}
+\def\wflols{\inlinemath{\text{wf-LoLs}}}
+
+\def\catLoL{\inlinemath{\text{\bf LoL}}}
+\def\catWFLoL{\inlinemath{\text{\bf LoL}_{\rm wf}}}
+\def\funcLoL{\inlinemath{L}}
+\def\funcWFLoL{\inlinemath{L_{\rm wf}}}
+
+\def\Set{\inlinemath{\text{\bf Set}}}
+
+\def\explicitCompose#1#2{\inlinemath{#1;#2}}
+\def\compose#1#2{\inlinemath{#1 \; #2}}
+\def\ndChoice#1#2{\inlinemath{#1 \Vert #2}}
+\def\repets#1{\inlinemath{#1^{\star}}}
+\def\test#1{\inlinemath{#1?}}
+
+\def\true{\type{true}}
+\def\false{\type{false}}
+\def\isNil{\type{isNil}}
+\let\bottom=\bot
+\let\emptySet=\emptyset
+\let\infinity=\infty
+
+\unexpanded\def\powerSet{\dosingleempty\doPowerSet}
+\unexpanded\def\doPowerSet[#1]{
+  \iffirstargument\doPowerSetSingle{#1}%
+  \else\doPowerSetZero%
+  \fi%
+}
+\def\doPowerSetSingle#1{\inlinemath{\cal P(#1)}}
+\def\doPowerSetZero{\inlinemath{\cal P}}
+
+\def\sets{\inlinemath{\text{Set}}}
+
+\startuseMPgraphic{MMundiNarrowTopBar}{textWidth,textHeight}
+  draw
+    (0                ,0                       ) --
+    (0                ,0.75*\MPvar{textHeight}  ) --
+    (\MPvar{textWidth},0.75*\MPvar{textHeight}  )
+    withpen   pencircle scaled 2pt
+    withcolor \MPcolor{gray} ;
+\stopuseMPgraphic
+
+\startuseMPgraphic{MMundiNarrowBottomBar}{textWidth,textHeight}
+  draw 
+    (0                ,\MPvar{textHeight}  ) -- 
+    (\MPvar{textWidth},\MPvar{textHeight}  ) -- 
+    (\MPvar{textWidth},1.75*\MPvar{textHeight})
+    withpen   pencircle scaled 2pt
+    withcolor  \MPcolor{gray} ;
+\stopuseMPgraphic
+
+\def\MMundi#1{
+\setbox\diSimpTmpBox=\hbox{#1}%
+\diSimpTmpDimen\wd\diSimpTmpBox%
+\setupMPvariables[MMundiNarrowTopBar]%
+[textWidth=1.05\diSimpTmpDimen,textHeight=0.5\lineheight]%
+\setupMPvariables[MMundiNarrowBottomBar]%
+[textWidth=1.05\diSimpTmpDimen,textHeight=0.5\lineheight]%
+\hbox to 1.05\diSimpTmpDimen {
+\rlap{\raise0.5ex\hbox{\useMPgraphic{MMundiNarrowTopBar}}}%
+\rlap{\lower0.5ex\hbox{\useMPgraphic{MMundiNarrowBottomBar}}}%
+\hfil\hbox{#1}\hfil}}
+
+\startuseMPgraphic{MMundiTopBar}{textWidth,textHeight}
+  draw
+    (0                ,0                   ) --
+    (0                ,\MPvar{textHeight}  ) --
+    (\MPvar{textWidth},\MPvar{textHeight}  )
+    withpen   pencircle scaled 3pt
+    withcolor \MPcolor{gray} ;
+    
+  label("\color[darkgray]{Classical commentary}", (0.25*\MPvar{textWidth}, \MPvar{textHeight})) ;
+    
+  setbounds currentpicture to
+    (0                ,0                   ) --
+    (0                ,2*\MPvar{textHeight}) --
+    (\MPvar{textWidth},2*\MPvar{textHeight}) --
+    (\MPvar{textWidth},0                   ) --
+    cycle ;
+\stopuseMPgraphic
+
+\startuseMPgraphic{MMundiBottomBar}{textWidth,textHeight}
+  draw 
+    (0                ,\MPvar{textHeight}  ) -- 
+    (\MPvar{textWidth},\MPvar{textHeight}  ) -- 
+    (\MPvar{textWidth},2*\MPvar{textHeight})
+    withpen   pencircle scaled 3pt
+    withcolor  \MPcolor{gray} ;
+    
+  setbounds currentpicture to
+    (0                ,0                   ) --
+    (0                ,2*\MPvar{textHeight}) --
+    (\MPvar{textWidth},2*\MPvar{textHeight}) --
+    (\MPvar{textWidth},0                   ) --
+    cycle ;
+\stopuseMPgraphic
+
+\def\startMMundi{
+  \setupMPvariables[MMundiTopBar]
+    [textWidth=\textwidth,textHeight=0.5\lineheight]
+  \useMPgraphic{MMundiTopBar}
+}
+
+\def\stopMMundi{
+  \setupMPvariables[MMundiBottomBar]
+    [textWidth=\textwidth,textHeight=0.5\lineheight]
+  \endgraf\useMPgraphic{MMundiBottomBar}
+}
+
+\def\ToDo#1{\color[red]{\bf TODO: #1}}
+\let\TODO\ToDo
+
+\stopMkIVCode
