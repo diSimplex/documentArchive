@@ -1,0 +1,10 @@
+return {
+
+  default = {
+    verbose = true,
+    lua = 'lua',
+    lpath = './lua/src/?.lua',
+    cpath = './lua/csrc/?.so'
+  }
+
+}

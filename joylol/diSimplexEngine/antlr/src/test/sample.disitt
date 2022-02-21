@@ -1,0 +1,79 @@
+% This is a test of the DiSiTT parser
+%
+% This is a simple comment
+
+ x:A % Is a simple judgement
+ 
+ x:A,y:B % Is a simple context
+ 
+ % For the following see: https://en.wikipedia.org/wiki/Turnstile_%28symbol%29
+ 
+ x:A,y:B |- x:A % Is a judgement in a context
+ 
+ x:A,y:B ⊢ x:A % Is ALSO a judgement in a context
+
+ x:A,y:B \vdash x:A % Is also a judgement in a context
+ 
+ % For the following see: https://en.wikipedia.org/wiki/Double_turnstile
+ 
+ x:A |= x:A % Is not (yet) a judgement in a context 
+ 
+ x:A ⊨ x:A % Is not (yet) a judgement in a context
+
+ x:A \vDash x:A % Is not (yet) a judgement in a context
+ 
+ x:A \models x:A % Is not (yet) a judgement in a context
+ 
+ % functional LaTeX style
+ 
+ \proof{
+   \judgement{x:A,y:B}{x:A}
+   \judgement{c:A,d:B}{c:A}
+ }{
+   \judgement{y:B}{x:A}
+ }
+ 
+ % Computer language style
+ 
+ Proof
+   x:A,y:B |- x:A ;
+   c:A,d:B |- c:A ;
+ =>
+   y:B |- x:A
+ 
+ % BussProof style
+ 
+ Assumption x:A,y:B |- x:A ;
+ Assumption c:A,d:B |- c:A;
+ Conclusion2 y:B |- x:A
+ 
+% \begin{theorem}
+% The following conditions are equivalent:
+% \begin{itemize}
+%   \item $f$ is an isomorphism
+%   \item $f$ is epic and split monic
+%   \item $f$ is monic and split epic
+% \end{itemize}
+% \end{theorem}
+ 
+ f:Isomorphism
+ f:Epic
+ f:SplitMonic
+ f:Monic
+ f:SplitEpic
+ 
+ Definition
+   f:Isomorphism \iff \exists{A}\exists{B}\exists{g}\suchThat\arrow{f}{A}{B}\and\arrow{g}{B}{A}\and\equals{\compose{g}{f}}{\identity{A}}\and\equals{\compose{f}{g}}{\identity{B}}
+   
+ Definition
+   f:Epic \iff \exists{A}\exists{B}\forAll{C}\forAll{\arrow{x}{B}{C}}\forAll{\arrow{y}{B}{C}}\suchThat\equals{\compose{x}{f}}{\compose{y}{f}}\then\equals{x}{y}
+   
+ Definition
+   f:Monic \iff \exists{A}\exists{B}\forAll{C}\forAll{\arrow{x}{C}{B}}\forAll{\arrow{y}{C}{B}}\suchThat\equals{\compose{f}{x}}{\compose{f}{y}}\then\equals{x}{y}
+   
+ Definition
+   f:SplitMonic \iff \exists{A}\exists{B}\exists{g}\suchThat\arrow{f}{A}{B}\and\arrow{g}{B}{A}\and\equals{\compose{g}{f}}{\identity{A}}
+   
+ Definition
+   f:SplitEpic \iff \exists{A}\exists{B}\exists{g}\suchThat\arrow{f}{A}{B}\and\arrow{g}{B}{A}\and\equals{\compose{f}{g}}{\identity{B}}
+  

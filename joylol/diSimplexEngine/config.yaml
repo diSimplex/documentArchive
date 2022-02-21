@@ -1,0 +1,69 @@
+# This cookbook configuration is used to configure the tasks required 
+# to maintain the diSimplexEngine paper.
+#
+
+paper:
+  name: diSimplexEngine
+  version: 1.0.0
+
+biblatex:
+  ignoreFields:
+    - abstract
+
+texStyle:
+  name: disitt-engine
+  version: 1.0.0
+  files: []
+
+lua:
+  rock:
+    cModules: 
+      diSimplexLuaC:
+        'csrc/diSimplexEngine/dynArray.c':
+          - csrc/diSimplexEngine/dynArray.h
+          - csrc/diSimplexEngine/dynArray.c
+        'csrc/diSimplexEngine/diSiTT.c':
+          - csrc/diSimplexEngine/dynArray.h
+          - csrc/diSimplexEngine/dynArray.c
+          - csrc/diSimplexEngine/diSiTT.h
+        'csrc/diSimplexEngine/diSimplex.c':
+          - csrc/diSimplexEngine/dynArray.h
+          - csrc/diSimplexEngine/dynArray.c
+          - csrc/diSimplexEngine/diSiTT.h
+          - csrc/diSimplexEngine/diSimplex.h
+        'csrc/diSimplexEngine/diStructure.c':
+          - csrc/diSimplexEngine/dynArray.h
+          - csrc/diSimplexEngine/dynArray.c
+          - csrc/diSimplexEngine/diSiTT.h
+          - csrc/diSimplexEngine/diSimplex.h
+          - csrc/diSimplexEngine/diStructure.h
+        'csrc/diSimplexLua.c':
+          - csrc/diSimplexEngine/dynArray.h
+          - csrc/diSimplexEngine/dynArray.c
+          - csrc/diSimplexEngine/diSiTT.h
+          - csrc/diSimplexEngine/diSiTT.c
+          - csrc/diSimplexEngine/diSimplex.h
+          - csrc/diSimplexEngine/diSimplex.c
+          - csrc/diSiTTLua.h
+          - csrc/diSimplexLua.h
+        'csrc/diStructureLua.c':
+          - csrc/diSimplexEngine/dynArray.h
+          - csrc/diSimplexEngine/dynArray.c
+          - csrc/diSimplexEngine/diSiTT.h
+          - csrc/diSimplexEngine/diSiTT.c
+          - csrc/diSimplexEngine/diSimplex.h
+          - csrc/diSimplexEngine/diSimplex.c
+          - csrc/diSimplexEngine/diStructure.h
+          - csrc/diSimplexEngine/diStructure.c
+          - csrc/diSiTTLua.h
+          - csrc/diSimplexLua.h
+          - csrc/diStructureLua.h
+        'csrc/diSiTTLua.c':
+          - csrc/diSimplexEngine/dynArray.h
+          - csrc/diSimplexEngine/dynArray.c
+          - csrc/diSimplexEngine/diSiTT.h
+          - csrc/diSimplexEngine/diSiTT.c
+          - csrc/diSimplexEngine/diSimplex.h
+          - csrc/diSimplexEngine/diSimplex.c
+          - csrc/diSiTTLua.h
+

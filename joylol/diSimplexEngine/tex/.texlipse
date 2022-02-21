@@ -1,0 +1,14 @@
+#TeXlipse project settings
+#Mon Jan 13 09:42:29 GMT 2014
+markTmpDer=true
+builderNum=2
+outputDir=
+makeIndSty=
+bibrefDir=
+outputFormat=pdf
+tempDir=tmp
+mainTexFile=diSimplexEngine.tex
+outputFile=diSimplexEngine.pdf
+langSpell=en
+markDer=true
+srcDir=
