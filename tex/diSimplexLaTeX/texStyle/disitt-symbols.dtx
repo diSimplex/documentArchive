@@ -1,0 +1,1754 @@
+% \changes{0.1b}{2014/02/02}{Initial version}
+%
+% \iffalse
+%<*never>
+\documentclass{amsart}
+\usepackage{doc}
+\usepackage{disitt}
+\usepackage{hyperref}
+\newcommand{\define}[2]{\emph{\textbf{#1}}}
+\GetFileInfo{disitt-engine.sty}
+\CodelineIndex
+\EnableCrossrefs
+\RecordChanges
+\begin{document}
+\CheckSum{12}
+\DocInput{disitt-symbols.dtx}
+\section{Copyright and \LaTeX\ Project Public License}
+\begin{verbatim}
+%txsBeginComment
+Copyright (C) 2014 Stephen Gaito (PerceptiSys Ltd)
+
+This work may be distributed and/or modified under the conditions of the
+LaTeX Project Public License, either version  1.3  of  this license or (at
+your option) any later version.
+
+The latest version of this license is in
+http://www.latex-project.org/lppl.txt and  version 1.3 or later is part of
+all distributions of LaTeX version 2005/12/01 or later.
+
+This work has the LPPL maintenance status `maintained'.
+
+The Current Maintainer of this work is Stephen Gaito.
+
+The released source can be found at:
+https://github.com/diSimplex/diSimplexEngine/tree/master/texStyle  The
+
+Development source can be found at:
+https://github.com/stephengaito/diSimplexEngine/tree/master/texStyle
+
+This work consists of the files disitt.tex, disitt-example.tex, 
+disitt.dtx, disittSymbols.dtx and disitt.ins and the derived files:
+disitt.sty, disitt.cwl, disittSymbols.sty, disittSymbols.cwl
+and disitt.pdf.
+%txsEndComment
+% \end{verbatim}
+\PrintIndex
+\PrintChanges
+\end{document}
+%</never>
+% \fi
+%
+% \DoNotIndex{\edef,\advance,\else,\csname,\endcsname,\expandafter}
+% \DoNotIndex{\ifx,\fi,\input,\ifnum,\relax,\newcount,\romannumeral}
+% \DoNotIndex{\the,\typeout,\xdef,\global,\newcommand,\RequirePackage}
+% \DoNotIndex{\PackageError,\ProvidesPackage,\gdef}
+% \DoNotIndex{\IncludeTests,\LogClose,\LogTests,\Expect,\ExpectIfThen}
+% \DoNotIndex{\isnamedefined,\isundefined}
+% \DoNotIndex{\stop,\makeatletter,\makeatother,\begin,\end,\def,\let}
+% \DoNotIndex{\testFSDestroy@fifo@stack@count@top}
+% \DoNotIndex{\testFSDestroy@fifo@stack@count@bottom}
+% \DoNotIndex{\testFSDestroy@fifo@stack@count@size}
+% \DoNotIndex{\fifo@stack@top@testFSDestroy}
+% \DoNotIndex{\fifo@stack@bottom@testFSDestroy}
+%
+%
+% \title{Directed Simplicial Type Theory \LaTeX\ Style}
+% \author{Stephen Gaito}
+% \maketitle
+% \begin{abstract}
+% This is the Directed Simplicial Type Theory (DiSiTT) style file. It is a LaTeX
+% style file used to typeset DiSiTT proof arguments.
+% \end{abstract}
+%
+% \tableofcontents
+%
+% \section{Introduction}
+%
+% \section{Integration tests and example usage}
+%
+% We use the \href{http://www.ctan.org/pkg/qstest}{QSTest} package from
+% \href{http://www.ctan.org}{CTAN} to provide both integration and unit tests of
+% our FIFO/stack package.
+%
+% In this section we walk through a number of integration tests which also
+% provide example uses of FIFO/Stacks. We provide unit tests of specific
+% invariants in the code section below.  These unit tests are associated
+% with the section of code which implements a particular invariant.
+%
+% We begin by setting up the \LaTeX\ QSTest package to test the
+% \verb|fifo-stack| package, and we will log everything. Note that we do not use
+% a document
+% class
+% or begin/end a document, this is because there should not be any \emph{normal}
+% output created.  All \emph{results} are listed in the associated
+% \verb|fifo-stack-test.lgout| file.
+%
+%    \begin{macrocode}
+%<*qstest>
+\RequirePackage{qstest}
+\RequirePackage{xifthen}
+\IncludeTests{*}
+\LogTests{lgout}{*}{*}
+%</qstest>
+%    \end{macrocode}
+%
+% \section{DiSiTT Symbols texstyle}
+%
+% \subsection{Identification}
+%
+%    \begin{macrocode}
+%<*package>
+\ProvidesPackage{disitt-symbols}%
+  [2014/03/25 v1.0 DiSiTT Symbols]
+%    \end{macrocode}
+%
+% \subsection{Rotating Math Symbols}
+%
+% The symbol manipulation commands are for use with the graphicx package. They
+% have been taken from an email from Barbara Beeton (bnb at ams.org). See:
+% http://www.tug.org/pipermail/texhax/2005-October/004861.html. We will make
+% extensive use of these commands to provide symbols for our specific use.
+%
+% \begin{macro}{\reflectit}
+%
+% The \verb|\reflectit| command takes any math symbol and reflects it in its
+% vertical middle line.
+%
+%    \begin{macrocode}
+%txs\reflectit{mathSymbol}#m
+\newcommand{\reflectit}[1]{\reflectbox{\ensuremath#1}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\turnover}
+%
+% The \verb|\turnover| command takes any math symbol and reflects it in its 
+% horizontal middle line
+%
+%    \begin{macrocode}
+%txs\turnover{mathSymbol}#m
+\newcommand{\turnover}[1]{\rotatebox[origin=c]{180}{\ensuremath#1}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\turncw}
+%   \begin{macro}{\turnccw}
+%
+% The \verb|\turnXXX| commands rotate a math symbol by 90 degrees about its
+% middle in either a clockwise or counter clockwise direction.
+%
+%    \begin{macrocode}
+%txs\turncw{mathSymbol}#m
+%txs\turnccw{mathSymbol}#m
+\newcommand{\turncw}[1]{\rotatebox[origin=c]{270}{\ensuremath#1}}
+\newcommand{\turnccw}[1]{\rotatebox[origin=c]{90}{\ensuremath#1}}
+%    \end{macrocode}
+%   \end{macro}
+% \end{macro}
+
+% \begin{macro}{\turnne}
+%   \begin{macro}{\turnnw}
+%     \begin{macro}{\turnsw}
+%       \begin{macro}{\turnse}
+% The \verb|\turnXX| commands rotates a math symbol by a multiple of 45
+% degrees about its center to point its top in either a north east, 
+% north west, south west or south east direction
+%    \begin{macrocode}
+%txs\turnne{mathSymbol}#m
+%txs\turnnw{mathSymbol}#m
+%txs\turnsw{mathSymbol}#m
+%txs\turnse{mathSymbol}#m
+\newcommand{\turnne}[1]{\rotatebox[origin=c]{45}{\ensuremath#1}}
+\newcommand{\turnnw}[1]{\rotatebox[origin=c]{135}{\ensuremath#1}}
+\newcommand{\turnsw}[1]{\rotatebox[origin=c]{225}{\ensuremath#1}}
+\newcommand{\turnse}[1]{\rotatebox[origin=c]{315}{\ensuremath#1}}
+%    \end{macrocode}
+%       \end{macro}
+%     \end{macro}
+%   \end{macro}
+% \end{macro}
+%
+% \subsection{Editorial comments}
+%
+% \begin{macro}{\CHECK}
+%   \begin{macro}{\COMMENT}
+%     \begin{macro}{\TODO}
+% The editorial commands \verb|\CHECK|, \verb|\COMMENT| and \verb|\TODO| are
+% provided to allow for editorial comments to the author but which will not be
+% included in the final document.
+%    \begin{macrocode}
+%txs\CHECK{someThingToCheck}#n
+\newcommand{\CHECK}[1]{\textbf{CHECK:[} #1 \textbf{]}}
+%txs\COMMENT{anEditorialComment}#n
+\newcommand{\COMMENT}[1]{\textbf{COMMENT:[} #1 \textbf{]}}
+%txs\TODO{somethingThatNeedsToBeDone}#n
+\newcommand{\TODO}[1]{\textbf{TODO: [} \ifmmode\text{#1}\else#1\fi \textbf{]}}
+%    \end{macrocode}
+%     \end{macro}
+%   \end{macro}
+% \end{macro}
+%
+% \subsection{Defininig a word or phrase}
+%
+% \begin{macro}{\define}
+% The \verb|\define| command ensures that the defined word is listed in the
+% index as well as placed in emphasized text font
+%    \begin{macrocode}
+%txs\define{word}{something...}#n
+\newcommand{\define}[2]{\emph{\textbf{#1}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsection{Book keeping}
+%
+% We define the following ``book keeping'' commands:
+%
+% \begin{macro}{\variable}
+%    \begin{macrocode}
+%txs\variable{aVarSym}{aSubScript}#
+\newcommand{\variable}[2]{\ensuremath{#1_{#2}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\compose}
+%    \begin{macrocode}
+%txs\compose#
+\newcommand{\compose}{\ensuremath{\circ}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\map}
+%    \begin{macrocode}
+%txs\map{name}{from}{to}#
+\newcommand{\map}[3]{\ensuremath{#1 \! : \! #2 \! \rightarrow \! #3}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\set}
+%    \begin{macrocode}
+%txs\set{of something...}#
+\newcommand{\set}[1]{\ensuremath{\{#1\}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsection{Symbols}
+%
+% We define the following ``symbol'' commands:
+%
+% \begin{macro}{\bottom}
+%    \begin{macrocode}
+%txs\bottom#
+\newcommand{\bottom}{\ensuremath{\bot}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\intersetion}
+%    \begin{macrocode}
+%txs\intersetion#
+\newcommand{\intersection}{\ensuremath{\cap}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\union}
+%    \begin{macrocode}
+%txs\union#
+\newcommand{\union}{\ensuremath{\cup}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\maps}
+%    \begin{macrocode}
+%txs\maps#
+\newcommand{\maps}{\ensuremath{\rightarrow}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\suchThat}
+%    \begin{macrocode}
+%txs\suchThat#
+\newcommand{\suchThat}{\ensuremath{\vert}}
+%    \end{macrocode}
+% \end{macro}
+%
+%\subsection{Judgements}
+%\subsubsection{Part of}
+%
+% We start by defining the \emph{only} primary judgement, the `part of' 
+% judgement:
+%
+% \begin{macro}{\partOf}
+%    \begin{macrocode}
+%txs\partOf#
+\newcommand{\partOf}[2]{\ensuremath{{#1}:{#2}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% all other judgements can be defined using the `part of' judgement.
+%
+%\subsubsection{Is a}
+%
+% We define the `is a' judgement:
+%
+% \begin{macro}{\isA}
+%    \begin{macrocode}
+%txs\isA#
+\newcommand{\isA}[2]{\ensuremath{{#1}::{#2}}}
+%    \end{macrocode}
+% \end{macro}
+%
+%\subsection{Important Objects}
+%\subsubsection{Universe}
+%
+% We define Plato's Universe:
+%
+% \begin{macro}{\Universe}
+%    \begin{macrocode}
+%txs\Universe{computingPower}{simplicialSize}#
+\newcommand{\Universe}[2]{\ensuremath{\mathfrak{U}_{#1}^{#2}}}
+%    \end{macrocode}
+% \end{macro}
+%
+%\subsubsection{Lists}
+%
+% We define ordered collections known by computer scientists as \emph{Lists}:
+%
+% \begin{macro}{\Lists}
+%    \begin{macrocode}
+%txs\Lists#
+\newcommand{\Lists}{\ensuremath{\mathfrak{L}}}
+%    \end{macrocode}
+% \end{macro}
+%
+%\subsubsection{List Automorphisms}
+%
+% We define the automorphisms of Lists:
+%
+% \begin{macro}{\ListAutomorphisms}
+%    \begin{macrocode}
+%txs\ListAutomorphisms#
+\newcommand{\ListAutomorphisms}{\ensuremath{\Delta}}
+%    \end{macrocode}
+% \end{macro}
+%
+%\subsubsection{Ordinals}
+% We define the following standard objects:
+%
+% \begin{macro}{\Ordinal}
+%   \begin{macro}{\zero}
+%     \begin{macro}{\one}
+%    \begin{macrocode}
+%txs\Ordinal#
+\newcommand{\Ordinal}{\ensuremath{\mathcal{O}}}
+%txs\zero#
+\newcommand{\zero}{\ensuremath{0}}
+%txs\one#
+\newcommand{\one}{\ensuremath{1}}
+%    \end{macrocode}
+%     \end{macro}
+%   \end{macro}
+% \end{macro}
+%
+% Now some ``functions'':
+%
+% \begin{macro}{\successor}
+%   \begin{macro}{\limitOrd}
+%    \begin{macrocode}
+%txs\successor{anOrdinal}#
+\newcommand{\successor}[1]{\ensuremath{s(#1)}}
+%txs\limitOrd{anOrdinal}#
+\newcommand{\limitOrd}[1]{\ensuremath{\omega(#1)}}
+%    \end{macrocode}
+%   \end{macro}
+% \end{macro}
+%
+% \subsection{Deltas}
+%
+% \begin{macro}{\diSimplex}
+%    \begin{macrocode}
+%txs\diSimplex{commaListDiSimplicies}#
+\newcommand{\diSimplex}[2]{\ensuremath{\Delta_{#2} \langle #1 \rangle}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsection{Important Arrows}
+%
+% \begin{macro}{\arrow}
+%    \begin{macrocode}
+%txs\arrow{domainObject}{targetObject}#
+\newcommand{\arrow}[2]{\ensuremath{#1 \rightarrow #2}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsection{Cardinals}
+%
+% \begin{macro}{\Cardinal}
+%    \begin{macrocode}
+%txs\Cardinal#
+\newcommand{\Cardinal}{\ensuremath{\mathcal{C}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsection{Sets}
+%
+% \begin{macro}{\Set}
+%    \begin{macrocode}
+%txs\Set#
+\newcommand{\Set}{\ensuremath{\textbf{Set}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsection{Isomorphisms}
+%
+% \begin{macro}{\isomorphic}
+%    \begin{macrocode}
+%txs\isomorphic#
+\newcommand{\isomorphic}{\ensuremath{\backsimeq}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsection{Old PerceptiSys symbols}
+%
+% \begin{macro}{\twoheaduparrow}
+%    \begin{macrocode}
+%txs\twoheaduparrow#
+\newcommand{\twoheaduparrow}{\turnccw{\twoheadrightarrow}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\twoheaddownarrow}
+%    \begin{macrocode}
+%txs\twoheaddownarrow#
+\newcommand{\twoheaddownarrow}{\turncw{\twoheadrightarrow}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\integral}
+%    \begin{macrocode}
+%txs\integral#
+\newcommand{\integral}{\ensuremath{\int}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\Reals}
+%    \begin{macrocode}
+%txs\Reals#
+\newcommand{\Reals}{\ensuremath{\mathbb{R}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\Dedekind}
+%    \begin{macrocode}
+%txs\Dedekind{arg1}#
+\newcommand{\Dedekind}[1]{\ensuremath{{#1}^{\circ}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\DedekindReals}
+%    \begin{macrocode}
+%txs\DedekindReals#
+\newcommand{\DedekindReals}{\Dedekind{\mathbb{R}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\rDedekind}
+%    \begin{macrocode}
+%txs\rDedekind{arg1}#
+\newcommand{\rDedekind}[1]{\ensuremath{{#1}^{\triangleright}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\rDedekindReals}
+%    \begin{macrocode}
+%txs\rDedekindReals#
+\newcommand{\rDedekindReals}{\rDedekind{\mathbb{R}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\pDedekind}
+%    \begin{macrocode}
+%txs\pDedekind{arg1}#
+\newcommand{\pDedekind}[1]{\ensuremath{{#1}^{\triangleleft}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\pDedekindReals}
+%    \begin{macrocode}
+%txs\pDedekindReals#
+\newcommand{\pDedekindReals}{\pDedekind{\mathbb{R}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\rpDedekind}
+%    \begin{macrocode}
+%txs\rpDedekind{arg1}#
+\newcommand{\rpDedekind}[1]{\ensuremath{{#1}^{\triangleright\triangleleft}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\rpDedekindReals}
+%    \begin{macrocode}
+%txs\rpDedekindReals#
+\newcommand{\rpDedekindReals}{\rpDedekind{\mathbb{R}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\prDedekind}
+%    \begin{macrocode}
+%txs\prDedekind{arg1}#
+\newcommand{\prDedekind}[1]{\ensuremath{{#1}^{\triangleleft\triangleright}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\prDedekindReals}
+%    \begin{macrocode}
+%txs\prDedekindReals#
+\newcommand{\prDedekindReals}{\prDedekind{\mathbb{R}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\crDedekind}
+%    \begin{macrocode}
+%txs\crDedekind{arg1}#
+\newcommand{\crDedekind}[1]{\ensuremath{{#1}^{\circ\triangleright}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\crDedekindReals}
+%    \begin{macrocode}
+%txs\crDedekindReals#
+\newcommand{\crDedekindReals}{\crDedekind{\mathbb{R}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\pcDedekind}
+%    \begin{macrocode}
+%txs\pcDedekind{arg1}#
+\newcommand{\pcDedekind}[1]{\ensuremath{{#1}^{\triangleleft\circ}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\pcDedekindReals}
+%    \begin{macrocode}
+%txs\pcDedekindReals#
+\newcommand{\pcDedekindReals}{\pcDedekind{\mathbb{R}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\rcpDedekind}
+%    \begin{macrocode}
+%txs\rcpDedekind{arg1}#
+\newcommand{\rcpDedekind}[1]{\ensuremath{{#1}^{\triangleright\circ\triangleleft}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\rcpDedekindReals}
+%    \begin{macrocode}
+%txs\rcpDedekindReals#
+\newcommand{\rcpDedekindReals}{\rcpDedekind{\mathbb{R}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\pcrDedekind}
+%    \begin{macrocode}
+%txs\pcrDedekind{arg1}#
+\newcommand{\pcrDedekind}[1]{\ensuremath{{#1}^{\triangleleft\circ\triangleright}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\pcrDedekindReals}
+%    \begin{macrocode}
+%txs\pcrDedekindReals#
+\newcommand{\pcrDedekindReals}{\pcrDedekind{\mathbb{R}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\Integers}
+%    \begin{macrocode}
+%txs\Integers#
+\newcommand{\Integers}{\ensuremath{\mathbb{Z}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\Rationals}
+%    \begin{macrocode}
+%txs\Rationals#
+\newcommand{\Rationals}{\ensuremath{\mathbb{Q}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\posRationals}
+%    \begin{macrocode}
+%txs\posRationals#
+\newcommand{\posRationals}{\ensuremath{\mathbb{Q}^+}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\RationalIntervals}
+%    \begin{macrocode}
+%txs\RationalIntervals#
+\newcommand{\RationalIntervals}{\ensuremath{\mathbb{Q}^{[]}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\RealIntervals}
+%    \begin{macrocode}
+%txs\RealIntervals#
+\newcommand{\RealIntervals}{\ensuremath{\mathbb{R}^{[]}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\naturalNumbers}
+%    \begin{macrocode}
+%txs\naturalNumbers#
+\newcommand{\naturalNumbers}{\ensuremath{\mathbb{N}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\measures}
+%    \begin{macrocode}
+%txs\measures#
+\newcommand{\measures}{\ensuremath{\mathbb{M}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\functions}
+%    \begin{macrocode}
+%txs\functions#
+\newcommand{\functions}{\ensuremath{\mathbb{D}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\powerSet}
+%    \begin{macrocode}
+%txs\powerSet#
+\newcommand{\powerSet}[2][]{\ensuremath{\text{\textbf{P}}_{#1}(#2)}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\avg}
+%    \begin{macrocode}
+%txs\avg#
+\newcommand{\avg}{\ensuremath{ \text{avg} }}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\tuple}
+%    \begin{macrocode}
+%txs\tuple#
+\newcommand{\tuple}[2][]{\ensuremath{#1(#2)}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\oInterval}
+%    \begin{macrocode}
+%txs\oInterval{arg1}#
+\newcommand{\oInterval}[1]{\ensuremath{\left( #1 \right)}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\cInterval}
+%    \begin{macrocode}
+%txs\cInterval{arg1}#
+\newcommand{\cInterval}[1]{\ensuremath{\left[ #1 \right]}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\coInterval}
+%    \begin{macrocode}
+%txs\coInterval{arg1}#
+\newcommand{\coInterval}[1]{\ensuremath{\left[ #1 \right)}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\ocInterval}
+%    \begin{macrocode}
+%txs\ocInterval{arg1}#
+\newcommand{\ocInterval}[1]{\ensuremath{\left( #1 \right]}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\woSet}
+%    \begin{macrocode}
+%txs\woSet{arg1}#
+\newcommand{\woSet}[1]{\ensuremath{\lbrack #1 \rbrack}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\kappaPullBackCoPowerSet}
+%    \begin{macrocode}
+%txs\kappaPullBackCoPowerSet{arg1}{arg2}#
+\newcommand{\kappaPullBackCoPowerSet}[2]{\ensuremath{\powerSet[c]{\woSet{#1}} \times_{\woSet{\kappa}} \powerSet[c]{\woSet{#2}}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\ndKappaPullBackCoPowerSet}
+%    \begin{macrocode}
+%txs\ndKappaPullBackCoPowerSet{arg1}{arg2}#
+\newcommand{\ndKappaPullBackCoPowerSet}[2]{\ensuremath{\woSet{#1} \times_{\woSet{\kappa}} \powerSet[c]{\woSet{#2}}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\definedBy}
+%    \begin{macrocode}
+%txs\definedBy#
+\newcommand{\definedBy}{\ensuremath{:=}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\thereExists}
+%    \begin{macrocode}
+%txs\thereExists#
+\newcommand{\thereExists}{\exists}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\forWhich}
+%    \begin{macrocode}
+%txs\forWhich#
+\newcommand{\forWhich}{\text{ for which }}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\infinity}
+%    \begin{macrocode}
+%txs\infinity#
+\newcommand{\infinity}{\infty}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\bigUnion}
+%    \begin{macrocode}
+%txs\bigUnion#
+\newcommand{\bigUnion}{\bigcup}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\join}
+%    \begin{macrocode}
+%txs\join#
+\newcommand{\join}{\cup}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\intersect}
+%    \begin{macrocode}
+%txs\intersect#
+\newcommand{\intersect}{\cap}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\meet}
+%    \begin{macrocode}
+%txs\meet#
+\newcommand{\meet}{\cap}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\AND}
+%    \begin{macrocode}
+%txs\AND#
+\newcommand{\AND}{\wedge}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\OR}
+%    \begin{macrocode}
+%txs\OR#
+\newcommand{\OR}{\vee}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\withOut}
+%    \begin{macrocode}
+%txs\withOut#
+\newcommand{\withOut}{\backslash}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\product}
+%    \begin{macrocode}
+%txs\product#
+\newcommand{\product}{\prod}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\coproduct}
+%    \begin{macrocode}
+%txs\coproduct#
+\newcommand{\coproduct}{\coprod}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\contains}
+%    \begin{macrocode}
+%txs\contains#
+\newcommand{\contains}{\supset}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\equivSet}
+%    \begin{macrocode}
+%txs\equivSet#
+\newcommand{\equivSet}[2][]{\ensuremath{\boldsymbol{[} #2 \boldsymbol{]}_{#1}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\ordinal}
+%    \begin{macrocode}
+%txs\ordinal{arg1}#
+\newcommand{\ordinal}[1]{\ensuremath{\Vert #1 \Vert}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\greatestLowerLimitOrdinal}
+%    \begin{macrocode}
+%txs\greatestLowerLimitOrdinal{arg1}#
+\newcommand{\greatestLowerLimitOrdinal}[1]{\ensuremath{|\lfloor #1 \rfloor{}|}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\leastUpperLimitOrdinal}
+%    \begin{macrocode}
+%txs\leastUpperLimitOrdinal{arg1}#
+\newcommand{\leastUpperLimitOrdinal}[1]{\ensuremath{|\lceil #1 \rceil{}|}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\image}
+%    \begin{macrocode}
+%txs\image{arg1}#
+\newcommand{\image}[1]{\ensuremath{\text{im}(#1)}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\cImage}
+%    \begin{macrocode}
+%txs\cImage{arg1}#
+\newcommand{\cImage}[1]{\ensuremath{\text{im}^{\text{c}}(#1)}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\kernel}
+%    \begin{macrocode}
+%txs\kernel{arg1}#
+\newcommand{\kernel}[1]{\ensuremath{\text{ker}(#1)}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\norm}
+%    \begin{macrocode}
+%txs\norm#
+\newcommand{\norm}[2][]{\ensuremath{|#2|_{#1}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\closure}
+%    \begin{macrocode}
+%txs\closure{arg1}#
+\newcommand{\closure}[1]{\ensuremath{\overline{#1}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\smooth}
+%    \begin{macrocode}
+%txs\smooth{arg1}#
+\newcommand{\smooth}[1]{\ensuremath{C^{#1}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\restrictedTo}
+%    \begin{macrocode}
+%txs\restrictedTo{arg1}{arg2}#
+\newcommand{\restrictedTo}[2]{\ensuremath{{#1}_{\vert{#2}}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\crossProduct}
+%    \begin{macrocode}
+%txs\crossProduct#
+\newcommand{\crossProduct}{\ensuremath{\times}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\grade}
+%    \begin{macrocode}
+%txs\grade{arg1}#
+\newcommand{\grade}[1]{\ensuremath{\sharp(#1)}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\emptySet}
+%    \begin{macrocode}
+%txs\emptySet#
+\newcommand{\emptySet}{\ensuremath{\emptyset}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\nSet}
+%    \begin{macrocode}
+%txs\nSet{arg1}#
+\newcommand{\nSet}[1]{\ensuremath{\mathbf{#1}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\Lower}
+%    \begin{macrocode}
+%txs\Lower{arg1}#
+\newcommand{\Lower}[1]{\ensuremath{\underline{#1}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\Upper}
+%    \begin{macrocode}
+%txs\Upper{arg1}#
+\newcommand{\Upper}[1]{\ensuremath{\overline{#1}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\hull}
+%    \begin{macrocode}
+%txs\hull{arg1}#
+\newcommand{\hull}[1]{\ensuremath{\Box{#1}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\lt}
+%    \begin{macrocode}
+%txs\lt#
+\newcommand{\lt}{\ensuremath{<}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\gt}
+%    \begin{macrocode}
+%txs\gt#
+\newcommand{\gt}{\ensuremath{>}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\mapsTo}
+%    \begin{macrocode}
+%txs\mapsTo#
+\newcommand{\mapsTo}{\ensuremath{\rightarrow}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\natMapsTo}
+%    \begin{macrocode}
+%txs\natMapsTo#
+\newcommand{\natMapsTo}{\ensuremath{\rightarrow}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\monoTo}
+%    \begin{macrocode}
+%txs\monoTo#
+\newcommand{\monoTo}{\ensuremath{\rightarrowtail}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\epiTo}
+%    \begin{macrocode}
+%txs\epiTo#
+\newcommand{\epiTo}{\ensuremath{\twoheadrightarrow}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\mapsFrom}
+%    \begin{macrocode}
+%txs\mapsFrom#
+\newcommand{\mapsFrom}{\ensuremath{\leftarrow}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\elementMapsTo}
+%    \begin{macrocode}
+%txs\elementMapsTo#
+\newcommand{\elementMapsTo}{\ensuremath{\mapsto}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\functionSpace}
+%    \begin{macrocode}
+%txs\functionSpace{arg1}{arg2}#
+\newcommand{\functionSpace}[2]{\ensuremath{\lbrack #1 \mapsTo #2 \rbrack}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\lessThan}
+%    \begin{macrocode}
+%txs\lessThan#
+\newcommand{\lessThan}{\ensuremath{<}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\subSet}
+%    \begin{macrocode}
+%txs\subSet#
+\newcommand{\subSet}{\ensuremath{\subset}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\subSetEq}
+%    \begin{macrocode}
+%txs\subSetEq#
+\newcommand{\subSetEq}{\ensuremath{\subseteq}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\sqSubSet}
+%    \begin{macrocode}
+%txs\sqSubSet#
+\newcommand{\sqSubSet}{\ensuremath{\sqsubset}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\sqSubSetEq}
+%    \begin{macrocode}
+%txs\sqSubSetEq#
+\newcommand{\sqSubSetEq}{\ensuremath{\sqsubseteq}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\approximates}
+%    \begin{macrocode}
+%txs\approximates#
+\newcommand{\approximates}{\ensuremath{\ll}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\greaterThan}
+%    \begin{macrocode}
+%txs\greaterThan#
+\newcommand{\greaterThan}{\ensuremath{>}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\superSet}
+%    \begin{macrocode}
+%txs\superSet#
+\newcommand{\superSet}{\ensuremath{\supset}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\superSetEq}
+%    \begin{macrocode}
+%txs\superSetEq#
+\newcommand{\superSetEq}{\ensuremath{\supseteq}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\sqSuperSet}
+%    \begin{macrocode}
+%txs\sqSuperSet#
+\newcommand{\sqSuperSet}{\ensuremath{\sqsupset}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\sqSuperSetEq}
+%    \begin{macrocode}
+%txs\sqSuperSetEq#
+\newcommand{\sqSuperSetEq}{\ensuremath{\sqsupseteq}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\aboveSet}
+%    \begin{macrocode}
+%txs\aboveSet{arg1}#
+\newcommand{\aboveSet}[1]{\ensuremath{\uparrow\!\!#1}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\aproxAboveSet}
+%    \begin{macrocode}
+%txs\aproxAboveSet{arg1}#
+\newcommand{\aproxAboveSet}[1]{\ensuremath{\twoheaduparrow #1}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\upperBounds}
+%    \begin{macrocode}
+%txs\upperBounds{arg1}#
+\newcommand{\upperBounds}[1]{\ensuremath{\text{ub}(#1)}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\supremum}
+%    \begin{macrocode}
+%txs\supremum{arg1}#
+\newcommand{\supremum}[1]{\ensuremath{\bigsqcup #1}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\dSupremum}
+%    \begin{macrocode}
+%txs\dSupremum{arg1}#
+\newcommand{\dSupremum}[1]{\ensuremath{\bigsqcup^{\uparrow} #1}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\belowSet}
+%    \begin{macrocode}
+%txs\belowSet{arg1}#
+\newcommand{\belowSet}[1]{\ensuremath{\downarrow\!\!#1}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\aproxBelowSet}
+%    \begin{macrocode}
+%txs\aproxBelowSet{arg1}#
+\newcommand{\aproxBelowSet}[1]{\ensuremath{\twoheaddownarrow #1}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\lowerBounds}
+%    \begin{macrocode}
+%txs\lowerBounds{arg1}#
+\newcommand{\lowerBounds}[1]{\ensuremath{\text{lb}(#1)}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\infimum}
+%    \begin{macrocode}
+%txs\infimum{arg1}#
+\newcommand{\infimum}[1]{\ensuremath{\bigsqcap #1}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\dInfimum}
+%    \begin{macrocode}
+%txs\dInfimum{arg1}#
+\newcommand{\dInfimum}[1]{\ensuremath{\bigsqcap^{\downarrow} #1}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\compactSet}
+%    \begin{macrocode}
+%txs\compactSet{arg1}#
+\newcommand{\compactSet}[1]{\ensuremath{\textsf{K}(#1)}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\fundGroupoid}
+%    \begin{macrocode}
+%txs\fundGroupoid{arg1}#
+\newcommand{\fundGroupoid}[1]{\ensuremath{\pi(#1)}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\freeGraph}
+%    \begin{macrocode}
+%txs\freeGraph{arg1}#
+\newcommand{\freeGraph}[1]{\ensuremath{\vec{P}(#1)}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\ideals}
+%    \begin{macrocode}
+%txs\ideals{arg1}#
+\newcommand{\ideals}[1]{\ensuremath{\text{Idl}(#1)}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\width}
+%    \begin{macrocode}
+%txs\width{arg1}#
+\newcommand{\width}[1]{\ensuremath{\| #1 \|}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\abs}
+%    \begin{macrocode}
+%txs\abs{arg1}#
+\newcommand{\abs}[1]{\ensuremath{\| #1 \|}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\sigmaAlgebraN}
+%    \begin{macrocode}
+%txs\sigmaAlgebraN#
+\newcommand{\sigmaAlgebraN}{\ensuremath{\sigma}\text{-algebra}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\sigmaAlgebrasN}
+%    \begin{macrocode}
+%txs\sigmaAlgebrasN#
+\newcommand{\sigmaAlgebrasN}{\ensuremath{\sigma}\text{-algebras}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\sigmaAlgebraicN}
+%    \begin{macrocode}
+%txs\sigmaAlgebraicN#
+\newcommand{\sigmaAlgebraicN}{\ensuremath{\sigma}\text{-algebraic}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\sigmaAlgebraC}
+%    \begin{macrocode}
+%txs\sigmaAlgebraC#
+\newcommand{\sigmaAlgebraC}{\ensuremath{\bold{\Sigma}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\mathTopoi}
+%    \begin{macrocode}
+%txs\mathTopoi{arg1}#
+\newcommand{\mathTopoi}[1]{\ensuremath{\mathcal{#1}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\mathCategory}
+%    \begin{macrocode}
+%txs\mathCategory{arg1}#
+\newcommand{\mathCategory}[1]{\textbf{\textsf{#1}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\envelopingC}
+%    \begin{macrocode}
+%txs\envelopingC#
+\newcommand{\envelopingC}{\ensuremath{\mathbf{\mathcal{E}}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\smallArrows}
+%    \begin{macrocode}
+%txs\smallArrows#
+\newcommand{\smallArrows}{\ensuremath{\mathbf{\mathcal{S}}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\setC}
+%    \begin{macrocode}
+%txs\setC#
+\newcommand{\setC}{\mathCategory{Set}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\categoryC}
+%    \begin{macrocode}
+%txs\categoryC#
+\newcommand{\categoryC}{\mathCategory{Cat}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\graphC}
+%    \begin{macrocode}
+%txs\graphC#
+\newcommand{\graphC}{\mathCategory{Graph}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\topologyC}
+%    \begin{macrocode}
+%txs\topologyC#
+\newcommand{\topologyC}{\mathCategory{Top}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\toposC}
+%    \begin{macrocode}
+%txs\toposC#
+\newcommand{\toposC}{\mathCategory{Topos}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\posetC}
+%    \begin{macrocode}
+%txs\posetC#
+\newcommand{\posetC}{\mathCategory{POSET}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\totalOrderedC}
+%    \begin{macrocode}
+%txs\totalOrderedC#
+\newcommand{\totalOrderedC}{\mathCategory{TotOrd}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\dcpoC}
+%    \begin{macrocode}
+%txs\dcpoC#
+\newcommand{\dcpoC}{\mathCategory{DCPO}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\cC}
+%    \begin{macrocode}
+%txs\cC#
+\newcommand{\cC}{\mathCategory{C}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\dC}
+%    \begin{macrocode}
+%txs\dC#
+\newcommand{\dC}{\mathCategory{D}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\gC}
+%    \begin{macrocode}
+%txs\gC#
+\newcommand{\gC}{\mathCategory{G}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\tC}
+%    \begin{macrocode}
+%txs\tC#
+\newcommand{\tC}{\mathCategory{T}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\zeroC}
+%    \begin{macrocode}
+%txs\zeroC#
+\newcommand{\zeroC}{\mathCategory{0}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\oneC}
+%    \begin{macrocode}
+%txs\oneC#
+\newcommand{\oneC}{\mathCategory{1}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\twoC}
+%    \begin{macrocode}
+%txs\twoC#
+\newcommand{\twoC}{\mathCategory{2}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\omegaC}
+%    \begin{macrocode}
+%txs\omegaC#
+\newcommand{\omegaC}{\ensuremath{\boldsymbol{\omega}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\zeroO}
+%    \begin{macrocode}
+%txs\zeroO#
+\newcommand{\zeroO}{\ensuremath{0}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\oneO}
+%    \begin{macrocode}
+%txs\oneO#
+\newcommand{\oneO}{\ensuremath{1}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\twoO}
+%    \begin{macrocode}
+%txs\twoO#
+\newcommand{\twoO}{\ensuremath{2}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\eT}
+%    \begin{macrocode}
+%txs\eT#
+\newcommand{\eT}{\mathTopoi{E}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\universe}
+%    \begin{macrocode}
+%txs\universe{arg1}#
+%\newcommand{\universe}[1]{\ensuremath{\textfrak{#1}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\universe}
+%    \begin{macrocode}
+%txs\universe{arg1}#
+\newcommand{\universe}[1]{\ensuremath{\mathCategory{#1}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\category}
+%    \begin{macrocode}
+%txs\category{arg1}#
+%\newcommand{\category}[1]{\ensuremath{\textfrak{#1}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\objects}
+%    \begin{macrocode}
+%txs\objects{arg1}#
+%\newcommand{\objects}[1]{\ensuremath{Ob(#1)}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\objects}
+%    \begin{macrocode}
+%txs\objects{arg1}#
+\newcommand{\objects}[1]{\ensuremath{{#1}_{0}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\ndObjects}
+%    \begin{macrocode}
+%txs\ndObjects{arg1}#
+\newcommand{\ndObjects}[1]{\ensuremath{ndOb(#1)}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\arrows}
+%    \begin{macrocode}
+%txs\arrows{arg1}#
+%\newcommand{\arrows}[1]{\ensuremath{Ar(#1)}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\arrows}
+%    \begin{macrocode}
+%txs\arrows{arg1}#
+\newcommand{\arrows}[1]{\ensuremath{{#1}_{1}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\domain}
+%    \begin{macrocode}
+%txs\domain{arg1}#
+\newcommand{\domain}[1]{\ensuremath{\text{dom}(#1)}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\coDomain}
+%    \begin{macrocode}
+%txs\coDomain{arg1}#
+\newcommand{\coDomain}[1]{\ensuremath{\text{cod}(#1)}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\identity}
+%    \begin{macrocode}
+%txs\identity{arg1}#
+\newcommand{\identity}[1]{\ensuremath{\boldsymbol{1}_{#1}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\Identity}
+%    \begin{macrocode}
+%txs\Identity{arg1}#
+\newcommand{\Identity}[1]{\ensuremath{\text{Id}_{#1}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\involution}
+%    \begin{macrocode}
+%txs\involution{arg1}#
+\newcommand{\involution}[1]{\ensuremath{\text{inv}(#1)}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\opposite}
+%    \begin{macrocode}
+%txs\opposite{arg1}#
+\newcommand{\opposite}[1]{\ensuremath{{#1}^{\text{op}}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\homomorphisms}
+%    \begin{macrocode}
+%txs\homomorphisms{arg1}{arg2}#
+\newcommand{\homomorphisms}[2]{\ensuremath{\text{Hom}_{#1}(#2)}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\ndHomomorphisms}
+%    \begin{macrocode}
+%txs\ndHomomorphisms{arg1}{arg2}#
+\newcommand{\ndHomomorphisms}[2]{\ensuremath{\text{Hom}^{\text{nd}}_{#1}(#2)}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\sHomomorphisms}
+%    \begin{macrocode}
+%txs\sHomomorphisms{arg1}{arg2}#
+\newcommand{\sHomomorphisms}[2]{\ensuremath{\text{sHom}_{#1}(#2)}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\subObjClass}
+%    \begin{macrocode}
+%txs\subObjClass{arg1}#
+\newcommand{\subObjClass}[1]{\ensuremath{\Omega_{#1}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\true}
+%    \begin{macrocode}
+%txs\true#
+\newcommand{\true}{\ensuremath{\top}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\false}
+%    \begin{macrocode}
+%txs\false#
+\newcommand{\false}{\ensuremath{\bottom}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\ndDeltaC}
+%    \begin{macrocode}
+%txs\ndDeltaC{arg1}{arg2}#
+\newcommand{\ndDeltaC}[2]{\ensuremath{\boldsymbol{\triangle\mspace{-15mu}-\mspace{1mu}}^{#1}_{#2}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\sNdDeltaC}
+%    \begin{macrocode}
+%txs\sNdDeltaC{arg1}{arg2}#
+\newcommand{\sNdDeltaC}[2]{\ensuremath{\boldsymbol{\triangle\mspace{-19mu}-\mspace{-18mu}\bot\mspace{1mu}}^{#1}_{#2}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\DeltaC}
+%    \begin{macrocode}
+%txs\DeltaC{arg1}{arg2}#
+\newcommand{\DeltaC}[2]{\ensuremath{\boldsymbol{\triangle}^{#1}_{#2}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\sDeltaC}
+%    \begin{macrocode}
+%txs\sDeltaC{arg1}{arg2}#
+\newcommand{\sDeltaC}[2]{\ensuremath{\boldsymbol{\triangle\mspace{-20mu}\perp\mspace{1mu}}^{#1}_{#2}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\deltaSetN}
+%    \begin{macrocode}
+%txs\deltaSetN#
+\newcommand{\deltaSetN}{\ensuremath{\Delta\text{-set}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\deltaSetsN}
+%    \begin{macrocode}
+%txs\deltaSetsN#
+\newcommand{\deltaSetsN}{\ensuremath{\Delta\text{-sets}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\deltaMapsN}
+%    \begin{macrocode}
+%txs\deltaMapsN#
+\newcommand{\deltaMapsN}{\ensuremath{\Delta\text{-maps}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\deltaSetsC}
+%    \begin{macrocode}
+%txs\deltaSetsC#
+\newcommand{\deltaSetsC}{\mathCategory{\deltaSetsN}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\simpC}
+%    \begin{macrocode}
+%txs\simpC#
+\newcommand{\simpC}{\mathCategory{Simp}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\simpApproxC}
+%    \begin{macrocode}
+%txs\simpApproxC#
+\newcommand{\simpApproxC}{\mathCategory{SimpApprox}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\symDynC}
+%    \begin{macrocode}
+%txs\symDynC#
+\newcommand{\symDynC}{\mathCategory{SymDyn}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\coFace}
+%    \begin{macrocode}
+%txs\coFace{arg1}{arg2}{arg3}#
+\newcommand{\coFace}[3]{\ensuremath{D^{#1, #2}_{#3}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\coDegeneracy}
+%    \begin{macrocode}
+%txs\coDegeneracy{arg1}{arg2}{arg3}#
+\newcommand{\coDegeneracy}[3]{\ensuremath{S^{#1, #2}_{#3}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\face}
+%    \begin{macrocode}
+%txs\face{arg1}{arg2}{arg3}#
+\newcommand{\face}[3]{\ensuremath{d^{#1, #2}_{#3}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\degeneracy}
+%    \begin{macrocode}
+%txs\degeneracy{arg1}{arg2}{arg3}#
+\newcommand{\degeneracy}[3]{\ensuremath{s^{#1, #2}_{#3}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\boundary}
+%    \begin{macrocode}
+%txs\boundary#
+\newcommand{\boundary}{\ensuremath{\partial}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\sStar}
+%    \begin{macrocode}
+%txs\sStar{arg1}{arg2}#
+\newcommand{\sStar}[2]{\ensuremath{\text{St}_{#1}({#2})}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\funcCat}
+%    \begin{macrocode}
+%txs\funcCat{arg1}{arg2}#
+\newcommand{\funcCat}[2]{\ensuremath{\boldsymbol{\lbrack} #1, #2 \boldsymbol{\rbrack}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\opFuncCat}
+%    \begin{macrocode}
+%txs\opFuncCat{arg1}{arg2}#
+\newcommand{\opFuncCat}[2]{\ensuremath{\boldsymbol{\lbrack} {#1}^{\text{op}}, #2 \boldsymbol{\rbrack}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\altOpFuncCat}
+%    \begin{macrocode}
+%txs\altOpFuncCat{arg1}{arg2}#
+\newcommand{\altOpFuncCat}[2]{\ensuremath{{#2}^{{#1}^{\text{op}}}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\presheaves}
+%    \begin{macrocode}
+%txs\presheaves{arg1}#
+\newcommand{\presheaves}[1]{\ensuremath{\hat{#1}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\poset}
+%    \begin{macrocode}
+%txs\poset{arg1}#
+\newcommand{\poset}[1]{\ensuremath{\mathcal{#1}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\topo}
+%    \begin{macrocode}
+%txs\topo{arg1}#
+\newcommand{\topo}[1]{\ensuremath{\mathcal{#1}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\notIn}
+%    \begin{macrocode}
+%txs\notIn#
+\newcommand{\notIn}{\ensuremath{\not{\!\in}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\forAll}
+%    \begin{macrocode}
+%txs\forAll{arg1}#
+\newcommand{\forAll}[1]{\ensuremath{\left(\forall{#1}\right)}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\thereExists}
+%    \begin{macrocode}
+%txs\thereExists{arg1}#
+%\newcommand{\thereExists}[1]{\ensuremath{\left(\exists{#1}\right)}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\lOr}
+%    \begin{macrocode}
+%txs\lOr#
+\newcommand{\lOr}{\ensuremath{\vee}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\lAnd}
+%    \begin{macrocode}
+%txs\lAnd#
+\newcommand{\lAnd}{\ensuremath{\wedge}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\terminalM}
+%    \begin{macrocode}
+%txs\terminalM{arg1}#
+\newcommand{\terminalM}[1]{\oc_{#1}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\initialM}
+%    \begin{macrocode}
+%txs\initialM{arg1}#
+\newcommand{\initialM}[1]{\turnover{\oc}_{#1}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\exponential}
+%    \begin{macrocode}
+%txs\exponential{arg1}{arg2}#
+\newcommand{\exponential}[2]{\ensuremath{{#1}^{#2}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\evaluationM}
+%    \begin{macrocode}
+%txs\evaluationM#
+\newcommand{\evaluationM}{\ensuremath{\epsilon}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\transpose}
+%    \begin{macrocode}
+%txs\transpose{arg1}#
+\newcommand{\transpose}[1]{\ensuremath{\tilde{#1}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsection{Finishing off}
+%
+%    \begin{macrocode}
+%</package>
+%<*qstest>
+\LogClose{lgout}
+\stop
+%</qstest>
+%    \end{macrocode}
+%

@@ -1,0 +1,311 @@
+% \changes{0.1b}{2015/12/22}{Initial version}
+%
+% \iffalse
+%<*never>
+\documentclass{amsart}
+\usepackage{doc}
+\usepackage{disitt}
+\usepackage{hyperref}
+\newcommand{\define}[2]{\emph{\textbf{#1}}}
+\GetFileInfo{disitt-engine.sty}
+\CodelineIndex
+\EnableCrossrefs
+\RecordChanges
+\begin{document}
+\CheckSum{12}
+\DocInput{disitt-code.dtx}
+\section{Copyright and \LaTeX\ Project Public License}
+\begin{verbatim}
+%txsBeginComment
+Copyright (C) 2015 Stephen Gaito (PerceptiSys Ltd)
+
+This work may be distributed and/or modified under the conditions of the
+LaTeX Project Public License, either version  1.3  of  this license or (at
+your option) any later version.
+
+The latest version of this license is in
+http://www.latex-project.org/lppl.txt and  version 1.3 or later is part of
+all distributions of LaTeX version 2005/12/01 or later.
+
+This work has the LPPL maintenance status `maintained'.
+
+The Current Maintainer of this work is Stephen Gaito.
+
+The released source can be found at:
+https://github.com/diSimplex/diSimplexEngine/tree/master/texStyle  The
+
+Development source can be found at:
+https://github.com/stephengaito/diSimplexEngine/tree/master/texStyle
+
+This work consists of the files disitt.tex, disitt-example.tex, 
+disitt.dtx, disittSymbols.dtx and disitt.ins and the derived files:
+disitt.sty, disitt.cwl, disittSymbols.sty, disittSymbols.cwl
+and disitt.pdf.
+%txsEndComment
+% \end{verbatim}
+\PrintIndex
+\PrintChanges
+\end{document}
+%</never>
+% \fi
+%
+% \DoNotIndex{\edef,\advance,\else,\csname,\endcsname,\expandafter}
+% \DoNotIndex{\ifx,\fi,\input,\ifnum,\relax,\newcount,\romannumeral}
+% \DoNotIndex{\the,\typeout,\xdef,\global,\newcommand,\RequirePackage}
+% \DoNotIndex{\PackageError,\ProvidesPackage,\gdef}
+% \DoNotIndex{\IncludeTests,\LogClose,\LogTests,\Expect,\ExpectIfThen}
+% \DoNotIndex{\isnamedefined,\isundefined}
+% \DoNotIndex{\stop,\makeatletter,\makeatother,\begin,\end,\def,\let}
+% \DoNotIndex{\testFSDestroy@fifo@stack@count@top}
+% \DoNotIndex{\testFSDestroy@fifo@stack@count@bottom}
+% \DoNotIndex{\testFSDestroy@fifo@stack@count@size}
+% \DoNotIndex{\fifo@stack@top@testFSDestroy}
+% \DoNotIndex{\fifo@stack@bottom@testFSDestroy}
+%
+%
+% \title{Directed Simplicial Type Theory \LaTeX\ Style}
+% \author{Stephen Gaito}
+% \maketitle
+% \begin{abstract}
+% This is the Directed Simplicial Type Theory (DiSiTT) style file. It is a LaTeX
+% style file used to typeset DiSiTT proof arguments.
+% \end{abstract}
+%
+% \tableofcontents
+%
+% \section{Introduction}
+%
+% \section{Integration tests and example usage}
+%
+% We use the \href{http://www.ctan.org/pkg/qstest}{QSTest} package from
+% \href{http://www.ctan.org}{CTAN} to provide both integration and unit tests of
+% our FIFO/stack package.
+%
+% In this section we walk through a number of integration tests which also
+% provide example uses of FIFO/Stacks. We provide unit tests of specific
+% invariants in the code section below.  These unit tests are associated
+% with the section of code which implements a particular invariant.
+%
+% We begin by setting up the \LaTeX\ QSTest package to test the
+% \verb|fifo-stack| package, and we will log everything. Note that we do not use
+% a document
+% class
+% or begin/end a document, this is because there should not be any \emph{normal}
+% output created.  All \emph{results} are listed in the associated
+% \verb|fifo-stack-test.lgout| file.
+%
+%    \begin{macrocode}
+%<*qstest>
+\RequirePackage{qstest}
+\RequirePackage{xifthen}
+\IncludeTests{*}
+\LogTests{lgout}{*}{*}
+%</qstest>
+%    \end{macrocode}
+%
+% \section{DiSiTT Code texstyle}
+%
+% \subsection{Identification}
+%
+%    \begin{macrocode}
+%<*package>
+\ProvidesPackage{disitt-code}%
+  [2015/12/22 v1.0 DiSiTT Code]
+%    \end{macrocode}
+%
+% \section{DiSiTT Backus-Naur Form}
+%
+% This \LaTeX code has been minimally altered from Adrian Robson's 
+% backnaur CTAN package ( \verb|https://www.ctan.org/pkg/backnaur| ).
+%
+% \subsection{BNF environments}
+%
+% \begin{environment}{bnf}
+% A production list with line numbers.
+%    \begin{macrocode}
+%txs\begin{bnf}#
+%txs\end{bnf}#
+\newenvironment{bnf}%
+{\begin{eqnarray}}%
+{\end{eqnarray}\ignorespacesafterend}
+%    \end{macrocode}
+% \end{environment}
+%
+% \begin{environment}{bnf*}
+% A production list with line numbers.
+%    \begin{macrocode}
+%txs\begin{bnf*}#
+%txs\end{bnf*}#
+\newenvironment{bnf*}%
+{\begin{eqnarray*}}%
+{\end{eqnarray*}\ignorespacesafterend}
+%    \end{macrocode}
+% \end{environment}
+%
+% \subsection{BNF definition commands}
+%
+% \begin{macro}{\bnfPN}
+%    \begin{macrocode}
+%txs\bnfPN{non-terminal}#
+\newcommand{\bnfPN}[1]{\langle \textnormal{#1} \rangle}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\bnfOR}
+%    \begin{macrocode}
+%txs\bnfOR#
+\newcommand{\bnfOR}{\; \mid \;}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\bnfSP}
+%    \begin{macrocode}
+%txs\bnfSP#
+\newcommand{\bnfSP}{\;}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\bnfES}
+%    \begin{macrocode}
+%txs\bnfES#
+\newcommand{\bnfES}{\lambda}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\bnfTD}
+%    \begin{macrocode}
+%txs\bnfTD{terminal}#
+\newcommand{\bnfTD}[1]{\textnormal{#1}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\bnfSK}
+%    \begin{macrocode}
+%txs\bnfSK#
+\newcommand{\bnfSK}{\dots}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\bnfKS}
+%    \begin{macrocode}
+%txs\bnfKS{base}{expoent}#
+\newcommand{\bnfKS}[2]{\lbrace #1 \rbrace^{#2}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\bnfPO}
+%    \begin{macrocode}
+%txs\bnfPO#
+\newcommand{\bnfPO}{::=}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\bnfProd}
+%    \begin{macrocode}
+%txs\bnfProd{nonTerminal}{production}#
+\newcommand{\bnfProd}[2]{\bnfPN{#1} & \bnfPO & #2 \\}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\bnfAlt}
+%    \begin{macrocode}
+%txs\bnfAlt{alternate production}#
+\newcommand{\bnfAlt}[1]{ & \bnfOR & #1 \\}
+%    \end{macrocode}
+% \end{macro}
+%
+% \section{Code environments}
+%
+% TODO: Consider using: github: mchakravarty/haskell.sty to do reserved 
+% words
+%
+%    \begin{macrocode}
+\RequirePackage{fancyvrb}%
+%    \end{macrocode}
+%
+% \begin{macro}{\joyLoLRequirePkg}
+%    \begin{macrocode}
+%txs\joyLoLRequirePkg{requiredPackage}#
+\newcommand{\joyLoLRequirePkg}[1]{}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\joyLoLRequireFile}
+%    \begin{macrocode}
+%txs\joyLoLRequireFile{requiredFileName}#
+\newcommand{\joyLoLRequireFile}[1]{}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{environment}{joyLoL}
+%    \begin{macrocode}
+%txs\begin{joyLoL}
+%txs\end{joyLoL}
+\DefineVerbatimEnvironment{joyLoL}{Verbatim}{frame=lines, framerule=0.2mm}
+%    \end{macrocode}
+% \end{environment}
+%
+% \begin{environment}{joyLoLPragmas}
+%    \begin{macrocode}
+%txs\begin{joyLoLPragmas}
+%txs\end{joyLoLPragmas}
+\newenvironment{joyLoLPragmas}{\comment}{\endcomment}
+%    \end{macrocode}
+% \end{environment}
+%
+% \begin{macro}{\racketRequirePkg}
+%    \begin{macrocode}
+%txs\racketRequirePkg{requiredPackage}#
+\newcommand{\racketRequirePkg}[1]{}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\racketRequireFile}
+%    \begin{macrocode}
+%txs\racketRequireFile{requiredFileName}#
+\newcommand{\racketRequireFile}[1]{}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{environment}{racket}
+%    \begin{macrocode}
+%txs\begin{racket}
+%txs\end{racket}
+\DefineVerbatimEnvironment{racket}{Verbatim}{frame=lines, framerule=0.2mm}
+%    \end{macrocode}
+% \end{environment}
+%
+% \begin{environment}{racketPragmas}
+%    \begin{macrocode}
+%txs\begin{racketPragmas}
+%txs\end{racketPragmas}
+\newenvironment{racketPragmas}{\comment}{\endcomment}
+%    \end{macrocode}
+% \end{environment}
+%
+% \begin{environment}{haskell}
+%    \begin{macrocode}
+%txs\begin{haskell}
+%txs\end{haskell}
+\DefineVerbatimEnvironment{haskell}{Verbatim}{frame=lines, framerule=0.2mm}
+%    \end{macrocode}
+% \end{environment}
+%
+% \begin{environment}{haskellPragmas}
+%    \begin{macrocode}
+%txs\begin{haskellPragmas}
+%txs\end{haskellPragmas}
+\newenvironment{haskellPragmas}{\comment}{\endcomment}
+%    \end{macrocode}
+% \end{environment}
+%
+% \subsection{Finishing off}
+%
+%    \begin{macrocode}
+%</package>
+%<*qstest>
+\LogClose{lgout}
+\stop
+%</qstest>
+%    \end{macrocode}
+%

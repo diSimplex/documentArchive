@@ -1,0 +1,455 @@
+% \changes{0.1b}{2014/02/02}{Initial version}
+%
+% \iffalse
+%<*never>
+\documentclass{amsart}
+\usepackage{doc}
+\usepackage{disitt}
+\usepackage{hyperref}
+\newcommand{\define}[2]{\emph{\textbf{#1}}}
+\GetFileInfo{disitt-engine.sty}
+\CodelineIndex
+\EnableCrossrefs
+\RecordChanges
+\begin{document}
+\CheckSum{12}
+\DocInput{disitt.dtx}
+%\DocInput{disitt-symbols.dtx}
+\section{Copyright and \LaTeX\ Project Public License}
+\begin{verbatim}
+%txsBeginComment
+Copyright (C) 2014 Stephen Gaito (PerceptiSys Ltd)
+
+This work may be distributed and/or modified under the conditions of the
+LaTeX Project Public License, either version  1.3  of  this license or (at
+your option) any later version.
+
+The latest version of this license is in
+http://www.latex-project.org/lppl.txt and  version 1.3 or later is part of
+all distributions of LaTeX version 2005/12/01 or later.
+
+This work has the LPPL maintenance status `maintained'.
+
+The Current Maintainer of this work is Stephen Gaito.
+
+The released source can be found at:
+https://github.com/diSimplex/diSimplexEngine/tree/master/texStyle  The
+
+Development source can be found at:
+https://github.com/stephengaito/diSimplexEngine/tree/master/texStyle
+
+This work consists of the files disitt.tex, disitt-example.tex, 
+disitt.dtx, disitt-symbols.dtx and disitt.ins and the derived files:
+disitt.sty, disitt.cwl, disitt-symbols.sty, disitt-symbols.cwl
+and disitt.pdf.
+%txsEndComment
+% \end{verbatim}
+\PrintIndex
+\PrintChanges
+\end{document}
+%</never>
+% \fi
+%
+% \DoNotIndex{\edef,\advance,\else,\csname,\endcsname,\expandafter}
+% \DoNotIndex{\ifx,\fi,\input,\ifnum,\relax,\newcount,\romannumeral}
+% \DoNotIndex{\the,\typeout,\xdef,\global,\newcommand,\RequirePackage}
+% \DoNotIndex{\PackageError,\ProvidesPackage,\gdef}
+% \DoNotIndex{\IncludeTests,\LogClose,\LogTests,\Expect,\ExpectIfThen}
+% \DoNotIndex{\isnamedefined,\isundefined}
+% \DoNotIndex{\stop,\makeatletter,\makeatother,\begin,\end,\def,\let}
+% \DoNotIndex{\testFSDestroy@fifo@stack@count@top}
+% \DoNotIndex{\testFSDestroy@fifo@stack@count@bottom}
+% \DoNotIndex{\testFSDestroy@fifo@stack@count@size}
+% \DoNotIndex{\fifo@stack@top@testFSDestroy}
+% \DoNotIndex{\fifo@stack@bottom@testFSDestroy}
+%
+% \title{Directed Simplicial Type Theory \LaTeX\ Style}
+% \author{Stephen Gaito}
+% \maketitle
+% \begin{abstract}
+% This is the Directed Simplicial Type Theory (DiSiTT) style file. It is a LaTeX
+% style file used to typeset DiSiTT proof arguments.
+% \end{abstract}
+%
+% \tableofcontents
+%
+% \section{Introduction}
+%
+% The Directed Simplicial Type Theory (DiSiTT) style is a \LaTeX\ style designed
+% to type set DiSiTT style natural decuction derivations, either rules or chains
+% of rule derivations. The \emph{primary purpose} of using the DiSiTT style
+% instead of other \LaTeX\ natural deduction packages is that the DiSiTT style
+% provides the syntax required by the DiSiTT engine to perform automatic
+% derivation checking. \emph{Inside} \LaTeX\ the DiSiTT style provides a
+% unified syntax with in which either the ``Gentzen'' (tree) style (using
+% \verb|bussproofs.sty|) or ``Fitch'' (sequential) style (using \verb|fitch.sty|) can be
+% used.
+%
+% The Directed Simplicial Type Theory (DiSiTT) engine, is essentially a natural
+% deduction judgement programming language (JPL). In classical natural deduction
+% the basic \emph{judement} is a statement that a given proposition, $A$, is
+% \emph{true}. In DiSiTT, the basic judgements are statements that one
+% (directed) simplicial structure is a \emph{part} of another.
+%
+% Any programming language will need to keep track of variables in various
+% contexts, our JPL is no different.  Natural deductions consist of nested
+% collections of derivations or \emph{proofs}.  Variables are scoped to a
+% particular nested collection of derivations.
+%
+% We have a number of distinct types of derivations:
+%
+% \begin{enumerate}
+%   \item \define{Definition}{}\DescribeEnv{def}\ or
+%     \define{Subdefinition}{}\DescribeEnv{subdef}\ used to \emph{define} an
+%     equivilance between two statements. Subdefinitions are numbered relative to
+%     their enclosing (sub)definition(s).
+%   \item \define{Lemma}{} or \define{Theorem}{} used to provide a number of
+%     \emph{hypothosized} statements followed by a number of \emph{derived}
+%     statements. A Lemma or Theorem is a definition of a natural deduction rule
+%     promise that a Proof will be given either in the following text, an
+%     appendix, or from another work.
+%   \item \define{Conjecture}{} the same as a Lemma or Theorem statement but
+%     marked as unproven (and hence unuseable in other derivations).
+%   \item \define{Proof}{} or \define{Subproof}{} used to provide detailed
+%     natural deduction derivations of one or more \emph{derived} statements using
+%     the given \emph{hypothosized} statements. Typically a proof follows a given
+%     Lemma or Theorem.  However Proofs can be used as a running discusion on how
+%     to prove a given statement (which might only be visible by the end of the
+%     discussion).
+% \end{enumerate}
+%
+% One of our primary aims is to produce ``journal'' ready documents, for this we
+% use \LaTeX\ as our primary document environment and assume that the JPL
+% derivations are environments inside a \LaTeX\ document. As such each of the
+% above derivation types are defined as \LaTeX\ environments, for example:
+%
+% \begin{verbatim}
+%   \begin{definition}
+%     \begin{subdefinition}
+%     ....
+%     \end{subdefinition}
+%   \end{definition}
+% \end{verbatim}
+%
+% Each derivation environment consists of a number of derivation statements. A
+% single statement consists of an optional \define{context}{} followed by a
+% \define{judgement}{}, where a context is a sequence of judgements:
+%
+% \begin{verbatim}
+%   \hypothesis{
+%     \judgement{a}{A}, 
+%     \judgement{b}{B},
+%      ...
+%     \judgement{x}{X}
+%   }{
+%     \judgement{z}{Z}
+%   }
+% \end{verbatim}
+% or
+% \begin{verbatim}
+%   \conclusion{
+%     \judgement{a}{A}, 
+%     \judgement{b}{B},
+%      ...
+%     \judgement{x}{X}
+%   }{
+%     \judgement{z}{Z}
+%   }
+% \end{verbatim}
+%
+% Every derivation environment must have at least one \verb|\conclusion|
+% statement. Multiple \verb|\conclusion| statements are considered to be mutulally
+% equivilant. Derivation environments need not have any \verb|\hyposthesis|
+% statements.  The order of statements is significant, and acts as a stack.
+%
+% In a proof derivation, every \verb|\conclusion| statement must be followed by a
+% \verb|\followsUsing{xxx}| statement, which identifies the previously defined
+% derivation which justifies the previous conclusion.
+%
+% \section{Examples}
+%
+% In this section we provide some worked examples.
+% \begin{verbatim}
+% \begin{lemma}
+%   The following are equivilant:
+%   \conclusion{}{\judgement{a}{A}}
+%   \conclusion{}{\judgement{b}{B}}
+% \end{lemma}
+% \end{verbatim}
+%
+% \section{Integration tests and example usage}
+%
+% We use the \href{http://www.ctan.org/pkg/qstest}{QSTest} package from
+% \href{http://www.ctan.org}{CTAN} to provide both integration and unit tests of
+% our FIFO/stack package.
+%
+% In this section we walk through a number of integration tests which also
+% provide example uses of FIFO/Stacks. We provide unit tests of specific
+% invariants in the code section below.  These unit tests are associated
+% with the section of code which implements a particular invariant.
+%
+% We begin by setting up the \LaTeX\ QSTest package to test the
+% \verb|fifo-stack| package, and we will log everything. Note that we do not use
+% a document
+% class
+% or begin/end a document, this is because there should not be any \emph{normal}
+% output created.  All \emph{results} are listed in the associated
+% \verb|fifo-stack-test.lgout| file.
+%
+%    \begin{macrocode}
+%<*qstest>
+\RequirePackage{qstest}
+\RequirePackage{xifthen}
+\IncludeTests{*}
+\LogTests{lgout}{*}{*}
+\RequirePackage{disitt-engine}
+%</qstest>
+%    \end{macrocode}
+%
+% \section{DiSiTT texstyle}
+%
+% \subsection{Identification}
+%
+%    \begin{macrocode}
+%<*package>
+\ProvidesPackage{disitt}%
+  [2014/03/25 v1.0 DiSiTT natural deduction styles]
+%txs#include:disitt-engine
+\RequirePackage{disitt-engine}
+%    \end{macrocode}
+%
+% \subsection{DiSiTT options}
+%
+% \subsubsection{Options for using includes}
+% 
+% \begin{macro}{\disittIncludeOnly}
+%   \begin{macro}{includeAll}
+%    \begin{macrocode}
+%txs\disittIncludeOnly{aFileToPotentiallyInclude}#n
+\DeclareOption{includeAll}{%
+\renewcommand{\disittIncludeOnly}[1]{}%
+}
+%    \end{macrocode}
+%   \end{macro}
+%
+%   \begin{macro}{includeSome}
+%    \begin{macrocode}
+\DeclareOption{includeSome}{%
+\newcommand{\disittIncludeOnly}[1]{\includeonly{##1}}%
+}
+%    \end{macrocode}
+%   \end{macro}
+% \end{macro}
+%
+% \subsubsection{Opions for using the TikZ diagram tool}
+%
+% \begin{environment}{cTikzPicture}
+%   \begin{macro}{tikzAll}
+%    \begin{macrocode}
+%txs\begin{cTikzPicture}#n
+%txs\end{cTikzPicture}#n
+\DeclareOption{tikzAll}{%
+\renewenvironment{cTikzPicture}%
+{\begin{center}\begin{tikzpicture}}%
+{\end{tikzpicture}\end{center}}
+}
+%    \end{macrocode}
+%   \end{macro}
+%
+%   \begin{macro}{tikzSome}
+%    \begin{macrocode}
+\DeclareOption{tikzSome}{%
+\newenvironment{cTikzPicture}%
+{\center\textbf{TikzPicture}\endcenter\comment}%
+{\endcomment}%
+}
+%    \end{macrocode}
+%   \end{macro}
+% \end{environment}
+%
+% \subsubsection{Execution of default options}
+%
+%    \begin{macrocode}
+\ExecuteOptions{includeSome,tikzSome}
+\ProcessOptions
+%    \end{macrocode}
+%
+% \subsection{Setting up required packages}
+%
+%    \begin{macrocode}
+\RequirePackage{stmaryrd}%
+\RequirePackage{amsmath}%
+\RequirePackage{amsfonts}%
+\RequirePackage{amssymb}%
+\RequirePackage{cmll}%
+\RequirePackage{graphicx}%
+%\RequirePackage{diagxy}%
+%\RequirePackage{fancyhdr}%
+\RequirePackage{gitinfo}%
+\RequirePackage{hyperref}% This may need to be last!
+%\RequirePackage{oldgerm}% for textfrak fonts
+%\RequirePackage{yfonts}% for textfrak fonts
+\RequirePackage{lscape} % for landscape of individual pages (large tables)
+\RequirePackage{verbatim}%
+%    \end{macrocode}
+%
+% \subsection{Setting up our use of PGF/TikZ}
+%
+%    \begin{macrocode}
+\usepackage{tikz}
+\usetikzlibrary{calc,intersections,matrix,arrows}
+%
+\tikzset{comDiagM/.style={matrix of math nodes, row sep=3em, column sep=3em, text height=1.5ex, text depth=0.25ex}}
+\tikzset{comDiagP/.style={->,font=\scriptsize}}
+\tikzset{inFront/.style={fill=white,inner sep=2pt}}
+\tikzset{injection/.style={right hook->}}
+\tikzset{surjection/.style={->>}}
+\tikzset{map/.style={->}}
+%    \end{macrocode}
+%
+% \begin{environment}{cTikzPictureWorking}
+%    \begin{macrocode}
+%txs\begin{cTikzPictureWorking}#n
+%txs\end{cTikzPictureWorking}#n
+\newenvironment{cTikzPictureWorking}
+{\begin{center}\begin{tikzpicture}}%
+{\end{tikzpicture}\end{center}}
+%    \end{macrocode}
+% \end{environment}
+%
+% \subsection{Embedding document information in to output PDF file}
+%
+% We could use something like the following to embed version control info
+% into the information section of the PDF file... 
+% this was taken from \cite[Section 3.4.4]{scharrer2007svnLatex}
+%
+% \begin{verbatim}
+% \pdfinfo { /CreationDate (D:\gitAuthorDate) }
+% \makeatletter
+% \hypersetup{%
+%    pdfauthor={\gitAuthorName},
+%    pdfkeywords={Revision \gitAbbrevHash}
+% }
+% \makeatother
+% \end{verbatim}
+%
+%\subsection{Setting up the theorem like environments}
+%
+%    \begin{macrocode}
+\newtheoremstyle{disittPlain}% name
+	{6pt}% space above
+	{6pt}% space below
+	{\itshape}%    body font
+	{}%    indent amount
+	{\bfseries}% theorem head font
+	{.}%   punctuation after theorem head
+	{.5em}% space after theorem head
+	{}%    theorem head spec
+%
+\newtheoremstyle{disittDefinition}% name
+	{6pt}% space above
+	{6pt}% space below
+	{}%    body font
+	{}%    indent amount
+	{\bfseries}% theorem head font
+	{.}%   punctuation after theorem head
+	{.5em}% space after theorem head
+	{}%    theorem head spec
+%
+\newtheoremstyle{disittRemark}% name
+	{6pt}% space above
+	{6pt}% space below
+	{}%    body font
+	{}%    indent amount
+	{\bfseries}% theorem head font
+	{.}%   punctuation after theorem head
+	{.5em}% space after theorem head
+	{}%    theorem head spec
+%
+\newtheoremstyle{disittAsside}% name
+	{6pt}% space above
+	{6pt}% space below
+	{\itshape\small}%    body font
+	{}%    indent amount
+	{\bfseries}% theorem head font
+	{.}%   punctuation after theorem head
+	{.5em}% space after theorem head
+	{}%    theorem head spec
+%
+\theoremstyle{disittPlain}
+%
+%txs\begin{conjecture}#n
+%txs\end{conjecture}#n
+\newtheorem{conjecture}{Conjecture}
+%
+%txs\begin{corollary}#n
+%txs\end{corollary}#n
+\newtheorem{corollary}{Corollary}[section]
+%
+%txs\begin{lemma}#n
+%txs\end{lemma}#n
+\newtheorem{lemma}{Lemma}[section]
+%
+%txs\begin{theorem}#n
+%txs\end{theorem}#n
+%txs\begin{proof}#n
+%txs\end{proof}#n
+\newtheorem{theorem}{Theorem}[section]
+%
+\theoremstyle{disittDefinition}
+%
+%txs\begin{definition}#n
+%txs\end{definition}#n
+\newtheorem{definition}{Definition}[section]
+\let\oldEndDefinition\enddefinition
+\renewcommand{\enddefinition}{\hfill\ensuremath{\Box}\oldEndDefinition}
+%
+%txs\begin{example}#n
+%txs\end{example}#n
+\newtheorem{example}{Example}[section]
+%
+\theoremstyle{disittRemark}
+%
+%txs\begin{remark}#n
+%txs\end{remark}#n
+\newtheorem{remark}{Remark}[section]
+%
+%\theoremstyle{disittAsside}
+%\newtheorem{comment}{Comment}
+%
+\numberwithin{equation}{section}
+%    \end{macrocode}
+%
+% \subsection{Additional setup}
+%    \begin{macrocode}
+%\newcommand{\discussionIcon}{{\fontencoding{T1}\fontfamily{fsyp}\selectfont A}}
+%
+%\newcommand{\sectionQuote}[1]{\protect\begin{flushright}\protect\parbox{10cm}{\protect\begin{verse}#1\protect\end{verse}}\protect\end{flushright}}
+%
+%\RequirePackage{array}
+%\setlength{\extrarowheight}{1pt}
+%\renewcommand{\arraystretch}{1.25}
+%\newcolumntype{C}{>{$}c<{$}}
+%\newcolumntype{L}{>{$}l<{$}}
+%\newcolumntype{R}{>{$}r<{$}}
+%
+%\DeclareGraphicsRule{*}{mps}{*}{}
+%    \end{macrocode}
+%
+% \subsection{Pull in DiSiTT symbols}
+%
+%    \begin{macrocode}
+%txs#include:disitt-symbols
+%\usepackage{disitt-symbols}
+%    \end{macrocode}
+%
+% \subsection{Finishing off}
+%
+%    \begin{macrocode}
+%</package>
+%<*qstest>
+\LogClose{lgout}
+\stop
+%</qstest>
+%    \end{macrocode}
+%
