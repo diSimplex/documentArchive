@@ -1,0 +1,268 @@
+I, [12-59-19-435#23386]  INFO -- : Cook version: 2.0.7
+I, [12-59-19-435#23386]  INFO -- : Adding global cookbook /home/stg/.cookbook
+I, [12-59-19-435#23386]  INFO -- : Loading cookbook: [/home/stg/.cookbook]
+I, [12-59-19-435#23386]  INFO -- : loading configuration file [/home/stg/.cookbook/cookbook.conf]
+  in /home/stg/ExpositionGit/papers/2SimplicialStructures/simplicialStructures
+I, [12-59-19-436#23386]  INFO -- : Building in /home/stg/ExpositionGit/papers/2SimplicialStructures/simplicialStructures
+I, [12-59-19-436#23386]  INFO -- : Loading cookbook: [/home/stg/ExpositionGit/papers/2SimplicialStructures/simplicialStructures]
+I, [12-59-19-437#23386]  INFO -- : loading configuration file [/home/stg/ExpositionGit/papers/2SimplicialStructures/simplicialStructures/cookbook.conf]
+  in /home/stg/ExpositionGit/papers/2SimplicialStructures/simplicialStructures
+I, [12-59-19-437#23386]  INFO -- : Loading rakefile [/home/stg/ExpositionGit/papers/2SimplicialStructures/simplicialStructures/cookbook.rake]
+  in /home/stg/ExpositionGit/papers/2SimplicialStructures/simplicialStructures
+I, [12-59-19-437#23386]  INFO -- : Loading cookbook: [/home/stg/ExpositionGit/tools/diSimplexLaTeX/cookbook]
+I, [12-59-19-437#23386]  INFO -- : loading configuration file [/home/stg/ExpositionGit/tools/diSimplexLaTeX/cookbook/cookbook.conf]
+  in /home/stg/ExpositionGit/papers/2SimplicialStructures/simplicialStructures
+I, [12-59-19-438#23386]  INFO -- : Loading rakefile [/home/stg/ExpositionGit/tools/diSimplexLaTeX/cookbook/cookbook.rake]
+  in /home/stg/ExpositionGit/papers/2SimplicialStructures/simplicialStructures
+I, [12-59-19-438#23386]  INFO -- : loading configuration file [/home/stg/ExpositionGit/tools/diSimplexLaTeX/cookbook/recipes/create/create.conf]
+  in /home/stg/ExpositionGit/papers/2SimplicialStructures/simplicialStructures
+I, [12-59-19-438#23386]  INFO -- : Loading rakefile [/home/stg/ExpositionGit/tools/diSimplexLaTeX/cookbook/recipes/create/create.rake]
+  in /home/stg/ExpositionGit/papers/2SimplicialStructures/simplicialStructures
+I, [12-59-19-439#23386]  INFO -- : Loading rakefile [/home/stg/ExpositionGit/tools/diSimplexLaTeX/cookbook/recipes/texStyles/texStyles.rake]
+  in /home/stg/ExpositionGit/papers/2SimplicialStructures/simplicialStructures
+I, [12-59-19-441#23386]  INFO -- : loading configuration file [/home/stg/ExpositionGit/tools/diSimplexLaTeX/cookbook/recipes/texFonts/texFonts.conf]
+  in /home/stg/ExpositionGit/papers/2SimplicialStructures/simplicialStructures
+I, [12-59-19-441#23386]  INFO -- : Loading rakefile [/home/stg/ExpositionGit/tools/diSimplexLaTeX/cookbook/recipes/texFonts/texFonts.rake]
+  in /home/stg/ExpositionGit/papers/2SimplicialStructures/simplicialStructures
+I, [12-59-19-442#23386]  INFO -- : loading configuration file [/home/stg/ExpositionGit/tools/diSimplexLaTeX/cookbook/documentTypes/article.conf]
+  in /home/stg/ExpositionGit/papers/2SimplicialStructures/simplicialStructures
+I, [12-59-19-442#23386]  INFO -- : ** Invoke cookPreConfig (first_time)
+I, [12-59-19-442#23386]  INFO -- : ** Execute cookPreConfig
+I, [12-59-19-442#23386]  INFO -- : finished (cook) preConfig stage
+
+
+I, [12-59-19-442#23386]  INFO -- : ** Invoke cookConfig (first_time)
+I, [12-59-19-442#23386]  INFO -- : ** Invoke create:config (first_time)
+I, [12-59-19-442#23386]  INFO -- : ** Execute create:config
+I, [12-59-19-443#23386]  INFO -- : ** Execute cookConfig
+I, [12-59-19-443#23386]  INFO -- : finished (cook) config stage
+
+
+I, [12-59-19-443#23386]  INFO -- : ** Invoke cookPostConfig (first_time)
+I, [12-59-19-443#23386]  INFO -- : ** Execute cookPostConfig
+I, [12-59-19-443#23386]  INFO -- : finished (cook) postConfig stage
+
+
+I, [12-59-19-443#23386]  INFO -- : --------------------
+Tasks defined
+
+
+I, [12-59-19-444#23386]  INFO -- : [<Rake::FileTask .git/hooks/latex-git-log => []>,
+ <Rake::FileTask .git/hooks/post-checkout => []>,
+ <Rake::FileTask .git/hooks/post-commit => []>,
+ <Rake::FileTask .git/hooks/post-merge => []>,
+ <Rake::FileTask .gitignore => []>,
+ <Rake::FileTask .gitignore.d/font-gitignore => []>,
+ <Rake::FileTask .gitignore.d/git-gitignore => []>,
+ <Rake::FileTask .gitignore.d/java-gitignore => []>,
+ <Rake::FileTask .gitignore.d/latex-gitignore => []>,
+ <Rake::FileTask .gitignore.d/scala-gitignore => []>,
+ <Rake::Task buildFonts => [texFonts:buildFonts]>,
+ <Rake::Task cleanFonts => [texFonts:cleanFonts]>,
+ <Rake::Task cleanHooks => [create:cleanHooks]>,
+ <Rake::Task cookConfig => [create:config]>,
+ <Rake::Task cookPostConfig => []>,
+ <Rake::Task cookPreConfig => []>,
+ <Rake::Task create => [create:default]>,
+ <Rake::Task create:cleanHooks => []>,
+ <Rake::Task create:config => []>,
+ <Rake::Task create:default => [.gitignore, .git/hooks/post-commit, .git/hooks/post-checkout, .git/hooks/post-merge, .git/hooks/latex-git-log, .gitignore.d/git-gitignore, .gitignore.d/java-gitignore, .gitignore.d/latex-gitignore, .gitignore.d/scala-gitignore, .gitignore.d/font-gitignore, tex/frontMatter.tex, tex/options.tex, tex/simplicialStructures.tex]>,
+ <Rake::Task packageFonts => [texFonts:packageFonts]>,
+ <Rake::FileTask tex/frontMatter.tex => []>,
+ <Rake::FileTask tex/options.tex => []>,
+ <Rake::FileTask tex/simplicialStructures.tex => []>,
+ <Rake::Task texFonts:buildFonts => [cleanFonts]>,
+ <Rake::Task texFonts:cleanFonts => []>,
+ <Rake::Task texFonts:packageFiles => [buildFonts]>,
+ <Rake::Task texFonts:packageFonts => [packageFiles]>,
+ <Rake::Task texStyle => [texStyles:default]>,
+ <Rake::FileTask texStyle/simplicialStructures-test.lgout => [texStyle/simplicialStructures-test.tex]>,
+ <Rake::FileTask texStyle/simplicialStructures-test.tex => [texStyle/simplicialStructures.dtx, texStyle/simplicialStructures.ins]>,
+ <Rake::FileTask texStyle/simplicialStructures.cwl => [texStyle/simplicialStructures.dtx]>,
+ <Rake::FileTask texStyle/simplicialStructures.pdf => [texStyle/simplicialStructures.dtx, texStyle/simplicialStructures.sty]>,
+ <Rake::FileTask texStyle/simplicialStructures.sty => [texStyle/simplicialStructures.dtx, texStyle/simplicialStructures.ins]>,
+ <Rake::Task texStyleDoc => [texStyles:tsdoc]>,
+ <Rake::Task texStyleTest => [texStyles:tstest]>,
+ <Rake::Task texStyles:default => [finalClean]>,
+ <Rake::Task texStyles:finalClean => [localRelease]>,
+ <Rake::Task texStyles:globalReleases => [initialClean]>,
+ <Rake::Task texStyles:initialClean => [texStyle/simplicialStructures.pdf, texStyle/simplicialStructures.sty, texStyle/simplicialStructures.cwl, texStyle/simplicialStructures-test.lgout]>,
+ <Rake::Task texStyles:localRelease => [globalReleases]>,
+ <Rake::Task texStyles:tsdoc => [texStyle/simplicialStructures.pdf]>,
+ <Rake::Task texStyles:tstest => [texStyle/simplicialStructures-test.lgout]>,
+ <Rake::Task ts => [texStyle]>,
+ <Rake::Task tsd => [texStyleDoc]>,
+ <Rake::Task tst => [texStyleTest]>]
+
+I, [12-59-19-444#23386]  INFO -- : --------------------
+Configuration data
+
+
+I, [12-59-19-445#23386]  INFO -- : Conf.cookbook.create.templatePath="/home/stg/ExpositionGit/tools/diSimplexLaTeX/cookbook/recipes/create/templates/"
+Conf.cookbook.dirName="/home/stg/ExpositionGit/tools/diSimplexLaTeX/cookbook"
+Conf.global.diSimplex.cookbook="/home/stg/ExpositionGit/tools/diSimplexLaTeX/cookbook"
+Conf.global.diSimplex.release.draft.gitHubPages="/home/stg/ExpositionGit/stephenGaitoGitHubPages"
+Conf.global.diSimplex.release.full.gitHubPages="/home/stg/ExpositionGit/diSimplexGitHubPages"
+Conf.global.stephenGaito.gitHubPages="/home/stg/ExpositionGit/stephenGaitoGitHubPages"
+Conf.global.texLive.localDir="/usr/local/texLive/texmf-local"
+Conf.global.texStudio.localConfDir="/home/stg/.config/texstudio"
+Conf.global.texStyle.localConfDir="/home/stg/.texmf/tex/latex"
+Conf.global.userBin="/home/stg/bin"
+Conf.gpg=emptyConstruct
+Conf.missingKey.global.cookbook.message="The cookbook configuration parameter needs to be set to the location of 
+the appropriate cookbook.
+"
+Conf.missingKey.global.cookbook.valueMessage="where <<value>> is the full path to the approprate cookbook directory.
+"
+Conf.missingKey.global.message="Global parameters are usually set in the cookbook.conf YAML file 
+contained in the .cookbook directory in your home directory.
+"
+Conf.missingKey.global.userBin.message="The configuration parameter global.userBin should be set to your 
+personal user's bin directory.
+"
+Conf.missingKey.global.userBin.valueMessage="where <<value>> is the path to your personal user's bin directory."
+Conf.paper.authors.stg.address="PerceptiSys Ltd, 21 Gregory Ave, Coventry, CV3 6DJ, United Kingdom"
+Conf.paper.authors.stg.email="stephen@perceptisys.co.uk"
+Conf.paper.authors.stg.name="Stephen Gaito"
+Conf.paper.authors.stg.url="http://www.perceptisys.co.uk"
+Conf.paper.copyrights[0]="Copyright: \copyright{} Stephen Gaito, PerceptiSys Ltd \the\year{}; Some rights reserved"
+Conf.paper.copyrights[1]="This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License."
+Conf.paper.document.options[0]="a4paper"
+Conf.paper.document.packages.disitt[0]="article"
+Conf.paper.document.type="amsart"
+Conf.paper.fileName="tex/simplicialStructures.tex"
+Conf.paper.name="simplicialStructures"
+Conf.paper.version="0.0.1"
+Conf.rsync.asyncTriggersBlocks[0]=
+Conf.rsync.cmdOptions=emptyArray
+Conf.rsync.command="rsync"
+Conf.rsync.commandPromptRegExp="."
+Conf.scp.asyncTriggersBlocks[0]=
+Conf.scp.cmdOptions=emptyArray
+Conf.scp.command="scp"
+Conf.scp.commandPromptRegExp="."
+Conf.sh.asyncTriggersBlocks[0]=
+Conf.sh.cmdOptions=emptyArray
+Conf.sh.command="sh"
+Conf.sh.commandPromptRegExp="."
+Conf.ssh.asyncTriggersBlocks[0]=
+Conf.ssh.cmdOptions=emptyArray
+Conf.ssh.command="ssh"
+Conf.ssh.commandPromptRegExp="."
+Conf.texFont.fontForge.dir="texFont/fontForge"
+Conf.texFont.fontForge.fontName="DiSimplexSymbols"
+Conf.texFont.fontPaths[0][0]="fonts/afm/local"
+Conf.texFont.fontPaths[0][1]="afm"
+Conf.texFont.fontPaths[1][0]="fonts/tfm/local"
+Conf.texFont.fontPaths[1][1]="tfm"
+Conf.texFont.fontPaths[2][0]="fonts/type1/local"
+Conf.texFont.fontPaths[2][1]="pfb"
+Conf.texFont.fontPaths[3][0]="fonts/map/local"
+Conf.texFont.fontPaths[3][1]="map"
+Conf.texFont.fontPaths[4][0]="fonts/vf/local"
+Conf.texFont.fontPaths[4][1]="vf"
+Conf.texFont.fontPaths[5][0]="tex/latex/local"
+Conf.texFont.fontPaths[5][1]="fd"
+Conf.texFont.texFonts.dir="texFont/texFonts"
+Conf.texFont.texFonts.fontName="fsyp"
+Conf.texStyle.files[0]="simplicialStructures"
+Conf.texStyle.install=false
+Conf.texStyle.name="simplicialStructures"
+Conf.texStyle.version="0.0.1"
+
+I, [12-59-19-445#23386]  INFO -- : --------------------
+Recipe paths
+
+
+I, [12-59-19-446#23386]  INFO -- : ["/home/stg/.cookbook/",
+ "/home/stg/.cookbook/recipes/",
+ "/home/stg/ExpositionGit/papers/2SimplicialStructures/simplicialStructures/",
+ "/home/stg/ExpositionGit/papers/2SimplicialStructures/simplicialStructures/recipes/",
+ "/home/stg/ExpositionGit/tools/diSimplexLaTeX/cookbook/",
+ "/home/stg/ExpositionGit/tools/diSimplexLaTeX/cookbook/recipes/"]
+
+I, [12-59-19-446#23386]  INFO -- : --------------------
+Ruby load paths
+
+
+I, [12-59-19-446#23386]  INFO -- : ["/home/stg/ExpositionGit/tools/diSimplexLaTeX/cookbook/recipes/",
+ "/home/stg/ExpositionGit/tools/diSimplexLaTeX/cookbook/",
+ "/home/stg/ExpositionGit/tools/diSimplexLaTeX/cookbook/lib",
+ "/home/stg/ExpositionGit/papers/2SimplicialStructures/simplicialStructures/recipes/",
+ "/home/stg/ExpositionGit/papers/2SimplicialStructures/simplicialStructures/",
+ "/home/stg/ExpositionGit/papers/2SimplicialStructures/simplicialStructures/lib",
+ "/home/stg/.cookbook/recipes/",
+ "/home/stg/.cookbook/",
+ "/home/stg/.cookbook/lib",
+ "/var/lib/gems/1.9.1/gems/rake-10.3.1/lib",
+ "/var/lib/gems/1.9.1/gems/construct-0.1.7/lib",
+ "/var/lib/gems/1.9.1/gems/erubis-2.7.0/lib",
+ "/var/lib/gems/1.9.1/gems/greenletters-0.3.0/lib",
+ "/var/lib/gems/1.9.1/gems/cook-2.0.7/lib",
+ "/usr/local/lib/site_ruby/1.9.1",
+ "/usr/local/lib/site_ruby/1.9.1/x86_64-linux",
+ "/usr/local/lib/site_ruby",
+ "/usr/lib/ruby/vendor_ruby/1.9.1",
+ "/usr/lib/ruby/vendor_ruby/1.9.1/x86_64-linux",
+ "/usr/lib/ruby/vendor_ruby",
+ "/usr/lib/ruby/1.9.1",
+ "/usr/lib/ruby/1.9.1/x86_64-linux",
+ "."]
+
+I, [12-59-19-446#23386]  INFO -- : --------------------
+
+
+I, [12-59-19-446#23386]  INFO -- : ** Invoke create (first_time)
+I, [12-59-19-446#23386]  INFO -- : ** Invoke create:default (first_time)
+I, [12-59-19-446#23386]  INFO -- : ** Invoke .gitignore (first_time)
+I, [12-59-19-447#23386]  INFO -- : ** Execute .gitignore
+I, [12-59-21-219#23386]  INFO -- : ** Invoke .git/hooks/post-commit (first_time)
+I, [12-59-21-219#23386]  INFO -- : ** Execute .git/hooks/post-commit
+I, [12-59-21-229#23386]  INFO -- : Applying erubis template: [/home/stg/ExpositionGit/tools/diSimplexLaTeX/cookbook/recipes/create/templates/git/hooks/post-commit.erb]
+to produce: [.git/hooks/post-commit]
+I, [12-59-21-230#23386]  INFO -- : ** Invoke .git/hooks/post-checkout (first_time)
+I, [12-59-21-230#23386]  INFO -- : ** Execute .git/hooks/post-checkout
+I, [12-59-21-230#23386]  INFO -- : Applying erubis template: [/home/stg/ExpositionGit/tools/diSimplexLaTeX/cookbook/recipes/create/templates/git/hooks/post-checkout.erb]
+to produce: [.git/hooks/post-checkout]
+I, [12-59-21-230#23386]  INFO -- : ** Invoke .git/hooks/post-merge (first_time)
+I, [12-59-21-231#23386]  INFO -- : ** Execute .git/hooks/post-merge
+I, [12-59-21-231#23386]  INFO -- : Applying erubis template: [/home/stg/ExpositionGit/tools/diSimplexLaTeX/cookbook/recipes/create/templates/git/hooks/post-merge.erb]
+to produce: [.git/hooks/post-merge]
+I, [12-59-21-231#23386]  INFO -- : ** Invoke .git/hooks/latex-git-log (first_time)
+I, [12-59-21-231#23386]  INFO -- : ** Execute .git/hooks/latex-git-log
+I, [12-59-21-231#23386]  INFO -- : Applying erubis template: [/home/stg/ExpositionGit/tools/diSimplexLaTeX/cookbook/recipes/create/templates/git/hooks/latex-git-log.erb]
+to produce: [.git/hooks/latex-git-log]
+I, [12-59-21-232#23386]  INFO -- : ** Invoke .gitignore.d/git-gitignore (first_time)
+I, [12-59-21-232#23386]  INFO -- : ** Execute .gitignore.d/git-gitignore
+I, [12-59-21-232#23386]  INFO -- : Applying erubis template: [/home/stg/ExpositionGit/tools/diSimplexLaTeX/cookbook/recipes/create/templates/gitignore.d/git-gitignore.erb]
+to produce: [.gitignore.d/git-gitignore]
+I, [12-59-21-233#23386]  INFO -- : ** Invoke .gitignore.d/java-gitignore (first_time)
+I, [12-59-21-233#23386]  INFO -- : ** Execute .gitignore.d/java-gitignore
+I, [12-59-21-233#23386]  INFO -- : Applying erubis template: [/home/stg/ExpositionGit/tools/diSimplexLaTeX/cookbook/recipes/create/templates/gitignore.d/java-gitignore.erb]
+to produce: [.gitignore.d/java-gitignore]
+I, [12-59-21-233#23386]  INFO -- : ** Invoke .gitignore.d/latex-gitignore (first_time)
+I, [12-59-21-233#23386]  INFO -- : ** Execute .gitignore.d/latex-gitignore
+I, [12-59-21-233#23386]  INFO -- : Applying erubis template: [/home/stg/ExpositionGit/tools/diSimplexLaTeX/cookbook/recipes/create/templates/gitignore.d/latex-gitignore.erb]
+to produce: [.gitignore.d/latex-gitignore]
+I, [12-59-21-233#23386]  INFO -- : ** Invoke .gitignore.d/scala-gitignore (first_time)
+I, [12-59-21-234#23386]  INFO -- : ** Execute .gitignore.d/scala-gitignore
+I, [12-59-21-234#23386]  INFO -- : Applying erubis template: [/home/stg/ExpositionGit/tools/diSimplexLaTeX/cookbook/recipes/create/templates/gitignore.d/scala-gitignore.erb]
+to produce: [.gitignore.d/scala-gitignore]
+I, [12-59-21-234#23386]  INFO -- : ** Invoke .gitignore.d/font-gitignore (first_time)
+I, [12-59-21-234#23386]  INFO -- : ** Execute .gitignore.d/font-gitignore
+I, [12-59-21-234#23386]  INFO -- : Applying erubis template: [/home/stg/ExpositionGit/tools/diSimplexLaTeX/cookbook/recipes/create/templates/gitignore.d/font-gitignore.erb]
+to produce: [.gitignore.d/font-gitignore]
+I, [12-59-21-234#23386]  INFO -- : ** Invoke tex/frontMatter.tex (first_time)
+I, [12-59-21-234#23386]  INFO -- : ** Execute tex/frontMatter.tex
+I, [12-59-21-235#23386]  INFO -- : Applying erubis template: [/home/stg/ExpositionGit/tools/diSimplexLaTeX/cookbook/recipes/create/templates/tex/frontMatter.tex.erb]
+to produce: [tex/frontMatter.tex]
+I, [12-59-21-235#23386]  INFO -- : ** Invoke tex/options.tex (first_time)
+I, [12-59-21-235#23386]  INFO -- : ** Execute tex/options.tex
+I, [12-59-21-236#23386]  INFO -- : Applying erubis template: [/home/stg/ExpositionGit/tools/diSimplexLaTeX/cookbook/recipes/create/templates/tex/options.tex.erb]
+to produce: [tex/options.tex]
+I, [12-59-21-236#23386]  INFO -- : ** Invoke tex/simplicialStructures.tex (first_time)
+I, [12-59-21-236#23386]  INFO -- : ** Execute tex/simplicialStructures.tex
+I, [12-59-21-236#23386]  INFO -- : Applying erubis template: [/home/stg/ExpositionGit/tools/diSimplexLaTeX/cookbook/recipes/create/templates/tex/document.tex.erb]
+to produce: [tex/simplicialStructures.tex]
+I, [12-59-21-237#23386]  INFO -- : ** Execute create:default
+I, [12-59-21-237#23386]  INFO -- : ** Execute create
