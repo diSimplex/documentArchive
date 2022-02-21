@@ -1,0 +1,35 @@
+% LaTeX source for the cardinals document
+%
+
+\InputIfFileExists{options}{}{}
+\documentclass[a4paper]{amsart}
+\usepackage{disitt}
+\usepackage{disitt-symbols}
+
+\begin{document}
+\sloppy
+
+\title[DiSiTT Cardinals]{The structure of the Cardinals using Directed Simplical Type Theory}
+\input{frontMatter}
+\subjclass[2010]{Primary unknown; Secondary unknown} %
+\keywords{Keyword one, keyword two etc.}%
+
+\begin{abstract}
+We explore the structure of the Cardinals, \Cardinal, using Directec Simplical Type Theory. In particular we define the Cardinals as the isomorphism classes of the Ordinals.  Of particular importance, for our purposes, is the structure of the automorphisms of each Cardinal.
+\end{abstract}
+\maketitle
+\tableofcontents
+
+\section{Introduction}
+
+\TODO{We are interested in the classical topos of Cardinal presheaves $[ \Cardinal^{op}, \Set ]$.}
+
+\TODO{Of particular interest is the structure of the automorphisms of a given cardinal, since this provides the symmetries of a given cardinal simplex.}
+
+\TODO{Of greatest interest are the automorphisms which are directed limits (dcpo?) of the finite automorphisms.}
+
+\bibliographystyle{amsalpha}
+\bibliography{cardinals}
+
+\end{document}
+
