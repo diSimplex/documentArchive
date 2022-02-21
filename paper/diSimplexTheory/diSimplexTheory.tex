@@ -1,0 +1,676 @@
+% LaTeX source for the diSimplexTheory document
+%
+
+\documentclass[a4paper,openany]{amsbook}
+\usepackage{disitt}
+\usepackage{disitt-symbols}
+\usepackage[backend=biber,style=alphabetic,citestyle=alphabetic]{biblatex}
+\addbibresource{diSimplexTheory.bib}
+\usepackage{mdframed}
+\newmdenv[linecolor=white,backgroundcolor=gray!10]{infobox}
+\newenvironment{myQuote}{\begin{quotation}}{\end{quotation}}
+\surroundwithmdframed[linecolor=white,backgroundcolor=gray!10]{myQuote}
+
+\begin{document}
+\frontmatter
+\sloppy
+
+\title[DiSimplicial Theory]{Reality of Mathematics: Directed Simplicial Theory, A 
+categorical trans-finite computational foundation for Mathematics}
+\input{frontMatter}
+\subjclass[2010]{Primary unknown; Secondary unknown} %
+\keywords{Keyword one, keyword two etc.}%
+
+\begin{abstract}
+To be able to provide a mathematical theory of Reality, one must first 
+address the question: \textit{How ``Real'' is Mathematics?}
+\end{abstract} 
+\maketitle 
+\tableofcontents 
+\mainmatter
+
+\begin{quotation}
+In the places I go there are things that I see\\
+That I \emph{never} could spell if I stopped with the Z.\\
+\begin{quote}
+\textit{On Beyond Zebra} by Dr Seuss.
+\end{quote}
+\end{quotation}
+
+\section{Introduction}
+
+The aim of this cycle of papers is to provide a rigorous mathematical theory of
+Reality. This first paper provides \emph{an} answer to the question: \emph{How
+`Real' is Mathematics?}, that is, \emph{what is the validity of the
+mathematics used to provide a mathematical theory of Reality?}
+
+Any answer to this question, which forms part of this cycle of papers, must of
+necessity be circular: \emph{what is the Reality of the beings who consider the
+validity of the mathematics which provides a mathematical description of
+Reality?} To break this circularity, we take the pragmatic approach,
+bastardising Descartes, and state: \emph{I make marks in the sand, so I exist},
+or to honour John McCarthy, \emph{I can build a Lisp Machine, so I exist}.
+
+Any discussion of the `Reality' or `Validity' of Mathematics is essentially a
+discussion of the \textit{Foundations of Mathematics}. Classically Mathematics
+is founded upon some form of Set Theory, such as Zermelo-–Fraenkel set theory
+with the axiom of choice (ZFC), expressed in the language of First Order
+Predicate Logic. To avoid Russel's paradox, one form of the Liar Paradox, ZFC
+explicitly includes, amongst others, an axiom forcing all sets to be
+well--founded. From a Categorical point of view, this means that classical Set
+Theory is an \emph{Algebraic} theory. From a computational point of view, this
+means that classical Set Theory is `data'.
+
+One of the primary aims of this cycle of papers, is to show that the Sciences
+and Engineering, are better served by a Mathematics which focuses on spatially
+distributed interacting \emph{processes}. This means that, from a Categorical
+point of view, we are interested in \emph{Co-Algebraic} structures as the
+Foundations of Mathematics.
+
+Equally importantly, `Truth', as expressed by Aristotelian Logic, in the form of
+First Order Predicate Logic, is less important then the ability to compute. We
+will show that First Order Predicate Logic, as traditionally used in
+Mathematics, is the \emph{internal} logic of \emph{the} Co-Algebraic Universe of
+Mathematics. We will refer to this Co-Algebraic Universe as \emph{`Plato's
+Universe'}, \Universe{}{}.
+
+\begin{myQuote}
+Put simply, we base our foundations of mathematics on generalised
+computation \emph{rather than} Logic.
+\end{myQuote}
+
+Clearly, not all of classical Mathematics is (classically) `computable'. For
+example, the use of the (the unrestricted) Axiom of Choice, is un-computable by
+a classical Turing Machine. This suggests that, to capture the whole of
+classical Mathematics, we will need a more nuanced model of computation. The
+critical point here is that classical mathematics is developed from an
+\emph{omnipotent} point of view, yet as finite beings, we only have far more
+limited computational abilities. In our best 'school Latin`, we christen beings
+with these more limited abilities, as \emph{modipotent}.
+
+The classical theory of computation typically investigates the relative power of
+computation using turing machines \emph{extended} with oracles. We will instead introduce
+computation whose power is controlled by the algebraic `size' of its available data
+structures and/or the amount of `time' available for the computation. For each
+\emph{algebraic} cardinal, $\gamma$, there is an associated computational power of a
+$\gamma$-modipotent being, or $\gamma$-being. The unlimited computational power of an
+omnipotent being (a `god') corresponds to the \emph{co-algebraic} cardinal, \Cardinal.
+Hence any omnipotent being will be referred to as a \Cardinal-being.
+
+The co-algebraic \emph{sub}universe of mathematics computable by an
+$\omega$-modipotent being, such as ourselves, will be referred to as
+\emph{`Plato's Playground'}.
+
+One of our primary interests is in how \emph{`Plato's Playground'} fits `inside'
+\emph{`Plato's universe'}. Clearly, $\omega$-modipotent beings can `dream' of,
+and hence specify, structures which they can not construct using
+$\omega$-computational tools. That is there are structures whose specifications
+`exist' in Plato's playground but which can only be realised in Plato's
+universe.
+
+Often to really understand a topic, it is useful to develop the same ideas using very
+different tools. After just over 100 years, it is past time to develop the foundations of
+mathematics using different tools.  In our case using computation rather than logic.
+However, not surprisingly, there will be rough correspondences between the different sets
+of tools. Again, in our case, each basic assumption in our computational theory of
+mathematics, corresponds to one or more of the axioms of Set Theory. The essentiality of
+these correspondences is what provides us with a \emph{deep} understanding of what it
+\emph{means} to \emph{found} mathematics.
+
+How can we understand the shift in focus from a Logical foundation for
+mathematics to a Computational foundation for mathematics? In the classical
+Logical foundation of mathematics it is the study of the (algebraic) structure
+of the logical implications of a set of axioms which is primary. Given these
+sets of axioms we can then investigate the collection of \emph{models} which
+satisfy the axioms. In the Computational foundations of mathematics, it is the
+co-algebraic collections of \emph{constructed} models which is primary.  Given
+these co-algebraic models there are then logical statements which distinguish,
+test or verify the models.
+
+\TODO{rework the following}
+
+As will become obvious later in this cycle of papers, ``Reality'' is \emph{a}
+model of \emph{a} higher topos.  Unfortunately, for finite beings \emph{inside}
+Reality, we can only ever specify a possible collection of possible Realities. A
+collection of Realities which are consistent with our current, finitely limited,
+understanding, or measurement of ``Reality''.
+
+Far more fundamental and far more important than propositions is the concept of
+Causality.  I will argue, in later work, that the human brain, is a causality
+inference engine. I will equally argue that the unification of Relativity and
+Quantum Mechanics requires a careful understanding of the \emph{finite}
+structure of causality.
+
+As should become evident, developing the mathematics of the \emph{finite}
+structure of causality, is most easily done when based upon Directed Simplicial
+Theory rather than classical propositional/predicate calculus. Following the
+lead of HoTT, propositional/predicate calculus, as well as set theory will be
+specific ``universes'' of Directed Simplicial Type Theory.
+
+The important point here, is that, while the mathematics of causality is
+\emph{implicitly} ``part'' of classical logic, it is conceptually useful to make
+the structure of causality \emph{explicit} in our foundations of mathematics. 
+Inferring and manipulating causality is after all the main aim of all of the
+sciences and engineering.
+
+This book is devoted to giving the reader a more ``mathematical'' overview of
+Directed Simplicial Theory.  It is meant to be read in companion with the very
+much more detailed \textit{Directed Simplicial Theory Implemented in Haskell}.
+
+\section{Building Plato's Wilderness}
+
+\begin{myQuote}
+Our explicit thesis is that Mathematics \emph{is} computation.
+\end{myQuote}
+
+To begin, we must provide a model of computation. The classical models of
+computability, such as Turing Machines, the Lambda Calculus and General
+Recursive Functions, are all, more or less, about computational sequentiality
+and `time'. While the model we are about to propose will be equivalent to any of
+the classical models, it is designed to be \emph{explicitly} about parallel
+computation and `space--time'. Moreover, since classical mathematics is
+mathematics from an omnipotent point of view, the computational model required
+to capture classical mathematics, must \emph{explicitly} have unbounded
+computational ability.
+
+Since Mathematics \emph{is} computation, we, as mathematicians, write \emph{in}
+a programming language. As in Computer Science, there are many programming
+languages, each suited to a different paradigm, there will be numerous
+mathematical languages.
+
+Again, in Theoretical Computer Science, given a programming language, the first question
+is: \emph{How do we know what this language computes?} This question is captured by the
+Axiomatic, Denotational and Operational Semantics associated with a given language.
+Plato's universe, \emph{the} Co-Algebraic universe of Mathematics, is essentially, the
+fixed point of these Semantic descriptions.
+
+Equally importantly, since `proof' is computation, how do we know that a `theorem' is
+`correct'. In Theoretical Computer Science, proofs that a given programaic artefact
+computes what it is meant to compute, are done using Axiomatic Semantics. Axiomatic
+Semantical proofs that a Theorem is correct are what we finite beings can use to show that
+Theorems which require trans-finite resources correctly compute the desired result. Given
+that we do not have classical `logic' at our disposal, we will use proof theoretic rules
+engine to build and verify these Axiomatic Semantical proofs.
+
+When the dust settles, to define Plato's Universe, \Universe{}{}, we will need to
+simultaneously define, via co--induction, the four structures of \Universe{}{},
+\Lists, \ListAutomorphisms, and the proof theoretical rule engine:
+%
+\begin{align}
+   \Universe{}{}          & \isomorphic \arrow{\ListAutomorphisms}{\Universe{}{}} & 
+   \text{Plato's Universe} \\
+   \Lists             & \isomorphic \one + \Universe{}{} \times \Lists        & 
+   \text{(Gernalized) Lists} \\
+   \ListAutomorphisms & \isomorphic \arrow{\Lists}{\Lists}                & 
+   \text{(Gernalized) List Automorphisms} \\
+    &  & \text{Rules Engine}
+\end{align}
+%
+Unfortunately, since we \emph{are} building the foundations of Mathematics, we,
+as yet, have no definitions of co--induction, $\isomorphic$, \one, $+$, $\times$,
+$\arrow{\cdot}{\cdot}$, let alone, \Universe{}{}, \Lists\ or even \ListAutomorphisms.
+
+Again, when the dust settles, Lists, \Lists, is \emph{an} \emph{implementation}
+of the classical concept of the Ordinals, \Ordinal, and the isomorphism objects
+of the Lists modulo List Automorphisms, \ListAutomorphisms, is \emph{an}
+\emph{implementation} of the classical concepts of the Cardinals, \Cardinal. In
+deed we will, eventually, make these explicit definitions, however, at the
+moment, we are getting ahead of our current (minimal) abilities.
+
+\subsection{Syntax: Marks in the sand}
+
+To be able to discuss the mathematics of an omnipotent \Cardinal-being, we
+\emph{explicitly} place \emph{no limits} on the size of the syntax. This means we
+make no assumption about the numbers of symbols which can be used, the number of
+symbols which can be `written', nor the length of time which might be used to
+`write these symbols down', since, of course, an omnipotent \Cardinal-being has
+no such limits. In each case we explicitly allow for a `transfinite number of
+symbols', a `transfinite sized piece of paper', and a `transfinite amount of
+time' (when of course we have suitably defined the `transfinite ordinals'). Note
+that, in contrast to classical set theory, to `compute' any large ordinal,
+instead of merely assuming it exists, an omnipotent \Cardinal-being does indeed
+require large ordinal lengths of time to write down large ordinal numbers of
+symbols.
+
+DiSimplicial structures, which are instances of Plato's universe, are highly
+structured objects with complex referential structure. There are two
+distinct types of references that we will use: 
+%
+\begin{itemize}
+%
+\item Specific known references, \define{names}{}, used to cross-link known
+(sub)structures in a given diSimplicial structure, and 
+%
+\item Specific unknown references, \define{variables}{}, used to denote
+(sub)structures we might be in the process of building and/or which we assume
+might exist. 
+%
+\end{itemize}
+%
+
+Since we are, among other things, developing a theory of computation, we follow
+Computer Scientists by using capital ASCII letters to denote \emph{names} and
+lower case ASCII letters to denote \emph{variables}. However, since we need a
+way of transcribing a diSimplicial structure as used by a possibly omnipotent
+\Cardinal-being, and since such a being might use more than the finite number of
+ASCII letters, we need a way of producing a transfinite number of symbols. To do
+this we assume that there is a well know and fixed numeration associated with
+any (co-)algebraic ordinal, then we can use any such numeral as a subscript of a
+given denotation of a name or variable.
+
+We proceed by providing a Backus-Naur Form (BNF) description of the allowed
+denotations of names and variables\footnote{We use an extended Backus-Naur form
+by allowing the use of standard POSIX regular expressions.}. Each $\gamma$-being
+will potentially have a different numeration. Our BNF for the syntax of a
+diSimplicial structure allows for alternate numerations.
+
+\newcommand{\bnf}[2]{\ensuremath{<\textbf{#1}_{#2}>}}
+\newcommand{\bnfAssign}{\text{::=}}
+\newcommand{\bnfT}[1]{\text{`}#1\text{'}}
+
+For an $\omega$-being a potential numeration is:
+%
+\begin{align*}
+%
+\bnf{numeral}{\omega} \quad & \bnfAssign & \text{[1-9]}\text{[0-9]*}
+%
+\end{align*}
+%
+
+For an $\epsilon_0$-being we can use the numeration based upon Cantor's normal
+form:
+%
+\begin{align*}
+%
+\bnf{numeral-part}{\epsilon_0} \quad & \bnfAssign & 
+  \bnfT{\omega} \bnf{numeral}{\epsilon_0} \bnfT{\cdot} \bnf{numeral}{\omega} \\
+%
+\bnf{numeral}{\epsilon_0} \quad & \bnfAssign & 
+  \bnf{numeral-part}{\epsilon_0} ( \; \bnfT{+} \bnf{numeral-part}{\epsilon_0} ) \text{*}
+%
+\end{align*}
+%
+where we have redundant representations unless the exponents of $\omega$ are
+strictly ordered $\beta_1, > \ldots > \beta_k \ge 0$.
+
+We postpone a potential numeration for a \Cardinal-being until after we have
+defined the full syntax for diSimplicial structures.
+
+In the following BNF, we use \bnf{numeral}{} to denote any given fixed
+numeration.
+
+For any being, names and variables are defined by:
+%
+\begin{align*}
+%
+\bnf{nv-part}{} \quad & \bnfAssign & 
+  \textbf{[A-Za-z0-9]+} \;\; ( \bnfT{\underline{\hspace{1ex} }} \bnf{numeral}{} )\text{?} \\
+%
+\bnf{name}{} \quad & \bnfAssign & \textbf{[A-Z]} \bnf{nv-part}{} \\
+%
+\bnf{variable}{} \quad & \bnfAssign & \textbf{[a-z]} \bnf{nv-part}{}
+%
+\end{align*}
+
+We begin by developing the syntax for \Universe{}{1}.
+%
+\begin{align*}
+%
+\bnf{diSimplex}{-1} \quad & \bnfAssign & \bnfT{\Delta_{-1}} \;\; \bnfT{\langle} \;\; \bnfT{\rangle} \\
+%
+\bnf{diSimplex}{0} \quad & \bnfAssign & \bnfT{\Delta_0} \;\; \bnfT{\langle} \bnf{name}{} \bnfT{\rangle} \\
+%
+\bnf{diSimplex}{1} \quad & \bnfAssign & 
+  \bnfT{\Delta_1} \;\; \bnfT{\langle} \bnf{name}{}, \bnf{name}{} \bnfT{\rangle}
+%
+\end{align*}
+%
+where the structures referred to by a name in each of $\Delta_0$ and $\Delta_1$
+constructs must be $\Delta_{-1}$ and $\Delta_0$ structures respectively.
+
+\subsection{new work}
+
+We ``build'' the rules for Plato's universe, \Universe{}{}, by simultaneously providing rules
+for construction, bi-simulation, and modal logic.
+
+When considering both the rules for bi-simulation and modal logic, it is important to
+realise that these rules apply to diSimplicial \emph{structures} and not to ``individual''
+simplicies in a given structure. Effectively a fragment of modal logic provides a
+specification of a ``subset'' of all diSimplicial structures which conform to that
+fragment of modal logic.
+
+A diSimplicial structure is a ``global'' ``object''.  It is made up of ``local'' simplicies. 
+Computation is ``local''. This means it proceeds by ``walking'' over the simplicies 
+``contained'' ``in'' a given diSimplicial structure. However, ``locality'' depends upon the 
+relative power of a given being. ``Locality'' for an $\omega$-being (or $\aleph_0$-being) 
+means finite collections of simplicies. ``Locality'' for an $\aleph_1$-being means countable 
+collections of simplicies. For an omnipotent \Cardinal-being, ``locality'' and ``globality'' 
+coincide.
+
+It is equally important to realise that we take an explicitly \emph{structuralist}
+approach. An ``object'' which has \emph{no} relationships with anything else, does not
+exist (as far as ``everything else'' is concerned). This is essentially a mathematical 
+version of Mach's principle. Local structure is determined by global relationships.  This 
+approach \emph{determines} our rules for bi-similarity.
+
+We begin at the beginning\footnote{We loosely follow the presentations found in the HoTT
+book, \cite[Appendix A2]{ufp2013hott} and Bart Jacobs' \cite{jacobs1999catLogicTypeTh},
+but of course with our own interpretations and deviations.}:
+
+A \define{judgement}{} is a reference to one or more computational structures in Plato's
+universe. A judgement might either represent an assumption that such a structure exists,
+or be the result of a computation.
+
+A \define{context}{}, \cJudgement{\Gamma}, is a collection of the currently accepted
+judgements. As such a context encodes the explicitly known relationships between the
+relevant parts of a collection of diSimplicial structures. A context is itself a
+judgement.
+
+A \define{part of judgement}{}, \judgement{b}{B}, is the statement that one diSimplicial 
+structure, $b$, is a (sub)part of another one, $B$.
+
+At the foundational level, these are the \emph{only} judgements. All other judgements are
+derived from these two.
+
+A \define{contextual judgement}{}, $\context{\Gamma} \vdash \mathcal{J}$, is the assertion 
+that, in the context, \context{\Gamma}, we can compute the judgement, $\mathcal{J}$. Note 
+that $\mathcal{J}$ can be either a context judgement, \cJudgement{\Gamma}, or a part of 
+judgement, \judgement{a}{A}, or any derived judgement.
+
+These and all other judgements are essentially defined by the collection of
+\define{inference rules}{} in which they participate. A typical inference rule, named,
+Name, has the form:
+%
+\begin{prooftree}
+\AxiomC{$c\mathcal{J}_0$}
+\AxiomC{$\cdots$}
+\AxiomC{$c\mathcal{J}_{\gamma}$}
+\RightLabel{Name}
+\TrinaryInfC{$c\mathcal{J}$}
+\end{prooftree}
+%
+For some ordinal, $\gamma$, and contextual judgements, $c\mathcal{J}_0, \cdots, 
+c\mathcal{J}_{\gamma}$ and $c\mathcal{J}$. 
+
+Following, \cite[section 2.5]{sangiorgi2012introBisimulationCoinduction}, we can read any
+rule in either the forward or backward direction.  In the forward direction a rule helps
+to define an algebra by showing one way in which an ``object'' is built up out of its
+parts. In the backward direction a rule helps to define a coalgebra by showing one way in
+which to observe the parts of an ``object''.  We will make explicit use of \emph{both} the
+forward and backward readings of any and all rules.
+
+\subsection{Context rules}
+
+\TODO{Translate these rules into disitt-engine format; redefine them for transfinite use.}
+
+\begin{prooftree}
+\AxiomC{}
+\RightLabel{empty-ctx}
+\UnaryInfC{\cJudgement{\cdot}}
+\end{prooftree}
+
+\begin{prooftree}
+\AxiomC{$\context{\mathcal{\hat{J}}} \vdash \mathcal{J}$}
+\RightLabel{next-ctx}
+\UnaryInfC{\cJudgement{\mathcal{\hat{J}}, \mathcal{J}}}
+\end{prooftree}
+
+As any self respecting functional programmer will recognise, this is a twisted,
+\emph{co-algebraic}, definition of a list. Instead of growing to the right, this list
+structure grows to the left. As we will see below, the pair of inference rules, empty-ctx
+and next-ctx together imply that a context is a mapping from the \emph{computable}
+ordinals into the collection of judgements. For omnipotent beings, the computable ordinals
+\emph{are} the ordinals.
+
+\begin{prooftree}
+\AxiomC{$\context{\mathcal{J}_0, \ldots, \mathcal{J}_n} \vdash \mathcal{J}_{n+1}$}
+\RightLabel{successor-ctx}
+\UnaryInfC{\cJudgement{\mathcal{J}_0, \ldots, \mathcal{J}_n, \mathcal{J}_{n+1}}}
+\end{prooftree}
+
+\begin{prooftree}
+\AxiomC{$\context{\mathcal{J}_0, \ldots, \mathcal{J}_n} \vdash 
+\cJudgement{\mathcal{J}_{n+1}, \ldots, \mathcal{J}_{n+m}}$}
+\RightLabel{flatten-1-ctx}
+\UnaryInfC{$\context{\mathcal{J}_0, \ldots, \mathcal{J}_n, \mathcal{J}_{n+1}} \vdash 
+\cJudgement{\mathcal{J}_{n+2}, \ldots, \mathcal{J}_{n+m}}$}
+\end{prooftree}
+
+\begin{prooftree}
+\AxiomC{$\context{\mathcal{J}_0, \ldots, \mathcal{J}_n} \vdash 
+\cJudgement{\cJudgement{\mathcal{J}_{n+1,0},\ldots,\mathcal{J}_{n+1,k}}, \ldots, 
+\mathcal{J}_{n+m}}$}
+\RightLabel{flatten-2-ctx}
+\UnaryInfC{$\context{\mathcal{J}_0, \ldots, \mathcal{J}_n, \mathcal{J}_{n+1,0}} \vdash 
+\cJudgement{\cJudgement{\mathcal{J}_{n+1,1},\ldots,\mathcal{J}_{n+1,k}}, \ldots, 
+\mathcal{J}_{n+m}}$}
+\end{prooftree}
+
+\TODO{I now assert that the two flattens above provide sufficient computational power to
+compute the total flattening of any countably structured context.... PROVE THIS.
+Essentially given these rules, a context is a countably infinitely branching countably
+infinitely deep tree. To flatten it we need to follow a weaving breadth first pattern
+continuously revisiting nodes until in the ``countably inifinite time'' it is flattened. 
+This \emph{will} be a typcial problem/solution for diSimplicial structures. Essentially this 
+is nothing more nor less than a \emph{fair} parallel scheduling algorithm for the parallel 
+application of, in this case, the flattening rules on all branches simultaneously. }
+
+\subsection{\Universe{}{-1}, \Universe{}{0} and \Universe{}{1}}
+
+See \cite{bell1988topoiSetThLogic, joyalMoerdijk1995algSetTh, aczel1988nonWellFoundedSets}
+
+\begin{prooftree}
+\AxiomC{\cJudgement{\Gamma}}
+\RightLabel{empty-\Universe{}{}}
+\UnaryInfC{$\context{\Gamma} \vdash \judgement{\cdot}{\Universe{}{}}$}
+\end{prooftree}
+
+\begin{prooftree}
+\AxiomC{$\context{\Gamma} \vdash \judgement{a}{\Universe{}{}}$}
+\RightLabel{reflexive-partOf}
+\UnaryInfC{$\context{\Gamma} \vdash \judgement{a}{a}$}
+\end{prooftree}
+
+\begin{prooftree}
+\AxiomC{$\context{\Gamma} \vdash \judgement{a}{b}$}
+\AxiomC{$\context{\Gamma} \vdash \judgement{b}{a}$}
+\RightLabel{antisymmetry-partOf}
+\BinaryInfC{$\context{\Gamma} \vdash a =_{\Universe{}{}} b$}
+\end{prooftree}
+
+\begin{prooftree}
+\AxiomC{$\context{\Gamma, \judgement{b}{a}} \vdash \judgement{c}{b}$}
+\RightLabel{tansitive-partOf}
+\UnaryInfC{$\context{\Gamma} \vdash \judgement{c}{a}$}
+\end{prooftree}
+
+\begin{prooftree}
+\AxiomC{$\context{\Gamma} \vdash \judgement{n}{\Universe{}{}}$}
+\RightLabel{empty-\Universe{}{0}}
+\UnaryInfC{$\context{\Gamma} \vdash \judgement{\Delta_{-1}(n)}{\Universe{}{-1}}$}
+\end{prooftree}
+
+\begin{prooftree}
+\AxiomC{$\context{\Gamma} \vdash \judgement{a}{\Universe{}{-1}}$}
+\RightLabel{empty-\Universe{}{0}}
+\UnaryInfC{$\context{\Gamma} \vdash \judgement{a}{\Universe{}{}}$}
+\end{prooftree}
+
+\begin{prooftree}
+\AxiomC{$\context{\Gamma} \vdash \judgement{n}{\Universe{}{}}$}
+\AxiomC{$\context{\Gamma} \vdash \judgement{a}{\Universe{}{-1}}$}
+\RightLabel{empty-\Universe{}{0}}
+\BinaryInfC{$\context{\Gamma} \vdash \judgement{\Delta_0(n;a)}{\Universe{}{0}}$}
+\end{prooftree}
+
+\begin{prooftree}
+\AxiomC{$\context{\Gamma} \vdash \judgement{a}{\Universe{}{0}}$}
+\RightLabel{empty-\Universe{}{0}}
+\UnaryInfC{$\context{\Gamma} \vdash \judgement{a}{\Universe{}{}}$}
+\end{prooftree}
+
+\begin{prooftree}
+\AxiomC{$\context{\Gamma} \vdash \judgement{n}{\Universe{}{}}$}
+\AxiomC{$\context{\Gamma} \vdash \judgement{a}{\Universe{}{0}}$}
+\AxiomC{$\context{\Gamma} \vdash \judgement{b}{\Universe{}{0}}$}
+\RightLabel{empty-\Universe{}{0}}
+\TrinaryInfC{$\context{\Gamma} \vdash \judgement{\Delta_1(n;a,b)}{\Universe{}{1}}$}
+\end{prooftree}
+
+\begin{prooftree}
+\AxiomC{$\context{\Gamma} \vdash \judgement{a}{\Universe{}{1}}$}
+\RightLabel{empty-\Universe{}{0}}
+\UnaryInfC{$\context{\Gamma} \vdash \judgement{a}{\Universe{}{}}$}
+\end{prooftree}
+
+\subsection{Definition of equality}
+
+The first and most important thing we must do is to, given the above definitions of
+Plato's universe, \Universe{}{}, define \define{equality}{}.  That is we need to show that
+we can compute the following:
+
+\begin{prooftree}
+\AxiomC{\hypothesis{\Gamma}{\judgement{a}{\Universe{}{0}}}}
+\AxiomC{\hypothesis{\Gamma}{\judgement{b}{\Universe{}{0}}}}
+\AxiomC{\hypothesis{\Gamma}{\judgement{a}{b}}}
+\AxiomC{\hypothesis{\Gamma}{\judgement{b}{a}}}
+\QuaternaryInfC{\conclusion{\Gamma}{\judgement{a = b}{\Universe{}{0}}}}
+\end{prooftree}
+
+\begin{prooftree}
+\AxiomC{\hypothesis{\Gamma}{\judgement{a}{\Universe{}{1}}}}
+\AxiomC{\hypothesis{\Gamma}{\judgement{b}{\Universe{}{1}}}}
+\AxiomC{\hypothesis{\Gamma}{\judgement{a}{b}}}
+\AxiomC{\hypothesis{\Gamma}{\judgement{b}{a}}}
+\QuaternaryInfC{\conclusion{\Gamma}{\judgement{a = b}{\Universe{}{1}}}}
+\end{prooftree}
+
+\subsection{\Universe{}{} is a Category}
+
+Given the above (partial) definition of Plato's universe, \Universe{}{}, our first
+intention is to show that it is a Category in the classical definition.  It is critical to
+note that we are explicitly assuming omnipotent, unlimited, computing power.
+
+To show that \Universe{}{} is a Category we need to show that we can compute the following 
+rules:
+
+\begin{prooftree}
+\AxiomC{\hypothesis{\Gamma}{\judgement{f}{\Universe{}{1}}}}
+\AxiomC{\hypothesis{\Gamma}{\judgement{g}{\Universe{}{1}}}}
+\AxiomC{\hypothesis{\Gamma}{\judgement{\pi_0(f) = \pi_1(g)}{\Universe{}{0}}}}
+\TrinaryInfC{\conclusion{\Gamma}{\judgement{f \circ g}{\Universe{}{1}}}}
+\end{prooftree}
+
+\begin{prooftree}
+\AxiomC{\hypothesis{\Gamma}{\judgement{f}{\Universe{}{1}}}}
+\AxiomC{\hypothesis{\Gamma}{\judgement{g}{\Universe{}{1}}}}
+\AxiomC{\hypothesis{\Gamma}{\judgement{h}{\Universe{}{1}}}}
+\AxiomC{\hypothesis{\Gamma}{\judgement{\pi_0(f) = \pi_1(g)}{\Universe{}{0}}}}
+\AxiomC{\hypothesis{\Gamma}{\judgement{\pi_0(g) = \pi_1(h)}{\Universe{}{0}}}}
+\QuinaryInfC{\conclusion{\Gamma}{\judgement{((f \circ g) \circ h) = (f \circ (g \circ h)) 
+}{\Universe{}{1}}}}
+\end{prooftree}
+
+\begin{prooftree}
+\AxiomC{\hypothesis{\Gamma}{\judgement{a}{\Universe{}{0}}}}
+\UnaryInfC{\conclusion{\Gamma}{\judgement{\one_a}{\Universe{}{1}}}}
+\end{prooftree}
+
+\begin{prooftree}
+\AxiomC{\hypothesis{\Gamma}{\judgement{\one_a}{\Universe{}{1}}}}
+\AxiomC{\hypothesis{\Gamma}{\judgement{f}{\Universe{}{1}}}}
+\AxiomC{\hypothesis{\Gamma}{\judgement{\pi_0(\one_a) = \pi_1(f)}{\Universe{}{0}}}}
+\TrinaryInfC{\conclusion{\Gamma}{\judgement{(f \circ \one_a) = f}{\Universe{}{1}}}}
+\end{prooftree}
+
+\begin{prooftree}
+\AxiomC{\hypothesis{\Gamma}{\judgement{\one_a}{\Universe{}{1}}}}
+\AxiomC{\hypothesis{\Gamma}{\judgement{f}{\Universe{}{1}}}}
+\AxiomC{\hypothesis{\Gamma}{\judgement{\pi_0(f) = \pi_1(\one_a)}{\Universe{}{0}}}}
+\TrinaryInfC{\conclusion{\Gamma}{\judgement{(\one_a \circ f)= f}{\Universe{}{1}}}}
+\end{prooftree}
+
+\subsection{(Von Neumann) Ordinals}
+
+See \cite{joyalMoerdijk1995algSetTh, aczel1988nonWellFoundedSets}
+
+\begin{prooftree}
+\AxiomC{$\context{\Gamma} \vdash \judgement{\cdot}{\Universe{}{}}$}
+\RightLabel{empty-\Universe{}{0}}
+\UnaryInfC{$\context{\Gamma} \vdash \judgement{\cdot}{\Ordinal}$}
+\end{prooftree}
+
+\begin{prooftree}
+\AxiomC{$\context{\Gamma} \vdash \judgement{n}{\Ordinal}$}
+\RightLabel{empty-\Universe{}{0}}
+\UnaryInfC{$\context{\Gamma} \vdash \judgement{\Delta_0(n; 
+\Delta_{-1}(n))}{\Ordinal}$}
+\end{prooftree}
+
+The following are both computable:
+
+\begin{prooftree}
+\AxiomC{$\context{\Gamma} \vdash \judgement{n}{\Ordinal}$}
+\RightLabel{empty-\Universe{}{0}}
+\UnaryInfC{$\context{\Gamma} \vdash \judgement{n}{\Universe{}{}}$}
+\end{prooftree}
+
+
+\begin{prooftree}
+\AxiomC{$\context{\Gamma} \vdash \judgement{n}{\Ordinal}$}
+\RightLabel{empty-\Universe{}{0}}
+\UnaryInfC{$\context{\Gamma} \vdash \judgement{\Delta_1(\cdot; n,\Delta_0(n; 
+\Delta_{-1}(n)))}{\Universe{}{1}}$}
+\end{prooftree}
+
+\subsection{Denotational Semantics}
+
+
+
+\subsection{Operational Semantics}
+
+
+
+\begin{definition}
+content...
+\end{definition}
+
+\subsection{motivation}
+
+A sketch of nearly random ideas relating to the base of the foundations of
+mathematics via computational complexity.
+
+start by looking at finite computation as above BUT we need to generalize lists
+to encompass the supremum operator. See chapter 2 and 3 of Algebraic Set Theory.
+compare the trees used to prove the existence of ZF-Algebras (chapter 3) with
+those used to help motivate Aczel's Non-Well-Founded sets. compare these with
+Vopenka's (rigid graph/tree) principle in Adamek and Rosicky's book Locally
+Presentable and Accessible Categories.
+
+Vopenka's principle is described in Mathoverflow articles:
+\verb|http://mathoverflow.net/questions/29302/reasons-to-believe-vopenkas-principle-huge-cardinals-are-consistent/29473#29473|
+and
+\verb|http://mathoverflow.net/questions/45602/can-vopenkas-principle-be-violated-definably/46538#46538|
+and or Adamek and Rosicky's book as really delineating the ``correct'' boundary
+between small and large sets. As such our theory \emph{should} ensure the
+Vopenka's principle is honoured.
+
+basically using AST's existence work, we can build the ordinals just in time (?)
+to extend finite computers into transfinite computers. (See Moschovakis's paper
+on definition of algorithms -- he does not go far enough and use co-algebraic
+methods... but his computer tools do assume ordinal computation as we need to
+do).
+
+need to understand the relationship between implicit and explicit computation
+--- see the similar dichotome in the lambda-calculus.
+
+look for p =!= np in the categorical theorems which force the use of the
+small/large boundary.
+
+look at: lucas2001transfiniteRewrite,
+dershowitzKaplanPlaisted1989transfiinteRewrite,
+jacobs2011coalgebraicComputation
+
+\printbibliography
+\end{document}
+
